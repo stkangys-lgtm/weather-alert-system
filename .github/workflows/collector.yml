@@ -1,0 +1,29 @@
+name: Weather Collector
+
+on:
+  schedule:
+    # 매시 45분 (KST). GitHub Actions 스케줄은 UTC 기준이지만, 분(45) 값은 시간대와
+    # 무관하게 동일하므로 그대로 사용. 실제 날짜/시각 계산은 잡 내부에서 TZ=Asia/Seoul로 보정.
+    - cron: "45 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Asia/Seoul
+      KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
+      GOOGLE_SHEETS_SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
+      GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+      SITES_JSON: ${{ secrets.SITES_JSON }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - run: python -m src.main

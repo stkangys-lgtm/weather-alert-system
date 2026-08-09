@@ -1,0 +1,21 @@
+# 인증정보 (기상청 API 키, 구글 서비스 계정 JSON 등) - 절대 커밋 금지
+credentials/
+*.json
+!config.example.py
+
+# 개인 설정 파일 (config.example.py를 복사해서 만든 실제 설정)
+config.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# OS / 에디터
+.DS_Store
+.vscode/
+*.log
+logs/
