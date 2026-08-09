@@ -11,26 +11,84 @@
 
 ## Phase 구성
 
-- **Phase 1 (현재)**: 개발환경 준비 + 기상청 API → Google Sheets 자동 기록
+- **Phase 1 (완료)**: 개발환경 준비 + 기상청 API(초단기실황/단기예보) → Google Sheets 자동 기록
+- **Phase 1.5 (완료)**: GitHub Actions로 매시 45분(KST) 자동 실행 — 로컬 컴퓨터를 켜둘 필요 없음
 - Phase 2: 이상기상 판정 로직 + 알림 발송 (예: 카카오톡/이메일/슬랙)
-- Phase 3: 배포 및 정기 실행 자동화 (스케줄러)
 
 ## 폴더 구조
 
 ```
 weather-alert-system/
+├── .github/workflows/collector.yml   # GitHub Actions 자동 실행 워크플로우
 ├── .gitignore
 ├── README.md
 ├── requirements.txt      # 설치할 파이썬 패키지 목록
 ├── config.example.py     # 설정 파일 예시 (실제 설정은 config.py로 복사해서 사용)
-├── src/                  # 소스 코드
+├── src/
+│   ├── settings.py       # 설정 로더 (로컬: config.py / CI: 환경변수 자동 분기)
+│   ├── kma_client.py      # 기상청 API 호출
+│   ├── sheets_client.py   # Google Sheets 기록
+│   ├── grid_converter.py  # 위경도 -> 기상청 격자좌표 변환
+│   └── main.py            # 실행 진입점
 ├── credentials/          # 인증정보 보관 (git에 올라가지 않음)
 └── tests/                # 테스트 코드
 ```
 
-## 시작하기
+## 클라우드 자동 실행 (GitHub Actions)
 
-1. 가상환경 생성 및 활성화 (README 안내 참고)
-2. `pip install -r requirements.txt`
-3. `config.example.py`를 `config.py`로 복사 후 실제 값 입력
-4. `credentials/` 폴더에 기상청 API 키, 구글 서비스 계정 JSON 등 배치 (`credentials/README.md` 참고)
+이 저장소는 GitHub Actions로 매시 45분(KST)에 자동 실행되도록 설정되어 있습니다.
+**로컬 컴퓨터를 켜둘 필요가 없고, 어느 컴퓨터에서 이 저장소를 열든 클라우드 실행에는 영향이 없습니다.**
+
+사용하는 GitHub Secrets (저장소 Settings → Secrets and variables → Actions에서 확인/재설정 가능, 값 조회는 불가):
+
+| Secret | 내용 |
+|---|---|
+| `KMA_API_KEY` | 기상청 공공데이터포털 인증키 (Decoding 키) |
+| `GOOGLE_SHEETS_SPREADSHEET_ID` | 기록 대상 스프레드시트 ID |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | 구글 서비스 계정 키 JSON 전체 내용 |
+| `SITES_JSON` | 현장 목록 (JSON) — `config.py`의 `SITES`와 동일 형식 |
+
+```bash
+gh run list --workflow=collector.yml   # 실행 이력 확인
+gh workflow run collector.yml          # 수동 실행
+gh run view <run-id> --log             # 특정 실행 로그 확인
+```
+
+## 로컬 개발 환경 시작하기 (새 컴퓨터에서 이어서 작업할 때)
+
+`config.py`와 `credentials/`는 보안을 위해 git에서 제외되어 있어서, 저장소를 새로 clone해도 따라오지 않습니다.
+아래 순서대로 다시 준비해야 합니다.
+
+1. **개발도구 설치**
+   ```bash
+   brew install python@3.12 gh
+   ```
+
+2. **GitHub 로그인 & 저장소 클론**
+   ```bash
+   gh auth login   # GitHub.com -> HTTPS -> Login with a web browser
+   gh repo clone stkangys-lgtm/weather-alert-system ~/Projects/weather-alert-system
+   cd ~/Projects/weather-alert-system
+   ```
+
+3. **가상환경 및 패키지 설치**
+   ```bash
+   python3.12 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+4. **로컬 설정 파일 재구성**
+   ```bash
+   cp config.example.py config.py
+   ```
+   `config.py`를 열어서 아래 값을 채웁니다:
+   - `KMA_API_KEY`: [data.go.kr](https://www.data.go.kr) 마이페이지 → 개발계정에서 기존 키 재조회 (Decoding 키 사용)
+   - `GOOGLE_SHEETS_SPREADSHEET_ID`: 대상 스프레드시트 URL의 `/d/`와 `/edit` 사이 부분
+   - `SITES`: 현장 목록 (GitHub Secrets의 `SITES_JSON`과 동일 — 값을 직접 조회할 수는 없으니, 필요하면 다시 정리)
+   - `credentials/google-service-account.json`: Google Cloud Console에서 동일 서비스 계정으로 **새 키를 발급**받아 배치 (`credentials/README.md` 참고). 기존 키 파일을 USB/메신저로 옮기는 것보다, 콘솔에서 새로 발급받는 편이 안전합니다.
+
+5. **동작 확인**
+   ```bash
+   python -m src.main
+   ```
