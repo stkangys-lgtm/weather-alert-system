@@ -60,23 +60,46 @@ gh run view <run-id> --log             # 특정 실행 로그 확인
 아래 순서대로 다시 준비해야 합니다.
 
 1. **개발도구 설치**
+
+   macOS (터미널):
    ```bash
    brew install python@3.12 gh
    ```
 
+   Windows (PowerShell):
+   ```powershell
+   winget install -e --id Python.Python.3.12
+   winget install --id GitHub.cli
+   ```
+   `winget`이 막혀있다면 [python.org](https://www.python.org/downloads/), [cli.github.com](https://cli.github.com)에서 설치파일을 직접 받는다. Python 설치 시 **"Add python.exe to PATH" 체크 필수**.
+
 2. **GitHub 로그인 & 저장소 클론**
    ```bash
    gh auth login   # GitHub.com -> HTTPS -> Login with a web browser
-   gh repo clone stkangys-lgtm/weather-alert-system ~/Projects/weather-alert-system
-   cd ~/Projects/weather-alert-system
    ```
+   macOS: `gh repo clone stkangys-lgtm/weather-alert-system ~/Projects/weather-alert-system && cd ~/Projects/weather-alert-system`
+   Windows (PowerShell): `gh repo clone stkangys-lgtm/weather-alert-system "$HOME\Projects\weather-alert-system"; cd "$HOME\Projects\weather-alert-system"`
 
 3. **가상환경 및 패키지 설치**
+
+   macOS:
    ```bash
    python3.12 -m venv .venv
    source .venv/bin/activate
    pip install -r requirements.txt
    ```
+
+   Windows (PowerShell):
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   pip install -r requirements.txt
+   ```
+   `Activate.ps1` 실행 시 "이 시스템에서 스크립트를 실행할 수 없으므로..." 오류가 나면 PowerShell 실행 정책 때문이다. 아래를 한 번만 실행하면 해결된다 (관리자 권한 불필요):
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+   ```
+   회사 정책(그룹정책)으로 이마저 막혀있다면 IT 부서에 문의가 필요하다.
 
 4. **로컬 설정 파일 재구성**
    ```bash
