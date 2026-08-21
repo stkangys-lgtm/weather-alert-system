@@ -12,7 +12,7 @@
 ## Phase 구성
 
 - **Phase 1 (완료)**: 개발환경 준비 + 기상청 API(초단기실황/단기예보) → Google Sheets 자동 기록
-- **Phase 1.5 (완료)**: GitHub Actions로 매시 45분(KST) 자동 실행 — 로컬 컴퓨터를 켜둘 필요 없음
+- **Phase 1.5 (완료)**: GitHub Actions로 현장 운영시간(KST 04:00~18:00) 매시 45분 자동 실행 — 로컬 컴퓨터를 켜둘 필요 없음
 - Phase 2: 이상기상 판정 로직 + 알림 발송 (예: 카카오톡/이메일/슬랙)
 
 ## 폴더 구조
@@ -36,7 +36,8 @@ weather-alert-system/
 
 ## 클라우드 자동 실행 (GitHub Actions)
 
-이 저장소는 GitHub Actions로 매시 45분(KST)에 자동 실행되도록 설정되어 있습니다.
+이 저장소는 GitHub Actions로 현장 운영시간(KST 04:00~18:00) 동안 매시 45분에 자동 실행되도록 설정되어 있습니다.
+(야간에는 현장에 인원이 없어 실행하지 않으며, GitHub Actions 무료 사용량 절약에도 도움이 됩니다.)
 **로컬 컴퓨터를 켜둘 필요가 없고, 어느 컴퓨터에서 이 저장소를 열든 클라우드 실행에는 영향이 없습니다.**
 
 사용하는 GitHub Secrets (저장소 Settings → Secrets and variables → Actions에서 확인/재설정 가능, 값 조회는 불가):
