@@ -2,6 +2,7 @@
 credentials/
 *.json
 !config.example.py
+!src/kr_map_data.json
 
 # 개인 설정 파일 (config.example.py를 복사해서 만든 실제 설정)
 config.py

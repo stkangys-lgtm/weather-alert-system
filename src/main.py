@@ -12,6 +12,7 @@ from src import alert_rules
 from src import settings as config
 from src.dashboard import build_dashboard_html
 from src.kma_client import get_current_weather, get_forecast
+from src.map_dashboard import build_map_html
 from src.sheets_client import append_rows, get_worksheet
 
 NCST_HEADER = ["기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)", "습도(%)", "풍속(m/s)", "판정"]
@@ -20,6 +21,7 @@ FCST_HEADER = ["기록시각", "현장명", "담당자", "예보일자", "예보
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
 ANNOUNCEMENT_PATH = os.path.join(DOCS_DIR, "announcement.txt")
 DASHBOARD_PATH = os.path.join(DOCS_DIR, "index.html")
+MAP_PATH = os.path.join(DOCS_DIR, "map.html")
 
 # 공고문은 매시간이 아니라 오전 7시, 오후 1시(KST) 실행 시에만 생성한다 (단톡방 공유용, 하루 2회면 충분).
 ANNOUNCEMENT_HOURS = {7, 13}
@@ -116,6 +118,7 @@ def write_dashboard(collected, now_str):
     site_rows = [
         {
             "site_name": item["site"]["site_name"],
+            "category": item["site"]["category"],
             "current": item["current"] or {},
             "forecast": item["forecast"],
             "level": item["judgment"]["level"],
@@ -126,6 +129,25 @@ def write_dashboard(collected, now_str):
     html = build_dashboard_html(now_str, site_rows)
     os.makedirs(DOCS_DIR, exist_ok=True)
     with open(DASHBOARD_PATH, "w", encoding="utf-8") as f:
+        f.write(html)
+
+
+def write_map(collected, now_str):
+    site_rows = [
+        {
+            "site_name": item["site"]["site_name"],
+            "category": item["site"]["category"],
+            "lat": item["site"]["lat"],
+            "lon": item["site"]["lon"],
+            "current": item["current"] or {},
+            "level": item["judgment"]["level"],
+            "reasons": item["judgment"]["reasons"],
+        }
+        for item in collected
+    ]
+    html = build_map_html(now_str, site_rows)
+    os.makedirs(DOCS_DIR, exist_ok=True)
+    with open(MAP_PATH, "w", encoding="utf-8") as f:
         f.write(html)
 
 
@@ -156,6 +178,7 @@ def main():
     if now.hour in ANNOUNCEMENT_HOURS:
         write_announcement(collected, now_str)
     write_dashboard(collected, now_str)
+    write_map(collected, now_str)
 
 
 if __name__ == "__main__":
