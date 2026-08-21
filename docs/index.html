@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전사 기상 자동감시 대시보드</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 24px; background: #f5f6f8; color: #1a1a1a;
+    font-family: -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+  }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  .updated { color: #666; font-size: 0.85rem; margin-bottom: 20px; }
+  .summary { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .summary .pill {
+    padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 0.95rem;
+  }
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px;
+  }
+  .card {
+    border-radius: 12px; padding: 16px; border: 1px solid rgba(0,0,0,0.08);
+    background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .card.level-경보 { border-left: 6px solid #e53935; }
+  .card.level-주의 { border-left: 6px solid #f2c200; }
+  .card.level-정상 { border-left: 6px solid #34a853; }
+  .card h2 { font-size: 1.05rem; margin: 0 0 8px; }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.78rem;
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .metrics { display: flex; gap: 14px; margin: 10px 0; font-size: 0.88rem; color: #333; }
+  .metrics div span { display: block; color: #888; font-size: 0.72rem; }
+  .reasons { font-size: 0.82rem; color: #a61b1b; margin: 6px 0; }
+  table.forecast { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.78rem; }
+  table.forecast th, table.forecast td {
+    padding: 4px 6px; text-align: center; border-bottom: 1px solid #eee;
+  }
+  table.forecast th { color: #888; font-weight: 500; }
+  footer { margin-top: 28px; color: #999; font-size: 0.75rem; }
+</style>
+</head>
+<body>
+  <h1>전사 기상 자동감시 대시보드</h1>
+  <div class="updated">최종 갱신: 2026-08-21 15:13</div>
+  <div class="summary"><div class="pill" style="background:#fff8e1;color:#8a6d00">주의 1개 현장</div><div class="pill" style="background:#e6f4ea;color:#1e7e34">정상 20개 현장</div></div>
+  <div class="grid">
+    
+    <div class="card level-주의">
+      <span class="badge" style="background:#fff8e1;color:#8a6d00">주의</span>
+      <h2>오리온 진천신공장</h2>
+      <div class="metrics">
+        <div><span>기온</span>25.7°C</div>
+        <div><span>풍속</span>1.4m/s</div>
+        <div><span>1시간강수</span>1.5mm</div>
+        <div><span>습도</span>89%</div>
+      </div>
+      <div class="reasons">호우 주의 (시간당 1.5mm)</div>
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>오리온 진천 기숙사</h2>
+      <div class="metrics">
+        <div><span>기온</span>25°C</div>
+        <div><span>풍속</span>1.2m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>96%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>25°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>24°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>24°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>연희·연남동 공공주택</h2>
+      <div class="metrics">
+        <div><span>기온</span>26.6°C</div>
+        <div><span>풍속</span>0.3m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>82%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>60%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>청정고원 스포츠센터</h2>
+      <div class="metrics">
+        <div><span>기온</span>23.9°C</div>
+        <div><span>풍속</span>2.2m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>87%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>25°C</td><td>30%</td><td>흐림</td></tr><tr><td>16시</td><td>25°C</td><td>30%</td><td>흐림</td></tr><tr><td>17시</td><td>23°C</td><td>30%</td><td>흐림</td></tr><tr><td>18시</td><td>22°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>22°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>21°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>EL충주 버티포트</h2>
+      <div class="metrics">
+        <div><span>기온</span>25.2°C</div>
+        <div><span>풍속</span>0.3m/s</div>
+        <div><span>1시간강수</span>0.7mm</div>
+        <div><span>습도</span>90%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>20%</td><td>구름많음</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>LX 논현 업무시설</h2>
+      <div class="metrics">
+        <div><span>기온</span>27.1°C</div>
+        <div><span>풍속</span>1.2m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>77%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>60%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>군포복합개발</h2>
+      <div class="metrics">
+        <div><span>기온</span>26.3°C</div>
+        <div><span>풍속</span>3.9m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>85%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>60%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>오리온수협 목포 김공장</h2>
+      <div class="metrics">
+        <div><span>기온</span>32°C</div>
+        <div><span>풍속</span>5m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>63%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>32°C</td><td>30%</td><td>흐림</td></tr><tr><td>16시</td><td>32°C</td><td>30%</td><td>흐림</td></tr><tr><td>17시</td><td>31°C</td><td>30%</td><td>흐림</td></tr><tr><td>18시</td><td>30°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>29°C</td><td>30%</td><td>흐림</td></tr><tr><td>20시</td><td>28°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>렉서스 동탄 네트워크</h2>
+      <div class="metrics">
+        <div><span>기온</span>26.1°C</div>
+        <div><span>풍속</span>1.3m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>90%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>27°C</td><td>60%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>화천군부대 시설공사</h2>
+      <div class="metrics">
+        <div><span>기온</span>27.4°C</div>
+        <div><span>풍속</span>0.7m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>83%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>26°C</td><td>30%</td><td>흐림</td></tr><tr><td>17시</td><td>26°C</td><td>30%</td><td>흐림</td></tr><tr><td>18시</td><td>26°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>25°C</td><td>30%</td><td>흐림</td></tr><tr><td>20시</td><td>24°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>반얀트리호텔 근생동</h2>
+      <div class="metrics">
+        <div><span>기온</span>27.2°C</div>
+        <div><span>풍속</span>0.6m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>78%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>60%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>포항~안동2 국도건설공사</h2>
+      <div class="metrics">
+        <div><span>기온</span>25.1°C</div>
+        <div><span>풍속</span>1.5m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>95%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>24°C</td><td>30%</td><td>흐림</td></tr><tr><td>16시</td><td>23°C</td><td>30%</td><td>흐림</td></tr><tr><td>17시</td><td>22°C</td><td>20%</td><td>구름많음</td></tr><tr><td>18시</td><td>21°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>21°C</td><td>30%</td><td>흐림</td></tr><tr><td>20시</td><td>20°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>시흥능곡 주변도로</h2>
+      <div class="metrics">
+        <div><span>기온</span>26.9°C</div>
+        <div><span>풍속</span>1m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>86%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>60%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>뇌죽천 하천재해예방</h2>
+      <div class="metrics">
+        <div><span>기온</span>32.2°C</div>
+        <div><span>풍속</span>1.8m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>63%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>32°C</td><td>30%</td><td>흐림</td></tr><tr><td>16시</td><td>32°C</td><td>30%</td><td>흐림</td></tr><tr><td>17시</td><td>31°C</td><td>30%</td><td>흐림</td></tr><tr><td>18시</td><td>30°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>28°C</td><td>30%</td><td>흐림</td></tr><tr><td>20시</td><td>27°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>산솔면 하수처리장</h2>
+      <div class="metrics">
+        <div><span>기온</span>24.8°C</div>
+        <div><span>풍속</span>2.7m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>86%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>25°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>24°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>24°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>단월정수장 시설공사</h2>
+      <div class="metrics">
+        <div><span>기온</span>25.2°C</div>
+        <div><span>풍속</span>0.3m/s</div>
+        <div><span>1시간강수</span>0.7mm</div>
+        <div><span>습도</span>90%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>20%</td><td>구름많음</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>후포 공공하수처리</h2>
+      <div class="metrics">
+        <div><span>기온</span>26°C</div>
+        <div><span>풍속</span>2.2m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>92%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>28°C</td><td>30%</td><td>흐림</td></tr><tr><td>16시</td><td>27°C</td><td>30%</td><td>흐림</td></tr><tr><td>17시</td><td>27°C</td><td>30%</td><td>흐림</td></tr><tr><td>18시</td><td>26°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>25°C</td><td>30%</td><td>흐림</td></tr><tr><td>20시</td><td>24°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>동해안 바닷가 자동차길</h2>
+      <div class="metrics">
+        <div><span>기온</span>24.9°C</div>
+        <div><span>풍속</span>1.7m/s</div>
+        <div><span>1시간강수</span>0.5mm</div>
+        <div><span>습도</span>90%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>25°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>24°C</td><td>20%</td><td>구름많음</td></tr><tr><td>20시</td><td>24°C</td><td>20%</td><td>구름많음</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>풍각지구 정비사업</h2>
+      <div class="metrics">
+        <div><span>기온</span>31.5°C</div>
+        <div><span>풍속</span>0.8m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>73%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>30%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>30%</td><td>흐림</td></tr><tr><td>17시</td><td>29°C</td><td>30%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>30%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>영주 가흥정수장</h2>
+      <div class="metrics">
+        <div><span>기온</span>25.5°C</div>
+        <div><span>풍속</span>0.2m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>93%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>29°C</td><td>30%</td><td>흐림</td></tr><tr><td>16시</td><td>29°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>30%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>25°C</td><td>30%</td><td>흐림</td></tr></table>
+    </div>
+    <div class="card level-정상">
+      <span class="badge" style="background:#e6f4ea;color:#1e7e34">정상</span>
+      <h2>송산그린시티 용수공급시설</h2>
+      <div class="metrics">
+        <div><span>기온</span>27°C</div>
+        <div><span>풍속</span>1.1m/s</div>
+        <div><span>1시간강수</span>0mm</div>
+        <div><span>습도</span>83%</div>
+      </div>
+      
+      <table class="forecast"><tr><th>시각</th><th>기온</th><th>강수확률</th><th>하늘</th></tr><tr><td>15시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>16시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>17시</td><td>28°C</td><td>60%</td><td>흐림</td></tr><tr><td>18시</td><td>27°C</td><td>60%</td><td>흐림</td></tr><tr><td>19시</td><td>26°C</td><td>60%</td><td>흐림</td></tr><tr><td>20시</td><td>26°C</td><td>60%</td><td>흐림</td></tr></table>
+    </div>
+  </div>
+  <footer>기상청 공공데이터포털(단기예보 2.0) 기반 · 담당자 정보는 비공개 처리됨</footer>
+</body>
+</html>
