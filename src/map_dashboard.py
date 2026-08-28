@@ -10,6 +10,8 @@ import math
 import os
 from html import escape
 
+from src.feels_like import compute_feels_like
+
 LEVEL_COLOR = {"정상": "#2fbf71", "주의": "#f5b400", "경보": "#e63946"}
 CATEGORY_ICON = {"건축": "🏗️", "토목": "🚧"}
 
@@ -186,6 +188,7 @@ _PAGE_TEMPLATE = """<!doctype html>
         '<h3>' + s.site_name + '</h3>' +
         '<div class="metrics">' +
           '<div>🌡 <span class="v">' + s.temp + '°C</span></div>' +
+          (s.feels !== null ? '<div>🤔 체감 <span class="v">' + s.feels + '°C</span></div>' : '') +
           '<div>💨 <span class="v">' + s.wsd + 'm/s</span></div>' +
           '<div>💧 <span class="v">' + s.rn1 + 'mm</span></div>' +
         '</div>' + reasonHtml;
@@ -224,6 +227,7 @@ def build_map_html(updated_str, site_rows):
             "level": row["level"],
             "reasons": row["reasons"],
             "temp": current.get("T1H", "-"),
+            "feels": compute_feels_like(current.get("T1H"), current.get("REH"), current.get("WSD")),
             "wsd": current.get("WSD", "-"),
             "rn1": current.get("RN1", "-"),
         })

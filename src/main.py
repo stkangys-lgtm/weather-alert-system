@@ -11,11 +11,12 @@ from datetime import datetime
 from src import alert_rules
 from src import settings as config
 from src.dashboard import build_dashboard_html
+from src.feels_like import compute_feels_like
 from src.kma_client import get_current_weather, get_forecast
 from src.map_dashboard import build_map_html
 from src.sheets_client import append_rows, get_worksheet
 
-NCST_HEADER = ["기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)", "습도(%)", "풍속(m/s)", "판정"]
+NCST_HEADER = ["기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)", "습도(%)", "풍속(m/s)", "판정", "체감온도(°C)"]
 FCST_HEADER = ["기록시각", "현장명", "담당자", "예보일자", "예보시각", "기온(°C)", "강수확률(%)", "하늘상태", "강수형태"]
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
@@ -63,6 +64,7 @@ def build_current_weather_rows(collected, now_str):
         if item["current"] is None:
             continue
         site, data, judgment = item["site"], item["current"], item["judgment"]
+        feels = compute_feels_like(data.get("T1H"), data.get("REH"), data.get("WSD"))
         rows.append([
             now_str,
             site["site_name"],
@@ -73,6 +75,7 @@ def build_current_weather_rows(collected, now_str):
             data.get("REH", ""),
             data.get("WSD", ""),
             judgment["level"],
+            feels if feels is not None else "",
         ])
     return rows
 

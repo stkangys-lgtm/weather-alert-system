@@ -4,7 +4,11 @@
 참고한 2단계(주의/경보) 임계값. 다만 법령상 "순간풍속"을 기준으로 하나, 기상청 초단기실황
 API는 1시간 평균풍속(WSD)만 제공하므로 이를 근사치로 사용한다. 실제 작업중지 여부는
 현장에서 순간풍속계 등으로 별도 확인이 필요하며, 이 판정은 참고용 알림 기준이다.
+
+폭염 기준은 실제 기상청 폭염특보 기준과 동일하게 "체감온도"를 사용한다 (src/feels_like.py).
 """
+
+from src.feels_like import compute_feels_like
 
 WIND_CAUTION = 10.0   # m/s, 타워크레인 설치/점검 등 고소작업 제한 권고
 WIND_WARNING = 15.0   # m/s, 옥외작업 중지 권고
@@ -12,8 +16,8 @@ WIND_WARNING = 15.0   # m/s, 옥외작업 중지 권고
 RAIN_CAUTION = 1.0    # mm/h, 비계 조립·해체 등 우천시 작업 제한 권고
 RAIN_WARNING = 15.0   # mm/h, 강한 호우로 작업 중지 권고
 
-HEAT_CAUTION = 33.0   # °C, 매시간 20분 휴식 등 온열질환 예방조치 권고
-HEAT_WARNING = 35.0   # °C, 정오~17시 옥외작업 제한 권고
+HEAT_CAUTION = 33.0   # °C 체감온도, 기상청 폭염주의보 기준과 동일. 매시간 20분 휴식 등 예방조치 권고
+HEAT_WARNING = 35.0   # °C 체감온도, 기상청 폭염경보 기준과 동일. 정오~17시 옥외작업 제한 권고
 
 LEVEL_NORMAL, LEVEL_CAUTION, LEVEL_WARNING = "정상", "주의", "경보"
 
@@ -56,7 +60,7 @@ def judge(weather):
     """
     wsd = _to_float(weather.get("WSD"))
     rn1 = _to_float(weather.get("RN1"))
-    t1h = _to_float(weather.get("T1H"))
+    feels = compute_feels_like(weather.get("T1H"), weather.get("REH"), weather.get("WSD"))
 
     triggered = []  # [(level, category, reason), ...]
 
@@ -72,11 +76,11 @@ def judge(weather):
         elif rn1 >= RAIN_CAUTION:
             triggered.append((LEVEL_CAUTION, CATEGORY_RAIN, f"호우 주의 (시간당 {rn1:.1f}mm)"))
 
-    if t1h is not None:
-        if t1h >= HEAT_WARNING:
-            triggered.append((LEVEL_WARNING, CATEGORY_HEAT, f"폭염 경보 (기온 {t1h:.1f}°C)"))
-        elif t1h >= HEAT_CAUTION:
-            triggered.append((LEVEL_CAUTION, CATEGORY_HEAT, f"폭염 주의 (기온 {t1h:.1f}°C)"))
+    if feels is not None:
+        if feels >= HEAT_WARNING:
+            triggered.append((LEVEL_WARNING, CATEGORY_HEAT, f"폭염 경보 (체감 {feels:.1f}°C)"))
+        elif feels >= HEAT_CAUTION:
+            triggered.append((LEVEL_CAUTION, CATEGORY_HEAT, f"폭염 주의 (체감 {feels:.1f}°C)"))
 
     severity = {LEVEL_NORMAL: 0, LEVEL_CAUTION: 1, LEVEL_WARNING: 2}
     level = max((lv for lv, _, _ in triggered), key=lambda lv: severity[lv], default=LEVEL_NORMAL)

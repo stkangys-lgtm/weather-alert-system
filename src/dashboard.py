@@ -5,6 +5,8 @@
 
 from html import escape
 
+from src.feels_like import compute_feels_like
+
 LEVEL_STYLE = {
     "정상": {"bg": "#eafaf1", "fg": "#1a7d4e", "bar": "#2fbf71", "icon": "✅"},
     "주의": {"bg": "#fff6e0", "fg": "#9a6b00", "bar": "#f5b400", "icon": "⚠️"},
@@ -103,6 +105,7 @@ _PAGE_TEMPLATE = """<!doctype html>
   .now {{ display: flex; align-items: center; gap: 12px; margin: 14px 0 10px; }}
   .now .icon {{ font-size: 2.4rem; line-height: 1; }}
   .now .temp {{ font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }}
+  .now .feels {{ font-size: 0.78rem; color: var(--sub); margin-top: -2px; }}
   .metrics {{ display: flex; gap: 16px; color: var(--sub); font-size: 0.82rem; margin-bottom: 4px; }}
   .metrics span.v {{ color: var(--ink); font-weight: 600; }}
   .reasons {{
@@ -217,6 +220,14 @@ def _card(site_name, category, current, forecast, level, reasons):
     wsd = current.get("WSD", "-")
     rn1 = current.get("RN1", "-")
     reh = current.get("REH", "-")
+    feels = compute_feels_like(current.get("T1H"), current.get("REH"), current.get("WSD"))
+
+    feels_html = ""
+    try:
+        if feels is not None and abs(feels - float(temp)) >= 1.0:
+            feels_html = f'<div class="feels">체감 {feels}°C</div>'
+    except (TypeError, ValueError):
+        pass
 
     cat_icon = CATEGORY_ICON.get(category, "")
 
@@ -230,7 +241,7 @@ def _card(site_name, category, current, forecast, level, reasons):
         </div>
         <div class="now">
           <div class="icon">{icon}</div>
-          <div class="temp">{escape(str(temp))}°C</div>
+          <div><div class="temp">{escape(str(temp))}°C</div>{feels_html}</div>
         </div>
         <div class="metrics">
           <div>💨 <span class="v">{escape(str(wsd))}m/s</span></div>
