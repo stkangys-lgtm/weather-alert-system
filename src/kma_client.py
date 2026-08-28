@@ -5,6 +5,7 @@
 - 단기예보조회 (getVilageFcst): 최대 3일 이내 예보
 """
 
+import time
 from datetime import datetime, timedelta
 
 import requests
@@ -16,6 +17,9 @@ SKY_CODE = {"1": "맑음", "3": "구름많음", "4": "흐림"}
 
 _VFCST_BASE_HOURS = ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
 
+RETRY_COUNT = 3        # 연결 타임아웃 등 일시적 오류에 대한 재시도 횟수
+RETRY_BACKOFF_SEC = 3  # 재시도 간 대기 시간(초, 매 시도마다 배로 증가)
+
 
 def _request(endpoint, api_key, params, timeout=10):
     url = f"{BASE_URL}/{endpoint}"
@@ -26,9 +30,21 @@ def _request(endpoint, api_key, params, timeout=10):
         "pageNo": "1",
         **params,
     }
-    response = requests.get(url, params=query, timeout=timeout)
-    response.raise_for_status()
-    body = response.json()["response"]
+
+    last_error = None
+    for attempt in range(1, RETRY_COUNT + 1):
+        try:
+            response = requests.get(url, params=query, timeout=timeout)
+            response.raise_for_status()
+            body = response.json()["response"]
+            break
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            last_error = e
+            if attempt < RETRY_COUNT:
+                time.sleep(RETRY_BACKOFF_SEC * attempt)
+            continue
+    else:
+        raise last_error
 
     header = body["header"]
     if header["resultCode"] != "00":

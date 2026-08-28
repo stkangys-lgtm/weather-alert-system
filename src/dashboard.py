@@ -11,6 +11,7 @@ LEVEL_STYLE = {
     "정상": {"bg": "#eafaf1", "fg": "#1a7d4e", "bar": "#2fbf71", "icon": "✅"},
     "주의": {"bg": "#fff6e0", "fg": "#9a6b00", "bar": "#f5b400", "icon": "⚠️"},
     "경보": {"bg": "#fdeaea", "fg": "#c62828", "bar": "#e63946", "icon": "🚨"},
+    "데이터없음": {"bg": "#eef0f3", "fg": "#5b6470", "bar": "#9aa4b2", "icon": "❔"},
 }
 
 SKY_ICON = {"맑음": "☀️", "구름많음": "⛅", "흐림": "☁️"}
@@ -66,6 +67,7 @@ _PAGE_TEMPLATE = """<!doctype html>
   .stat.hi-경보 .num {{ color: #ff8a8a; }}
   .stat.hi-주의 .num {{ color: #ffd670; }}
   .stat.hi-정상 .num {{ color: #8fe3b5; }}
+  .stat.hi-데이터없음 .num {{ color: #c7ccd4; }}
 
   .content {{ max-width: 1180px; margin: -26px auto 40px; padding: 0 24px; }}
   .toolbar {{
@@ -140,6 +142,7 @@ _PAGE_TEMPLATE = """<!doctype html>
         <div class="stat hi-경보"><div class="num">{count_경보}</div><div class="lbl">🚨 경보</div></div>
         <div class="stat hi-주의"><div class="num">{count_주의}</div><div class="lbl">⚠️ 주의</div></div>
         <div class="stat hi-정상"><div class="num">{count_정상}</div><div class="lbl">✅ 정상</div></div>
+        <div class="stat hi-데이터없음"><div class="num">{count_데이터없음}</div><div class="lbl">❔ 데이터없음</div></div>
       </div>
     </div>
   </div>
@@ -256,10 +259,10 @@ def _card(site_name, category, current, forecast, level, reasons):
 
 def build_dashboard_html(updated_str, site_rows):
     """site_rows: [{"site_name", "current": dict, "forecast": list, "level": str, "reasons": list}, ...]"""
-    severity = {"경보": 2, "주의": 1, "정상": 0}
+    severity = {"경보": 3, "주의": 2, "데이터없음": 1, "정상": 0}
     ordered = sorted(site_rows, key=lambda r: severity[r["level"]], reverse=True)
 
-    counts = {"경보": 0, "주의": 0, "정상": 0}
+    counts = {"경보": 0, "주의": 0, "정상": 0, "데이터없음": 0}
     for row in site_rows:
         counts[row["level"]] += 1
 
@@ -273,5 +276,6 @@ def build_dashboard_html(updated_str, site_rows):
         count_경보=counts["경보"],
         count_주의=counts["주의"],
         count_정상=counts["정상"],
+        count_데이터없음=counts["데이터없음"],
         cards=cards,
     )

@@ -48,7 +48,7 @@ def collect_site_data(sites):
             print(f"[예보 오류] {site['site_name']}: {e}")
             forecast = []
 
-        judgment = alert_rules.judge(current) if current is not None else {"level": alert_rules.LEVEL_NORMAL, "reasons": [], "categories": []}
+        judgment = alert_rules.judge(current) if current is not None else alert_rules.unknown_judgment()
         results.append({"site": site, "current": current, "forecast": forecast, "judgment": judgment})
 
         if current is not None:

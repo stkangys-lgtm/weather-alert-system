@@ -20,6 +20,7 @@ HEAT_CAUTION = 33.0   # °C 체감온도, 기상청 폭염주의보 기준과 �
 HEAT_WARNING = 35.0   # °C 체감온도, 기상청 폭염경보 기준과 동일. 정오~17시 옥외작업 제한 권고
 
 LEVEL_NORMAL, LEVEL_CAUTION, LEVEL_WARNING = "정상", "주의", "경보"
+LEVEL_UNKNOWN = "데이터없음"  # 기상청 API 조회 실패 등으로 실황을 못 받아온 경우. "정상"으로 오인되지 않도록 별도 레벨로 취급.
 
 CATEGORY_WIND, CATEGORY_RAIN, CATEGORY_HEAT = "강풍", "호우", "폭염"
 
@@ -90,12 +91,18 @@ def judge(weather):
     return {"level": level, "reasons": reasons, "categories": categories}
 
 
+def unknown_judgment():
+    """실황 데이터를 가져오지 못했을 때 사용하는 판정 결과. "정상"으로 취급하지 않는다."""
+    return {"level": LEVEL_UNKNOWN, "reasons": ["기상 데이터 수신 실패"], "categories": []}
+
+
 def build_announcement(now_str, site_results):
     """단톡방 등에 공유할 수 있는 공고문 텍스트를 생성한다. 이상기상 유무와 관계없이 매번 생성한다.
 
     site_results: [{"site_name", "manager", "manager_phone", "level", "reasons", "categories"}, ...]
     """
-    affected = [r for r in site_results if r["level"] != LEVEL_NORMAL]
+    affected = [r for r in site_results if r["level"] not in (LEVEL_NORMAL, LEVEL_UNKNOWN)]
+    unknown = [r for r in site_results if r["level"] == LEVEL_UNKNOWN]
 
     # 카테고리별로 해당 현장명을 모은다 (표시 순서는 CATEGORY_ORDER 고정).
     sites_by_category = {cat: [] for cat in CATEGORY_ORDER}
@@ -108,6 +115,9 @@ def build_announcement(now_str, site_results):
 
     if not affected:
         lines.append("현재 전 현장 특이 기상상황 없습니다.")
+        if unknown:
+            names = "、".join(r["site_name"] for r in unknown)
+            lines.append(f"(단, {names}은(는) 기상 데이터 수신에 실패해 확인이 필요합니다.)")
         lines.append("")
         lines.append("감사합니다.")
         return "\n".join(lines)
@@ -140,7 +150,9 @@ def build_announcement(now_str, site_results):
     for r in affected:
         reason_text = ", ".join(r["reasons"])
         lines.append(f"- {r['site_name']} : {reason_text}")
-    normal_count = len(site_results) - len(affected)
+    for r in unknown:
+        lines.append(f"- {r['site_name']} : 기상 데이터 수신 실패(확인 필요)")
+    normal_count = len(site_results) - len(affected) - len(unknown)
     if normal_count:
         lines.append(f"- 그 외 {normal_count}개 현장 특이사항 없음")
     lines.append("")

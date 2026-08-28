@@ -12,7 +12,7 @@ from html import escape
 
 from src.feels_like import compute_feels_like
 
-LEVEL_COLOR = {"정상": "#2fbf71", "주의": "#f5b400", "경보": "#e63946"}
+LEVEL_COLOR = {"정상": "#2fbf71", "주의": "#f5b400", "경보": "#e63946", "데이터없음": "#9aa4b2"}
 CATEGORY_ICON = {"건축": "🏗️", "토목": "🚧"}
 
 _DATA_PATH = os.path.join(os.path.dirname(__file__), "kr_map_data.json")
@@ -68,6 +68,7 @@ _PAGE_TEMPLATE = """<!doctype html>
   .stat.hi-경보 .num {{ color: #ff8a8a; }}
   .stat.hi-주의 .num {{ color: #ffd670; }}
   .stat.hi-정상 .num {{ color: #8fe3b5; }}
+  .stat.hi-데이터없음 .num {{ color: #c7ccd4; }}
 
   .content {{ max-width: 1180px; margin: -22px auto 40px; padding: 0 24px; }}
   .panel {{
@@ -132,6 +133,7 @@ _PAGE_TEMPLATE = """<!doctype html>
         <div class="stat hi-경보"><div class="num">{count_경보}</div><div class="lbl">🚨 경보</div></div>
         <div class="stat hi-주의"><div class="num">{count_주의}</div><div class="lbl">⚠️ 주의</div></div>
         <div class="stat hi-정상"><div class="num">{count_정상}</div><div class="lbl">✅ 정상</div></div>
+        <div class="stat hi-데이터없음"><div class="num">{count_데이터없음}</div><div class="lbl">❔ 데이터없음</div></div>
       </div>
     </div>
   </div>
@@ -146,6 +148,7 @@ _PAGE_TEMPLATE = """<!doctype html>
           <span><span class="dot" style="background:#2fbf71"></span>정상</span>
           <span><span class="dot" style="background:#f5b400"></span>주의</span>
           <span><span class="dot" style="background:#e63946"></span>경보</span>
+          <span><span class="dot" style="background:#9aa4b2"></span>데이터없음</span>
         </div>
       </div>
       <div class="map-wrap">
@@ -161,7 +164,7 @@ _PAGE_TEMPLATE = """<!doctype html>
 
   <script>
     const SITES = {sites_json};
-    const LEVEL_COLOR = {{"정상": "#2fbf71", "주의": "#f5b400", "경보": "#e63946"}};
+    const LEVEL_COLOR = {{"정상": "#2fbf71", "주의": "#f5b400", "경보": "#e63946", "데이터없음": "#9aa4b2"}};
     let activeCategory = 'all';
     let selectedIdx = null;
 
@@ -240,6 +243,7 @@ def build_map_html(updated_str, site_rows):
         count_경보=sum(1 for r in site_rows if r["level"] == "경보"),
         count_주의=sum(1 for r in site_rows if r["level"] == "주의"),
         count_정상=sum(1 for r in site_rows if r["level"] == "정상"),
+        count_데이터없음=sum(1 for r in site_rows if r["level"] == "데이터없음"),
         width=_MAP["width"],
         height=_MAP["height"],
         province_paths=_province_paths_svg(),
