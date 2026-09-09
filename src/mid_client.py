@@ -96,19 +96,20 @@ def get_mid_temperature(api_key, ta_reg_id, now=None, timeout=10, retries=RETRY_
 def combine_forecast(land_data, temp_data, base_date=None):
     """육상 + 기온 예보를 날짜별 예보 리스트로 결합.
 
-    반환: [{"date": "YYYY-MM-DD", "day_offset": 3~10, "sky_am", "sky_pm", "pop_am", "pop_pm", "ta_min", "ta_max"}, ...]
-    base_date: 오늘 날짜 (datetime.date). None이면 today() 사용.
+    반환: [{"date": "YYYY-MM-DD", "day_offset": 4~10, "sky_am", "sky_pm", "pop_am", "pop_pm", "ta_min", "ta_max"}, ...]
+
+    기상청 중기예보 API는 D+4~D+10을 반환한다 (D+0~D+3은 단기예보 커버). D+4~D+7은 오전/오후
+    분리(wf4Am, wf4Pm 등), D+8~D+10은 오전/오후 통합(wf8, rnSt8) 값 하나만 있음.
     """
     if base_date is None:
         base_date = datetime.now().date()
 
     combined = []
-    for offset in range(3, 11):
+    for offset in range(4, 11):
         entry = {
             "day_offset": offset,
             "date": (base_date + timedelta(days=offset)).strftime("%Y-%m-%d"),
         }
-        # 3~7일은 오전/오후 분리, 8~10일은 통합 값 하나만 있음
         if offset <= 7:
             entry["sky_am"] = land_data.get(f"wf{offset}Am")
             entry["sky_pm"] = land_data.get(f"wf{offset}Pm")
