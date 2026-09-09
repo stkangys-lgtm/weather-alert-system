@@ -99,10 +99,16 @@ def unknown_judgment():
 def build_announcement(now_str, site_results):
     """단톡방 등에 공유할 수 있는 공고문 텍스트를 생성한다. 이상기상 유무와 관계없이 매번 생성한다.
 
-    site_results: [{"site_name", "manager", "manager_phone", "level", "reasons", "categories"}, ...]
+    site_results: [{"site_name", "level", "reasons", "categories", "events"(선택)}, ...]
+    events: [{"date": "9/10(목)", "kind": "폭염"|"호우"|"강풍"|...", "detail": "..."}, ...]
     """
     affected = [r for r in site_results if r["level"] not in (LEVEL_NORMAL, LEVEL_UNKNOWN)]
     unknown = [r for r in site_results if r["level"] == LEVEL_UNKNOWN]
+    # 향후 예보에서 위험 이벤트가 있는 현장 (오늘/내일 것은 제외)
+    future_events_by_site = {}
+    for r in site_results:
+        for ev in r.get("events") or []:
+            future_events_by_site.setdefault(r["site_name"], []).append(ev)
 
     # 카테고리별로 해당 현장명을 모은다 (표시 순서는 CATEGORY_ORDER 고정).
     sites_by_category = {cat: [] for cat in CATEGORY_ORDER}
@@ -118,6 +124,10 @@ def build_announcement(now_str, site_results):
         if unknown:
             names = "、".join(r["site_name"] for r in unknown)
             lines.append(f"(단, {names}은(는) 기상 데이터 수신에 실패해 확인이 필요합니다.)")
+        if future_events_by_site:
+            lines.append("")
+            lines.append("【향후 10일 예보 특이사항】")
+            _append_future_events(lines, future_events_by_site)
         lines.append("")
         lines.append("감사합니다.")
         return "\n".join(lines)
@@ -157,8 +167,28 @@ def build_announcement(now_str, site_results):
         lines.append(f"- 그 외 {normal_count}개 현장 특이사항 없음")
     lines.append("")
 
+    if future_events_by_site:
+        lines.append("【향후 10일 예보 특이사항】")
+        _append_future_events(lines, future_events_by_site)
+        lines.append("")
+
     lines.append("감사합니다.")
     return "\n".join(lines)
+
+
+def _append_future_events(lines, future_events_by_site):
+    """지역별 향후 예보 이벤트를 공고문에 추가. 같은 (지역, 이벤트) 중복은 하나로 묶어 표시."""
+    # 지역코드가 같은 현장은 이벤트도 같으므로, (날짜, 종류, detail)별로 현장들을 그룹핑
+    by_event = {}
+    for site_name, events in future_events_by_site.items():
+        for ev in events:
+            key = (ev["date"], ev["kind"], ev["detail"])
+            by_event.setdefault(key, []).append(site_name)
+
+    # 날짜순 정렬
+    for (date, kind, detail), sites in sorted(by_event.items(), key=lambda x: x[0][0]):
+        names = "、".join(sites[:3]) + (f" 외 {len(sites) - 3}개 현장" if len(sites) > 3 else "")
+        lines.append(f"- {date} {kind} ({detail}) : {names}")
 
 
 def _circled_number(n):

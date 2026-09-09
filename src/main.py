@@ -14,8 +14,11 @@ from src import alert_rules
 from src import settings as config
 from src.dashboard import build_dashboard_html
 from src.feels_like import compute_feels_like
+from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
 from src.kma_client import get_current_weather, get_forecast
 from src.map_dashboard import build_map_html
+from src.mid_client import combine_forecast, get_mid_land_forecast, get_mid_temperature
+from src.mid_regions import resolve_region_codes
 from src.sheets_client import append_rows, get_worksheet
 
 NCST_HEADER = ["기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)", "습도(%)", "풍속(m/s)", "판정", "체감온도(°C)"]
@@ -28,6 +31,54 @@ MAP_PATH = os.path.join(DOCS_DIR, "map.html")
 
 # 공고문은 매시간이 아니라 오전 7시, 오후 1시(KST) 실행 시에만 생성한다 (단톡방 공유용, 하루 2회면 충분).
 ANNOUNCEMENT_HOURS = {7, 13}
+
+
+def collect_mid_forecasts(sites, fast_fail_mode=False):
+    """중기예보(3~10일)를 지역코드별로 한 번씩만 조회해 캐싱한 뒤 현장별로 매핑.
+
+    반환: {site_name: [combined_forecast_entries]}
+    실패 시 해당 현장은 빈 리스트가 채워진다. 지역코드가 같은 현장들은 API 호출 1회로 처리.
+    """
+    land_cache, ta_cache = {}, {}
+    result = {}
+    consecutive_conn_failures = 0
+
+    for site in sites:
+        land_reg, ta_reg, _, _ = resolve_region_codes(site["lat"], site["lon"])
+
+        if land_reg not in land_cache:
+            retries = 1 if (fast_fail_mode or consecutive_conn_failures >= 3) else 3
+            try:
+                land_cache[land_reg] = get_mid_land_forecast(config.KMA_API_KEY, land_reg, retries=retries)
+                consecutive_conn_failures = 0
+            except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+                print(f"[중기 육상 오류/연결] {land_reg}: {type(e).__name__}")
+                land_cache[land_reg] = {}
+                consecutive_conn_failures += 1
+            except Exception as e:
+                print(f"[중기 육상 오류] {land_reg}: {e}")
+                land_cache[land_reg] = {}
+
+        if ta_reg not in ta_cache:
+            retries = 1 if (fast_fail_mode or consecutive_conn_failures >= 3) else 3
+            try:
+                ta_cache[ta_reg] = get_mid_temperature(config.KMA_API_KEY, ta_reg, retries=retries)
+                consecutive_conn_failures = 0
+            except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+                print(f"[중기 기온 오류/연결] {ta_reg}: {type(e).__name__}")
+                ta_cache[ta_reg] = {}
+                consecutive_conn_failures += 1
+            except Exception as e:
+                print(f"[중기 기온 오류] {ta_reg}: {e}")
+                ta_cache[ta_reg] = {}
+
+        land, temp = land_cache[land_reg], ta_cache[ta_reg]
+        if land or temp:
+            result[site["site_name"]] = combine_forecast(land, temp)
+        else:
+            result[site["site_name"]] = []
+
+    return result
 
 
 def collect_site_data(sites):
@@ -122,16 +173,19 @@ def build_forecast_rows(collected, now_str):
     return rows
 
 
-def write_announcement(collected, now_str):
-    site_results = [
-        {
-            "site_name": item["site"]["site_name"],
+def write_announcement(collected, now_str, mid_forecasts):
+    site_results = []
+    for item in collected:
+        name = item["site"]["site_name"]
+        mid = mid_forecasts.get(name, [])
+        events = summarize_events(analyze_short_term(item["forecast"]), analyze_mid_term(mid))
+        site_results.append({
+            "site_name": name,
             "level": item["judgment"]["level"],
             "reasons": item["judgment"]["reasons"],
             "categories": item["judgment"]["categories"],
-        }
-        for item in collected
-    ]
+            "events": events,
+        })
     text = alert_rules.build_announcement(now_str, site_results)
     os.makedirs(DOCS_DIR, exist_ok=True)
     with open(ANNOUNCEMENT_PATH, "w", encoding="utf-8") as f:
@@ -140,18 +194,23 @@ def write_announcement(collected, now_str):
     return text
 
 
-def write_dashboard(collected, now_str):
-    site_rows = [
-        {
-            "site_name": item["site"]["site_name"],
+def write_dashboard(collected, now_str, mid_forecasts):
+    site_rows = []
+    for item in collected:
+        name = item["site"]["site_name"]
+        mid = mid_forecasts.get(name, [])
+        # 단기 + 중기 예보에서 특이사항 이벤트 추출
+        events = summarize_events(analyze_short_term(item["forecast"]), analyze_mid_term(mid))
+        site_rows.append({
+            "site_name": name,
             "category": item["site"]["category"],
             "current": item["current"] or {},
             "forecast": item["forecast"],
+            "mid_forecast": mid,
+            "events": events,
             "level": item["judgment"]["level"],
             "reasons": item["judgment"]["reasons"],
-        }
-        for item in collected
-    ]
+        })
     html = build_dashboard_html(now_str, site_rows)
     os.makedirs(DOCS_DIR, exist_ok=True)
     with open(DASHBOARD_PATH, "w", encoding="utf-8") as f:
@@ -182,6 +241,7 @@ def main():
     now_str = now.strftime("%Y-%m-%d %H:%M")
 
     collected = collect_site_data(config.SITES)
+    mid_forecasts = collect_mid_forecasts(config.SITES)
 
     ncst_ws = get_worksheet(
         config.GOOGLE_SHEETS_SPREADSHEET_ID,
@@ -202,8 +262,8 @@ def main():
     append_rows(fcst_ws, build_forecast_rows(collected, now_str))
 
     if now.hour in ANNOUNCEMENT_HOURS:
-        write_announcement(collected, now_str)
-    write_dashboard(collected, now_str)
+        write_announcement(collected, now_str, mid_forecasts)
+    write_dashboard(collected, now_str, mid_forecasts)
     write_map(collected, now_str)
 
 

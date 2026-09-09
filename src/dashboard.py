@@ -16,12 +16,25 @@ LEVEL_STYLE = {
 
 SKY_ICON = {"맑음": "☀️", "구름많음": "⛅", "흐림": "☁️"}
 PTY_ICON = {"비": "🌧️", "비/눈": "🌨️", "눈": "❄️", "빗방울": "🌦️", "빗방울눈날림": "🌨️", "눈날림": "🌨️"}
+# 중기예보 하늘상태(문자)용 아이콘 매핑
+MID_SKY_ICON = {
+    "맑음": "☀️", "구름많음": "⛅", "구름많고 비": "🌧️", "구름많고 눈": "🌨️", "구름많고 비/눈": "🌨️",
+    "구름많고 소나기": "🌦️", "흐림": "☁️", "흐리고 비": "🌧️", "흐리고 눈": "🌨️",
+    "흐리고 비/눈": "🌨️", "흐리고 소나기": "🌦️",
+}
+EVENT_ICON = {"폭염": "🥵", "폭염주의": "🥵", "강수": "🌧️", "강풍": "💨", "강풍주의": "💨", "한파": "🥶"}
 
 
 def _weather_icon(sky, pty):
     if pty and pty not in ("없음", "", "-"):
         return PTY_ICON.get(pty, "🌧️")
     return SKY_ICON.get(sky, "🌤️")
+
+
+def _mid_sky_icon(sky_text):
+    if not sky_text:
+        return "❔"
+    return MID_SKY_ICON.get(sky_text, SKY_ICON.get(sky_text, "🌤️"))
 
 
 _PAGE_TEMPLATE = """<!doctype html>
@@ -120,6 +133,21 @@ _PAGE_TEMPLATE = """<!doctype html>
   }}
   .fc .fc-icon {{ font-size: 1.15rem; margin: 3px 0; }}
   .fc .fc-temp {{ color: var(--ink); font-weight: 700; font-size: 0.82rem; }}
+  .section-label {{ font-size: 0.72rem; color: var(--sub); font-weight: 700; margin: 14px 0 6px; letter-spacing: 0.02em; }}
+  .weekly {{ display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }}
+  .wk {{
+    flex: 0 0 auto; text-align: center; background: linear-gradient(180deg, #f5f7fb, #eef2f8);
+    border-radius: 10px; padding: 8px 8px; min-width: 54px; font-size: 0.72rem; color: var(--sub);
+  }}
+  .wk .wk-day {{ font-weight: 700; color: var(--ink); }}
+  .wk .wk-icon {{ font-size: 1.15rem; margin: 3px 0; }}
+  .wk .wk-tmp {{ color: var(--ink); font-weight: 700; font-size: 0.78rem; }}
+  .wk .wk-tmp .lo {{ color: #3b82f6; }} .wk .wk-tmp .hi {{ color: #e63946; }}
+  .events {{ margin-top: 10px; font-size: 0.78rem; }}
+  .events .ev {{
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px;
+    background: #fff3f3; color: #a61b1b; margin: 3px 3px 0 0; font-weight: 600;
+  }}
   footer {{ max-width: 1180px; margin: 0 auto 30px; padding: 0 24px; color: #98a2b3; font-size: 0.78rem; }}
 
   @media (max-width: 480px) {{
@@ -203,10 +231,49 @@ def _forecast_chips(forecast, limit=6):
     return "".join(chips)
 
 
+def _weekly_chips(mid_forecast):
+    """중기예보(3~10일) 리스트를 요일별 칩 HTML로 변환."""
+    from datetime import datetime
+    chips = []
+    for entry in mid_forecast:
+        try:
+            d = datetime.strptime(entry["date"], "%Y-%m-%d")
+            day_label = "월화수목금토일"[d.weekday()]
+            date_label = f"{d.month}/{d.day}"
+        except Exception:
+            day_label, date_label = "", entry.get("date", "")
+        sky = entry.get("sky_pm") or entry.get("sky_am") or ""
+        icon = _mid_sky_icon(sky)
+        ta_min = entry.get("ta_min")
+        ta_max = entry.get("ta_max")
+        temp_html = ""
+        if ta_min is not None and ta_max is not None:
+            temp_html = f'<div class="wk-tmp"><span class="lo">{ta_min}°</span>/<span class="hi">{ta_max}°</span></div>'
+        pop = entry.get("pop_pm") or entry.get("pop_am") or "-"
+        chips.append(
+            f'<div class="wk"><div class="wk-day">{escape(day_label)}</div>'
+            f'<div>{escape(date_label)}</div>'
+            f'<div class="wk-icon">{icon}</div>'
+            f'{temp_html}'
+            f'<div>💧{escape(str(pop))}%</div></div>'
+        )
+    return "".join(chips)
+
+
+def _events_html(events):
+    if not events:
+        return ""
+    chips = []
+    for ev in events:
+        icon = EVENT_ICON.get(ev["kind"], "⚠️")
+        chips.append(f'<span class="ev">{icon} {escape(ev["date"])} {escape(ev["kind"])}</span>')
+    return f'<div class="section-label">향후 10일 특이사항</div><div class="events">{"".join(chips)}</div>'
+
+
 CATEGORY_ICON = {"건축": "🏗️", "토목": "🚧"}
 
 
-def _card(site_name, category, current, forecast, level, reasons):
+def _card(site_name, category, current, forecast, mid_forecast, events, level, reasons):
     style = LEVEL_STYLE[level]
     icon = _weather_icon(None, current.get("PTY"))
     reasons_html = ""
@@ -217,7 +284,17 @@ def _card(site_name, category, current, forecast, level, reasons):
         )
     forecast_html = ""
     if forecast:
-        forecast_html = f'<div class="forecast">{_forecast_chips(forecast)}</div>'
+        forecast_html = (
+            f'<div class="section-label">단기 예보 (3일 이내, 시간별)</div>'
+            f'<div class="forecast">{_forecast_chips(forecast)}</div>'
+        )
+    weekly_html = ""
+    if mid_forecast:
+        weekly_html = (
+            f'<div class="section-label">주간 예보 (3~10일)</div>'
+            f'<div class="weekly">{_weekly_chips(mid_forecast)}</div>'
+        )
+    events_html = _events_html(events)
 
     temp = current.get("T1H", "-")
     wsd = current.get("WSD", "-")
@@ -252,7 +329,9 @@ def _card(site_name, category, current, forecast, level, reasons):
           <div>💦 <span class="v">{escape(str(reh))}%</span></div>
         </div>
         {reasons_html}
+        {events_html}
         {forecast_html}
+        {weekly_html}
       </div>
     </div>"""
 
@@ -267,7 +346,11 @@ def build_dashboard_html(updated_str, site_rows):
         counts[row["level"]] += 1
 
     cards = "".join(
-        _card(row["site_name"], row["category"], row["current"], row["forecast"], row["level"], row["reasons"])
+        _card(
+            row["site_name"], row["category"], row["current"], row["forecast"],
+            row.get("mid_forecast", []), row.get("events", []),
+            row["level"], row["reasons"],
+        )
         for row in ordered
     )
 
