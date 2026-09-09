@@ -17,11 +17,12 @@ SKY_CODE = {"1": "맑음", "3": "구름많음", "4": "흐림"}
 
 _VFCST_BASE_HOURS = ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
 
-RETRY_COUNT = 3        # 연결 타임아웃 등 일시적 오류에 대한 재시도 횟수
-RETRY_BACKOFF_SEC = 3  # 재시도 간 대기 시간(초, 매 시도마다 배로 증가)
+RETRY_COUNT = 3        # 연결 타임아웃 등 일시적 오류에 대한 재시도 횟수 (기본)
+RETRY_BACKOFF_SEC = 2  # 재시도 간 대기 시간(초, 매 시도마다 배로 증가)
 
 
-def _request(endpoint, api_key, params, timeout=10):
+def _request(endpoint, api_key, params, timeout=10, retries=RETRY_COUNT):
+    """retries=1로 넘기면 재시도 없이 1회만 시도한다 (전면 장애 감지 시 빠르게 넘어가기 위함)."""
     url = f"{BASE_URL}/{endpoint}"
     query = {
         "serviceKey": api_key,
@@ -32,7 +33,7 @@ def _request(endpoint, api_key, params, timeout=10):
     }
 
     last_error = None
-    for attempt in range(1, RETRY_COUNT + 1):
+    for attempt in range(1, retries + 1):
         try:
             response = requests.get(url, params=query, timeout=timeout)
             response.raise_for_status()
@@ -40,7 +41,7 @@ def _request(endpoint, api_key, params, timeout=10):
             break
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
             last_error = e
-            if attempt < RETRY_COUNT:
+            if attempt < retries:
                 time.sleep(RETRY_BACKOFF_SEC * attempt)
             continue
     else:
@@ -78,13 +79,15 @@ def _latest_vfcst_base_time(now=None):
     return yesterday.strftime("%Y%m%d"), "2300"
 
 
-def get_current_weather(api_key, nx, ny, now=None):
+def get_current_weather(api_key, nx, ny, now=None, timeout=10, retries=RETRY_COUNT):
     """초단기실황 조회. {'T1H': 기온, 'RN1': 강수량, 'REH': 습도, 'WSD': 풍속, 'PTY': 강수형태, ...} 반환."""
     base_date, base_time = _latest_ncst_base_time(now)
     items = _request(
         "getUltraSrtNcst",
         api_key,
         {"base_date": base_date, "base_time": base_time, "nx": nx, "ny": ny},
+        timeout=timeout,
+        retries=retries,
     )
 
     result = {"base_date": base_date, "base_time": base_time}
@@ -97,7 +100,7 @@ def get_current_weather(api_key, nx, ny, now=None):
     return result
 
 
-def get_forecast(api_key, nx, ny, now=None):
+def get_forecast(api_key, nx, ny, now=None, timeout=10, retries=RETRY_COUNT):
     """단기예보 조회. 시각별 예보 리스트를 시간순으로 반환.
 
     각 항목: {'fcst_date', 'fcst_time', 'TMP'(기온), 'POP'(강수확률), 'SKY'(하늘상태), 'PTY'(강수형태), ...}
@@ -107,6 +110,8 @@ def get_forecast(api_key, nx, ny, now=None):
         "getVilageFcst",
         api_key,
         {"base_date": base_date, "base_time": base_time, "nx": nx, "ny": ny},
+        timeout=timeout,
+        retries=retries,
     )
 
     by_time = {}

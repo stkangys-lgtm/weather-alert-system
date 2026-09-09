@@ -8,6 +8,8 @@
 import os
 from datetime import datetime
 
+import requests
+
 from src import alert_rules
 from src import settings as config
 from src.dashboard import build_dashboard_html
@@ -32,21 +34,42 @@ def collect_site_data(sites):
     """현장별 실황·예보·이상기상 판정을 한 번에 조회한다.
 
     반환: [{"site": dict, "current": dict|None, "forecast": list, "judgment": dict}, ...]
-    실황/예보 조회 실패 시 해당 항목은 None/빈 리스트로 채워지고 오류가 출력된다.
+
+    기상청 API가 전면 장애일 때 재시도로 시간을 낭비하지 않도록, 앞 3개 현장이 모두 실패하면
+    이후 현장부터는 재시도 없이 1회만 시도한다 (연속 실패 → API 자체 문제로 판단해 조기 종료).
+    GitHub Actions 10분 타임아웃 안에 끝나야 데이터없음 표시라도 커밋되어 대시보드가 갱신된다.
     """
     results = []
+    consecutive_conn_failures = 0
+    fast_fail_mode = False
+
     for site in sites:
+        retries = 1 if fast_fail_mode else None
+        kwargs = {} if retries is None else {"retries": retries}
+
         try:
-            current = get_current_weather(config.KMA_API_KEY, site["nx"], site["ny"])
+            current = get_current_weather(config.KMA_API_KEY, site["nx"], site["ny"], **kwargs)
+            consecutive_conn_failures = 0
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            print(f"[실황 오류/연결] {site['site_name']}: {type(e).__name__}")
+            current = None
+            consecutive_conn_failures += 1
         except Exception as e:
             print(f"[실황 오류] {site['site_name']}: {e}")
             current = None
 
         try:
-            forecast = get_forecast(config.KMA_API_KEY, site["nx"], site["ny"])
+            forecast = get_forecast(config.KMA_API_KEY, site["nx"], site["ny"], **kwargs)
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+            print(f"[예보 오류/연결] {site['site_name']}: {type(e).__name__}")
+            forecast = []
         except Exception as e:
             print(f"[예보 오류] {site['site_name']}: {e}")
             forecast = []
+
+        if consecutive_conn_failures >= 3 and not fast_fail_mode:
+            print("[전면 장애 감지] 이후 현장은 재시도 없이 1회만 시도합니다 (10분 타임아웃 회피)")
+            fast_fail_mode = True
 
         judgment = alert_rules.judge(current) if current is not None else alert_rules.unknown_judgment()
         results.append({"site": site, "current": current, "forecast": forecast, "judgment": judgment})
