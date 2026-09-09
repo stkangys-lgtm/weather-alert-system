@@ -46,10 +46,16 @@ def collect_mid_forecasts(sites, fast_fail_mode=False):
     for site in sites:
         land_reg, ta_reg, _, _ = resolve_region_codes(site["lat"], site["lon"])
 
+        # 중기예보는 timeout 5초, 재시도 2회로 짧게 잡아 전체 실행이 지연되지 않게 함.
+        # (전면 장애 감지 시엔 timeout 5초, 재시도 없이 1회만)
+        mid_timeout = 5
+        mid_retries = 1 if (fast_fail_mode or consecutive_conn_failures >= 3) else 2
+
         if land_reg not in land_cache:
-            retries = 1 if (fast_fail_mode or consecutive_conn_failures >= 3) else 3
             try:
-                land_cache[land_reg] = get_mid_land_forecast(config.KMA_API_KEY, land_reg, retries=retries)
+                land_cache[land_reg] = get_mid_land_forecast(
+                    config.KMA_API_KEY, land_reg, timeout=mid_timeout, retries=mid_retries,
+                )
                 consecutive_conn_failures = 0
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
                 print(f"[중기 육상 오류/연결] {land_reg}: {type(e).__name__}")
@@ -60,9 +66,10 @@ def collect_mid_forecasts(sites, fast_fail_mode=False):
                 land_cache[land_reg] = {}
 
         if ta_reg not in ta_cache:
-            retries = 1 if (fast_fail_mode or consecutive_conn_failures >= 3) else 3
             try:
-                ta_cache[ta_reg] = get_mid_temperature(config.KMA_API_KEY, ta_reg, retries=retries)
+                ta_cache[ta_reg] = get_mid_temperature(
+                    config.KMA_API_KEY, ta_reg, timeout=mid_timeout, retries=mid_retries,
+                )
                 consecutive_conn_failures = 0
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
                 print(f"[중기 기온 오류/연결] {ta_reg}: {type(e).__name__}")
