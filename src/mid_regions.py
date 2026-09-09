@@ -70,8 +70,20 @@ def nearest_region(lat, lon, regions):
     return best_code, best_name
 
 
-def resolve_region_codes(lat, lon):
-    """(land_reg_id, ta_reg_id, land_name, ta_name) 튜플 반환."""
-    land_code, land_name = nearest_region(lat, lon, LAND_REGIONS)
-    ta_code, ta_name = nearest_region(lat, lon, TA_REGIONS)
+def resolve_region_codes(lat, lon, land_override=None, ta_override=None):
+    """(land_reg_id, ta_reg_id, land_name, ta_name) 튜플 반환.
+
+    광역 경계에 걸친 현장(자동 매핑이 잘못되는 경우)은 land_override / ta_override를 명시해
+    자동 결과를 덮어쓴다. 예: 청도군은 경북이지만 대푯값 거리로 인해 부산·울산·경남으로 잡힘.
+    """
+    if land_override and land_override in LAND_REGIONS:
+        land_code, land_name = land_override, LAND_REGIONS[land_override][2]
+    else:
+        land_code, land_name = nearest_region(lat, lon, LAND_REGIONS)
+
+    if ta_override and ta_override in TA_REGIONS:
+        ta_code, ta_name = ta_override, TA_REGIONS[ta_override][2]
+    else:
+        ta_code, ta_name = nearest_region(lat, lon, TA_REGIONS)
+
     return land_code, ta_code, land_name, ta_name

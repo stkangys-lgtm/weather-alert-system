@@ -44,7 +44,11 @@ def collect_mid_forecasts(sites, fast_fail_mode=False):
     consecutive_conn_failures = 0
 
     for site in sites:
-        land_reg, ta_reg, _, _ = resolve_region_codes(site["lat"], site["lon"])
+        land_reg, ta_reg, _, _ = resolve_region_codes(
+            site["lat"], site["lon"],
+            land_override=site.get("mid_land_override"),
+            ta_override=site.get("mid_ta_override"),
+        )
 
         # 중기예보는 timeout 5초, 재시도 2회로 짧게 잡아 전체 실행이 지연되지 않게 함.
         # (전면 장애 감지 시엔 timeout 5초, 재시도 없이 1회만)
