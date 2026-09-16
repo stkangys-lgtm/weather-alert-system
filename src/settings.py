@@ -17,7 +17,7 @@ try:
     GOOGLE_SHEETS_SPREADSHEET_ID = _config.GOOGLE_SHEETS_SPREADSHEET_ID
     GOOGLE_SHEETS_CREDENTIALS_PATH = _config.GOOGLE_SHEETS_CREDENTIALS_PATH
     GOOGLE_SERVICE_ACCOUNT_JSON = None
-    SITES = _config.SITES
+    SITES = [site for site in _config.SITES if site.get("active", True)]
     ALERT_WEBHOOK_URL = getattr(_config, "ALERT_WEBHOOK_URL", os.environ.get("ALERT_WEBHOOK_URL", ""))
     ALERT_WEBHOOK_TOKEN = getattr(_config, "ALERT_WEBHOOK_TOKEN", os.environ.get("ALERT_WEBHOOK_TOKEN", ""))
 
@@ -27,6 +27,6 @@ except ImportError:
     GOOGLE_SHEETS_SPREADSHEET_ID = os.environ["GOOGLE_SHEETS_SPREADSHEET_ID"]
     GOOGLE_SHEETS_CREDENTIALS_PATH = None
     GOOGLE_SERVICE_ACCOUNT_JSON = os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]
-    SITES = json.loads(os.environ["SITES_JSON"])
+    SITES = [site for site in json.loads(os.environ["SITES_JSON"]) if site.get("active", True)]
     ALERT_WEBHOOK_URL = os.environ.get("ALERT_WEBHOOK_URL", "")
     ALERT_WEBHOOK_TOKEN = os.environ.get("ALERT_WEBHOOK_TOKEN", "")

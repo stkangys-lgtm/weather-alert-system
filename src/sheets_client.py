@@ -56,3 +56,14 @@ def append_rows(worksheet, rows):
     """여러 행을 한 번의 API 호출로 기록 (건별 호출 대비 Google API 요청 한도 절약)."""
     if rows:
         worksheet.append_rows(rows, value_input_option="USER_ENTERED")
+
+
+def replace_rows(worksheet, header, rows):
+    """주간 현황처럼 최신 스냅샷만 필요한 탭을 헤더와 전달된 행으로 교체한다."""
+    values = [header] + list(rows)
+    worksheet.clear()
+    worksheet.update(
+        range_name=f"A1:{gspread.utils.rowcol_to_a1(len(values), len(header))}",
+        values=values,
+        value_input_option="USER_ENTERED",
+    )
