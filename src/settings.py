@@ -13,14 +13,20 @@ try:
     import config as _config
 
     KMA_API_KEY = _config.KMA_API_KEY
+    KMA_API_HUB_KEY = getattr(_config, "KMA_API_HUB_KEY", os.environ.get("KMA_API_HUB_KEY", ""))
     GOOGLE_SHEETS_SPREADSHEET_ID = _config.GOOGLE_SHEETS_SPREADSHEET_ID
     GOOGLE_SHEETS_CREDENTIALS_PATH = _config.GOOGLE_SHEETS_CREDENTIALS_PATH
     GOOGLE_SERVICE_ACCOUNT_JSON = None
     SITES = _config.SITES
+    ALERT_WEBHOOK_URL = getattr(_config, "ALERT_WEBHOOK_URL", os.environ.get("ALERT_WEBHOOK_URL", ""))
+    ALERT_WEBHOOK_TOKEN = getattr(_config, "ALERT_WEBHOOK_TOKEN", os.environ.get("ALERT_WEBHOOK_TOKEN", ""))
 
 except ImportError:
     KMA_API_KEY = os.environ["KMA_API_KEY"]
+    KMA_API_HUB_KEY = os.environ.get("KMA_API_HUB_KEY", "")
     GOOGLE_SHEETS_SPREADSHEET_ID = os.environ["GOOGLE_SHEETS_SPREADSHEET_ID"]
     GOOGLE_SHEETS_CREDENTIALS_PATH = None
     GOOGLE_SERVICE_ACCOUNT_JSON = os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"]
     SITES = json.loads(os.environ["SITES_JSON"])
+    ALERT_WEBHOOK_URL = os.environ.get("ALERT_WEBHOOK_URL", "")
+    ALERT_WEBHOOK_TOKEN = os.environ.get("ALERT_WEBHOOK_TOKEN", "")

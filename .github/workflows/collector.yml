@@ -2,12 +2,15 @@ name: Weather Collector
 
 on:
   schedule:
-    # 현장 운영시간(KST 04:00~18:00)에만 매시 45분 실행. GitHub Actions 스케줄은 UTC 기준이므로
-    # KST 04~17시(운영시간)를 UTC로 환산: UTC 19~23시(전날) + UTC 0~8시(당일) = "0-8,19-23".
-    # 분(45) 값은 시간대와 무관하게 동일. 야간(KST 18~04시)에는 현장이 없어 실행하지 않음으로써
-    # GitHub Actions 무료 사용량(월 2,000분) 소진을 줄인다.
-    - cron: "45 0-8,19-23 * * *"
+    # KST 04:17~17:47 운영. :17/:47 이중 실행으로 예약 지연·누락을 보완하고
+    # 정각 혼잡을 피한다. UTC 기준 시간 범위는 KST보다 9시간 이전이다.
+    - cron: "17 0-8,19-23 * * *"
+    - cron: "47 0-8,19-23 * * *"
   workflow_dispatch: {}
+
+concurrency:
+  group: weather-collector
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -19,9 +22,18 @@ jobs:
     env:
       TZ: Asia/Seoul
       KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
+      # 선택 설정: 기상청 API Hub 현재 특보 조회용 키
+      KMA_API_HUB_KEY: ${{ secrets.KMA_API_HUB_KEY }}
       GOOGLE_SHEETS_SPREADSHEET_ID: ${{ secrets.GOOGLE_SHEETS_SPREADSHEET_ID }}
       GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
       SITES_JSON: ${{ secrets.SITES_JSON }}
+      # 선택 설정: 알림톡 발송사/사내 중계 Webhook이 준비되기 전에는 비워 둔다.
+      ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+      ALERT_WEBHOOK_TOKEN: ${{ secrets.ALERT_WEBHOOK_TOKEN }}
+      # :17은 직전 주 실행이 누락되거나 45분 이상 지연됐을 때만 실제 수집한다.
+      COLLECTION_MODE: ${{ github.event_name == 'schedule' && startsWith(github.event.schedule, '17 ') && 'backup' || 'primary' }}
+      # :17 보완 실행에서는 대량의 동일 예보행을 다시 적재하지 않는다.
+      WRITE_FORECAST_HISTORY: ${{ github.event_name != 'schedule' || startsWith(github.event.schedule, '47 ') }}
     steps:
       - uses: actions/checkout@v4
 
@@ -40,6 +52,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/index.html docs/map.html docs/announcement.txt
+          git add --all -- docs
           git diff --cached --quiet || git commit -m "대시보드 자동 갱신 [skip ci]"
           git push

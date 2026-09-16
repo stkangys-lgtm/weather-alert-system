@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>전사 기상 자동감시 대시보드</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%9B%85</text></svg>">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  :root {
+    --bg: #edf3f0; --card: #ffffff; --ink: #10231d; --sub: #66756f;
+    --line: rgba(15,23,42,0.07);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Pretendard", -apple-system, "Segoe UI", "Malgun Gothic", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hero {
+    background: linear-gradient(120deg, #003b2d 0%, #005b3c 58%, #009a44 100%);
+    color: #fff; padding: 36px 24px 48px;
+  }
+  .hero-inner { max-width: 1180px; margin: 0 auto; }
+  .hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .hero h1 { font-size: 1.7rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .hero .updated { color: rgba(255,255,255,0.72); font-size: 0.88rem; }
+  .hero a.navlink { color: #fff; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 14px; border-radius: 10px; text-decoration: none; font-size: 0.85rem; white-space: nowrap; }
+  .hero a.navlink:hover { background: rgba(255,255,255,0.26); }
+  .stats { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+  .stat {
+    flex: 1; min-width: 140px; background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18); border-radius: 14px; padding: 14px 18px;
+    backdrop-filter: blur(6px);
+  }
+  .stat .num { font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+  .stat .lbl { font-size: 0.82rem; color: rgba(255,255,255,0.75); margin-top: 2px; }
+  .stat.hi-경보 .num { color: #ff8a8a; }
+  .stat.hi-주의 .num { color: #ffd670; }
+  .stat.hi-정상 .num { color: #8fe3b5; }
+  .stat.hi-데이터없음 .num { color: #c7ccd4; }
+
+  .content { max-width: 1180px; margin: -26px auto 40px; padding: 0 24px; }
+  .toolbar {
+    background: var(--card); border-radius: 14px; box-shadow: 0 6px 24px rgba(15,23,42,0.08);
+    padding: 12px 16px; margin-bottom: 18px; display: flex; gap: 10px; align-items: center;
+  }
+  .toolbar input {
+    flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px;
+    font-size: 0.92rem; font-family: inherit; outline: none;
+  }
+  .toolbar input:focus { border-color: #009a44; }
+  .toolbar .count { color: var(--sub); font-size: 0.82rem; white-space: nowrap; }
+  .toolbar .chip {
+    padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer;
+    font-size: 0.85rem; font-weight: 600; background: #f7f8fb; color: var(--sub); white-space: nowrap;
+  }
+  .toolbar .chip.active { background: #003b2d; color: #fff; border-color: #003b2d; }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px;
+  }
+  .card {
+    background: var(--card); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(15,23,42,0.07); border: 1px solid var(--line);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(15,23,42,0.12); }
+  .card .bar { height: 5px; }
+  .card .body { padding: 18px 18px 16px; }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .card h2 { font-size: 1.08rem; margin: 2px 0 0; line-height: 1.35; }
+  .cat-tag { font-size: 0.72rem; font-weight: 700; color: var(--sub); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 11px; border-radius: 999px;
+    font-size: 0.76rem; font-weight: 700; white-space: nowrap; margin-left: 8px;
+  }
+  .now { display: flex; align-items: center; gap: 12px; margin: 14px 0 10px; }
+  .now .icon { font-size: 2.4rem; line-height: 1; }
+  .now .temp { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
+  .now .feels { font-size: 0.78rem; color: var(--sub); margin-top: -2px; }
+  .metrics { display: flex; gap: 16px; color: var(--sub); font-size: 0.82rem; margin-bottom: 4px; }
+  .metrics span.v { color: var(--ink); font-weight: 600; }
+  .reasons {
+    margin-top: 10px; font-size: 0.82rem; font-weight: 600; padding: 8px 10px; border-radius: 8px;
+  }
+  .forecast { display: flex; gap: 8px; overflow-x: auto; margin-top: 14px; padding-bottom: 2px; }
+  .fc {
+    flex: 0 0 auto; text-align: center; background: #f7f8fb; border-radius: 10px;
+    padding: 8px 10px; min-width: 52px; font-size: 0.75rem; color: var(--sub);
+  }
+  .fc .fc-icon { font-size: 1.15rem; margin: 3px 0; }
+  .fc .fc-temp { color: var(--ink); font-weight: 700; font-size: 0.82rem; }
+  .section-label { font-size: 0.72rem; color: var(--sub); font-weight: 700; margin: 14px 0 6px; letter-spacing: 0.02em; }
+  .weekly { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
+  .wk {
+    flex: 0 0 auto; text-align: center; background: linear-gradient(180deg, #f5f7fb, #eef2f8);
+    border-radius: 10px; padding: 8px 8px; min-width: 54px; font-size: 0.72rem; color: var(--sub);
+  }
+  .wk .wk-day { font-weight: 700; color: var(--ink); }
+  .wk .wk-icon { font-size: 1.15rem; margin: 3px 0; }
+  .wk .wk-tmp { color: var(--ink); font-weight: 700; font-size: 0.78rem; }
+  .wk .wk-tmp .lo { color: #3b82f6; } .wk .wk-tmp .hi { color: #e63946; }
+  .events { margin-top: 10px; font-size: 0.78rem; }
+  .events .ev {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px;
+    background: #fff3f3; color: #a61b1b; margin: 3px 3px 0 0; font-weight: 600;
+  }
+  footer { max-width: 1180px; margin: 0 auto 30px; padding: 0 24px; color: #98a2b3; font-size: 0.78rem; }
+
+  @media (max-width: 480px) {
+    .hero { padding: 28px 16px 42px; }
+    .content { padding: 0 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div>
+          <h1>전 현장 기상 대시보드</h1>
+          <div class="updated">최종 갱신 2026-09-09 10:47 · 기상청 단기예보 2.0 기반</div>
+        </div>
+        <a class="navlink" href="index.html">← 지도 관제로 돌아가기</a>
+      </div>
+      <div class="stats">
+        <div class="stat hi-경보"><div class="num">0</div><div class="lbl">🚨 경보</div></div>
+        <div class="stat hi-주의"><div class="num">1</div><div class="lbl">⚠️ 주의</div></div>
+        <div class="stat hi-정상"><div class="num">20</div><div class="lbl">✅ 정상</div></div>
+        <div class="stat hi-데이터없음"><div class="num">0</div><div class="lbl">❔ 데이터없음</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="toolbar">
+      <div class="chip active" data-cat="all" onclick="setCategory('all', this)">전체</div>
+      <div class="chip" data-cat="건축" onclick="setCategory('건축', this)">🏗️ 건축</div>
+      <div class="chip" data-cat="토목" onclick="setCategory('토목', this)">🚧 토목</div>
+      <input id="filter" type="text" placeholder="현장명 검색..." oninput="filterCards()">
+      <div class="count" id="filterCount"></div>
+    </div>
+    <div class="grid" id="grid">
+      
+    <div class="card" data-name="청정고원 스포츠센터" data-category="건축">
+      <div class="bar" style="background:#f5b400"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>청정고원 스포츠센터</h2></div>
+          <span class="badge" style="background:#fff6e0;color:#9a6b00">⚠️ 주의</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌧️</div>
+          <div><div class="temp">13.8°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">2.2m/s</span></div>
+          <div>💧 <span class="v">1.1mm</span></div>
+          <div>💦 <span class="v">93%</span></div>
+        </div>
+        <div class="reasons" style="background:#fff6e0;color:#9a6b00">호우 주의 (시간당 1.1mm)</div>
+        <div class="section-label">향후 10일 특이사항</div><div class="events"><span class="ev">🌧️ 9/9(수) 강수</span></div>
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">🌧️</div><div class="fc-temp">14°</div><div>💧60%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">15°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">⛅</div><div class="fc-temp">15°</div><div>💧20%</div></div><div class="fc"><div>12시</div><div class="fc-icon">⛅</div><div class="fc-temp">15°</div><div>💧20%</div></div><div class="fc"><div>13시</div><div class="fc-icon">⛅</div><div class="fc-temp">16°</div><div>💧20%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">17°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">24°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">24°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="오리온 진천신공장" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>오리온 진천신공장</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.5°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">3.3m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">64%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">21°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="오리온 진천 기숙사" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>오리온 진천 기숙사</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">22.2°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">2.5m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">50%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">19°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">20°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">21°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="연희·연남동 공공주택" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>연희·연남동 공공주택</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.8°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">1.1m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">64%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">21°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☁️</div><div class="fc-temp">22°</div><div>💧30%</div></div><div class="fc"><div>11시</div><div class="fc-icon">⛅</div><div class="fc-temp">23°</div><div>💧20%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☁️</div><div class="fc-temp">24°</div><div>💧30%</div></div><div class="fc"><div>13시</div><div class="fc-icon">⛅</div><div class="fc-temp">25°</div><div>💧20%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">26°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="el충주 버티포트" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>EL충주 버티포트</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.7°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">2.4m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">53%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">21°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">16°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="lx 논현 업무시설" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>LX 논현 업무시설</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.9°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">3.8m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">50%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">22°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☁️</div><div class="fc-temp">23°</div><div>💧30%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☁️</div><div class="fc-temp">23°</div><div>💧30%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☁️</div><div class="fc-temp">24°</div><div>💧30%</div></div><div class="fc"><div>13시</div><div class="fc-icon">⛅</div><div class="fc-temp">26°</div><div>💧20%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">26°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="군포복합개발" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>군포복합개발</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.9°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">4.5m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">52%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">21°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">21°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>12시</div><div class="fc-icon">⛅</div><div class="fc-temp">24°</div><div>💧20%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">26°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">28°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="오리온수협 목포 김공장" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>오리온수협 목포 김공장</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">26°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">2.2m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">60%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">26°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">27°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">28°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">28°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">28°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">☁️</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">29°</span></div><div>💧30%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">☁️</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">29°</span></div><div>💧30%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">20°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">20°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">20°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">20°</span>/<span class="hi">29°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="렉서스 동탄 네트워크" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>렉서스 동탄 네트워크</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">22.7°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">3.3m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">55%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">22°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">26°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">26°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">28°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="화천군부대 시설공사" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>화천군부대 시설공사</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.3°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">2.7m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">52%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">⛅</div><div class="fc-temp">18°</div><div>💧20%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">20°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">21°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☁️</div><div class="fc-temp">21°</div><div>💧30%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☁️</div><div class="fc-temp">22°</div><div>💧30%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">23°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">14°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">14°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">16°</span>/<span class="hi">26°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="반얀트리호텔 근생동" data-category="건축">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🏗️ 건축</span><h2>반얀트리호텔 근생동</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.8°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">4.1m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">52%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">21°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☁️</div><div class="fc-temp">22°</div><div>💧30%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☁️</div><div class="fc-temp">23°</div><div>💧30%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☁️</div><div class="fc-temp">24°</div><div>💧30%</div></div><div class="fc"><div>13시</div><div class="fc-icon">⛅</div><div class="fc-temp">25°</div><div>💧20%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">26°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="포항~안동2 국도건설공사" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>포항~안동2 국도건설공사</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.6°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">2.6m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">55%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☀️</div><div class="fc-temp">21°</div><div>💧0%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="시흥능곡 주변도로" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>시흥능곡 주변도로</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.3°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">3.1m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">57%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">22°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">⛅</div><div class="fc-temp">24°</div><div>💧20%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">26°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☁️</div><div class="fc-temp">27°</div><div>💧30%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="뇌죽천 하천재해예방" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>뇌죽천 하천재해예방</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">24°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">1.3m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">64%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☀️</div><div class="fc-temp">21°</div><div>💧0%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">27°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">28°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">28°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">☁️</div><div class="wk-tmp"><span class="lo">20°</span>/<span class="hi">30°</span></div><div>💧30%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">☁️</div><div class="wk-tmp"><span class="lo">20°</span>/<span class="hi">30°</span></div><div>💧30%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="산솔면 하수처리장" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>산솔면 하수처리장</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.8°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">4.2m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">59%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">⛅</div><div class="fc-temp">19°</div><div>💧20%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">21°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">21°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>13시</div><div class="fc-icon">⛅</div><div class="fc-temp">23°</div><div>💧20%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">16°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">14°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">14°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">16°</span>/<span class="hi">25°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="단월정수장 시설공사" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>단월정수장 시설공사</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.7°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">2.4m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">53%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">21°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">16°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">15°</span>/<span class="hi">26°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="후포 공공하수처리" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>후포 공공하수처리</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">21.9°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">6.9m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">59%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>12시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>13시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">20°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">22°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">21°</span>/<span class="hi">25°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="동해안 바닷가 자동차길" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>동해안 바닷가 자동차길</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">20.1°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">3.5m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">51%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">⛅</div><div class="fc-temp">21°</div><div>💧20%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">21°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">⛅</div><div class="fc-temp">21°</div><div>💧20%</div></div><div class="fc"><div>12시</div><div class="fc-icon">⛅</div><div class="fc-temp">21°</div><div>💧20%</div></div><div class="fc"><div>13시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div><div class="fc"><div>14시</div><div class="fc-icon">⛅</div><div class="fc-temp">22°</div><div>💧20%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">24°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">25°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">24°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="풍각지구 정비사업" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>풍각지구 정비사업</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">23.6°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">3.3m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">54%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>10시</div><div class="fc-icon">⛅</div><div class="fc-temp">23°</div><div>💧20%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">16°</span>/<span class="hi">30°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">26°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">17°</span>/<span class="hi">27°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="영주 가흥정수장" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>영주 가흥정수장</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">22.1°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">0.5m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">57%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☀️</div><div class="fc-temp">21°</div><div>💧0%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☀️</div><div class="fc-temp">22°</div><div>💧0%</div></div><div class="fc"><div>11시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">23°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☀️</div><div class="fc-temp">25°</div><div>💧0%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    <div class="card" data-name="송산그린시티 용수공급시설" data-category="토목">
+      <div class="bar" style="background:#2fbf71"></div>
+      <div class="body">
+        <div class="card-top">
+          <div><span class="cat-tag">🚧 토목</span><h2>송산그린시티 용수공급시설</h2></div>
+          <span class="badge" style="background:#eafaf1;color:#1a7d4e">✅ 정상</span>
+        </div>
+        <div class="now">
+          <div class="icon">🌤️</div>
+          <div><div class="temp">22.7°C</div></div>
+        </div>
+        <div class="metrics">
+          <div>💨 <span class="v">5.6m/s</span></div>
+          <div>💧 <span class="v">0mm</span></div>
+          <div>💦 <span class="v">58%</span></div>
+        </div>
+        
+        
+        <div class="section-label">단기 예보 (3일 이내, 시간별)</div><div class="forecast"><div class="fc"><div>09시</div><div class="fc-icon">☁️</div><div class="fc-temp">22°</div><div>💧30%</div></div><div class="fc"><div>10시</div><div class="fc-icon">☁️</div><div class="fc-temp">23°</div><div>💧30%</div></div><div class="fc"><div>11시</div><div class="fc-icon">⛅</div><div class="fc-temp">23°</div><div>💧20%</div></div><div class="fc"><div>12시</div><div class="fc-icon">☀️</div><div class="fc-temp">24°</div><div>💧0%</div></div><div class="fc"><div>13시</div><div class="fc-icon">☀️</div><div class="fc-temp">26°</div><div>💧0%</div></div><div class="fc"><div>14시</div><div class="fc-icon">☁️</div><div class="fc-temp">26°</div><div>💧30%</div></div></div>
+        <div class="section-label">주간 예보 (3~10일)</div><div class="weekly"><div class="wk"><div class="wk-day">일</div><div>9/13</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">월</div><div>9/14</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">27°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">화</div><div>9/15</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">18°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">수</div><div>9/16</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">목</div><div>9/17</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">28°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">금</div><div>9/18</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div><div class="wk"><div class="wk-day">토</div><div>9/19</div><div class="wk-icon">⛅</div><div class="wk-tmp"><span class="lo">19°</span>/<span class="hi">29°</span></div><div>💧20%</div></div></div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <footer>기상청 공공데이터포털(단기예보 2.0) 기반 · 담당자 정보는 비공개 처리됨</footer>
+  <script>
+    let activeCategory = 'all';
+
+    function setCategory(cat, el) {
+      activeCategory = cat;
+      document.querySelectorAll('.toolbar .chip').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      filterCards();
+    }
+
+    function filterCards() {
+      const q = document.getElementById('filter').value.trim().toLowerCase();
+      const cards = document.querySelectorAll('#grid .card');
+      let shown = 0;
+      cards.forEach(c => {
+        const matchText = c.dataset.name.includes(q);
+        const matchCat = activeCategory === 'all' || c.dataset.category === activeCategory;
+        const show = matchText && matchCat;
+        c.style.display = show ? '' : 'none';
+        if (show) shown++;
+      });
+      document.getElementById('filterCount').textContent = shown + '개 현장';
+    }
+    filterCards();
+  </script>
+</body>
+</html>

@@ -22,7 +22,10 @@ MID_SKY_ICON = {
     "구름많고 소나기": "🌦️", "흐림": "☁️", "흐리고 비": "🌧️", "흐리고 눈": "🌨️",
     "흐리고 비/눈": "🌨️", "흐리고 소나기": "🌦️",
 }
-EVENT_ICON = {"폭염": "🥵", "폭염주의": "🥵", "강수": "🌧️", "강풍": "💨", "강풍주의": "💨", "한파": "🥶"}
+EVENT_ICON = {
+    "고온 위험 예상": "🥵", "고온 유의 예상": "🥵", "강수 예상": "🌧️",
+    "강풍 위험 예상": "💨", "강풍 유의 예상": "💨", "한파 가능": "🥶",
+}
 
 
 def _weather_icon(sky, pty):
@@ -49,7 +52,7 @@ _PAGE_TEMPLATE = """<!doctype html>
   href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
   :root {{
-    --bg: #f2f4f8; --card: #ffffff; --ink: #1b1f27; --sub: #6b7280;
+    --bg: #edf3f0; --card: #ffffff; --ink: #10231d; --sub: #66756f;
     --line: rgba(15,23,42,0.07);
   }}
   * {{ box-sizing: border-box; }}
@@ -59,7 +62,7 @@ _PAGE_TEMPLATE = """<!doctype html>
     -webkit-font-smoothing: antialiased;
   }}
   .hero {{
-    background: linear-gradient(135deg, #16223f 0%, #1f3a68 55%, #2f5a9e 100%);
+    background: linear-gradient(120deg, #003b2d 0%, #005b3c 58%, #009a44 100%);
     color: #fff; padding: 36px 24px 48px;
   }}
   .hero-inner {{ max-width: 1180px; margin: 0 auto; }}
@@ -91,13 +94,40 @@ _PAGE_TEMPLATE = """<!doctype html>
     flex: 1; border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px;
     font-size: 0.92rem; font-family: inherit; outline: none;
   }}
-  .toolbar input:focus {{ border-color: #2f5a9e; }}
+  .toolbar input:focus {{ border-color: #009a44; box-shadow: 0 0 0 3px rgba(0,154,68,.1); }}
   .toolbar .count {{ color: var(--sub); font-size: 0.82rem; white-space: nowrap; }}
   .toolbar .chip {{
     padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); cursor: pointer;
     font-size: 0.85rem; font-weight: 600; background: #f7f8fb; color: var(--sub); white-space: nowrap;
   }}
-  .toolbar .chip.active {{ background: #1f3a68; color: #fff; border-color: #1f3a68; }}
+  .toolbar .chip.active {{ background: #003b2d; color: #fff; border-color: #003b2d; }}
+
+  .system-status {{
+    background: #fff; border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px;
+    padding: 13px 16px; box-shadow: 0 4px 16px rgba(15,23,42,0.05);
+    display: flex; align-items: center; gap: 10px; font-size: 0.86rem;
+  }}
+  .system-status .status-dot {{ width: 10px; height: 10px; border-radius: 50%; background: #2fbf71; flex: 0 0 auto; }}
+  .system-status.delayed {{ background: #fff8e7; color: #7a5700; border-color: #f1cf72; }}
+  .system-status.delayed .status-dot {{ background: #f5b400; }}
+  .system-status.outage {{ background: #fff0f0; color: #9f2020; border-color: #efb0b0; }}
+  .system-status.outage .status-dot {{ background: #e63946; }}
+  .system-status strong {{ margin-right: 4px; }}
+  .system-status .age {{ margin-left: auto; color: var(--sub); white-space: nowrap; }}
+
+  .changes {{
+    background: #fff; border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px;
+    padding: 15px 16px; box-shadow: 0 4px 16px rgba(15,23,42,0.05);
+  }}
+  .changes-head {{ display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 8px; }}
+  .changes h2 {{ font-size: 0.95rem; margin: 0; }}
+  .changes time {{ font-size: 0.76rem; color: var(--sub); }}
+  .change-list {{ display: flex; gap: 7px; overflow-x: auto; padding-bottom: 2px; }}
+  .change-item {{
+    flex: 0 0 auto; border-radius: 10px; padding: 8px 11px; background: #f6f8fb;
+    font-size: 0.78rem; color: var(--sub); border: 1px solid var(--line);
+  }}
+  .change-item strong {{ display: block; color: var(--ink); margin-bottom: 2px; }}
 
   .grid {{
     display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px;
@@ -153,6 +183,8 @@ _PAGE_TEMPLATE = """<!doctype html>
   @media (max-width: 480px) {{
     .hero {{ padding: 28px 16px 42px; }}
     .content {{ padding: 0 14px; }}
+    .system-status {{ align-items: flex-start; flex-wrap: wrap; }}
+    .system-status .age {{ width: 100%; margin-left: 20px; }}
   }}
 </style>
 </head>
@@ -161,10 +193,10 @@ _PAGE_TEMPLATE = """<!doctype html>
     <div class="hero-inner">
       <div class="hero-top">
         <div>
-          <h1>⛅ 전사 기상 자동감시 대시보드</h1>
+          <h1>전 현장 기상 대시보드</h1>
           <div class="updated">최종 갱신 {updated} · 기상청 단기예보 2.0 기반</div>
         </div>
-        <a class="navlink" href="map.html">🗺️ 지도로 보기</a>
+        <a class="navlink" href="index.html">← 지도 관제로 돌아가기</a>
       </div>
       <div class="stats">
         <div class="stat hi-경보"><div class="num">{count_경보}</div><div class="lbl">🚨 경보</div></div>
@@ -175,6 +207,13 @@ _PAGE_TEMPLATE = """<!doctype html>
     </div>
   </div>
   <div class="content">
+    <div class="system-status" id="systemStatus" data-generated-at="{generated_at_iso}"
+         data-missing-sites="{missing_site_count}" data-total-sites="{total_site_count}">
+      <span class="status-dot"></span>
+      <span id="statusMessage"><strong>정상 수집</strong> 최신 기상자료를 표시하고 있습니다.</span>
+      <span class="age" id="dataAge">갱신시각 확인 중</span>
+    </div>
+    {changes_html}
     <div class="toolbar">
       <div class="chip active" data-cat="all" onclick="setCategory('all', this)">전체</div>
       <div class="chip" data-cat="건축" onclick="setCategory('건축', this)">🏗️ 건축</div>
@@ -186,7 +225,7 @@ _PAGE_TEMPLATE = """<!doctype html>
       {cards}
     </div>
   </div>
-  <footer>기상청 공공데이터포털(단기예보 2.0) 기반 · 담당자 정보는 비공개 처리됨</footer>
+  <footer>「기상청 공식 특보」는 API Hub 발효자료, 「시스템 선제알림」은 격자 실황 기반 참고정보입니다. 현장 작업중지 판단은 현장 계측과 작업여건을 별도 확인해야 합니다.</footer>
   <script>
     let activeCategory = 'all';
 
@@ -210,7 +249,36 @@ _PAGE_TEMPLATE = """<!doctype html>
       }});
       document.getElementById('filterCount').textContent = shown + '개 현장';
     }}
+
+    function updateFreshness() {{
+      const box = document.getElementById('systemStatus');
+      const generated = new Date(box.dataset.generatedAt);
+      if (Number.isNaN(generated.getTime())) return;
+      const ageMinutes = Math.max(0, Math.floor((Date.now() - generated.getTime()) / 60000));
+      const missingSites = Number(box.dataset.missingSites || 0);
+      const totalSites = Number(box.dataset.totalSites || 0);
+      const message = document.getElementById('statusMessage');
+      box.classList.remove('delayed', 'outage');
+      if (totalSites > 0 && missingSites >= totalSites) {{
+        box.classList.add('outage');
+        message.innerHTML = '<strong>전체 수집 실패</strong> 모든 현장의 기상자료를 받지 못했습니다. 별도 확인이 필요합니다.';
+      }} else if (ageMinutes >= 70) {{
+        box.classList.add('outage');
+        message.innerHTML = '<strong>수집 장애 가능</strong> 70분 이상 새 자료가 없습니다. 현장 기상상황을 별도로 확인해 주세요.';
+      }} else if (missingSites > 0) {{
+        box.classList.add('delayed');
+        message.innerHTML = '<strong>일부 수집 실패</strong> ' + missingSites + '개 현장의 자료를 받지 못했습니다.';
+      }} else if (ageMinutes >= 40) {{
+        box.classList.add('delayed');
+        message.innerHTML = '<strong>갱신 지연</strong> 표시 정보가 최신이 아닐 수 있습니다.';
+      }} else {{
+        message.innerHTML = '<strong>정상 수집</strong> 최신 기상자료를 표시하고 있습니다.';
+      }}
+      document.getElementById('dataAge').textContent = ageMinutes + '분 전 갱신';
+    }}
     filterCards();
+    updateFreshness();
+    setInterval(updateFreshness, 60000);
   </script>
 </body>
 </html>
@@ -336,7 +404,41 @@ def _card(site_name, category, current, forecast, mid_forecast, events, level, r
     </div>"""
 
 
-def build_dashboard_html(updated_str, site_rows):
+def _changes_html(changes, last_change_at):
+    if not changes:
+        return ""
+    items = []
+    for change in changes[:8]:
+        level = change.get("to_level") or "-"
+        items.append(
+            '<div class="change-item">'
+            f'<strong>{escape(change.get("site_name", "-"))}</strong>'
+            f'{escape(change.get("type", "변경"))} · {escape(level)}'
+            '</div>'
+        )
+    change_time = ""
+    if last_change_at:
+        try:
+            from datetime import datetime
+            change_time = datetime.fromisoformat(last_change_at).strftime("%Y-%m-%d %H:%M")
+        except (TypeError, ValueError):
+            change_time = str(last_change_at)
+    return (
+        '<section class="changes"><div class="changes-head">'
+        '<h2>최근 기상변화</h2>'
+        f'<time>{escape(change_time)}</time></div>'
+        f'<div class="change-list">{"".join(items)}</div></section>'
+    )
+
+
+def build_dashboard_html(
+    updated_str,
+    site_rows,
+    generated_at_iso=None,
+    recent_changes=None,
+    last_change_at=None,
+    missing_site_count=0,
+):
     """site_rows: [{"site_name", "current": dict, "forecast": list, "level": str, "reasons": list}, ...]"""
     severity = {"경보": 3, "주의": 2, "데이터없음": 1, "정상": 0}
     ordered = sorted(site_rows, key=lambda r: severity[r["level"]], reverse=True)
@@ -360,5 +462,9 @@ def build_dashboard_html(updated_str, site_rows):
         count_주의=counts["주의"],
         count_정상=counts["정상"],
         count_데이터없음=counts["데이터없음"],
+        generated_at_iso=escape(generated_at_iso or updated_str),
+        changes_html=_changes_html(recent_changes or [], last_change_at),
+        missing_site_count=missing_site_count,
+        total_site_count=len(site_rows),
         cards=cards,
     )

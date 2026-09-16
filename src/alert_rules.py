@@ -1,28 +1,27 @@
-"""이상기상 판정 로직.
+"""본사 공지와 현장 확인을 위한 기상 위험 신호 판정 로직.
 
-산업안전보건기준에 관한 규칙 제37조(강풍시 작업중지) 및 온열질환 예방 가이드(고용노동부)를
-참고한 2단계(주의/경보) 임계값. 다만 법령상 "순간풍속"을 기준으로 하나, 기상청 초단기실황
-API는 1시간 평균풍속(WSD)만 제공하므로 이를 근사치로 사용한다. 실제 작업중지 여부는
-현장에서 순간풍속계 등으로 별도 확인이 필요하며, 이 판정은 참고용 알림 기준이다.
-
-폭염 기준은 실제 기상청 폭염특보 기준과 동일하게 "체감온도"를 사용한다 (src/feels_like.py).
+격자 예보·실황은 현장 계측값이나 법정 작업중지 판단을 대신하지 않는다. 따라서 자체 계산값은
+항상 ``시스템 선제알림``으로 표시하고, API Hub에서 받은 ``기상청 공식 특보``와 구분한다.
 """
 
 from src.feels_like import compute_feels_like
 
-WIND_CAUTION = 10.0   # m/s, 타워크레인 설치/점검 등 고소작업 제한 권고
-WIND_WARNING = 15.0   # m/s, 옥외작업 중지 권고
+WIND_CAUTION = 10.0   # m/s, 강풍 영향을 받는 작업·시설물 선제 점검 신호
+WIND_WARNING = 15.0   # m/s, 매우 강한 바람 선제 점검 신호
 
-RAIN_CAUTION = 1.0    # mm/h, 비계 조립·해체 등 우천시 작업 제한 권고
-RAIN_WARNING = 15.0   # mm/h, 강한 호우로 작업 중지 권고
+RAIN_CAUTION = 5.0    # mm/h, 일반 현장용 강수 선제 점검 신호
+RAIN_WARNING = 15.0   # mm/h, 강한 비 선제 점검 신호
 
-HEAT_CAUTION = 33.0   # °C 체감온도, 기상청 폭염주의보 기준과 동일. 매시간 20분 휴식 등 예방조치 권고
-HEAT_WARNING = 35.0   # °C 체감온도, 기상청 폭염경보 기준과 동일. 정오~17시 옥외작업 제한 권고
+HEAT_CAUTION = 31.0   # °C 추정 체감온도, 온열질환 예방조치 강화 구간
+HEAT_WARNING = 33.0   # °C 추정 체감온도, 매 2시간 이내 20분 이상 휴식 확인 구간
 
 LEVEL_NORMAL, LEVEL_CAUTION, LEVEL_WARNING = "정상", "주의", "경보"
 LEVEL_UNKNOWN = "데이터없음"  # 기상청 API 조회 실패 등으로 실황을 못 받아온 경우. "정상"으로 오인되지 않도록 별도 레벨로 취급.
 
 CATEGORY_WIND, CATEGORY_RAIN, CATEGORY_HEAT = "강풍", "호우", "폭염"
+CATEGORY_COLD, CATEGORY_SNOW, CATEGORY_TYPHOON = "한파", "대설", "태풍"
+CATEGORY_DRY, CATEGORY_DUST, CATEGORY_MARINE = "건조", "황사", "해상기상"
+CATEGORY_OTHER = "기타기상"
 
 # 공고문의 【안전관리 유의사항】에 들어갈 항목. 현장에서 실제 쓰던 양식을 참고해 구성.
 ACTION_ITEMS = {
@@ -37,13 +36,35 @@ ACTION_ITEMS = {
         "침수 우려 구역 내 장비 안전지대 이동",
     ],
     CATEGORY_HEAT: [
-        "매시간 20분 휴식 등 온열질환 예방수칙 준수",
+        "체감온도 33°C 이상 시 매 2시간 이내 20분 이상 휴식 확인",
         "높은 습도로 체감온도가 함께 상승할 수 있어 각별한 주의 요망",
         "폭염안전 5대 기본수칙 준수",
     ],
+    CATEGORY_COLD: ["보온시설·한랭질환 예방조치 확인", "결빙 구간과 동파 우려 설비 점검"],
+    CATEGORY_SNOW: ["제설자재·장비 확보 및 적설 취약구조물 점검", "통행로 미끄럼·낙상 방지조치 확인"],
+    CATEGORY_TYPHOON: ["가설물·양중장비·자재 결속 상태 재점검", "침수·정전·대피계획 및 비상연락망 확인"],
+    CATEGORY_DRY: ["용접·용단 등 화기작업과 임시소방시설 점검", "가연물 분리 및 산불 유입 위험 확인"],
+    CATEGORY_DUST: ["옥외작업자 호흡기 보호 및 실내 대피공간 확인", "시야 저하에 따른 장비 운행 주의"],
+    CATEGORY_MARINE: ["해안·항만 작업 및 선박 운항계획 재확인", "월파·강풍 취약구역 출입 통제 검토"],
+    CATEGORY_OTHER: ["기상청 특보 상세내용과 현장 여건을 확인", "취약 작업·시설물에 필요한 예방조치 검토"],
 }
-CATEGORY_HEADING = {CATEGORY_WIND: "강풍 대비", CATEGORY_RAIN: "호우 대비", CATEGORY_HEAT: "온열질환 유의"}
-CATEGORY_ORDER = [CATEGORY_WIND, CATEGORY_RAIN, CATEGORY_HEAT]
+CATEGORY_HEADING = {
+    CATEGORY_WIND: "강풍 대비", CATEGORY_RAIN: "호우 대비", CATEGORY_HEAT: "온열질환 유의",
+    CATEGORY_COLD: "한파 대비", CATEGORY_SNOW: "대설 대비", CATEGORY_TYPHOON: "태풍 대비",
+    CATEGORY_DRY: "건조·화재 대비", CATEGORY_DUST: "황사 대비", CATEGORY_MARINE: "해상기상 대비",
+    CATEGORY_OTHER: "기상특보 대비",
+}
+CATEGORY_ORDER = [
+    CATEGORY_TYPHOON, CATEGORY_WIND, CATEGORY_RAIN, CATEGORY_HEAT, CATEGORY_COLD,
+    CATEGORY_SNOW, CATEGORY_DRY, CATEGORY_DUST, CATEGORY_MARINE, CATEGORY_OTHER,
+]
+
+OFFICIAL_CATEGORY = {
+    "강풍": CATEGORY_WIND, "호우": CATEGORY_RAIN, "폭염": CATEGORY_HEAT,
+    "한파": CATEGORY_COLD, "대설": CATEGORY_SNOW, "태풍": CATEGORY_TYPHOON,
+    "건조": CATEGORY_DRY, "황사": CATEGORY_DUST, "풍랑": CATEGORY_MARINE,
+    "해일": CATEGORY_MARINE, "지진해일": CATEGORY_MARINE,
+}
 
 
 def _to_float(value):
@@ -67,21 +88,21 @@ def judge(weather):
 
     if wsd is not None:
         if wsd >= WIND_WARNING:
-            triggered.append((LEVEL_WARNING, CATEGORY_WIND, f"강풍 경보 (풍속 {wsd:.1f}m/s)"))
+            triggered.append((LEVEL_WARNING, CATEGORY_WIND, f"시스템 선제알림: 매우 강한 바람 (풍속 {wsd:.1f}m/s)"))
         elif wsd >= WIND_CAUTION:
-            triggered.append((LEVEL_CAUTION, CATEGORY_WIND, f"강풍 주의 (풍속 {wsd:.1f}m/s)"))
+            triggered.append((LEVEL_CAUTION, CATEGORY_WIND, f"시스템 선제알림: 강한 바람 (풍속 {wsd:.1f}m/s)"))
 
     if rn1 is not None:
         if rn1 >= RAIN_WARNING:
-            triggered.append((LEVEL_WARNING, CATEGORY_RAIN, f"호우 경보 (시간당 {rn1:.1f}mm)"))
+            triggered.append((LEVEL_WARNING, CATEGORY_RAIN, f"시스템 선제알림: 강한 비 (시간당 {rn1:.1f}mm)"))
         elif rn1 >= RAIN_CAUTION:
-            triggered.append((LEVEL_CAUTION, CATEGORY_RAIN, f"호우 주의 (시간당 {rn1:.1f}mm)"))
+            triggered.append((LEVEL_CAUTION, CATEGORY_RAIN, f"시스템 선제알림: 비 유의 (시간당 {rn1:.1f}mm)"))
 
     if feels is not None:
         if feels >= HEAT_WARNING:
-            triggered.append((LEVEL_WARNING, CATEGORY_HEAT, f"폭염 경보 (체감 {feels:.1f}°C)"))
+            triggered.append((LEVEL_WARNING, CATEGORY_HEAT, f"시스템 선제알림: 온열질환 위험 (추정 체감 {feels:.1f}°C)"))
         elif feels >= HEAT_CAUTION:
-            triggered.append((LEVEL_CAUTION, CATEGORY_HEAT, f"폭염 주의 (체감 {feels:.1f}°C)"))
+            triggered.append((LEVEL_CAUTION, CATEGORY_HEAT, f"시스템 선제알림: 고온 유의 (추정 체감 {feels:.1f}°C)"))
 
     severity = {LEVEL_NORMAL: 0, LEVEL_CAUTION: 1, LEVEL_WARNING: 2}
     level = max((lv for lv, _, _ in triggered), key=lambda lv: severity[lv], default=LEVEL_NORMAL)
@@ -89,6 +110,31 @@ def judge(weather):
     categories = [cat for _, cat, _ in triggered]
 
     return {"level": level, "reasons": reasons, "categories": categories}
+
+
+def apply_official_warnings(judgment, warnings):
+    """공식 특보를 자체 판정 결과에 합치되 출처를 명확히 표시한다."""
+    result = {
+        "level": judgment["level"],
+        "reasons": list(judgment.get("reasons") or []),
+        "categories": list(judgment.get("categories") or []),
+        "official_warnings": list(warnings or []),
+    }
+    severity = {LEVEL_UNKNOWN: -1, LEVEL_NORMAL: 0, LEVEL_CAUTION: 1, LEVEL_WARNING: 2}
+    for warning in warnings or []:
+        official_level = LEVEL_WARNING if str(warning.get("level_code")) == "3" else LEVEL_CAUTION
+        if severity[official_level] > severity.get(result["level"], -1):
+            result["level"] = official_level
+        warning_type = warning.get("warning_type") or "기상"
+        warning_level = warning.get("warning_level") or "특보"
+        region = warning.get("region_name") or warning.get("parent_region_name") or "해당 지역"
+        reason = f"기상청 공식 특보: {warning_type}{warning_level} ({region})"
+        if reason not in result["reasons"]:
+            result["reasons"].append(reason)
+        category = OFFICIAL_CATEGORY.get(warning_type, CATEGORY_OTHER)
+        if category not in result["categories"]:
+            result["categories"].append(category)
+    return result
 
 
 def unknown_judgment():
@@ -137,7 +183,7 @@ def build_announcement(now_str, site_results):
         sites = sites_by_category[cat]
         if sites:
             names = "、".join(sites[:3]) + (f" 외 {len(sites) - 3}개 현장" if len(sites) > 3 else "")
-            summary_parts.append(f"{names}에 {cat} 관련 기상특보 수준의 상황이 확인되고 있습니다.")
+            summary_parts.append(f"{names}에 {cat} 관련 기상 위험 신호가 확인되고 있습니다.")
     lines.extend(summary_parts)
     lines.append("")
     lines.append("각 현장에서는 기상상황을 수시로 확인하시어 안전관리에 신경 써 주시기를 당부드립니다.")

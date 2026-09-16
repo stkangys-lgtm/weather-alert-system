@@ -16,18 +16,33 @@ from src.dashboard import build_dashboard_html
 from src.feels_like import compute_feels_like
 from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
 from src.kma_client import get_current_weather, get_forecast
+from src.kma_warning_client import get_current_warnings, match_warnings_to_sites
 from src.map_dashboard import build_map_html
 from src.mid_client import combine_forecast, get_mid_land_forecast, get_mid_temperature
 from src.mid_regions import resolve_region_codes
+from src.notification_queue import process_notifications
 from src.sheets_client import append_rows, get_worksheet
+from src.state_monitor import (
+    build_alert_message,
+    build_snapshot,
+    carry_change_summary,
+    detect_changes,
+    load_state,
+    save_state,
+    state_age_minutes,
+)
 
 NCST_HEADER = ["기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)", "습도(%)", "풍속(m/s)", "판정", "체감온도(°C)"]
 FCST_HEADER = ["기록시각", "현장명", "담당자", "예보일자", "예보시각", "기온(°C)", "강수확률(%)", "하늘상태", "강수형태"]
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
 ANNOUNCEMENT_PATH = os.path.join(DOCS_DIR, "announcement.txt")
-DASHBOARD_PATH = os.path.join(DOCS_DIR, "index.html")
-MAP_PATH = os.path.join(DOCS_DIR, "map.html")
+DASHBOARD_PATH = os.path.join(DOCS_DIR, "sites.html")
+MAP_PATH = os.path.join(DOCS_DIR, "index.html")
+LEGACY_MAP_PATH = os.path.join(DOCS_DIR, "map.html")
+STATE_PATH = os.path.join(DOCS_DIR, "weather-state.json")
+LATEST_ALERT_PATH = os.path.join(DOCS_DIR, "latest-alert.txt")
+NOTIFICATION_OUTBOX_PATH = os.path.join(DOCS_DIR, "notification-outbox.json")
 
 # 공고문은 매시간이 아니라 오전 7시, 오후 1시(KST) 실행 시에만 생성한다 (단톡방 공유용, 하루 2회면 충분).
 ANNOUNCEMENT_HOURS = {7, 13}
@@ -143,6 +158,31 @@ def collect_site_data(sites):
     return results
 
 
+def attach_official_warnings(collected):
+    """현재 공식 특보를 한 번 조회해 현장별 판정에 합친다.
+
+    API Hub 키가 없거나 조회가 실패해도 기존 실황·예보 결과는 그대로 유지한다.
+    """
+    api_key = getattr(config, "KMA_API_HUB_KEY", "")
+    if not api_key:
+        print("[공식 특보] KMA_API_HUB_KEY 미설정으로 조회를 건너뜁니다")
+        return []
+    try:
+        warnings = get_current_warnings(api_key)
+        matched = match_warnings_to_sites(warnings, [item["site"] for item in collected])
+        matched_count = 0
+        for item in collected:
+            site_warnings = matched.get(item["site"]["site_name"], [])
+            item["judgment"] = alert_rules.apply_official_warnings(item["judgment"], site_warnings)
+            item["official_warnings"] = site_warnings
+            matched_count += len(site_warnings)
+        print(f"[공식 특보] 발효 {len(warnings)}건 / 현장 매칭 {matched_count}건")
+        return warnings
+    except Exception as e:
+        print(f"[공식 특보 오류] 조회는 실패했지만 기존 기상 수집은 계속합니다: {e}")
+        return []
+
+
 def build_current_weather_rows(collected, now_str):
     rows = []
     for item in collected:
@@ -205,7 +245,7 @@ def write_announcement(collected, now_str, mid_forecasts):
     return text
 
 
-def write_dashboard(collected, now_str, mid_forecasts):
+def write_dashboard(collected, now_str, mid_forecasts, generated_at_iso=None, recent_changes=None, last_change_at=None):
     site_rows = []
     for item in collected:
         name = item["site"]["site_name"]
@@ -222,60 +262,134 @@ def write_dashboard(collected, now_str, mid_forecasts):
             "level": item["judgment"]["level"],
             "reasons": item["judgment"]["reasons"],
         })
-    html = build_dashboard_html(now_str, site_rows)
+    html = build_dashboard_html(
+        now_str,
+        site_rows,
+        generated_at_iso=generated_at_iso,
+        recent_changes=recent_changes,
+        last_change_at=last_change_at,
+        missing_site_count=sum(1 for item in collected if item["current"] is None),
+    )
     os.makedirs(DOCS_DIR, exist_ok=True)
     with open(DASHBOARD_PATH, "w", encoding="utf-8") as f:
         f.write(html)
 
 
-def write_map(collected, now_str):
-    site_rows = [
-        {
+def write_map(collected, now_str, mid_forecasts):
+    site_rows = []
+    for item in collected:
+        name = item["site"]["site_name"]
+        events = summarize_events(
+            analyze_short_term(item["forecast"]),
+            analyze_mid_term(mid_forecasts.get(name, [])),
+        )
+        site_rows.append({
             "site_name": item["site"]["site_name"],
             "category": item["site"]["category"],
             "lat": item["site"]["lat"],
             "lon": item["site"]["lon"],
             "current": item["current"] or {},
+            "forecast": item["forecast"],
+            "events": events,
             "level": item["judgment"]["level"],
             "reasons": item["judgment"]["reasons"],
-        }
-        for item in collected
-    ]
+        })
     html = build_map_html(now_str, site_rows)
     os.makedirs(DOCS_DIR, exist_ok=True)
-    with open(MAP_PATH, "w", encoding="utf-8") as f:
-        f.write(html)
+    # 지도 화면을 기본 진입점으로 사용하고, 기존 map.html 주소도 호환한다.
+    for path in (MAP_PATH, LEGACY_MAP_PATH):
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(html)
+
+
+def update_weather_state(collected, mid_forecasts, generated_at_iso, now_str):
+    """이전 실행과 비교하고, 변화가 있을 때만 최신 알림 문안을 갱신한다."""
+    previous = load_state(STATE_PATH)
+    current = build_snapshot(collected, mid_forecasts, generated_at_iso)
+    changes = detect_changes(previous, current)
+    current = carry_change_summary(previous, current, changes)
+    save_state(STATE_PATH, current)
+
+    alert_text = None
+    if changes:
+        alert_text = build_alert_message(now_str, changes)
+        with open(LATEST_ALERT_PATH, "w", encoding="utf-8") as f:
+            f.write(alert_text + "\n")
+        print("\n" + alert_text + "\n")
+    else:
+        print("[기상변화] 알림이 필요한 새로운 변화 없음")
+    return current, changes, alert_text
+
+
+def write_sheets_safely(collected, now_str, write_forecast=True):
+    """Sheets 장애가 대시보드와 위험상태 갱신까지 막지 않도록 격리한다."""
+    try:
+        ncst_ws = get_worksheet(
+            config.GOOGLE_SHEETS_SPREADSHEET_ID,
+            "실시간기록",
+            credentials_path=config.GOOGLE_SHEETS_CREDENTIALS_PATH,
+            credentials_json=config.GOOGLE_SERVICE_ACCOUNT_JSON,
+            header=NCST_HEADER,
+        )
+        append_rows(ncst_ws, build_current_weather_rows(collected, now_str))
+        if write_forecast:
+            fcst_ws = get_worksheet(
+                config.GOOGLE_SHEETS_SPREADSHEET_ID,
+                "예보기록",
+                credentials_path=config.GOOGLE_SHEETS_CREDENTIALS_PATH,
+                credentials_json=config.GOOGLE_SERVICE_ACCOUNT_JSON,
+                header=FCST_HEADER,
+            )
+            append_rows(fcst_ws, build_forecast_rows(collected, now_str))
+        else:
+            print("[예보기록] 보완 실행에서는 중복 적재를 건너뜁니다")
+    except Exception as e:
+        print(f"[Google Sheets 오류] 기록은 실패했지만 대시보드 생성은 계속합니다: {e}")
 
 
 def main():
     now = datetime.now()
     now_str = now.strftime("%Y-%m-%d %H:%M")
+    generated_at_iso = now.astimezone().isoformat(timespec="seconds")
+
+    # :17 실행은 :47 주 실행의 지연·누락을 보완하는 용도다. 직전 자료가 신선하면
+    # 외부 API와 Sheets를 호출하지 않아 Actions 사용량과 API 호출량을 절약한다.
+    if os.environ.get("COLLECTION_MODE") == "backup":
+        age = state_age_minutes(load_state(STATE_PATH), now.astimezone())
+        if age is not None and age < 45:
+            print(f"[보완 실행 건너뜀] 마지막 정상 수집이 {age:.0f}분 전입니다")
+            return
 
     collected = collect_site_data(config.SITES)
+    attach_official_warnings(collected)
     mid_forecasts = collect_mid_forecasts(config.SITES)
-
-    ncst_ws = get_worksheet(
-        config.GOOGLE_SHEETS_SPREADSHEET_ID,
-        "실시간기록",
-        credentials_path=config.GOOGLE_SHEETS_CREDENTIALS_PATH,
-        credentials_json=config.GOOGLE_SERVICE_ACCOUNT_JSON,
-        header=NCST_HEADER,
+    state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
+    delivery = process_notifications(
+        NOTIFICATION_OUTBOX_PATH,
+        alert_text,
+        changes,
+        generated_at_iso,
+        webhook_url=config.ALERT_WEBHOOK_URL,
+        webhook_token=config.ALERT_WEBHOOK_TOKEN,
     )
-    fcst_ws = get_worksheet(
-        config.GOOGLE_SHEETS_SPREADSHEET_ID,
-        "예보기록",
-        credentials_path=config.GOOGLE_SHEETS_CREDENTIALS_PATH,
-        credentials_json=config.GOOGLE_SERVICE_ACCOUNT_JSON,
-        header=FCST_HEADER,
+    print(
+        "[알림 전달] "
+        f"발송 {delivery['sent']}건 / 실패 {delivery['failed']}건 / 대기 {delivery['waiting']}건"
     )
-
-    append_rows(ncst_ws, build_current_weather_rows(collected, now_str))
-    append_rows(fcst_ws, build_forecast_rows(collected, now_str))
+    write_forecast_history = os.environ.get("WRITE_FORECAST_HISTORY", "true").lower() == "true"
+    write_sheets_safely(collected, now_str, write_forecast=write_forecast_history)
 
     if now.hour in ANNOUNCEMENT_HOURS:
         write_announcement(collected, now_str, mid_forecasts)
-    write_dashboard(collected, now_str, mid_forecasts)
-    write_map(collected, now_str)
+    write_dashboard(
+        collected,
+        now_str,
+        mid_forecasts,
+        generated_at_iso=generated_at_iso,
+        recent_changes=state.get("last_changes", []),
+        last_change_at=state.get("last_change_at"),
+    )
+    write_map(collected, now_str, mid_forecasts)
 
 
 if __name__ == "__main__":
