@@ -18,7 +18,9 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 현장별 단기예보·실황과 중기예보를 순차 조회하므로 기상청 응답이
+    # 느린 날에도 21개 현장을 끝까지 처리할 수 있도록 여유를 둔다.
+    timeout-minutes: 20
     env:
       TZ: Asia/Seoul
       KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
