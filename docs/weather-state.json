@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-16T15:46:08+09:00",
+  "updated_at": "2026-09-16T16:43:08+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -9,98 +9,98 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "오리온 진천 기숙사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "연희·연남동 공공주택": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "청정고원 스포츠센터": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "LX 논현 업무시설": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "양산 부산대병원": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "군포복합개발": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "오리온수협 목포 김공장": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "렉서스 동탄 네트워크": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "화천군부대 시설공사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "반얀트리호텔 근생동": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "포항~안동2 국도건설공사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "시흥능곡 주변도로": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "뇌죽천 하천재해예방": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": [
         {
           "date": "9/20(일)",
@@ -118,28 +118,28 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "단월정수장 시설공사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "후포 공공하수처리": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "동해안 바닷가 자동차길": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": [
         {
           "date": "9/18(금)",
@@ -157,25 +157,25 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "영주 가흥정수장": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     },
     "송산그린시티 용수공급시설": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260916-1500",
+      "observation_id": "20260916-1600",
       "forecast_risks": []
     }
   },
-  "last_success_at": "2026-09-16T15:46:08+09:00",
+  "last_success_at": "2026-09-16T16:43:08+09:00",
   "last_change_at": "2026-09-16T15:46:08+09:00",
   "last_changes": [
     {
