@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-20T06:45:52+09:00",
+  "updated_at": "2026-09-20T08:36:36+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -9,42 +9,42 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "오리온 진천 기숙사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "연희·연남동 공공주택": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "청정고원 스포츠센터": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "LX 논현 업무시설": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "양산 부산대병원": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -57,14 +57,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "오리온수협 목포 김공장": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -77,28 +77,28 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "화천군부대 시설공사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "반얀트리호텔 근생동": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "포항~안동2 국도건설공사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -111,14 +111,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "뇌죽천 하천재해예방": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -131,21 +131,21 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "단월정수장 시설공사": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "후포 공공하수처리": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -158,14 +158,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     },
     "풍각지구 정비사업": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -178,7 +178,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -191,11 +191,11 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260920-0600",
+      "observation_id": "20260920-0700",
       "forecast_risks": []
     }
   },
-  "last_success_at": "2026-09-20T06:45:52+09:00",
+  "last_success_at": "2026-09-20T08:36:36+09:00",
   "last_change_at": "2026-09-20T06:45:52+09:00",
   "last_changes": [
     {
