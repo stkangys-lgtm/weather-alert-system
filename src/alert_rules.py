@@ -1,7 +1,8 @@
-"""공공 기상자료를 이용한 사내 선제감시 판정 로직.
+"""공공 기상자료로 현장별 기상 상황을 서술하고 공고문을 만드는 로직.
 
-이 모듈의 주의/경보는 기상청이 발표한 특보나 법정 작업중지 판정이 아니다. 법적 조치는
-``src.legal_rules``에서 작업 종류와 현장 실측값을 함께 대조한다.
+여기서 표시되는 주의/경보는 확정된 사내 기준이나 기상청 공식 특보가 아니라, 공공 격자
+자료로 관측한 현재 상황을 알려주는 참고 신호다. 법적 조치는 ``src.legal_rules``에서 작업
+종류와 현장 실측값을 함께 대조한다.
 """
 
 from src.feels_like import compute_feels_like
@@ -196,7 +197,7 @@ def build_announcement(now_str, site_results):
 
     if not affected:
         if official_by_site:
-            lines.append("사내 선제감시 기준 도달 현장은 없으나, 아래 기상청 공식 특보가 발표 중입니다.")
+            lines.append("자체 실황 확인에서는 특이 상황이 없으나, 아래 기상청 공식 특보가 발표 중입니다.")
         else:
             lines.append("현재 전 현장 특이 기상상황 없습니다.")
         if unknown:
@@ -217,7 +218,7 @@ def build_announcement(now_str, site_results):
         sites = sites_by_category[cat]
         if sites:
             names = "、".join(sites[:3]) + (f" 외 {len(sites) - 3}개 현장" if len(sites) > 3 else "")
-            summary_parts.append(f"{names}에 {cat} 관련 사내 선제감시 기준 도달 상황이 확인되고 있습니다.")
+            summary_parts.append(f"{names}에서 {cat} 위험이 우려되는 기상 상황이 확인되고 있습니다.")
     lines.extend(summary_parts)
     _append_official_warnings(lines, official_by_site)
     lines.append("")
