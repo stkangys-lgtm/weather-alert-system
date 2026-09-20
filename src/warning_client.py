@@ -54,7 +54,8 @@ KNOWN_SITE_REGIONS = {
 }
 
 
-def _request(endpoint, api_key, params=None, timeout=10, retries=RETRY_COUNT):
+def _request(endpoint, api_key, params=None, timeout=10, retries=RETRY_COUNT, breaker=None):
+    """breaker가 전달되면 실황·예보 회로 차단기와 상태를 공유한다."""
     query = {
         "serviceKey": api_key,
         "dataType": "JSON",
@@ -62,7 +63,6 @@ def _request(endpoint, api_key, params=None, timeout=10, retries=RETRY_COUNT):
         "pageNo": "1",
         **(params or {}),
     }
-    last_error = None
     for attempt in range(1, retries + 1):
         try:
             response = requests.get(f"{BASE_URL}/{endpoint}", params=query, timeout=timeout)
@@ -73,12 +73,15 @@ def _request(endpoint, api_key, params=None, timeout=10, retries=RETRY_COUNT):
                 raise RuntimeError(
                     f"기상청 특보 API 오류: {header['resultCode']} {header['resultMsg']}"
                 )
+            if breaker is not None:
+                breaker.record_success()
             return payload.get("body") or {}
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as exc:
-            last_error = exc
-            if attempt < retries:
-                time.sleep(RETRY_BACKOFF_SEC * attempt)
-    raise last_error
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+            if breaker is not None:
+                breaker.record_failure()
+            if attempt >= retries or (breaker is not None and breaker.is_tripped()):
+                raise
+            time.sleep(RETRY_BACKOFF_SEC * attempt)
 
 
 def _split_areas(value):
@@ -140,9 +143,9 @@ def parse_warning_status(text, status_kind="기상특보", announced_at=None, ef
     return warnings
 
 
-def get_active_warnings(api_key, timeout=10, retries=RETRY_COUNT):
+def get_active_warnings(api_key, timeout=10, retries=RETRY_COUNT, breaker=None):
     """전국 최신 특보현황을 한 번 조회한다. 현재 특보와 예비특보를 함께 반환한다."""
-    body = _request("getPwnStatus", api_key, timeout=timeout, retries=retries)
+    body = _request("getPwnStatus", api_key, timeout=timeout, retries=retries, breaker=breaker)
     items = (body.get("items") or {}).get("item") or []
     if isinstance(items, dict):
         items = [items]

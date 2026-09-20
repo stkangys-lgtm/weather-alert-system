@@ -8,18 +8,13 @@
 import os
 from datetime import datetime
 
-import requests
-
 from src import alert_rules
 from src import settings as config
+from src.collection import CircuitBreaker, collect_mid_forecasts, collect_site_data
 from src.dashboard import build_dashboard_html
 from src.feels_like import compute_feels_like
 from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
-from src.kma_client import get_current_weather, get_forecast
-from src.legal_rules import evaluate_legal_signals, highest_legal_status
 from src.map_dashboard import build_map_html
-from src.mid_client import combine_forecast, get_mid_land_forecast, get_mid_temperature
-from src.mid_regions import resolve_region_codes
 from src.notification_queue import process_notifications
 from src.state_monitor import (
     build_alert_message,
@@ -53,131 +48,15 @@ NOTIFICATION_OUTBOX_PATH = os.path.join(DOCS_DIR, "notification-outbox.json")
 ANNOUNCEMENT_HOURS = {7, 13}
 
 
-def collect_mid_forecasts(sites, fast_fail_mode=False):
-    """중기예보(3~10일)를 지역코드별로 한 번씩만 조회해 캐싱한 뒤 현장별로 매핑.
-
-    반환: {site_name: [combined_forecast_entries]}
-    실패 시 해당 현장은 빈 리스트가 채워진다. 지역코드가 같은 현장들은 API 호출 1회로 처리.
-    """
-    land_cache, ta_cache = {}, {}
-    result = {}
-    consecutive_conn_failures = 0
-
-    for site in sites:
-        land_reg, ta_reg, _, _ = resolve_region_codes(
-            site["lat"], site["lon"],
-            land_override=site.get("mid_land_override"),
-            ta_override=site.get("mid_ta_override"),
-        )
-
-        # 중기예보는 timeout 5초, 재시도 2회로 짧게 잡아 전체 실행이 지연되지 않게 함.
-        # (전면 장애 감지 시엔 timeout 5초, 재시도 없이 1회만)
-        mid_timeout = 5
-        mid_retries = 1 if (fast_fail_mode or consecutive_conn_failures >= 3) else 2
-
-        if land_reg not in land_cache:
-            try:
-                land_cache[land_reg] = get_mid_land_forecast(
-                    config.KMA_API_KEY, land_reg, timeout=mid_timeout, retries=mid_retries,
-                )
-                consecutive_conn_failures = 0
-            except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-                print(f"[중기 육상 오류/연결] {land_reg}: {type(e).__name__}")
-                land_cache[land_reg] = {}
-                consecutive_conn_failures += 1
-            except Exception as e:
-                print(f"[중기 육상 오류] {land_reg}: {e}")
-                land_cache[land_reg] = {}
-
-        if ta_reg not in ta_cache:
-            try:
-                ta_cache[ta_reg] = get_mid_temperature(
-                    config.KMA_API_KEY, ta_reg, timeout=mid_timeout, retries=mid_retries,
-                )
-                consecutive_conn_failures = 0
-            except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-                print(f"[중기 기온 오류/연결] {ta_reg}: {type(e).__name__}")
-                ta_cache[ta_reg] = {}
-                consecutive_conn_failures += 1
-            except Exception as e:
-                print(f"[중기 기온 오류] {ta_reg}: {e}")
-                ta_cache[ta_reg] = {}
-
-        land, temp = land_cache[land_reg], ta_cache[ta_reg]
-        if land or temp:
-            result[site["site_name"]] = combine_forecast(land, temp)
-        else:
-            result[site["site_name"]] = []
-
-    return result
-
-
-def collect_site_data(sites):
-    """현장별 실황·예보·이상기상 판정을 한 번에 조회한다.
-
-    반환: [{"site": dict, "current": dict|None, "forecast": list, "judgment": dict}, ...]
-
-    기상청 API가 전면 장애일 때 재시도로 시간을 낭비하지 않도록, 앞 3개 현장이 모두 실패하면
-    이후 현장부터는 재시도 없이 1회만 시도한다 (연속 실패 → API 자체 문제로 판단해 조기 종료).
-    GitHub Actions 10분 타임아웃 안에 끝나야 데이터없음 표시라도 커밋되어 대시보드가 갱신된다.
-    """
-    results = []
-    consecutive_conn_failures = 0
-    fast_fail_mode = False
-
-    for site in sites:
-        retries = 1 if fast_fail_mode else None
-        kwargs = {} if retries is None else {"retries": retries}
-
-        try:
-            current = get_current_weather(config.KMA_API_KEY, site["nx"], site["ny"], **kwargs)
-            consecutive_conn_failures = 0
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-            print(f"[실황 오류/연결] {site['site_name']}: {type(e).__name__}")
-            current = None
-            consecutive_conn_failures += 1
-        except Exception as e:
-            print(f"[실황 오류] {site['site_name']}: {e}")
-            current = None
-
-        try:
-            forecast = get_forecast(config.KMA_API_KEY, site["nx"], site["ny"], **kwargs)
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-            print(f"[예보 오류/연결] {site['site_name']}: {type(e).__name__}")
-            forecast = []
-        except Exception as e:
-            print(f"[예보 오류] {site['site_name']}: {e}")
-            forecast = []
-
-        if consecutive_conn_failures >= 3 and not fast_fail_mode:
-            print("[전면 장애 감지] 이후 현장은 재시도 없이 1회만 시도합니다 (10분 타임아웃 회피)")
-            fast_fail_mode = True
-
-        judgment = alert_rules.judge(current) if current is not None else alert_rules.unknown_judgment()
-        legal_signals = evaluate_legal_signals(site, current or {})
-        results.append({
-            "site": site,
-            "current": current,
-            "forecast": forecast,
-            "judgment": judgment,
-            "legal_signals": legal_signals,
-            "legal_status": highest_legal_status(legal_signals),
-        })
-
-        if current is not None:
-            print(f"[실황 수집] {site['site_name']}: 기온 {current.get('T1H', '?')}°C ({judgment['level']})")
-        print(f"[예보 수집] {site['site_name']}: {len(forecast)}건")
-
-    return results
-
-
-def attach_weather_warnings(collected):
+def attach_weather_warnings(collected, breaker=None):
     """전국 특보를 한 번 조회해 수집된 현장에 연결한다.
 
     특보 API 장애가 실황·예보 대시보드 전체를 막지 않도록 실패를 격리한다.
+    breaker가 전달되면 다른 API 호출과 회로 차단 상태를 공유한다.
     """
     try:
-        warnings = get_active_warnings(config.KMA_API_KEY, timeout=10, retries=2)
+        retries = 1 if breaker is not None and breaker.is_tripped() else 2
+        warnings = get_active_warnings(config.KMA_API_KEY, timeout=10, retries=retries, breaker=breaker)
         by_site = match_warnings_to_sites([item["site"] for item in collected], warnings)
         for item in collected:
             item["weather_warnings"] = by_site.get(item["site"]["site_name"], [])
@@ -403,9 +282,12 @@ def main():
             print(f"[보완 실행 건너뜀] 마지막 정상 수집이 {age:.0f}분 전입니다")
             return
 
-    collected = collect_site_data(config.SITES)
-    attach_weather_warnings(collected)
-    mid_forecasts = collect_mid_forecasts(config.SITES)
+    # 실황·예보·중기 호출이 공유하는 회로 차단기. 어느 한쪽에서 전면 장애가 감지되면
+    # 다른 쪽 재시도도 즉시 중단해 GitHub Actions 10분 타임아웃 안에서 대시보드가 갱신된다.
+    breaker = CircuitBreaker()
+    collected = collect_site_data(config.SITES, breaker=breaker)
+    attach_weather_warnings(collected, breaker=breaker)
+    mid_forecasts = collect_mid_forecasts(config.SITES, breaker=breaker)
     state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
     delivery = process_notifications(
         NOTIFICATION_OUTBOX_PATH,

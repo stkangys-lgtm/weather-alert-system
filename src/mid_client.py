@@ -30,7 +30,10 @@ def _latest_tmfc(now=None):
     return yesterday.strftime("%Y%m%d") + "1800"
 
 
-def _request(endpoint, api_key, params, timeout=10, retries=RETRY_COUNT):
+def _request(endpoint, api_key, params, timeout=10, retries=RETRY_COUNT, breaker=None):
+    """breaker가 전달되면 성공·실패를 공유 상태에 기록한다. 다른 워커가 이미 회로 차단을
+    발동시켰다면 남은 재시도 대기 없이 즉시 예외를 올린다.
+    """
     url = f"{BASE_URL}/{endpoint}"
     query = {
         "serviceKey": api_key,
@@ -39,20 +42,20 @@ def _request(endpoint, api_key, params, timeout=10, retries=RETRY_COUNT):
         "pageNo": "1",
         **params,
     }
-    last_error = None
     for attempt in range(1, retries + 1):
         try:
             response = requests.get(url, params=query, timeout=timeout)
             response.raise_for_status()
             body = response.json()["response"]
+            if breaker is not None:
+                breaker.record_success()
             break
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
-            last_error = e
-            if attempt < retries:
-                time.sleep(RETRY_BACKOFF_SEC * attempt)
-            continue
-    else:
-        raise last_error
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+            if breaker is not None:
+                breaker.record_failure()
+            if attempt >= retries or (breaker is not None and breaker.is_tripped()):
+                raise
+            time.sleep(RETRY_BACKOFF_SEC * attempt)
 
     header = body["header"]
     if header["resultCode"] != "00":
@@ -61,7 +64,7 @@ def _request(endpoint, api_key, params, timeout=10, retries=RETRY_COUNT):
     return body["body"]["items"]["item"]
 
 
-def get_mid_land_forecast(api_key, land_reg_id, now=None, timeout=10, retries=RETRY_COUNT):
+def get_mid_land_forecast(api_key, land_reg_id, now=None, timeout=10, retries=RETRY_COUNT, breaker=None):
     """광역 육상 중기예보. 3~10일후의 오전/오후 하늘상태와 강수확률 반환.
 
     반환 dict의 키 예: 'wf3Am'(3일후 오전 하늘상태), 'wf3Pm', 'rnSt3Am'(3일후 오전 강수확률), 'rnSt10' 등.
@@ -73,11 +76,12 @@ def get_mid_land_forecast(api_key, land_reg_id, now=None, timeout=10, retries=RE
         {"regId": land_reg_id, "tmFc": tm_fc},
         timeout=timeout,
         retries=retries,
+        breaker=breaker,
     )
     return items[0] if items else {}
 
 
-def get_mid_temperature(api_key, ta_reg_id, now=None, timeout=10, retries=RETRY_COUNT):
+def get_mid_temperature(api_key, ta_reg_id, now=None, timeout=10, retries=RETRY_COUNT, breaker=None):
     """시군 기온 중기예보. 3~10일후의 최저/최고 기온 반환.
 
     반환 dict의 키 예: 'taMin3', 'taMax3', 'taMin10', 'taMax10' 등.
@@ -89,6 +93,7 @@ def get_mid_temperature(api_key, ta_reg_id, now=None, timeout=10, retries=RETRY_
         {"regId": ta_reg_id, "tmFc": tm_fc},
         timeout=timeout,
         retries=retries,
+        breaker=breaker,
     )
     return items[0] if items else {}
 
