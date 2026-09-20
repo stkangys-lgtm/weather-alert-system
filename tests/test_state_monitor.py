@@ -111,6 +111,23 @@ class StateMonitorTests(unittest.TestCase):
         self.assertIn("테스트 현장", message)
         self.assertIn("배수로", message)
 
+    def test_alert_follows_in_house_notice_tone(self):
+        """사내 배포 문체(공지드립니다·【제목】·①·②·마무리·감사합니다)를 유지한다."""
+        changes = [{
+            "site_name": "테스트 현장",
+            "type": "위험 발생",
+            "to_level": "경보",
+            "categories": ["폭염"],
+            "reasons": ["체감 35.5°C"],
+        }]
+        message = build_alert_message("2026-09-20T14:00:00+09:00", changes)
+        self.assertTrue(message.startswith("■ 공지드립니다."))
+        self.assertIn("【온열질환 안전관리 사항】", message)
+        self.assertIn("① 변동 현황", message)
+        self.assertIn("② 본사·현장 확인사항", message)
+        self.assertIn("온열질환 예방조치가 실제 이행될 수 있도록", message)
+        self.assertTrue(message.rstrip().endswith("감사합니다."))
+
     def test_new_legal_action_is_detected_and_message_contains_article_action(self):
         current = snapshot()
         current["sites"]["테스트 현장"]["legal_signals"] = [{

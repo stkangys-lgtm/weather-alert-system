@@ -41,6 +41,41 @@ ACTION_ITEMS = {
 CATEGORY_HEADING = {CATEGORY_WIND: "강풍 대비", CATEGORY_RAIN: "호우 대비", CATEGORY_HEAT: "온열질환 유의"}
 CATEGORY_ORDER = [CATEGORY_WIND, CATEGORY_RAIN, CATEGORY_HEAT]
 
+# 상황 반응형 제목·마무리에 쓰는 어휘. 카테고리가 여러 개면 '및'으로 이어 붙인다.
+# 문안 톤은 사내 배포 샘플에서 관찰한 어휘를 참고하고, 상황·기간·강도에 맞춰 유동적으로 사용한다.
+_TITLE_FRAGMENT = {
+    CATEGORY_HEAT: "온열질환",
+    CATEGORY_RAIN: "수방",
+    CATEGORY_WIND: "강풍 대비",
+}
+_CLOSING_FRAGMENT = {
+    CATEGORY_HEAT: "온열질환 예방조치",
+    CATEGORY_RAIN: "수방 조치",
+    CATEGORY_WIND: "강풍 대비 조치",
+}
+
+
+def _situational_title(active_categories):
+    """활성 카테고리로 【제목】 문구를 만든다. 없으면 기존 범용 제목을 그대로 사용."""
+    fragments = [_TITLE_FRAGMENT[cat] for cat in CATEGORY_ORDER if cat in active_categories]
+    if not fragments:
+        return "안전관리 유의사항"
+    if len(fragments) == 1:
+        return f"{fragments[0]} 안전관리 사항"
+    return f"{' 및 '.join(fragments)} 안전관리 사항"
+
+
+def _situational_closing(active_categories):
+    """활성 위험이 있을 때만 이행 촉구 마무리 문단을 추가한다."""
+    fragments = [_CLOSING_FRAGMENT[cat] for cat in CATEGORY_ORDER if cat in active_categories]
+    if not fragments:
+        return None
+    if len(fragments) == 1:
+        subject = fragments[0]
+    else:
+        subject = " 및 ".join(fragments)
+    return f"각 현장에서는 {subject}가 실제 이행될 수 있도록 관리하여 주시기 바랍니다."
+
 
 def _to_float(value):
     try:
@@ -189,7 +224,8 @@ def build_announcement(now_str, site_results):
     lines.append("본 안내는 기상청 특보 또는 법정 작업중지 확정이 아닙니다. 현장 작업과 실측값을 확인해 주십시오.")
     lines.append("")
 
-    lines.append("【안전관리 유의사항】")
+    active_categories = [cat for cat in CATEGORY_ORDER if sites_by_category[cat]]
+    lines.append(f"【{_situational_title(active_categories)}】")
     lines.append("")
     section_no = 0
     for cat in CATEGORY_ORDER:
@@ -219,6 +255,14 @@ def build_announcement(now_str, site_results):
         lines.append("")
 
     _append_legal_signals(lines, legal_by_site, legal_gap_count)
+
+    closing = _situational_closing(active_categories)
+    if closing:
+        # 문단 사이 빈 줄을 유지해 카톡·문자에서 자연스럽게 읽히도록 한다.
+        if lines and lines[-1] != "":
+            lines.append("")
+        lines.append(closing)
+        lines.append("")
 
     lines.append("감사합니다.")
     return "\n".join(lines)

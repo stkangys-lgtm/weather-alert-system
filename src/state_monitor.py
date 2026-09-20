@@ -322,35 +322,44 @@ def carry_change_summary(previous, current, changes):
 
 
 def build_alert_message(generated_at, changes):
-    """알림톡 템플릿 변수와 현장 전파에 함께 쓸 수 있는 텍스트를 만든다."""
-    lines = [
-        "[현대아산 기상안전 알림]",
-        "",
-        f"기준시각: {generated_at}",
-        f"기상·안전 상태변화 {len(changes)}건이 감지되었습니다.",
-        "",
-        "■ 변동 현황",
-    ]
+    """알림톡 템플릿 변수와 현장 전파에 함께 쓸 수 있는 텍스트를 만든다.
+
+    사내 배포 문체(공지드립니다·【제목】·ㅇ·감사합니다)를 따르되, 위험 종류와 강도에
+    맞춰 제목과 마무리 문구가 유동적으로 조립된다.
+    """
     action_categories = []
     actions = []
     for change in changes:
-        level = change.get("to_level") or "-"
-        reasons = ", ".join(change.get("reasons") or [])
-        detail = f" / {reasons}" if reasons else ""
-        lines.append(f"- {change['site_name']}: {change['type']} ({level}){detail}")
         action_categories.extend(change.get("categories") or [])
         for action in change.get("actions") or []:
             if action not in actions:
                 actions.append(action)
-
-    # 기상 카테고리의 공통 확인사항을 법정 신호의 구체 조치 뒤에 추가한다.
     for category in action_categories:
         for action in ACTION_ITEMS.get(category, []):
             if action not in actions:
                 actions.append(action)
+
+    # 문안 제목·마무리는 alert_rules 헬퍼와 공유해서 정기 공고문과 톤을 맞춘다.
+    from src.alert_rules import _situational_closing, _situational_title
+
+    lines = [
+        "■ 공지드립니다.",
+        "",
+        f"{display_time(generated_at)} 기준 기상·안전 상태변화 {len(changes)}건이 감지되었습니다.",
+        "",
+        f"【{_situational_title(action_categories)}】",
+        "",
+        "① 변동 현황",
+    ]
+    for change in changes:
+        level = change.get("to_level") or "-"
+        reasons = ", ".join(change.get("reasons") or [])
+        detail = f" / {reasons}" if reasons else ""
+        lines.append(f"ㅇ {change['site_name']}: {change['type']} ({level}){detail}")
+
     if actions:
-        lines.extend(["", "■ 본사·현장 확인사항"])
-        lines.extend(f"- {action}" for action in actions)
+        lines.extend(["", "② 본사·현장 확인사항"])
+        lines.extend(f"ㅇ {action}" for action in actions)
 
     if any(str(change.get("type", "")).startswith(("기상특보", "예비특보")) for change in changes):
         lines.extend(["", "※ 기상특보·예비특보는 기상청 공식 발표를 현장 행정구역과 연결한 정보입니다."])
@@ -359,6 +368,11 @@ def build_alert_message(generated_at, changes):
         "※ 선제기상 신호는 기상청 인근 격자자료 기반이며 기상특보가 아닙니다.",
         "※ 법정 신호는 표시된 조문과 현장 작업·실측값을 함께 확인해 이행해 주시기 바랍니다.",
     ])
+
+    closing = _situational_closing(action_categories)
+    if closing:
+        lines.extend(["", closing])
+    lines.extend(["", "감사합니다."])
     return "\n".join(lines)
 
 
