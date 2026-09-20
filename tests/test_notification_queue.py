@@ -41,16 +41,55 @@ class NotificationQueueTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = str(Path(directory) / "outbox.json")
             result = process_notifications(path, "경보 문안", [{"site_name": "A현장"}], "now")
-            self.assertEqual({"sent": 0, "failed": 0, "waiting": 1}, result)
+            self.assertEqual("shadow", result["mode"])
+            self.assertEqual(0, result["sent"])
+            self.assertEqual(0, result["failed"])
+            self.assertEqual(1, result["waiting"])
             self.assertEqual("pending", load_queue(path)["alerts"][0]["status"])
+
+    def test_shadow_mode_blocks_configured_webhook(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = str(Path(directory) / "outbox.json")
+            session = _SuccessfulSession()
+            result = process_notifications(
+                path,
+                "모의운영 문안",
+                [{"site_name": "A현장"}],
+                "now",
+                webhook_url="https://example.test",
+                webhook_token="secret",
+                session=session,
+                mode="shadow",
+            )
+            self.assertEqual("shadow", result["mode"])
+            self.assertEqual(0, result["sent"])
+            self.assertEqual(1, result["waiting"])
+            self.assertEqual([], session.calls)
 
     def test_failed_delivery_is_retried_and_sent(self):
         with tempfile.TemporaryDirectory() as directory:
             path = str(Path(directory) / "outbox.json")
-            failed = process_notifications(path, "주의 문안", [], "now", "https://example.test", session=_FailedSession())
+            failed = process_notifications(
+                path,
+                "주의 문안",
+                [],
+                "now",
+                "https://example.test",
+                session=_FailedSession(),
+                mode="live",
+            )
             self.assertEqual(1, failed["failed"])
             session = _SuccessfulSession()
-            sent = process_notifications(path, None, [], "later", "https://example.test", "secret", session=session)
+            sent = process_notifications(
+                path,
+                None,
+                [],
+                "later",
+                "https://example.test",
+                "secret",
+                session=session,
+                mode="live",
+            )
             self.assertEqual(1, sent["sent"])
             alert = json.loads(Path(path).read_text())["alerts"][0]
             self.assertEqual("sent", alert["status"])

@@ -20,6 +20,7 @@ try:
     SITES = [site for site in _config.SITES if site.get("active", True)]
     ALERT_WEBHOOK_URL = getattr(_config, "ALERT_WEBHOOK_URL", os.environ.get("ALERT_WEBHOOK_URL", ""))
     ALERT_WEBHOOK_TOKEN = getattr(_config, "ALERT_WEBHOOK_TOKEN", os.environ.get("ALERT_WEBHOOK_TOKEN", ""))
+    NOTIFICATION_MODE = getattr(_config, "NOTIFICATION_MODE", os.environ.get("NOTIFICATION_MODE", "shadow"))
 
 except ImportError:
     KMA_API_KEY = os.environ["KMA_API_KEY"]
@@ -30,3 +31,4 @@ except ImportError:
     SITES = [site for site in json.loads(os.environ["SITES_JSON"]) if site.get("active", True)]
     ALERT_WEBHOOK_URL = os.environ.get("ALERT_WEBHOOK_URL", "")
     ALERT_WEBHOOK_TOKEN = os.environ.get("ALERT_WEBHOOK_TOKEN", "")
+    NOTIFICATION_MODE = os.environ.get("NOTIFICATION_MODE", "shadow")

@@ -111,11 +111,27 @@ def dispatch_pending(queue, webhook_url, webhook_token=None, now_iso=None, sessi
     }
 
 
-def process_notifications(path, message, changes, created_at, webhook_url=None, webhook_token=None, session=requests):
-    """신규 문안 적재와 기존 실패 건 재전송을 한 번에 수행한다."""
+def process_notifications(
+    path,
+    message,
+    changes,
+    created_at,
+    webhook_url=None,
+    webhook_token=None,
+    session=requests,
+    mode="shadow",
+):
+    """신규 문안을 적재하고, live 모드에서만 외부 전송한다.
+
+    기본값은 ``shadow``다. Webhook 비밀값이 실수로 등록돼 있어도 명시적으로
+    ``live``를 선택하지 않는 한 네트워크 전송을 하지 않는다.
+    """
     queue = load_queue(path)
     if message:
         enqueue_alert(queue, message, changes, created_at)
-    result = dispatch_pending(queue, webhook_url, webhook_token, session=session)
+    delivery_mode = "live" if str(mode).strip().lower() == "live" else "shadow"
+    effective_url = webhook_url if delivery_mode == "live" else ""
+    result = dispatch_pending(queue, effective_url, webhook_token, session=session)
+    result["mode"] = delivery_mode
     save_queue(path, queue)
     return result

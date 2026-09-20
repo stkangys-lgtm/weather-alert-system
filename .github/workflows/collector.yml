@@ -32,6 +32,8 @@ jobs:
       # 선택 설정: 알림톡 발송사/사내 중계 Webhook이 준비되기 전에는 비워 둔다.
       ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
       ALERT_WEBHOOK_TOKEN: ${{ secrets.ALERT_WEBHOOK_TOKEN }}
+      # 기존 문체 학습·승인 전까지는 비밀값이 등록돼 있어도 외부 발송을 강제로 차단한다.
+      NOTIFICATION_MODE: shadow
       # :17은 직전 주 실행이 누락되거나 45분 이상 지연됐을 때만 실제 수집한다.
       COLLECTION_MODE: ${{ github.event_name == 'schedule' && startsWith(github.event.schedule, '17 ') && 'backup' || 'primary' }}
       # :17 보완 실행에서는 대량의 동일 예보행을 다시 적재하지 않는다.

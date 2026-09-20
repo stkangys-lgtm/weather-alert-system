@@ -17,6 +17,7 @@ LEVEL_COLOR = {
     "경보": "#ff4d5f",
     "데이터없음": "#87948f",
 }
+LEVEL_LABEL = {"정상": "정상", "주의": "선제주의", "경보": "선제경계", "데이터없음": "데이터없음"}
 
 _DATA_PATH = os.path.join(os.path.dirname(__file__), "kr_map_data.json")
 with open(_DATA_PATH, encoding="utf-8") as _f:
@@ -96,6 +97,7 @@ button { -webkit-tap-highlight-color:transparent; }
 .province { fill:#dceae4;stroke:#fff;stroke-width:1.7;transition:fill .2s; }.province:hover { fill:#cfe2d9; }
 .marker { cursor:pointer;outline:none; }.marker-hit { fill:transparent; }.marker-core { fill:var(--marker);stroke:#fff;stroke-width:2.2;filter:drop-shadow(0 3px 4px rgba(0,0,0,.24));transition:transform .15s;transform-box:fill-box;transform-origin:center; }
 .marker:hover .marker-core,.marker:focus .marker-core,.marker.selected .marker-core { transform:scale(1.45);stroke:var(--deep); }
+.marker-legal { fill:#fff;stroke:#b31326;stroke-width:2; }.marker-legal-text { fill:#b31326;font-size:7px;font-weight:950;text-anchor:middle;pointer-events:none; }
 .marker-halo { fill:none;stroke:var(--marker);stroke-width:2;opacity:.36;transform-box:fill-box;transform-origin:center;animation:pulse 2.3s ease-out infinite; }
 .marker[data-level="정상"] .marker-halo,.marker[data-level="데이터없음"] .marker-halo { display:none; }
 .marker-label { font-size:10px;font-weight:750;fill:#183b30;paint-order:stroke;stroke:#f9fcfb;stroke-width:3px;stroke-linejoin:round;pointer-events:none;opacity:0;transition:opacity .15s; }
@@ -116,6 +118,11 @@ button { -webkit-tap-highlight-color:transparent; }
 .temperature small,.metric small { display:block;color:var(--muted);font-size:.68rem;margin-bottom:6px; }.temperature b { font-size:2.5rem;letter-spacing:-.07em; }
 .metric { padding:12px 14px;border:1px solid var(--line);border-radius:13px;background:#fff; }.metric b { font-size:1rem; }
 .reasons { display:none;margin:0 0 16px;padding:12px;border-radius:12px;background:#fff3f4;color:#b42b3c;font-size:.76rem;font-weight:700;line-height:1.45; }.reasons.show { display:block; }
+.legal-list { display:grid;gap:7px; }.legal-item { padding:10px 11px;border-radius:11px;background:#f3f7f5;border:1px solid rgba(0,91,60,.15);font-size:.72rem;line-height:1.42; }
+.legal-item.action { background:#fff2f3;border-color:#f1bdc3;color:#8f2531; }.legal-item.verify { background:#fff8e8;border-color:#efd69a;color:#755000; }
+.legal-item b { display:block;margin-bottom:3px; }.legal-item small { display:block;color:inherit;opacity:.72; }.legal-item p { margin:4px 0 0; }
+.warning-list { display:grid;gap:7px; }.warning-item { padding:10px 11px;border-radius:11px;background:#fff2e4;border:1px solid #efc27f;color:#764700;font-size:.72rem;line-height:1.42; }
+.warning-item b { display:block;color:#9a4800;margin-bottom:3px; }.warning-item small { display:block;color:inherit;opacity:.8; }
 .section-head { margin:19px 0 9px;display:flex;justify-content:space-between;align-items:center; }.section-head b { font-size:.8rem; }.section-head span { color:var(--muted);font-size:.67rem; }
 .forecast { display:flex;gap:7px;overflow-x:auto;padding:2px 0 7px;scroll-snap-type:x mandatory; }.fc { min-width:70px;padding:10px 7px;border:1px solid var(--line);border-radius:12px;text-align:center;scroll-snap-align:start;background:#fff; }.fc time { font-size:.66rem;color:var(--muted); }.fc .icon { font-size:1.2rem;margin:6px 0; }.fc b { display:block;font-size:.82rem; }.fc small { color:#39826a;font-size:.65rem; }
 .event-list { display:grid;gap:7px; }.event { padding:10px 11px;border-radius:11px;background:#fff7eb;border:1px solid #ffe0ac;font-size:.73rem;color:#7d5200; }.event b { margin-right:5px; }.no-event { padding:12px;border-radius:11px;background:#edf8f2;color:#267556;font-size:.74rem; }
@@ -132,8 +139,8 @@ button { -webkit-tap-highlight-color:transparent; }
   <header class="topbar">
     <div class="brand"><div class="brand-mark">HA</div><div><strong>HYUNDAI ASAN</strong><small>기상안전 통합관제</small></div></div>
     <div class="topstats">
-      <div class="topstat"><b>__TOTAL__</b><span>전체</span></div><div class="topstat"><b style="color:#ff7784">__ALERT__</b><span>경보</span></div>
-      <div class="topstat"><b style="color:#ffc65d">__CAUTION__</b><span>주의</span></div><div class="topstat"><b style="color:#60f2a6">__NORMAL__</b><span>정상</span></div>
+      <div class="topstat"><b>__TOTAL__</b><span>전체</span></div><div class="topstat"><b style="color:#ffcf70">__WARNING__</b><span>기상특보</span></div><div class="topstat"><b style="color:#ff9aa5">__LEGAL__</b><span>법정조치</span></div>
+      <div class="topstat"><b style="color:#ff7784">__ALERT__</b><span>선제경계</span></div><div class="topstat"><b style="color:#ffc65d">__CAUTION__</b><span>선제주의</span></div>
     </div>
     <div class="updated"><i class="live"></i><span>LIVE</span><span>__UPDATED__ 갱신</span></div>
   </header>
@@ -152,7 +159,7 @@ button { -webkit-tap-highlight-color:transparent; }
           </svg>
         </div></div>
         <div class="tooltip" id="tooltip"></div>
-        <div class="map-legend"><span><i class="dot" style="background:#18c875"></i>정상</span><span><i class="dot" style="background:#ffb020"></i>주의</span><span><i class="dot" style="background:#ff4d5f"></i>경보</span></div>
+        <div class="map-legend"><span><i class="dot" style="background:#18c875"></i>정상</span><span><i class="dot" style="background:#ffb020"></i>선제주의</span><span><i class="dot" style="background:#ff4d5f"></i>선제경계</span><span>⚖ 법정조치</span></div>
         <div class="zoom"><button id="zoomIn" aria-label="지도 확대">＋</button><button id="zoomOut" aria-label="지도 축소">−</button><button id="zoomReset" aria-label="지도 원위치">⌂</button></div>
       </div>
     </div>
@@ -161,7 +168,8 @@ button { -webkit-tap-highlight-color:transparent; }
       <h1 id="siteName"></h1><div class="category" id="category"></div>
       <div class="weather-main"><div class="temperature"><small>현재 기온</small><b id="temp"></b><small id="feels"></small></div><div class="metric"><small>풍속</small><b id="wind"></b></div><div class="metric"><small>1시간 강수</small><b id="rain"></b></div></div>
       <div class="reasons" id="reasons"></div>
-      <div class="category">공식 특보와 시스템 선제알림은 구분 표시되며, 작업중지 판단을 대신하지 않습니다.</div>
+      <div class="section-head"><b>기상청 공식 발표</b><span>특보 조회서비스</span></div><div class="warning-list" id="weatherWarnings"></div>
+      <div class="section-head"><b>법정 조치·현장 확인</b><span>작업·실측 기반</span></div><div class="legal-list" id="legalSignals"></div>
       <div class="section-head"><b>시간대별 예보</b><span>좌우로 밀어 보기</span></div><div class="forecast" id="forecast"></div>
       <div class="section-head"><b>예상 특이기상</b><span>향후 10일</span></div><div class="event-list" id="events"></div>
       <div class="actions"><a class="action primary" href="latest-alert.txt">전파 문안 보기</a><a class="action" href="sites.html">전체 현장 목록</a></div>
@@ -171,22 +179,25 @@ button { -webkit-tap-highlight-color:transparent; }
 <script>
 const SITES=__SITES__;
 const LEVEL_COLOR={"정상":"#18c875","주의":"#ffb020","경보":"#ff4d5f","데이터없음":"#87948f"};
+const LEVEL_LABEL={"정상":"정상","주의":"선제주의","경보":"선제경계","데이터없음":"데이터없음"};
 const iconFor=(f)=>{const p=f.PTY||"";if(p&&p!=="없음"&&p!=="-")return p.includes("눈")?"🌨️":"🌧️";return f.SKY==="맑음"?"☀️":f.SKY==="흐림"?"☁️":"⛅"};
 const safe=(v,fallback="-")=>v===null||v===undefined||v===""?fallback:String(v);
 const esc=(v)=>safe(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 let selected=0,activeFilter="all",scale=1,panX=0,panY=0,drag=null;
 function renderDetail(idx){selected=idx;const s=SITES[idx];if(!s)return;document.documentElement.style.setProperty("--selected",LEVEL_COLOR[s.level]);
  document.querySelectorAll(".marker").forEach(m=>m.classList.toggle("selected",Number(m.dataset.idx)===idx));
- document.getElementById("level").textContent=s.level;document.getElementById("siteName").textContent=s.site_name;document.getElementById("category").textContent=`${s.category} 현장 · 위도 ${s.lat.toFixed(2)}, 경도 ${s.lon.toFixed(2)}`;
+ document.getElementById("level").textContent=s.status_label||LEVEL_LABEL[s.level]||s.level;document.getElementById("siteName").textContent=s.site_name;document.getElementById("category").textContent=`${s.category} 현장 · 위도 ${s.lat.toFixed(2)}, 경도 ${s.lon.toFixed(2)}`;
  document.getElementById("temp").textContent=`${safe(s.temp)}°`;document.getElementById("feels").textContent=s.feels===null?"체감온도 정보 없음":`체감 ${s.feels}°C`;
  document.getElementById("wind").textContent=`${safe(s.wsd)} m/s`;document.getElementById("rain").textContent=`${safe(s.rn1)} mm`;
  const reasons=document.getElementById("reasons");reasons.textContent=s.reasons.length?s.reasons.join(" · "):"";reasons.classList.toggle("show",s.reasons.length>0);
+ document.getElementById("weatherWarnings").innerHTML=!s.weather_warnings_available?'<div class="warning-item"><b>❔ 특보 수신 실패</b><small>기상청 특보를 별도로 확인해 주세요.</small></div>':s.weather_warnings.length?s.weather_warnings.map(w=>`<div class="warning-item"><b>📢 ${esc(w.kind)} · ${esc(w.title)}</b><small>${esc((w.matched_areas||w.areas||[]).join(", "))}</small></div>`).join(""):'<div class="no-event">현재 해당 현장에 발표된 기상특보 없음</div>';
+ document.getElementById("legalSignals").innerHTML=s.legal_signals.length?s.legal_signals.map(x=>{const cls=["법정 작업중지","법정 조치 이행 필요"].includes(x.status)?"action":"verify";return `<div class="legal-item ${cls}"><b>${esc(x.status)} · ${esc(x.title)}</b><small>${esc(x.article)}</small><p>${esc(x.reason)}</p></div>`}).join(""):'<div class="no-event">등록된 법정 조치 신호 없음</div>';
  document.getElementById("forecast").innerHTML=(s.forecast.length?s.forecast.slice(0,12):[{}]).map(f=>`<div class="fc"><time>${esc((f.fcst_time||"").slice(0,2)||"--")}시</time><div class="icon">${f.fcst_time?iconFor(f):"·"}</div><b>${esc(f.TMP)}°</b><small>강수 ${esc(f.POP)}%</small></div>`).join("");
  document.getElementById("events").innerHTML=s.events.length?s.events.map(e=>`<div class="event"><b>${esc(e.date)}</b>${esc(e.kind)} · ${esc(e.detail)}</div>`).join(""):'<div class="no-event">예보 기간 내 주요 위험기상 없음</div>';
 }
 function applyFilter(){const q=document.getElementById("search").value.trim().toLowerCase();let count=0,first=null;document.querySelectorAll(".marker").forEach(m=>{const s=SITES[Number(m.dataset.idx)];const category=activeFilter==="all"||s.category===activeFilter||(activeFilter==="risk"&&["주의","경보"].includes(s.level));const show=category&&s.site_name.toLowerCase().includes(q);m.style.display=show?"":"none";if(show){count++;if(first===null)first=Number(m.dataset.idx)}});document.getElementById("visibleCount").textContent=`${count}개 현장`;if(first!==null&&document.querySelector(`.marker[data-idx="${selected}"]`).style.display==="none")renderDetail(first)}
 document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));b.classList.add("active");activeFilter=b.dataset.filter;applyFilter()}));document.getElementById("search").addEventListener("input",applyFilter);
-document.querySelectorAll(".marker").forEach(m=>{const idx=Number(m.dataset.idx);m.addEventListener("click",()=>renderDetail(idx));m.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();renderDetail(idx)}});m.addEventListener("mouseenter",e=>{const s=SITES[idx],t=document.getElementById("tooltip");t.innerHTML=`<b>${esc(s.site_name)}</b><span>${esc(s.level)} · ${esc(s.temp)}°C · 풍속 ${esc(s.wsd)}m/s</span>`;t.classList.add("show")});m.addEventListener("mousemove",e=>{const r=document.querySelector(".map-stage").getBoundingClientRect(),t=document.getElementById("tooltip");t.style.left=`${e.clientX-r.left+12}px`;t.style.top=`${e.clientY-r.top+12}px`});m.addEventListener("mouseleave",()=>document.getElementById("tooltip").classList.remove("show"))});
+document.querySelectorAll(".marker").forEach(m=>{const idx=Number(m.dataset.idx);m.addEventListener("click",()=>renderDetail(idx));m.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();renderDetail(idx)}});m.addEventListener("mouseenter",e=>{const s=SITES[idx],t=document.getElementById("tooltip");t.innerHTML=`<b>${esc(s.site_name)}</b><span>${esc(s.status_label||LEVEL_LABEL[s.level]||s.level)} · ${esc(s.temp)}°C · 풍속 ${esc(s.wsd)}m/s</span>`;t.classList.add("show")});m.addEventListener("mousemove",e=>{const r=document.querySelector(".map-stage").getBoundingClientRect(),t=document.getElementById("tooltip");t.style.left=`${e.clientX-r.left+12}px`;t.style.top=`${e.clientY-r.top+12}px`});m.addEventListener("mouseleave",()=>document.getElementById("tooltip").classList.remove("show"))});
 const canvas=document.getElementById("canvas"),viewport=document.getElementById("viewport");function transform(){canvas.style.transform=`translate(${panX}px,${panY}px) scale(${scale})`};function zoom(delta){scale=Math.min(2.2,Math.max(.82,scale+delta));if(scale===1){panX=0;panY=0}transform()};document.getElementById("zoomIn").onclick=()=>zoom(.2);document.getElementById("zoomOut").onclick=()=>zoom(-.2);document.getElementById("zoomReset").onclick=()=>{scale=1;panX=panY=0;transform()};viewport.addEventListener("pointerdown",e=>{if(e.target.closest(".marker"))return;drag={x:e.clientX,y:e.clientY,px:panX,py:panY};viewport.setPointerCapture(e.pointerId);viewport.classList.add("dragging")});viewport.addEventListener("pointermove",e=>{if(!drag)return;panX=drag.px+e.clientX-drag.x;panY=drag.py+e.clientY-drag.y;transform()});viewport.addEventListener("pointerup",()=>{drag=null;viewport.classList.remove("dragging")});
 renderDetail(0);
 </script></body></html>'''
@@ -198,27 +209,47 @@ def build_map_html(updated_str, site_rows):
     for idx, row in enumerate(site_rows):
         current = row.get("current") or {}
         x, y = _project(row["lat"], row["lon"])
-        level = row.get("level", "데이터없음")
+        level = row.get("display_level", row.get("level", "데이터없음"))
         color = LEVEL_COLOR.get(level, LEVEL_COLOR["데이터없음"])
         label = escape(row["site_name"] if len(row["site_name"]) <= 11 else row["site_name"][:10] + "…")
         markers.append(
             f'<g class="marker" tabindex="0" role="button" aria-label="{escape(row["site_name"])} {escape(level)}" '
             f'data-idx="{idx}" data-level="{escape(level)}" style="--marker:{color}" transform="translate({x} {y})">'
             '<circle class="marker-hit" r="15"/><circle class="marker-halo" r="7"/>'
-            f'<circle class="marker-core" r="6.5"/><text class="marker-label" x="10" y="3">{label}</text></g>'
+            f'<circle class="marker-core" r="6.5"/>'
+            + ('<circle class="marker-legal" cx="8" cy="-8" r="5"/><text class="marker-legal-text" x="8" y="-5.5">L</text>'
+               if row.get("legal_status") in ("법정 작업중지", "법정 조치 이행 필요") else '')
+            + f'<text class="marker-label" x="10" y="3">{label}</text></g>'
         )
         payload.append({
             "site_name": row["site_name"], "category": row["category"],
             "lat": row["lat"], "lon": row["lon"], "level": level,
             "reasons": row.get("reasons") or [], "temp": current.get("T1H"),
+            "legal_signals": row.get("legal_signals") or [],
+            "weather_warnings": row.get("weather_warnings") or [],
+            "weather_warnings_available": row.get("weather_warnings_available", True),
+            "status_label": (
+                f"기상특보 {'경보' if level == '경보' else '주의보'}"
+                if row.get("weather_warnings") else LEVEL_LABEL.get(level, level)
+            ),
             "feels": compute_feels_like(current.get("T1H"), current.get("REH"), current.get("WSD")),
             "wsd": current.get("WSD"), "rn1": current.get("RN1"),
             "forecast": row.get("forecast") or [], "events": row.get("events") or [],
         })
 
-    counts = {level: sum(1 for row in site_rows if row.get("level") == level) for level in LEVEL_COLOR}
+    counts = {
+        level: sum(1 for row in site_rows if row.get("display_level", row.get("level")) == level)
+        for level in LEVEL_COLOR
+    }
+    warning_count = sum(1 for row in site_rows if row.get("weather_warnings"))
+    legal_count = sum(
+        1 for row in site_rows
+        if row.get("legal_status") in ("법정 작업중지", "법정 조치 이행 필요")
+    )
     replacements = {
         "__UPDATED__": escape(updated_str), "__TOTAL__": str(len(site_rows)),
+        "__LEGAL__": str(legal_count),
+        "__WARNING__": str(warning_count),
         "__ALERT__": str(counts["경보"]), "__CAUTION__": str(counts["주의"]),
         "__NORMAL__": str(counts["정상"]), "__WIDTH__": str(_MAP["width"]),
         "__HEIGHT__": str(_MAP["height"]), "__PROVINCES__": _province_paths_svg(),

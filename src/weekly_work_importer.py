@@ -12,7 +12,6 @@ from datetime import datetime
 from openpyxl import load_workbook
 
 from src import settings as config
-from src.sheets_client import get_worksheet, replace_rows
 
 
 WEEKLY_WORKSHEET = "주간공종"
@@ -161,6 +160,9 @@ def parse_weekly_work(path, active_sites=None):
 
 
 def upload_weekly_work(path):
+    # XLSX 분석만 할 때는 Google Sheets 패키지와 인증이 필요하지 않도록 업로드 시점에 불러온다.
+    from src.sheets_client import get_worksheet, replace_rows
+
     report = parse_weekly_work(path)
     worksheet = get_worksheet(
         config.GOOGLE_SHEETS_SPREADSHEET_ID,

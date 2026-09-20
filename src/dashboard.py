@@ -14,6 +14,8 @@ LEVEL_STYLE = {
     "데이터없음": {"bg": "#eef0f3", "fg": "#5b6470", "bar": "#9aa4b2", "icon": "❔"},
 }
 
+LEVEL_LABEL = {"정상": "정상", "주의": "선제주의", "경보": "선제경계", "데이터없음": "데이터없음"}
+
 SKY_ICON = {"맑음": "☀️", "구름많음": "⛅", "흐림": "☁️"}
 PTY_ICON = {"비": "🌧️", "비/눈": "🌨️", "눈": "❄️", "빗방울": "🌦️", "빗방울눈날림": "🌨️", "눈날림": "🌨️"}
 # 중기예보 하늘상태(문자)용 아이콘 매핑
@@ -22,10 +24,7 @@ MID_SKY_ICON = {
     "구름많고 소나기": "🌦️", "흐림": "☁️", "흐리고 비": "🌧️", "흐리고 눈": "🌨️",
     "흐리고 비/눈": "🌨️", "흐리고 소나기": "🌦️",
 }
-EVENT_ICON = {
-    "고온 위험 예상": "🥵", "고온 유의 예상": "🥵", "강수 예상": "🌧️",
-    "강풍 위험 예상": "💨", "강풍 유의 예상": "💨", "한파 가능": "🥶",
-}
+EVENT_ICON = {"폭염": "🥵", "폭염주의": "🥵", "강수": "🌧️", "강풍": "💨", "강풍주의": "💨", "한파": "🥶"}
 
 
 def _weather_icon(sky, pty):
@@ -84,6 +83,8 @@ _PAGE_TEMPLATE = """<!doctype html>
   .stat.hi-주의 .num {{ color: #ffd670; }}
   .stat.hi-정상 .num {{ color: #8fe3b5; }}
   .stat.hi-데이터없음 .num {{ color: #c7ccd4; }}
+  .stat.hi-법정 .num {{ color: #ff9aa5; }}
+  .stat.hi-특보 .num {{ color: #ffcf70; }}
 
   .content {{ max-width: 1180px; margin: -26px auto 40px; padding: 0 24px; }}
   .toolbar {{
@@ -156,6 +157,18 @@ _PAGE_TEMPLATE = """<!doctype html>
   .reasons {{
     margin-top: 10px; font-size: 0.82rem; font-weight: 600; padding: 8px 10px; border-radius: 8px;
   }}
+  .legal-signals {{ display: grid; gap: 7px; margin-top: 10px; }}
+  .legal-signal {{ padding: 10px 11px; border-radius: 10px; background: #f3f7f5;
+    border: 1px solid rgba(0,91,60,.14); font-size: 0.78rem; line-height: 1.45; }}
+  .legal-signal.action {{ background: #fff3f3; border-color: #f3c2c7; }}
+  .legal-signal.verify {{ background: #fff8e7; border-color: #f0d598; }}
+  .legal-signal .legal-head {{ display:flex; justify-content:space-between; gap:8px; font-weight:750; }}
+  .legal-signal .article {{ color:var(--sub); white-space:nowrap; font-size:.7rem; }}
+  .legal-signal p {{ margin:4px 0 0; color:var(--sub); }}
+  .weather-warnings {{ display:grid; gap:7px; margin-top:10px; }}
+  .weather-warning {{ padding:10px 11px; border-radius:10px; background:#fff2e4;
+    border:1px solid #efc27f; color:#764700; font-size:.78rem; line-height:1.45; }}
+  .weather-warning strong {{ display:block; color:#9a4800; }}
   .forecast {{ display: flex; gap: 8px; overflow-x: auto; margin-top: 14px; padding-bottom: 2px; }}
   .fc {{
     flex: 0 0 auto; text-align: center; background: #f7f8fb; border-radius: 10px;
@@ -199,8 +212,10 @@ _PAGE_TEMPLATE = """<!doctype html>
         <a class="navlink" href="index.html">← 지도 관제로 돌아가기</a>
       </div>
       <div class="stats">
-        <div class="stat hi-경보"><div class="num">{count_경보}</div><div class="lbl">🚨 경보</div></div>
-        <div class="stat hi-주의"><div class="num">{count_주의}</div><div class="lbl">⚠️ 주의</div></div>
+        <div class="stat hi-특보"><div class="num">{count_특보}</div><div class="lbl">📢 기상특보</div></div>
+        <div class="stat hi-법정"><div class="num">{count_법정}</div><div class="lbl">⚖️ 법정조치</div></div>
+        <div class="stat hi-경보"><div class="num">{count_경보}</div><div class="lbl">🚨 선제경계</div></div>
+        <div class="stat hi-주의"><div class="num">{count_주의}</div><div class="lbl">⚠️ 선제주의</div></div>
         <div class="stat hi-정상"><div class="num">{count_정상}</div><div class="lbl">✅ 정상</div></div>
         <div class="stat hi-데이터없음"><div class="num">{count_데이터없음}</div><div class="lbl">❔ 데이터없음</div></div>
       </div>
@@ -225,7 +240,7 @@ _PAGE_TEMPLATE = """<!doctype html>
       {cards}
     </div>
   </div>
-  <footer>「기상청 공식 특보」는 API Hub 발효자료, 「시스템 선제알림」은 격자 실황 기반 참고정보입니다. 현장 작업중지 판단은 현장 계측과 작업여건을 별도 확인해야 합니다.</footer>
+  <footer>기상청 공공데이터포털(단기예보 2.0·기상특보 조회서비스) 기반 · 담당자 정보는 비공개 처리됨</footer>
   <script>
     let activeCategory = 'all';
 
@@ -341,8 +356,49 @@ def _events_html(events):
 CATEGORY_ICON = {"건축": "🏗️", "토목": "🚧"}
 
 
-def _card(site_name, category, current, forecast, mid_forecast, events, level, reasons):
-    style = LEVEL_STYLE[level]
+def _legal_signals_html(signals):
+    if not signals:
+        return ""
+    items = []
+    for signal in signals:
+        status = signal.get("status", "현장 확인 필요")
+        css_class = "action" if status in ("법정 작업중지", "법정 조치 이행 필요") else "verify"
+        items.append(
+            f'<div class="legal-signal {css_class}">'
+            f'<div class="legal-head"><span>{escape(status)} · {escape(signal.get("title", ""))}</span>'
+            f'<span class="article">{escape(signal.get("article", ""))}</span></div>'
+            f'<p>{escape(signal.get("reason", ""))}</p></div>'
+        )
+    return '<div class="section-label">법정 조치·현장 확인</div><div class="legal-signals">' + "".join(items) + "</div>"
+
+
+def _warnings_html(warnings, available=True):
+    if not available:
+        return (
+            '<div class="section-label">기상청 공식 발표</div>'
+            '<div class="weather-warnings"><div class="weather-warning">'
+            '<strong>❔ 특보 수신 실패</strong>기상청 특보를 별도로 확인해 주세요.</div></div>'
+        )
+    if not warnings:
+        return ""
+    items = []
+    for warning in warnings:
+        areas = warning.get("matched_areas") or warning.get("areas") or []
+        area_text = ", ".join(areas)
+        kind = "예비특보" if warning.get("kind") == "예비특보" else "기상특보"
+        items.append(
+            f'<div class="weather-warning"><strong>📢 {escape(kind)} · '
+            f'{escape(warning.get("title", "-"))}</strong>{escape(area_text)}</div>'
+        )
+    return '<div class="section-label">기상청 공식 발표</div><div class="weather-warnings">' + "".join(items) + "</div>"
+
+
+def _card(
+    site_name, category, current, forecast, mid_forecast, events, level, reasons,
+    legal_signals=None, weather_warnings=None, display_level=None, weather_warnings_available=True,
+):
+    display_level = display_level or level
+    style = LEVEL_STYLE[display_level]
     icon = _weather_icon(None, current.get("PTY"))
     reasons_html = ""
     if reasons:
@@ -363,6 +419,8 @@ def _card(site_name, category, current, forecast, mid_forecast, events, level, r
             f'<div class="weekly">{_weekly_chips(mid_forecast)}</div>'
         )
     events_html = _events_html(events)
+    legal_html = _legal_signals_html(legal_signals or [])
+    warnings_html = _warnings_html(weather_warnings or [], weather_warnings_available)
 
     temp = current.get("T1H", "-")
     wsd = current.get("WSD", "-")
@@ -378,6 +436,11 @@ def _card(site_name, category, current, forecast, mid_forecast, events, level, r
         pass
 
     cat_icon = CATEGORY_ICON.get(category, "")
+    if weather_warnings:
+        official = "경보" if display_level == "경보" else "주의보"
+        badge_text = f"📢 기상특보 {official}"
+    else:
+        badge_text = f"{style['icon']} {LEVEL_LABEL[level]}"
 
     return f"""
     <div class="card" data-name="{escape(site_name.lower())}" data-category="{escape(category)}">
@@ -385,7 +448,7 @@ def _card(site_name, category, current, forecast, mid_forecast, events, level, r
       <div class="body">
         <div class="card-top">
           <div><span class="cat-tag">{cat_icon} {escape(category)}</span><h2>{escape(site_name)}</h2></div>
-          <span class="badge" style="background:{style['bg']};color:{style['fg']}">{style['icon']} {escape(level)}</span>
+          <span class="badge" style="background:{style['bg']};color:{style['fg']}">{escape(badge_text)}</span>
         </div>
         <div class="now">
           <div class="icon">{icon}</div>
@@ -397,6 +460,8 @@ def _card(site_name, category, current, forecast, mid_forecast, events, level, r
           <div>💦 <span class="v">{escape(str(reh))}%</span></div>
         </div>
         {reasons_html}
+        {warnings_html}
+        {legal_html}
         {events_html}
         {forecast_html}
         {weekly_html}
@@ -441,24 +506,33 @@ def build_dashboard_html(
 ):
     """site_rows: [{"site_name", "current": dict, "forecast": list, "level": str, "reasons": list}, ...]"""
     severity = {"경보": 3, "주의": 2, "데이터없음": 1, "정상": 0}
-    ordered = sorted(site_rows, key=lambda r: severity[r["level"]], reverse=True)
+    ordered = sorted(site_rows, key=lambda r: severity[r.get("display_level", r["level"])], reverse=True)
 
     counts = {"경보": 0, "주의": 0, "정상": 0, "데이터없음": 0}
     for row in site_rows:
         counts[row["level"]] += 1
+    legal_count = sum(
+        1 for row in site_rows
+        if row.get("legal_status") in ("법정 작업중지", "법정 조치 이행 필요")
+    )
+    warning_count = sum(1 for row in site_rows if row.get("weather_warnings"))
 
     cards = "".join(
         _card(
             row["site_name"], row["category"], row["current"], row["forecast"],
             row.get("mid_forecast", []), row.get("events", []),
-            row["level"], row["reasons"],
+            row["level"], row["reasons"], row.get("legal_signals", []),
+            row.get("weather_warnings", []), row.get("display_level"),
+            row.get("weather_warnings_available", True),
         )
         for row in ordered
     )
 
     return _PAGE_TEMPLATE.format(
         updated=escape(updated_str),
+        count_특보=warning_count,
         count_경보=counts["경보"],
+        count_법정=legal_count,
         count_주의=counts["주의"],
         count_정상=counts["정상"],
         count_데이터없음=counts["데이터없음"],

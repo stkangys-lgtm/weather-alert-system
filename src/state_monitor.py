@@ -48,15 +48,6 @@ ACTION_ITEMS = {
         "가설시설물·자재 결속 상태 사전 확인",
         "고소작업과 양중작업 계획 재검토",
     ],
-    "고온 위험 예상": [
-        "물·그늘·휴식 제공 및 작업시간 조정계획 확인",
-        "온열질환 민감군과 응급조치 체계 사전 확인",
-    ],
-    "고온 유의 예상": ["물·그늘·휴식 제공계획과 작업시간 확인"],
-    "강수 예상": ["배수로·집수정과 수방자재 사전 점검", "굴착부·비탈면·저지대 사전 확인"],
-    "강풍 위험 예상": ["가설시설물·자재 결속과 고소·양중작업 계획 재검토"],
-    "강풍 유의 예상": ["가설시설물·자재 결속 상태 사전 확인"],
-    "한파 가능": ["보온·동파·결빙 취약부와 근로자 방한조치 사전 확인"],
 }
 
 
@@ -108,8 +99,12 @@ def build_snapshot(collected, mid_forecasts, generated_at):
             "reasons": item["judgment"].get("reasons") or [],
             "observation_id": f"{current.get('base_date', '')}-{current.get('base_time', '')}",
             "forecast_risks": forecast_events,
+            "legal_signals": item.get("legal_signals") or [],
+            "weather_warnings": item.get("weather_warnings") or [],
+            "weather_warnings_available": item.get("weather_warnings_available", True),
         }
     successful_sites = sum(1 for item in collected if item.get("current") is not None)
+    warning_available = all(item.get("weather_warnings_available", True) for item in collected)
     total_sites = len(collected)
     if successful_sites == total_sites:
         collection_status = "healthy"
@@ -123,6 +118,7 @@ def build_snapshot(collected, mid_forecasts, generated_at):
         "successful_sites": successful_sites,
         "total_sites": total_sites,
         "collection_status": collection_status,
+        "warning_collection_status": "healthy" if warning_available else "failed",
         "sites": sites,
     }
 
@@ -135,6 +131,22 @@ def _forecast_keys(site_state):
     }
 
 
+def _warning_key(warning):
+    areas = warning.get("matched_areas") or warning.get("areas") or []
+    return (
+        warning.get("kind"),
+        warning.get("title"),
+        warning.get("announced_at"),
+        tuple(sorted(areas)),
+    )
+
+
+def _warning_reason(warning):
+    areas = warning.get("matched_areas") or warning.get("areas") or []
+    area_text = ", ".join(areas)
+    return f"{warning.get('title', '기상특보')} · {area_text}".rstrip(" ·")
+
+
 def detect_changes(previous, current):
     """알림이 필요한 상태 변화와 새 예보 위험을 반환한다.
 
@@ -143,6 +155,27 @@ def detect_changes(previous, current):
     """
     changes = []
     old_sites = (previous or {}).get("sites", {})
+
+    old_warning_status = (previous or {}).get("warning_collection_status", "healthy")
+    new_warning_status = current.get("warning_collection_status", "healthy")
+    if new_warning_status == "failed" and old_warning_status != "failed":
+        changes.append({
+            "site_name": "전 현장",
+            "type": "기상특보 수집 장애",
+            "from_level": old_warning_status,
+            "to_level": "별도 확인 필요",
+            "categories": [],
+            "reasons": ["기상청 특보 API 응답을 받지 못했습니다."],
+        })
+    elif new_warning_status == "healthy" and old_warning_status == "failed":
+        changes.append({
+            "site_name": "전 현장",
+            "type": "기상특보 수집 정상화",
+            "from_level": "수집 장애",
+            "to_level": "정상",
+            "categories": [],
+            "reasons": ["기상청 특보 API 수신이 정상화되었습니다."],
+        })
 
     for name, new in current["sites"].items():
         old = old_sites.get(name)
@@ -193,6 +226,80 @@ def detect_changes(previous, current):
                     "categories": [event.get("kind")],
                     "reasons": [f"{event.get('date')} {event.get('detail', '')}".strip()],
                 })
+
+        if new.get("weather_warnings_available", True):
+            old_warnings = {
+                _warning_key(warning): warning
+                for warning in (old or {}).get("weather_warnings", [])
+            }
+            new_warnings = {
+                _warning_key(warning): warning
+                for warning in new.get("weather_warnings", [])
+            }
+            for key, warning in new_warnings.items():
+                if key in old_warnings:
+                    continue
+                changes.append({
+                    "site_name": name,
+                    "type": "기상특보 발효" if warning.get("kind") == "기상특보" else "예비특보 발표",
+                    "from_level": None,
+                    "to_level": warning.get("level") or warning.get("kind"),
+                    "categories": [warning.get("phenomenon")] if warning.get("phenomenon") else [],
+                    "reasons": [_warning_reason(warning)],
+                })
+            for key, warning in old_warnings.items():
+                if key in new_warnings:
+                    continue
+                changes.append({
+                    "site_name": name,
+                    "type": "기상특보 해제" if warning.get("kind") == "기상특보" else "예비특보 변경",
+                    "from_level": warning.get("level") or warning.get("kind"),
+                    "to_level": "해제",
+                    "categories": [],
+                    "reasons": [_warning_reason(warning)],
+                })
+
+        old_legal = {
+            (signal.get("status"), signal.get("work_type"), signal.get("article"), signal.get("title"))
+            for signal in (old or {}).get("legal_signals", [])
+        }
+        for signal in new.get("legal_signals", []):
+            key = (signal.get("status"), signal.get("work_type"), signal.get("article"), signal.get("title"))
+            if key in old_legal or signal.get("status") == "데이터 부족":
+                continue
+            changes.append({
+                "site_name": name,
+                "type": "법정 조치 발생",
+                "from_level": None,
+                "to_level": signal.get("status"),
+                "categories": ["법정조치"],
+                "reasons": [f"{signal.get('title')} ({signal.get('article')})"],
+                "actions": signal.get("actions") or [],
+            })
+
+        new_legal = {
+            (signal.get("status"), signal.get("work_type"), signal.get("article"), signal.get("title"))
+            for signal in new.get("legal_signals", [])
+        }
+        new_legal_identities = {
+            (signal.get("work_type"), signal.get("article"), signal.get("title"))
+            for signal in new.get("legal_signals", [])
+        }
+        new_has_data_gap = any(signal.get("status") == "데이터 부족" for signal in new.get("legal_signals", []))
+        for signal in (old or {}).get("legal_signals", []):
+            key = (signal.get("status"), signal.get("work_type"), signal.get("article"), signal.get("title"))
+            identity = (signal.get("work_type"), signal.get("article"), signal.get("title"))
+            if key in new_legal or identity in new_legal_identities or signal.get("status") == "데이터 부족":
+                continue
+            changes.append({
+                "site_name": name,
+                "type": "법정 조치 재확인" if new_has_data_gap else "법정 조치 상태 변경",
+                "from_level": signal.get("status"),
+                "to_level": "데이터 부족" if new_has_data_gap else "조건 해소 확인",
+                "categories": ["법정조치"],
+                "reasons": [f"기존 {signal.get('title')} ({signal.get('article')})"],
+                "actions": ["현장 작업상태와 조치 지속 여부 확인"],
+            })
     return changes
 
 
@@ -220,19 +327,23 @@ def build_alert_message(generated_at, changes):
         "[현대아산 기상안전 알림]",
         "",
         f"기준시각: {generated_at}",
-        f"기상변화 {len(changes)}건이 감지되었습니다.",
+        f"기상·안전 상태변화 {len(changes)}건이 감지되었습니다.",
         "",
         "■ 변동 현황",
     ]
     action_categories = []
+    actions = []
     for change in changes:
         level = change.get("to_level") or "-"
         reasons = ", ".join(change.get("reasons") or [])
         detail = f" / {reasons}" if reasons else ""
         lines.append(f"- {change['site_name']}: {change['type']} ({level}){detail}")
         action_categories.extend(change.get("categories") or [])
+        for action in change.get("actions") or []:
+            if action not in actions:
+                actions.append(action)
 
-    actions = []
+    # 기상 카테고리의 공통 확인사항을 법정 신호의 구체 조치 뒤에 추가한다.
     for category in action_categories:
         for action in ACTION_ITEMS.get(category, []):
             if action not in actions:
@@ -241,10 +352,12 @@ def build_alert_message(generated_at, changes):
         lines.extend(["", "■ 본사·현장 확인사항"])
         lines.extend(f"- {action}" for action in actions)
 
+    if any(str(change.get("type", "")).startswith(("기상특보", "예비특보")) for change in changes):
+        lines.extend(["", "※ 기상특보·예비특보는 기상청 공식 발표를 현장 행정구역과 연결한 정보입니다."])
     lines.extend([
         "",
-        "※ 기상청 인근 격자자료 기반의 선제 안내입니다.",
-        "※ 현장 실측과 작업여건을 확인하여 조치 여부를 판단해 주시기 바랍니다.",
+        "※ 선제기상 신호는 기상청 인근 격자자료 기반이며 기상특보가 아닙니다.",
+        "※ 법정 신호는 표시된 조문과 현장 작업·실측값을 함께 확인해 이행해 주시기 바랍니다.",
     ])
     return "\n".join(lines)
 

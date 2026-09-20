@@ -6,8 +6,8 @@
 # 기상청 API 인증키 (공공데이터포털에서 발급)
 KMA_API_KEY = "YOUR_KMA_API_KEY_HERE"
 
-# 선택 설정: 기상청 API 허브(apihub.kma.go.kr) 현재 특보 조회용 인증키
-# 공공데이터포털 인증키와 별도입니다. 비워 두면 공식 특보 조회만 건너뜁니다.
+# 과거 API Hub 방식과 호환하기 위한 선택값입니다. 현재 공식 특보 수집은
+# 공공데이터포털 KMA_API_KEY를 사용하므로 비워 둘 수 있습니다.
 KMA_API_HUB_KEY = ""
 
 # Google Sheets 관련 설정
@@ -15,7 +15,9 @@ GOOGLE_SHEETS_CREDENTIALS_PATH = "credentials/google-service-account.json"
 GOOGLE_SHEETS_SPREADSHEET_ID = "YOUR_SPREADSHEET_ID_HERE"
 
 # 선택 설정: 알림톡 발송사 또는 사내 메시징 중계 Webhook.
-# 비워 두면 외부 발송 없이 알림 문안이 대기열에만 저장됩니다.
+# shadow: 문안과 대기열만 생성하고 외부 발송은 차단 (기본값)
+# live: 승인된 문체와 발송 연동 검증이 끝난 뒤에만 사용
+NOTIFICATION_MODE = "shadow"
 ALERT_WEBHOOK_URL = ""
 ALERT_WEBHOOK_TOKEN = ""
 
@@ -29,10 +31,22 @@ SITES = [
         "lon": 126.9780,
         "nx": 60,
         "ny": 127,
+        # 기상청 특보문에 표시되는 시·군·구 별칭. 광역 전체 특보용 도/시 명칭은 별도 지정합니다.
+        "warning_regions": ["종로구", "서울도심권"],
+        "warning_provinces": ["서울", "서울특별시"],
         "manager": "홍길동",
         "manager_phone": "010-0000-0001",
-        # 공식 특보 구역과 현장을 연결합니다. 구역코드를 알면 warning_region_codes가 가장 정확합니다.
-        "warning_region_keywords": ["서울"],
+        # 현장에 존재하는 작업·설비. 가능한 값은 아래 설명을 참고하세요.
+        "work_types": ["tower_crane_operation", "steel_erection", "outdoor_heat"],
+        # 현재 진행 작업을 확인한 경우 True. 빈 목록 + True는 해당 시점 진행 작업 없음을 뜻합니다.
+        "active_work_types_configured": True,
+        "active_work_types": ["steel_erection", "outdoor_heat"],
+        # 현장 실측값 연계 예시. 자동 연계 전에는 입력·업데이트 방식이 별도로 필요합니다.
+        "site_measurements": {
+            "gust_wind_speed": 8.2,
+            "apparent_temperature": 32.5,
+            "snowfall_1h": 0,
+        },
     },
     {
         "site_name": "부산 B현장",
@@ -75,3 +89,15 @@ SITES = [
         "manager_phone": "010-0000-0005",
     },
 ]
+
+# work_types / active_work_types 값
+# - tower_crane_install: 타워크레인 설치·수리·점검·해체
+# - tower_crane_operation: 타워크레인 운전
+# - steel_erection: 철골작업
+# - scaffold: 비계 조립·해체·변경
+# - excavation: 굴착작업
+# - outdoor_lift: 옥외 승강기
+# - outdoor_heat: 옥외 폭염작업
+# warning_regions / warning_provinces
+# - 새 현장 추가 시 기상청 특보 구역명과 연결할 행정구역을 입력합니다.
+# - 예: 화성시 현장 → warning_regions=["화성시", "화성"], warning_provinces=["경기도"]

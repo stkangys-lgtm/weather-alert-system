@@ -6,15 +6,15 @@
 ## 프로젝트 목표
 
 - 전사 현장(공사현장 등)의 기상 상황을 자동으로 감시
-- 강풍/호우/폭염 등 기상 위험 신호와 기상청 공식 특보 확인
+- 강풍/호우/폭염 등 위험 기상 조건 발생 시 자동 알림
 - 안전관리자가 매번 수기로 기상청 사이트를 확인하지 않아도 되도록 자동화
 
 ## Phase 구성
 
 - **Phase 1 (완료)**: 개발환경 준비 + 기상청 API(초단기실황/단기예보) → Google Sheets 자동 기록
 - **Phase 1.5 (완료)**: GitHub Actions로 현장 운영시간에 자동 실행 — 로컬 컴퓨터를 켜둘 필요 없음
-- **Phase 2 (진행중)**: 이상기상 판정, 이전 상태 대비 변화 감지, 모바일 대시보드, 현장 전파용 문안 자동 생성. 알림톡은 승인된 템플릿과 발송 API 정보가 준비되면 연결 예정
-- **Phase 2.5 (구현)**: 알림 대기열, 중복 방지, 실패 재시도 및 공급사 독립 Webhook. Webhook 미설정 시 외부 발송은 하지 않음
+- **Phase 2 (진행중)**: 공식 기상특보 연동, 이상기상 판정, 이전 상태 대비 변화 감지, 모바일 대시보드, 현장 전파용 문안 자동 생성. 알림톡은 승인된 템플릿과 발송 API 정보가 준비되면 연결 예정
+- **Phase 2.5 (모의운영)**: 알림 대기열, 중복 방지, 실패 재시도 및 공급사 독립 Webhook. 기존 문체 양식 승인 전까지 `shadow` 모드로 외부 발송을 강제 차단
 
 ## 대시보드 (GitHub Pages)
 
@@ -24,17 +24,19 @@
 공개되는 `docs/` 아래 파일에는 담당자 이름·연락처를 저장하지 않습니다. `announcement.txt`와
 `latest-alert.txt`도 Pages에서 접근할 수 있으므로 공개 가능한 기상·조치 정보만 포함합니다.
 
-시스템 선제알림 기준(`src/alert_rules.py`에서 조정 가능):
+시스템은 위험정보를 다음 세 층으로 구분합니다.
 
-| 항목 | 주의 | 경보 |
-|---|---|---|
-| 강풍 (풍속) | 10m/s 이상 | 15m/s 이상 |
-| 강수 (1시간 강수량) | 5mm 이상 | 15mm 이상 |
-| 고온 (추정 체감온도) | 31°C 이상 | 33°C 이상 |
+- `기상특보`: 기상청이 실제 발표한 특보. 자체 수치 비교로 임의 생성하지 않습니다.
+- `법정 작업중지·조치`: 현장 작업 종류와 법령이 요구하는 측정값을 함께 확인합니다.
+- `선제주의·선제경계`: 공공 기상자료에 따른 사내 사전 확인 신호이며 법정 판정이나 기상특보가 아닙니다.
 
-> 위 수치는 본사 공지와 현장 확인을 위한 선제 신호이며 법정 작업중지 기준이나 기상특보를
-> 대신하지 않습니다. 화면에서는 API Hub 발효자료를 `기상청 공식 특보`, 격자 실황 계산값을
-> `시스템 선제알림`으로 구분합니다. 실제 작업 여부는 현장 계측값, 공종, 작업여건을 함께 확인해야 합니다.
+법적 판정에는 현장별 `work_types`, `active_work_types`가 필요합니다. 타워크레인은 순간풍속,
+폭염작업은 작업장소 실측 체감온도가 없으면 확정하지 않고 `데이터 부족`으로 표시합니다.
+공식 특보는 전국 현황을 실행당 한 번만 조회한 뒤 현장의 `warning_regions`와
+`warning_provinces`에 따라 배분합니다. 현재 운영 현장은 기본 매핑이 포함되어 있으며,
+새 현장을 추가할 때는 해당 두 값을 함께 지정하는 것이 안전합니다.
+세부 기준과 국가법령정보센터 원문은
+[`legal/LEGAL_WEATHER_SAFETY_MATRIX_2026-09-20.md`](legal/LEGAL_WEATHER_SAFETY_MATRIX_2026-09-20.md)를 참고하세요.
 
 ## 폴더 구조
 
@@ -48,10 +50,11 @@ weather-alert-system/
 ├── src/
 │   ├── settings.py       # 설정 로더 (로컬: config.py / CI: 환경변수 자동 분기)
 │   ├── kma_client.py      # 기상청 API 호출
-│   ├── kma_warning_client.py # 기상청 API Hub 현재 특보 조회·현장 매칭
+│   ├── warning_client.py  # 기상청 공식 특보 조회·현장 지역 매칭
 │   ├── sheets_client.py   # Google Sheets 기록
 │   ├── grid_converter.py  # 위경도 -> 기상청 격자좌표 변환
 │   ├── alert_rules.py     # 이상기상 판정 + 공고문 텍스트 생성
+│   ├── legal_rules.py     # 작업 종류·실측값 기반 법정 조치 판정
 │   ├── state_monitor.py   # 이전 상태 비교 + 변화 알림 문안 생성
 │   ├── dashboard.py       # 현장 목록 대시보드 HTML 생성
 │   ├── map_dashboard.py   # 지도 중심 통합관제 HTML 생성
@@ -73,12 +76,15 @@ weather-alert-system/
 | Secret | 내용 |
 |---|---|
 | `KMA_API_KEY` | 기상청 공공데이터포털 인증키 (Decoding 키) |
-| `KMA_API_HUB_KEY` | 선택: 기상청 API Hub 현재 특보 조회용 인증키 |
 | `GOOGLE_SHEETS_SPREADSHEET_ID` | 기록 대상 스프레드시트 ID |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | 구글 서비스 계정 키 JSON 전체 내용 |
 | `SITES_JSON` | 현장 목록 (JSON) — `config.py`의 `SITES`와 동일 형식 |
 | `ALERT_WEBHOOK_URL` | 선택: 알림톡 발송사 또는 사내 메시징 중계 Webhook URL |
 | `ALERT_WEBHOOK_TOKEN` | 선택: Webhook Bearer 인증 토큰 |
+
+현재 워크플로우의 `NOTIFICATION_MODE`는 `shadow`로 고정되어 있습니다. 따라서 Webhook Secret이
+등록돼 있어도 문안과 대기열만 생성하고 외부 메시지를 보내지 않습니다. 기존 전파 문체 양식의
+학습·검토와 발송 연동 시험이 모두 승인된 뒤에만 `live`로 변경합니다.
 
 ```bash
 gh run list --workflow=collector.yml   # 실행 이력 확인
@@ -139,10 +145,8 @@ gh run view <run-id> --log             # 특정 실행 로그 확인
    ```
    `config.py`를 열어서 아래 값을 채웁니다:
    - `KMA_API_KEY`: [data.go.kr](https://www.data.go.kr) 마이페이지 → 개발계정에서 기존 키 재조회 (Decoding 키 사용)
-   - `KMA_API_HUB_KEY`: 선택. [기상청 API 허브](https://apihub.kma.go.kr/)에서 발급 후 입력. 미설정 시 공식 특보 조회만 생략
    - `GOOGLE_SHEETS_SPREADSHEET_ID`: 대상 스프레드시트 URL의 `/d/`와 `/edit` 사이 부분
    - `SITES`: 현장 목록 (GitHub Secrets의 `SITES_JSON`과 동일 — 값을 직접 조회할 수는 없으니, 필요하면 다시 정리)
-     - 공식 특보 매칭은 각 현장에 `warning_region_codes` 또는 `warning_region_keywords`를 추가하면 정확해집니다. 둘 다 없으면 현장명에 포함된 지역명으로 자동 매칭합니다.
    - `credentials/google-service-account.json`: Google Cloud Console에서 동일 서비스 계정으로 **새 키를 발급**받아 배치 (`credentials/README.md` 참고). 기존 키 파일을 USB/메신저로 옮기는 것보다, 콘솔에서 새로 발급받는 편이 안전합니다.
 
 5. **동작 확인**
@@ -164,16 +168,11 @@ gh run view <run-id> --log             # 특정 실행 로그 확인
 
 위험 수치가 조금 달라진 것만으로는 알리지 않으며, 위험단계·위험종류 변경, 새 예보 위험,
 데이터 수집 장애와 정상화가 발생할 때만 새 알림 문안을 생성합니다.
+모의운영 중 생성된 문안은 실제 수신자에게 보내지 않고 향후 문체 비교·검토 자료로만 사용합니다.
 
 ## 주간 공종 갱신
 
 금요일 건설사업회의 XLSX에서 활성 현장의 `현장명`과 `주요공정 - 금주`만 추출해
-Google Sheets의 `주간공종` 탭을 교체합니다. 담당자, 연락처, 공사금액, 수금액과 현안은
-읽기 결과에 포함하지 않습니다.
-
-```powershell
-python -m src.weekly_work_importer "C:\path\건설사업회의.xlsx" --upload
-```
-
-회의자료에만 있는 비관제 현장은 제외하며, 관제 현장이 회의자료에서 누락되면 로그에 표시합니다.
-원본 XLSX는 개인정보와 경영정보를 포함하므로 저장소나 공개 `docs/` 폴더에 추가하지 않습니다.
+Google Sheets의 `주간공종` 탭을 교체할 수 있습니다. 담당자, 연락처, 공사금액, 수금액과
+현안은 추출 결과에 포함하지 않습니다. 현장 주소 DB를 전달받으면 같은 방식으로 필요한
+위치 필드만 선별해 연계합니다.

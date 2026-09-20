@@ -16,12 +16,11 @@ from src.dashboard import build_dashboard_html
 from src.feels_like import compute_feels_like
 from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
 from src.kma_client import get_current_weather, get_forecast
-from src.kma_warning_client import get_current_warnings, match_warnings_to_sites
+from src.legal_rules import evaluate_legal_signals, highest_legal_status
 from src.map_dashboard import build_map_html
 from src.mid_client import combine_forecast, get_mid_land_forecast, get_mid_temperature
 from src.mid_regions import resolve_region_codes
 from src.notification_queue import process_notifications
-from src.sheets_client import append_rows, get_worksheet
 from src.state_monitor import (
     build_alert_message,
     build_snapshot,
@@ -31,8 +30,14 @@ from src.state_monitor import (
     save_state,
     state_age_minutes,
 )
+from src.warning_client import get_active_warnings, match_warnings_to_sites, warning_display_level
 
-NCST_HEADER = ["기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)", "습도(%)", "풍속(m/s)", "판정", "체감온도(°C)"]
+NCST_HEADER = [
+    "기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)",
+    # 앞 10개 열 이름은 기존 시트와의 자동 확장 호환성을 위해 유지한다.
+    "습도(%)", "풍속(m/s)", "판정", "체감온도(°C)", "법정상태",
+    "법정근거", "법정확인·조치", "현장실측체감온도(°C)", "현장순간풍속(m/s)",
+]
 FCST_HEADER = ["기록시각", "현장명", "담당자", "예보일자", "예보시각", "기온(°C)", "강수확률(%)", "하늘상태", "강수형태"]
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
@@ -149,7 +154,15 @@ def collect_site_data(sites):
             fast_fail_mode = True
 
         judgment = alert_rules.judge(current) if current is not None else alert_rules.unknown_judgment()
-        results.append({"site": site, "current": current, "forecast": forecast, "judgment": judgment})
+        legal_signals = evaluate_legal_signals(site, current or {})
+        results.append({
+            "site": site,
+            "current": current,
+            "forecast": forecast,
+            "judgment": judgment,
+            "legal_signals": legal_signals,
+            "legal_status": highest_legal_status(legal_signals),
+        })
 
         if current is not None:
             print(f"[실황 수집] {site['site_name']}: 기온 {current.get('T1H', '?')}°C ({judgment['level']})")
@@ -158,29 +171,33 @@ def collect_site_data(sites):
     return results
 
 
-def attach_official_warnings(collected):
-    """현재 공식 특보를 한 번 조회해 현장별 판정에 합친다.
+def attach_weather_warnings(collected):
+    """전국 특보를 한 번 조회해 수집된 현장에 연결한다.
 
-    API Hub 키가 없거나 조회가 실패해도 기존 실황·예보 결과는 그대로 유지한다.
+    특보 API 장애가 실황·예보 대시보드 전체를 막지 않도록 실패를 격리한다.
     """
-    api_key = getattr(config, "KMA_API_HUB_KEY", "")
-    if not api_key:
-        print("[공식 특보] KMA_API_HUB_KEY 미설정으로 조회를 건너뜁니다")
-        return []
     try:
-        warnings = get_current_warnings(api_key)
-        matched = match_warnings_to_sites(warnings, [item["site"] for item in collected])
-        matched_count = 0
+        warnings = get_active_warnings(config.KMA_API_KEY, timeout=10, retries=2)
+        by_site = match_warnings_to_sites([item["site"] for item in collected], warnings)
         for item in collected:
-            site_warnings = matched.get(item["site"]["site_name"], [])
-            item["judgment"] = alert_rules.apply_official_warnings(item["judgment"], site_warnings)
-            item["official_warnings"] = site_warnings
-            matched_count += len(site_warnings)
-        print(f"[공식 특보] 발효 {len(warnings)}건 / 현장 매칭 {matched_count}건")
+            item["weather_warnings"] = by_site.get(item["site"]["site_name"], [])
+            item["weather_warnings_available"] = True
+        affected = sum(1 for item in collected if item["weather_warnings"])
+        print(f"[기상특보 수집] 전국 {len(warnings)}건 / 해당 현장 {affected}곳")
         return warnings
     except Exception as e:
-        print(f"[공식 특보 오류] 조회는 실패했지만 기존 기상 수집은 계속합니다: {e}")
+        print(f"[기상특보 오류] 특보 확인은 실패했지만 실황·예보 수집은 계속합니다: {e}")
+        for item in collected:
+            item["weather_warnings"] = []
+            item["weather_warnings_available"] = False
         return []
+
+
+def _display_level(item):
+    official = warning_display_level(item.get("weather_warnings") or [])
+    internal = item["judgment"]["level"]
+    severity = {"정상": 0, "데이터없음": 1, "주의": 2, "경보": 3}
+    return max((internal, official or "정상"), key=lambda level: severity[level])
 
 
 def build_current_weather_rows(collected, now_str):
@@ -190,6 +207,8 @@ def build_current_weather_rows(collected, now_str):
             continue
         site, data, judgment = item["site"], item["current"], item["judgment"]
         feels = compute_feels_like(data.get("T1H"), data.get("REH"), data.get("WSD"))
+        legal_signals = item.get("legal_signals") or []
+        measurements = site.get("site_measurements") or {}
         rows.append([
             now_str,
             site["site_name"],
@@ -201,6 +220,13 @@ def build_current_weather_rows(collected, now_str):
             data.get("WSD", ""),
             judgment["level"],
             feels if feels is not None else "",
+            item.get("legal_status") or "해당 없음",
+            ", ".join(dict.fromkeys(s.get("article", "") for s in legal_signals if s.get("article"))),
+            " / ".join(
+                action for signal in legal_signals for action in (signal.get("actions") or [])
+            ),
+            measurements.get("apparent_temperature", ""),
+            measurements.get("gust_wind_speed", ""),
         ])
     return rows
 
@@ -235,6 +261,9 @@ def write_announcement(collected, now_str, mid_forecasts):
             "level": item["judgment"]["level"],
             "reasons": item["judgment"]["reasons"],
             "categories": item["judgment"]["categories"],
+            "legal_signals": item.get("legal_signals", []),
+            "weather_warnings": item.get("weather_warnings", []),
+            "weather_warnings_available": item.get("weather_warnings_available", True),
             "events": events,
         })
     text = alert_rules.build_announcement(now_str, site_results)
@@ -260,7 +289,12 @@ def write_dashboard(collected, now_str, mid_forecasts, generated_at_iso=None, re
             "mid_forecast": mid,
             "events": events,
             "level": item["judgment"]["level"],
+            "display_level": _display_level(item),
             "reasons": item["judgment"]["reasons"],
+            "legal_signals": item.get("legal_signals", []),
+            "legal_status": item.get("legal_status"),
+            "weather_warnings": item.get("weather_warnings", []),
+            "weather_warnings_available": item.get("weather_warnings_available", True),
         })
     html = build_dashboard_html(
         now_str,
@@ -292,7 +326,12 @@ def write_map(collected, now_str, mid_forecasts):
             "forecast": item["forecast"],
             "events": events,
             "level": item["judgment"]["level"],
+            "display_level": _display_level(item),
             "reasons": item["judgment"]["reasons"],
+            "legal_signals": item.get("legal_signals", []),
+            "legal_status": item.get("legal_status"),
+            "weather_warnings": item.get("weather_warnings", []),
+            "weather_warnings_available": item.get("weather_warnings_available", True),
         })
     html = build_map_html(now_str, site_rows)
     os.makedirs(DOCS_DIR, exist_ok=True)
@@ -324,6 +363,10 @@ def update_weather_state(collected, mid_forecasts, generated_at_iso, now_str):
 def write_sheets_safely(collected, now_str, write_forecast=True):
     """Sheets 장애가 대시보드와 위험상태 갱신까지 막지 않도록 격리한다."""
     try:
+        # 로컬에서 대시보드만 확인할 때 Google 선택 패키지가 없어도 수집·화면 생성을
+        # 실행할 수 있도록 실제 Sheets 기록 시점에만 불러온다.
+        from src.sheets_client import append_rows, get_worksheet
+
         ncst_ws = get_worksheet(
             config.GOOGLE_SHEETS_SPREADSHEET_ID,
             "실시간기록",
@@ -361,7 +404,7 @@ def main():
             return
 
     collected = collect_site_data(config.SITES)
-    attach_official_warnings(collected)
+    attach_weather_warnings(collected)
     mid_forecasts = collect_mid_forecasts(config.SITES)
     state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
     delivery = process_notifications(
@@ -371,9 +414,11 @@ def main():
         generated_at_iso,
         webhook_url=config.ALERT_WEBHOOK_URL,
         webhook_token=config.ALERT_WEBHOOK_TOKEN,
+        mode=config.NOTIFICATION_MODE,
     )
+    mode_label = "실발송" if delivery["mode"] == "live" else "모의운영(외부 발송 차단)"
     print(
-        "[알림 전달] "
+        f"[알림 전달: {mode_label}] "
         f"발송 {delivery['sent']}건 / 실패 {delivery['failed']}건 / 대기 {delivery['waiting']}건"
     )
     write_forecast_history = os.environ.get("WRITE_FORECAST_HISTORY", "true").lower() == "true"

@@ -23,6 +23,8 @@ def snapshot(level="정상", categories=None, forecasts=None):
                 "categories": categories or [],
                 "reasons": [],
                 "forecast_risks": forecasts or [],
+                "legal_signals": [],
+                "weather_warnings": [],
             }
         },
     }
@@ -50,6 +52,40 @@ class StateMonitorTests(unittest.TestCase):
         self.assertEqual(changes[0]["type"], "새 예보 위험")
         self.assertEqual(changes[0]["categories"], ["한파"])
 
+    def test_official_warning_activation_and_release_are_detected(self):
+        warning = {
+            "kind": "기상특보", "title": "호우주의보", "phenomenon": "호우",
+            "level": "주의보", "announced_at": "202609201400",
+            "areas": ["경기도(군포)"], "matched_areas": ["경기도(군포)"],
+        }
+        current = snapshot()
+        current["sites"]["테스트 현장"]["weather_warnings"] = [warning]
+        changes = detect_changes(snapshot(), current)
+        self.assertEqual("기상특보 발효", changes[0]["type"])
+        self.assertEqual(["호우"], changes[0]["categories"])
+        message = build_alert_message("2026-09-20 14:00", changes)
+        self.assertIn("기상청 공식 발표", message)
+        self.assertIn("배수로", message)
+
+        released = detect_changes(current, snapshot())
+        self.assertEqual("기상특보 해제", released[0]["type"])
+        self.assertEqual([], released[0]["categories"])
+
+    def test_warning_api_failure_does_not_create_false_release(self):
+        warning = {
+            "kind": "기상특보", "title": "호우주의보", "phenomenon": "호우",
+            "level": "주의보", "announced_at": "202609201400",
+            "matched_areas": ["경기도(군포)"],
+        }
+        previous = snapshot()
+        previous["warning_collection_status"] = "healthy"
+        previous["sites"]["테스트 현장"]["weather_warnings"] = [warning]
+        current = snapshot()
+        current["warning_collection_status"] = "failed"
+        current["sites"]["테스트 현장"]["weather_warnings_available"] = False
+        changes = detect_changes(previous, current)
+        self.assertEqual(["기상특보 수집 장애"], [change["type"] for change in changes])
+
     def test_change_summary_is_carried(self):
         old = snapshot()
         old["last_change_at"] = "2026-09-15T09:00:00+09:00"
@@ -74,6 +110,52 @@ class StateMonitorTests(unittest.TestCase):
         message = build_alert_message("2026-09-15 10:47", changes)
         self.assertIn("테스트 현장", message)
         self.assertIn("배수로", message)
+
+    def test_new_legal_action_is_detected_and_message_contains_article_action(self):
+        current = snapshot()
+        current["sites"]["테스트 현장"]["legal_signals"] = [{
+            "status": "법정 작업중지",
+            "work_type": "steel_erection",
+            "title": "철골작업 중지",
+            "article": "제383조",
+            "reason": "시간당 강우 1.0mm",
+            "actions": ["철골작업 즉시 중지"],
+        }]
+        changes = detect_changes(snapshot(), current)
+        self.assertEqual("법정 조치 발생", changes[0]["type"])
+        message = build_alert_message("2026-09-20 10:00", changes)
+        self.assertIn("제383조", message)
+        self.assertIn("철골작업 즉시 중지", message)
+
+    def test_data_gap_does_not_trigger_external_alert(self):
+        current = snapshot()
+        current["sites"]["테스트 현장"]["legal_signals"] = [{
+            "status": "데이터 부족", "work_type": "site_profile",
+            "title": "현장 작업 프로필 미등록", "article": "판정 전제정보",
+        }]
+        self.assertEqual([], detect_changes(snapshot(), current))
+
+    def test_removed_legal_action_requests_confirmation(self):
+        previous = snapshot()
+        previous["sites"]["테스트 현장"]["legal_signals"] = [{
+            "status": "법정 작업중지", "work_type": "steel_erection",
+            "title": "철골작업 중지", "article": "제383조",
+        }]
+        changes = detect_changes(previous, snapshot())
+        self.assertEqual("법정 조치 상태 변경", changes[0]["type"])
+        self.assertIn("지속 여부 확인", changes[0]["actions"][0])
+
+    def test_legal_status_change_creates_one_event(self):
+        previous = snapshot()
+        current = snapshot()
+        base = {"work_type": "steel_erection", "title": "철골작업 중지", "article": "제383조"}
+        previous["sites"]["테스트 현장"]["legal_signals"] = [{**base, "status": "현장 확인 필요"}]
+        current["sites"]["테스트 현장"]["legal_signals"] = [{
+            **base, "status": "법정 작업중지", "actions": ["철골작업 즉시 중지"],
+        }]
+        changes = detect_changes(previous, current)
+        self.assertEqual(1, len(changes))
+        self.assertEqual("법정 작업중지", changes[0]["to_level"])
 
     def test_state_age_minutes(self):
         state = snapshot()
