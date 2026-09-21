@@ -1,16 +1,18 @@
 {
   "version": 1,
-  "updated_at": "2026-09-21T15:23:35+09:00",
-  "successful_sites": 21,
+  "updated_at": "2026-09-21T20:06:27+09:00",
+  "successful_sites": 0,
   "total_sites": 21,
-  "collection_status": "healthy",
-  "warning_collection_status": "healthy",
+  "collection_status": "failed",
+  "warning_collection_status": "failed",
   "sites": {
     "오리온 진천신공장": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -27,13 +29,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "오리온 진천 기숙사": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -50,13 +54,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "연희·연남동 공공주택": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -73,13 +79,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "청정고원 스포츠센터": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -96,13 +104,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "LX 논현 업무시설": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -119,20 +129,16 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "양산 부산대병원": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
+      "reasons": [
+        "기상 데이터 수신 실패"
       ],
+      "observation_id": "-",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -148,13 +154,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "군포복합개발": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -171,20 +179,16 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "오리온수협 목포 김공장": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
+      "reasons": [
+        "기상 데이터 수신 실패"
       ],
+      "observation_id": "-",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -200,13 +204,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "렉서스 동탄 네트워크": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -223,13 +229,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "화천군부대 시설공사": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -246,13 +254,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "반얀트리호텔 근생동": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -269,20 +279,16 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "포항~안동2 국도건설공사": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
+      "reasons": [
+        "기상 데이터 수신 실패"
       ],
+      "observation_id": "-",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -298,13 +304,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "시흥능곡 주변도로": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -321,20 +329,16 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "뇌죽천 하천재해예방": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
+      "reasons": [
+        "기상 데이터 수신 실패"
       ],
+      "observation_id": "-",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -350,13 +354,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "산솔면 하수처리장": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -373,13 +379,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "단월정수장 시설공사": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -396,20 +404,16 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "후포 공공하수처리": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
+      "reasons": [
+        "기상 데이터 수신 실패"
       ],
+      "observation_id": "-",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -425,13 +429,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "동해안 바닷가 자동차길": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -448,71 +454,15 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
     },
     "풍각지구 정비사업": {
-      "level": "정상",
+      "level": "데이터없음",
       "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
+      "reasons": [
+        "기상 데이터 수신 실패"
       ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
-    "영주 가흥정수장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
-    "송산그린시티 용수공급시설": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20260921-1400",
+      "observation_id": "-",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -529,189 +479,261 @@
         }
       ],
       "weather_warnings": [],
-      "weather_warnings_available": true
+      "weather_warnings_available": false
+    },
+    "영주 가흥정수장": {
+      "level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
+      "forecast_risks": [],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": false
+    },
+    "송산그린시티 용수공급시설": {
+      "level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ],
+      "observation_id": "-",
+      "forecast_risks": [],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": false
     }
   },
   "last_success_at": "2026-09-21T15:23:35+09:00",
-  "last_change_at": "2026-09-21T15:23:35+09:00",
+  "last_change_at": "2026-09-21T20:06:27+09:00",
   "last_changes": [
     {
       "site_name": "전 현장",
-      "type": "기상특보 수집 정상화",
-      "from_level": "수집 장애",
-      "to_level": "정상",
+      "type": "기상특보 수집 장애",
+      "from_level": "healthy",
+      "to_level": "별도 확인 필요",
       "categories": [],
       "reasons": [
-        "기상청 특보 API 수신이 정상화되었습니다."
+        "기상청 특보 API 응답을 받지 못했습니다."
       ]
     },
     {
       "site_name": "오리온 진천신공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
     },
     {
       "site_name": "오리온 진천 기숙사",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
     },
     {
       "site_name": "연희·연남동 공공주택",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
     },
     {
       "site_name": "청정고원 스포츠센터",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
     },
     {
       "site_name": "LX 논현 업무시설",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
       "reasons": [
-        "9/26(토) 흐리고 비 예보, 강수확률 최고 60%"
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "양산 부산대병원",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
       ]
     },
     {
       "site_name": "군포복합개발",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
       "reasons": [
-        "9/26(토) 흐리고 비 예보, 강수확률 최고 60%"
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
       ]
     },
     {
       "site_name": "렉서스 동탄 네트워크",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
     },
     {
       "site_name": "화천군부대 시설공사",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
     },
     {
       "site_name": "반얀트리호텔 근생동",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "포항~안동2 국도건설공사",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "포항~안동2 국도건설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
       "reasons": [
-        "9/26(토) 흐리고 비 예보, 강수확률 최고 60%"
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "포항~안동2 국도건설공사",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
       ]
     },
     {
       "site_name": "시흥능곡 주변도로",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
       "reasons": [
-        "9/26(토) 흐리고 비 예보, 강수확률 최고 60%"
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
       ]
     },
     {
       "site_name": "산솔면 하수처리장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
+    },
+    {
+      "site_name": "풍각지구 정비사업",
+      "type": "수집 장애",
+      "from_level": "정상",
+      "to_level": "데이터없음",
+      "categories": [],
+      "reasons": [
+        "기상 데이터 수신 실패"
+      ]
     }
   ]
 }
