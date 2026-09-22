@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-22T22:26:10+09:00",
+  "updated_at": "2026-09-22T22:40:14+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -112,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -141,7 +141,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -175,7 +175,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -204,7 +204,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -238,7 +238,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -267,7 +267,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -301,7 +301,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -335,7 +335,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -369,7 +369,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -392,7 +392,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -426,7 +426,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -455,7 +455,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -484,7 +484,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -513,7 +513,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -542,7 +542,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -576,7 +576,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -605,7 +605,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -628,7 +628,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260922-2100",
+      "observation_id": "20260922-2200",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -659,7 +659,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-09-22T22:26:10+09:00",
+  "last_success_at": "2026-09-22T22:40:14+09:00",
   "last_change_at": "2026-09-22T22:26:10+09:00",
   "last_changes": [
     {
