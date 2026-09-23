@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-23T15:39:58+09:00",
+  "updated_at": "2026-09-23T20:40:49+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1400",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1400",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1400",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -112,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1400",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -146,7 +146,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1400",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -180,15 +180,10 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1400",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "9/27(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -214,7 +209,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -248,7 +243,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -277,7 +272,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -311,7 +306,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -345,7 +340,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -379,10 +374,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "9/26(토)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -408,7 +408,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -442,7 +442,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -471,7 +471,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -505,7 +505,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -539,14 +539,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
-      "forecast_risks": [
-        {
-          "date": "9/25(금)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20260923-2000",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -568,7 +562,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -602,7 +596,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -631,7 +625,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -665,7 +659,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260923-1500",
+      "observation_id": "20260923-2000",
       "forecast_risks": [
         {
           "date": "9/25(금)",
@@ -696,83 +690,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-09-23T15:39:58+09:00",
-  "last_change_at": "2026-09-23T07:11:38+09:00",
+  "last_success_at": "2026-09-23T20:40:49+09:00",
+  "last_change_at": "2026-09-23T20:40:49+09:00",
   "last_changes": [
     {
-      "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/25(금) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/27(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
       "site_name": "포항~안동2 국도건설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/25(금) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "산솔면 하수처리장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/25(금) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "단월정수장 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/25(금) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "영주 가흥정수장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/25(금) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "영주 가흥정수장",
       "type": "새 예보 위험",
       "from_level": null,
       "to_level": "정상",
