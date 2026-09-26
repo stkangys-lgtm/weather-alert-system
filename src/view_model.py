@@ -29,11 +29,23 @@ SITE_FIELDS = ("id", "name", "short", "category", "region", "lat", "lon", "state
 ACTIONABLE_LEGAL = {STATUS_STOP, STATUS_ACTION, STATUS_VERIFY}
 
 
+MISSING_LIMIT = 900  # 기상청 API: +900 이상, -900 이하 값은 결측(Missing)
+
+
 def _num(value):
     try:
-        return float(value)
+        number = float(value)
     except (TypeError, ValueError):
         return None
+    return number if -MISSING_LIMIT < number < MISSING_LIMIT else None
+
+
+def _is_number(value):
+    try:
+        float(value)
+    except (TypeError, ValueError):
+        return False
+    return True
 
 
 def _int(value):
@@ -69,12 +81,12 @@ def now_values(current):
     if not current:
         return None
     rain = _num(current.get("RN1"))
-    if rain is None:
+    if rain is None and not _is_number(current.get("RN1")):
         rain = parse_pcp(current.get("RN1"))[0] or 0.0
-    temp = _num(current.get("T1H"))
-    feels = compute_feels_like(current.get("T1H"), current.get("REH"), current.get("WSD"))
+    temp, wind, humidity = _num(current.get("T1H")), _num(current.get("WSD")), _int(current.get("REH"))
+    feels = compute_feels_like(temp, humidity, wind)
     return {"temp": temp, "feels": feels if feels is not None else temp, "rain_mm": rain,
-            "wind": _num(current.get("WSD")), "humidity": _int(current.get("REH"))}
+            "wind": wind, "humidity": humidity}
 
 
 def _forecast_time(row):

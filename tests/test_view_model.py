@@ -50,6 +50,16 @@ class NowValuesTests(unittest.TestCase):
         self.assertEqual({"temp": 18.6, "feels": 18.6, "rain_mm": 31.0, "wind": 4.1, "humidity": 95},
                          now_values(self.CURRENT))
 
+    def test_kma_missing_markers_are_not_published_as_values(self):
+        current = dict(self.CURRENT, T1H="-998.9", RN1="-998.9", WSD="999", REH="-999")
+        values = now_values(current)
+        self.assertEqual((None, None, None, None),
+                         (values["temp"], values["feels"], values["wind"], values["humidity"]))
+        self.assertIsNone(values["rain_mm"])
+        rows = fc_rows(datetime(2026, 9, 25, 18, 0), 1, TMP="-998.9", WSD="-998.9")
+        hour = hourly_series(rows, datetime(2026, 9, 25, 17, 0, tzinfo=KST))[0]
+        self.assertEqual((None, None), (hour["temp"], hour["wind"]))
+
     def test_missing_current(self):
         self.assertIsNone(now_values(None))
         self.assertIsNone(observed_at(None))
