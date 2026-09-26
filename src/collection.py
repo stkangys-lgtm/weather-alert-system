@@ -18,7 +18,7 @@ import requests
 
 from src import alert_rules
 from src.legal_rules import evaluate_legal_signals, highest_legal_status
-from src.mid_client import combine_forecast, get_mid_land_forecast, get_mid_temperature
+from src.mid_client import combine_forecast, get_mid_land_forecast, get_mid_temperature, mid_issue_datetime
 from src.mid_regions import resolve_region_codes
 
 MAX_WORKERS = 6
@@ -177,6 +177,7 @@ def collect_mid_forecasts(
     breaker=None,
     land_fetcher=None,
     ta_fetcher=None,
+    now=None,
 ):
     """중기예보(3~10일)를 지역코드별로 한 번씩만 조회한 뒤 현장별로 매핑.
 
@@ -193,6 +194,10 @@ def collect_mid_forecasts(
         land_fetcher = get_mid_land_forecast
     if ta_fetcher is None:
         ta_fetcher = get_mid_temperature
+
+    # 중기예보의 "N일 뒤"는 발표일 기준이다. 실행한 날 기준으로 계산하면 전날 18시 발표를
+    # 쓰는 새벽 실행(04:17~06:17)에서 날짜가 하루씩 밀린다.
+    issue_date = mid_issue_datetime(now).date()
 
     land_cache, ta_cache = {}, {}
     result = {}
@@ -211,7 +216,7 @@ def collect_mid_forecasts(
         if land_reg not in land_cache:
             try:
                 land_cache[land_reg] = land_fetcher(
-                    api_key, land_reg, timeout=mid_timeout, retries=mid_retries, breaker=breaker,
+                    api_key, land_reg, now=now, timeout=mid_timeout, retries=mid_retries, breaker=breaker,
                 )
             except CONNECTION_ERRORS as e:
                 print(f"[중기 육상 오류/연결] {land_reg}: {type(e).__name__}")
@@ -224,7 +229,7 @@ def collect_mid_forecasts(
         if ta_reg not in ta_cache:
             try:
                 ta_cache[ta_reg] = ta_fetcher(
-                    api_key, ta_reg, timeout=mid_timeout, retries=mid_retries, breaker=breaker,
+                    api_key, ta_reg, now=now, timeout=mid_timeout, retries=mid_retries, breaker=breaker,
                 )
             except CONNECTION_ERRORS as e:
                 print(f"[중기 기온 오류/연결] {ta_reg}: {type(e).__name__}")
@@ -236,7 +241,7 @@ def collect_mid_forecasts(
 
         land, temp = land_cache[land_reg], ta_cache[ta_reg]
         if land or temp:
-            result[site["site_name"]] = combine_forecast(land, temp)
+            result[site["site_name"]] = combine_forecast(land, temp, base_date=issue_date)
         else:
             result[site["site_name"]] = []
 

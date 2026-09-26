@@ -83,6 +83,12 @@ def _latest_vfcst_base_time(now=None):
     return yesterday.strftime("%Y%m%d"), "2300"
 
 
+def forecast_base_datetime(now=None):
+    """지금 조회되는 최신 단기예보의 발표시각(한국시각, 시간대 정보 없음)."""
+    base_date, base_time = _latest_vfcst_base_time(now)
+    return datetime.strptime(base_date + base_time, "%Y%m%d%H%M")
+
+
 def get_current_weather(api_key, nx, ny, now=None, timeout=10, retries=RETRY_COUNT, breaker=None):
     """초단기실황 조회. {'T1H': 기온, 'RN1': 강수량, 'REH': 습도, 'WSD': 풍속, 'PTY': 강수형태, ...} 반환."""
     base_date, base_time = _latest_ncst_base_time(now)

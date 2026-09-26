@@ -10,11 +10,14 @@
 import time
 import unittest
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 from unittest.mock import patch
 
 import requests
 
 from src import kma_client
+from src.kma_client import forecast_base_datetime
+from src.mid_client import mid_issue_datetime
 from src.collection import (
     CIRCUIT_BREAKER_THRESHOLD,
     CircuitBreaker,
@@ -133,11 +136,11 @@ class CircuitBreakerTests(unittest.TestCase):
         # 이후 중기예보는 재시도 없이 1회만 호출되어야 한다.
         received_retries = []
 
-        def fake_land(api_key, reg, timeout=None, retries=None, breaker=None):
+        def fake_land(api_key, reg, now=None, timeout=None, retries=None, breaker=None):
             received_retries.append(retries)
             return {"wf4Am": "맑음"}
 
-        def fake_ta(api_key, reg, timeout=None, retries=None, breaker=None):
+        def fake_ta(api_key, reg, now=None, timeout=None, retries=None, breaker=None):
             received_retries.append(retries)
             return {"taMin4": "10"}
 
@@ -148,6 +151,7 @@ class CircuitBreakerTests(unittest.TestCase):
             land_fetcher=fake_land,
             ta_fetcher=fake_ta,
         )
+        self.assertEqual(2, len(received_retries))
         self.assertTrue(all(r == 1 for r in received_retries))
 
     def test_partial_failure_preserves_healthy_sites(self):
@@ -246,6 +250,49 @@ class KmaClientBreakerIntegrationTests(unittest.TestCase):
 
         self.assertEqual(1, len(attempts), "breaker 트립 후에는 재시도가 없어야 한다")
         self.assertEqual([], sleep_calls, "breaker 트립 시 재시도 대기가 없어야 한다")
+
+
+class MidForecastDateTests(unittest.TestCase):
+    SITE = make_site("A", 103, 109, lat=36.68, lon=129.45)
+
+    def _collect(self, now):
+        def land(api_key, reg, **kwargs):
+            return {"wf5Am": "맑음", "wf5Pm": "구름많음", "rnSt5Am": 10, "rnSt5Pm": 20}
+
+        def ta(api_key, reg, **kwargs):
+            return {"taMin5": 17, "taMax5": 23}
+
+        entries = collect_mid_forecasts([self.SITE], api_key="TEST", land_fetcher=land, ta_fetcher=ta, now=now)["A"]
+        return {entry["date"]: entry for entry in entries}
+
+    def test_issue_time_helpers(self):
+        self.assertEqual(datetime(2026, 9, 25, 18, 0), mid_issue_datetime(datetime(2026, 9, 26, 5, 0)))
+        self.assertEqual(datetime(2026, 9, 26, 6, 0), mid_issue_datetime(datetime(2026, 9, 26, 10, 0)))
+        self.assertEqual(datetime(2026, 9, 26, 14, 0), forecast_base_datetime(datetime(2026, 9, 26, 15, 0)))
+
+    def test_morning_run_uses_previous_evening_issue_date(self):
+        # 06:30 전에는 전날 18시 발표를 쓰므로 "5일 뒤"는 9/25 + 5 = 9/30 이다.
+        by_date = self._collect(datetime(2026, 9, 26, 5, 0))
+        self.assertEqual("맑음", by_date["2026-09-30"]["sky_am"])
+        self.assertEqual(17, by_date["2026-09-30"]["ta_min"])
+
+    def test_daytime_run_uses_same_day_issue_date(self):
+        by_date = self._collect(datetime(2026, 9, 26, 10, 0))
+        self.assertEqual("맑음", by_date["2026-10-01"]["sky_am"])
+
+    def test_fetchers_receive_now(self):
+        seen = []
+
+        def land(api_key, reg, **kwargs):
+            seen.append(kwargs.get("now"))
+            return {}
+
+        def ta(api_key, reg, **kwargs):
+            return {}
+
+        now = datetime(2026, 9, 26, 5, 0)
+        collect_mid_forecasts([self.SITE], api_key="TEST", land_fetcher=land, ta_fetcher=ta, now=now)
+        self.assertEqual([now], seen)
 
 
 if __name__ == "__main__":

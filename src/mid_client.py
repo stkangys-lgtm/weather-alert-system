@@ -30,6 +30,11 @@ def _latest_tmfc(now=None):
     return yesterday.strftime("%Y%m%d") + "1800"
 
 
+def mid_issue_datetime(now=None):
+    """지금 조회되는 최신 중기예보의 발표시각(06:00 또는 18:00, 한국시각, 시간대 정보 없음)."""
+    return datetime.strptime(_latest_tmfc(now), "%Y%m%d%H%M")
+
+
 def _request(endpoint, api_key, params, timeout=10, retries=RETRY_COUNT, breaker=None):
     """breaker가 전달되면 성공·실패를 공유 상태에 기록한다. 다른 워커가 이미 회로 차단을
     발동시켰다면 남은 재시도 대기 없이 즉시 예외를 올린다.
