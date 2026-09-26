@@ -38,7 +38,7 @@
       ["i-hum", "습도", v.humidity == null ? "-" : v.humidity, "%"],
     ];
     return items.map(([ic, name, value, unit]) =>
-      `<div class="tile"><div class="l">${WX.icon(ic)}${name}</div><div class="v num">${esc(value)}<small>${unit}</small></div></div>`).join("");
+      `<div class="tile"><div class="l">${WX.icon(ic)}${name}<small>${unit}</small></div><div class="v num">${esc(value)}</div></div>`).join("");
   }
   function legalInfo(site) {
     if (!site.legal_profile) {
@@ -72,7 +72,8 @@
     const L = state.latest;
     const obs = site.as_of ? `${WX.kst(site.as_of).hm} 관측` : "관측 자료 없음";
     const issued = L.forecast_issued_at ? `${WX.kst(L.forecast_issued_at).hm} 발표` : "발표 시각 없음";
-    $("#tlNote").textContent = `지금 칸은 ${obs}, 나머지는 기상청 단기예보(${issued})입니다.`;
+    $("#tlNote").textContent = (site.hourly || []).length ? `지금 칸은 ${obs}, 나머지는 기상청 단기예보(${issued})입니다.`
+      : `지금 칸은 ${obs}입니다. 이 현장은 이번 수집에서 기상청 예보 자료를 받지 못했습니다.`;
     requestAnimationFrame(() => requestAnimationFrame(() => tl.classList.add("shown")));
   }
   function moveCursor() {
@@ -121,9 +122,13 @@
     },
     open(site, first) {
       $("#detail").classList.add("open");
+      $("#detail").inert = false;
       render(first);
     },
-    close() { $("#detail").classList.remove("open", "expanded"); },
+    close() {
+      $("#detail").classList.remove("open", "expanded");
+      $("#detail").inert = true;
+    },
     render() { render(false); },
     moveCursor,
   };

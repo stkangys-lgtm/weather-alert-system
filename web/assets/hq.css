@@ -63,6 +63,7 @@ html, body { height: 100%; overflow: hidden; }
 .row .u { display: block; font-size: 10px; font-weight: 800; color: var(--muted-ink); letter-spacing: .06em; margin-top: 4px; }
 .row .nm { display: block; font-weight: 700; font-size: 14.5px; letter-spacing: -.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .row .st { display: block; font-size: 12px; color: var(--ink2); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row .st .ic { width: 12px; height: 12px; vertical-align: -2px; margin-right: 3px; }
 .row .st .warn { color: var(--warn); font-weight: 700; }
 .row .st .crit { color: var(--crit); font-weight: 700; }
 .row .strip { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; margin-top: 7px; }
@@ -82,9 +83,12 @@ html, body { height: 100%; overflow: hidden; }
 .dhead h2 { margin: 3px 0 0; font-size: 20px; letter-spacing: -.4px; line-height: 1.3; }
 .dbody { flex: 1; overflow: auto; padding: 0 16px 16px; display: flex; flex-direction: column; gap: 12px; scrollbar-width: thin; overscroll-behavior: contain; }
 .hero { position: relative; overflow: hidden; border-radius: 18px; padding: 18px; color: #fff; min-height: 150px;
-  background: linear-gradient(160deg, #30405a 0%, #4c5d78 55%, #7d8a9f 100%); transition: background .6s, filter .4s; }
-.hero.clear { background: linear-gradient(160deg, #4a78b0 0%, #7fa6d3 60%, #b9d0ea 100%); }
-.hero.cloudy { background: linear-gradient(160deg, #556275 0%, #7d8898 60%, #a7b0bd 100%); }
+  /* 흰 글자 대비 4.5 이상(설계서 7): 하늘색 위에 아래로 짙어지는 막을 덮는다(계산상 최저 4.8) */
+  --shade: linear-gradient(180deg, rgba(16, 24, 32, .28), rgba(16, 24, 32, .58));
+  --sky: linear-gradient(160deg, #30405a 0%, #4c5d78 55%, #7d8a9f 100%);
+  background: var(--shade), var(--sky); transition: filter .4s; }
+.hero.clear { --sky: linear-gradient(160deg, #4a78b0 0%, #7fa6d3 60%, #b9d0ea 100%); }
+.hero.cloudy { --sky: linear-gradient(160deg, #556275 0%, #7d8898 60%, #a7b0bd 100%); }
 .hero.dim { filter: saturate(.35); }
 .hero::after { content: ""; position: absolute; inset: -40px; pointer-events: none; opacity: 0; transition: opacity .6s;
   background-image: repeating-linear-gradient(104deg, rgba(255, 255, 255, 0) 0 10px, rgba(255, 255, 255, .22) 10px 11px, rgba(255, 255, 255, 0) 11px 22px);
@@ -94,15 +98,15 @@ html, body { height: 100%; overflow: hidden; }
 .hero.clear::before { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 255, 255, .45), rgba(255, 255, 255, 0) 70%); pointer-events: none; }
 @keyframes rain { from { transform: translate(0, 0); } to { transform: translate(-6px, 26px); } }
-.hero .t1 { display: flex; align-items: center; gap: 6px; font-size: 12.5px; opacity: .9; font-weight: 600; position: relative; }
+.hero .t1 { display: flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; position: relative; }
 .hero .t2 { font-size: 60px; font-weight: 800; letter-spacing: -.05em; line-height: 1; margin-top: 8px; position: relative; }
 .hero .t3 { font-size: 14px; margin: 8px 0 0; line-height: 1.5; max-width: 94%; position: relative; }
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 10px 9px; min-width: 0; }
-.tile .l { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--muted-ink); font-weight: 600; }
+.tile .l { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--muted-ink); font-weight: 600; white-space: nowrap; }
+.tile .l small { font-size: 10px; font-weight: 600; margin-left: auto; }
 .tile .l .ic { width: 13px; height: 13px; }
 .tile .v { font-size: 20px; font-weight: 800; letter-spacing: -.03em; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tile .v small { font-size: 11px; color: var(--muted-ink); font-weight: 700; margin-left: 1px; letter-spacing: 0; }
 .tl { position: relative; touch-action: pan-y; cursor: pointer; margin-top: 26px; }  /* 위쪽 여백: 시각 표시 자리 */
 .tl-row { display: grid; grid-template-columns: 40px 1fr; align-items: center; gap: 6px; margin-top: 6px; }
 .tl-row > span { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--ink2); font-weight: 600; }

@@ -49,7 +49,7 @@
   <div class="list" id="list"></div>
 </aside>
 
-<section class="detail glass" id="detail" aria-label="선택한 현장" aria-live="polite">
+<section class="detail glass" id="detail" aria-label="선택한 현장" aria-live="polite" inert>
   <button type="button" class="handle" data-sheet="detail" aria-label="상세 펼치기·접기"></button>
   <div class="dhead"><div><div class="cat" id="dCat"></div><h2 id="dName"></h2></div><button type="button" class="x" id="dClose" aria-label="상세 닫기"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-x"/></svg></button></div>
   <div class="dbody">
@@ -85,7 +85,7 @@
 </section>
 
 <div class="scrim" id="scrim"></div>
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><header><b id="mTitle">전파 문안</b><button type="button" class="x" id="mClose" aria-label="닫기"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-x"/></svg></button></header><p class="mnote" id="mNote"></p><pre id="mText"></pre><footer><button type="button" class="btn sec" id="mCancel">닫기</button><button type="button" class="btn pri" id="mCopy"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-copy"/></svg>문안 복사</button></footer></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" inert><header><b id="mTitle">전파 문안</b><button type="button" class="x" id="mClose" aria-label="닫기"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-x"/></svg></button></header><p class="mnote" id="mNote"></p><pre id="mText"></pre><footer><button type="button" class="btn sec" id="mCancel">닫기</button><button type="button" class="btn pri" id="mCopy"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-copy"/></svg>문안 복사</button></footer></div>
 <div class="toast" id="toast" role="status"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-check"/></svg><span></span></div>
 
 <div class="loadfail" id="loadfail" role="alert" hidden><div><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-alert"/></svg><b>화면 자료를 불러오지 못했습니다</b><p>잠시 뒤 다시 시도해 주세요. 계속되면 관리자에게 알려 주세요.</p><button type="button" class="btn pri" id="retry"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-refresh"/></svg>다시 시도</button></div></div>

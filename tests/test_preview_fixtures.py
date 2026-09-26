@@ -11,7 +11,7 @@ class PreviewFixtureTests(unittest.TestCase):
     def test_variants(self):
         base = build([make_item(site=site_cfg(f"현장{k}", lat=36 + k * 0.1, lon=127 + k * 0.1)) for k in range(7)])
         fixtures = build_fixtures(base)
-        self.assertEqual({"rain", "failed", "partial", "night", "escape"}, set(fixtures))
+        self.assertEqual({"rain", "failed", "partial", "night", "escape", "noforecast", "onset"}, set(fixtures))
         for name, latest in fixtures.items():
             with self.subTest(name=name):
                 self.assertEqual(1, latest["schema"])
@@ -25,6 +25,12 @@ class PreviewFixtureTests(unittest.TestCase):
         self.assertIn("missing", [s["state"] for s in fixtures["partial"]["sites"]])
         self.assertEqual("failed", fixtures["night"]["status"]["warnings"])
         self.assertIn("<b>", fixtures["escape"]["sites"][0]["name"])
+        noforecast = fixtures["noforecast"]
+        self.assertEqual(([], "partial"), (noforecast["sites"][2]["hourly"], noforecast["status"]["forecast"]))
+        self.assertIn("예보 자료가 없습니다", noforecast["sites"][2]["summary"])
+        onset = fixtures["onset"]
+        self.assertEqual(("rain", 0.0), (onset["sites"][0]["now"]["precip"], onset["sites"][0]["now"]["rain_mm"]))
+        self.assertEqual(2, onset["national"]["rain_sites"])
 
 
 if __name__ == "__main__":

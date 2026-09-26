@@ -23,15 +23,17 @@
     return `${alert}<b>${esc(site.short)}</b><span class="mu num">${fmt(v.temp, 1)}°</span>`;
   }
 
-  function attach(next) {
+  // quiet: 같은 지도에 새 자료로 표식만 다시 만든다(이동·등장 효과 없음).
+  function attach(next, quiet) {
     marks.forEach(m => m.handle.remove());
     marks.clear();
     groups.forEach(g => g.handle.remove());
     groups = [];
+    const fresh = next !== adapter;
     adapter = next;
     located().forEach(site => {
       const el = document.createElement("div");
-      el.className = "mk";
+      el.className = quiet ? "mk in" : "mk";
       el.tabIndex = 0;
       el.setAttribute("role", "button");
       el.innerHTML = '<span class="d"></span><span class="lab"></span>';
@@ -41,11 +43,13 @@
       });
       marks.set(site.id, { site, el, handle: adapter.addMarker(el, site.lon, site.lat, "left", [-7, 0]) });
     });
-    adapter.onMove(regroup);
+    if (fresh) adapter.onMove(regroup);
     $("#zIn").hidden = $("#zOut").hidden = !adapter.canZoom;
     render();
-    adapter.fitBounds(WX.KOREA, { padding: HQ.padding() });
-    popIn();
+    if (!quiet) {
+      adapter.fitBounds(WX.KOREA, { padding: HQ.padding() });
+      popIn();
+    }
     if (state.sel) focus(state.sel, false);
   }
 
@@ -89,10 +93,11 @@
     pts.forEach(a => {
       if (used.has(a.m.site.id)) return;
       used.add(a.m.site.id);
-      if (a.m.site === state.sel) return;
+      // 선택 현장과 특보·법정 현장(pinned)은 묶음에 넣지 않고 항상 따로 보인다.
+      if (a.m.site === state.sel || a.m.site.pinned) return;
       const members = [a.m.site];
       pts.forEach(b => {
-        if (used.has(b.m.site.id) || b.m.site === state.sel) return;
+        if (used.has(b.m.site.id) || b.m.site === state.sel || b.m.site.pinned) return;
         if (Math.hypot(a.p.x - b.p.x, a.p.y - b.p.y) < CLUSTER_PX) { members.push(b.m.site); used.add(b.m.site.id); }
       });
       if (members.length > 1) group(members);
@@ -187,5 +192,6 @@
     },
     render,
     focus,
+    reload() { if (adapter) attach(adapter, true); },
   };
 })();

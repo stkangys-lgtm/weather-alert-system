@@ -7,10 +7,13 @@
   const HQ = (window.HQ = window.HQ || {});
   const state = (HQ.state = { latest: null, sites: [], times: [], h: 0, sel: null, sort: "rain", view: "map" });
   const UNIT = { rain: "MM/H", wind: "M/S", temp: "°C" };
-  let bound = false;
+  const REFRESH_MS = 5 * 60 * 1000;   // 자료 다시 불러오기(Pages 캐시 최대 10분 고려)
+  const STATUS_MS = 60 * 1000;        // 수집 지연 여부는 1분마다 다시 판단
+  let bound = false, timers = false;
 
   HQ.value = (site, h = state.h) => WX.valueAt(site, state.times, h);
-  HQ.isRain = v => !!v && (v.rain || 0) >= WX.RAIN_BINS[0];
+  // 관측(지금)은 Python 판단(now.precip)을 따르고, 예보 시각은 예보 강수량으로 본다.
+  HQ.isRain = v => !!v && (v.observed && v.precip !== undefined ? v.precip === "rain" : (v.rain || 0) >= WX.RAIN_BINS[0]);
   HQ.hourText = h => (h === 0 ? "지금" : WX.hourLabel(state.times[h], state.times[0]));
   HQ.whenText = h => {
     if (h > 0) return `${HQ.hourText(h)} 예보`;
@@ -70,7 +73,7 @@
     if (!top) {
       setKpi("rainMax", 0);
       $("#rainMaxL").textContent = "최대 시간당";
-    } else if (h > 0 && !isFinite(Number(top.v.rainText))) {
+    } else if (!isFinite(Number(top.v.rainText))) {
       mx._tween = (mx._tween || 0) + 1;
       mx.dataset.v = String(top.v.rain);
       mx.textContent = top.v.rainText;
@@ -87,11 +90,12 @@
   /* ── 현장 목록 ── */
   function statusLine(site, h) {
     if (site.state === "missing") return '<span class="mute">자료 없음 · 이번 수집 실패</span>';
+    // 빨강·주황 글자는 특보·법정에만, 항상 아이콘과 함께(설계서 3.1).
     const official = site.warnings.filter(w => w.kind !== "예비특보");
-    if (official.length) { const c = WX.warningChip(official[0]); return `<span class="${c.cls}">${esc(c.text)}</span>`; }
+    if (official.length) { const c = WX.warningChip(official[0]); return `<span class="${c.cls}">${WX.icon("i-alert")}${esc(c.text)}</span>`; }
     const legal = site.legal.find(l => WX.legalChip(l).cls);
-    if (legal) { const c = WX.legalChip(legal); return `<span class="${c.cls}">${esc(c.text)}</span>`; }
-    if (site.warnings.length) return `<span class="warn">${esc(WX.warningChip(site.warnings[0]).text)}</span>`;
+    if (legal) { const c = WX.legalChip(legal); return `<span class="${c.cls}">${WX.icon("i-shield")}${esc(c.text)}</span>`; }
+    if (site.warnings.length) return `<span class="warn">${WX.icon("i-alert")}${esc(WX.warningChip(site.warnings[0]).text)}</span>`;
     if (h === 0 && site.state === "stale") return `<span class="mute">${WX.kst(site.as_of).hm} 관측 자료 · 이번 수집 실패</span>`;
     const v = HQ.value(site, h), ahead = [];
     for (let k = h + 1; k <= Math.min(h + 12, state.times.length - 1); k++) {
@@ -99,21 +103,24 @@
       if (f) ahead.push({ k, f });
     }
     const wet = ahead.filter(x => HQ.isRain(x.f));
+    const noForecast = !(site.hourly || []).length;   // 예보를 받지 못한 현장을 "비 예보 없음"으로 적지 않는다
     if (HQ.isRain(v)) {
       const head = h === 0 ? "지금 비" : "비";
+      if (noForecast) return `${head} · 예보 자료 없음`;
       return wet.length ? `${head} · 예보상 ${esc(HQ.hourText(wet[wet.length - 1].k))}까지` : `${head} · 이후 12시간 비 예보 없음`;
     }
+    if (noForecast || (h > 0 && !v)) return '<span class="mute">예보 자료 없음</span>';
     if (wet.length) return `예보상 ${esc(HQ.hourText(wet[0].k))}부터 비`;
     const sky = (v && v.sky) || (ahead[0] && ahead[0].f.sky);
     return `${sky ? `${esc(sky)} · ` : ""}12시간 비 예보 없음`;
   }
-  function buildList() {
+  function buildList(intro = true) {
     const list = $("#list");
     list.innerHTML = "";
     state.sites.forEach(site => {
       const row = document.createElement("button");
       row.type = "button";
-      row.className = "row pre";
+      row.className = intro ? "row pre" : "row";
       row.dataset.id = site.id;
       row.innerHTML = '<span class="big"><span class="v num"></span><span class="u"></span></span>'
         + `<span class="mid"><span class="nm" title="${esc(site.name)}">${esc(site.short)}</span><span class="st"></span>`
@@ -240,6 +247,38 @@
       if (HQ.detail && window.innerWidth >= 900 && state.view === "map" && state.sites.length) HQ.select(HQ.ordered()[0], false);
     }, delay(1300));
   }
+  // 새 자료로 바꾼다. 고른 현장·시각·정렬·화면은 그대로 둔다.
+  HQ.applyLatest = latest => {
+    const selId = state.sel && state.sel.id;
+    state.latest = latest;
+    state.sites = latest.sites;
+    state.times = WX.timeline(latest);
+    state.h = Math.min(state.h, state.times.length - 1);
+    state.sel = selId ? state.sites.find(s => s.id === selId) || null : null;
+    renderStatus();
+    buildList(false);
+    if (HQ.time) HQ.time.retick();
+    if (HQ.map) HQ.map.reload();
+    if (state.sel) { if (HQ.detail) HQ.detail.open(state.sel, true); } else { HQ.close(); }
+    HQ.setHour(state.h, true);
+    if (state.view === "list" && HQ.table) HQ.table.render();
+  };
+  async function refresh() {
+    try {
+      const latest = await WX.load(WX.dataUrl("data/latest.json"));
+      if (latest.generated_at !== state.latest.generated_at) HQ.applyLatest(latest);
+      else renderStatus();
+    } catch (error) {
+      renderStatus();   // 다시 불러오기에 실패하면 이전 화면을 두고 수집 상태만 다시 판단한다
+    }
+  }
+  function startTimers() {
+    if (timers) return;
+    timers = true;
+    setInterval(renderStatus, STATUS_MS);
+    setInterval(refresh, REFRESH_MS);
+  }
+
   function start(latest) {
     state.latest = latest;
     state.sites = latest.sites;
@@ -255,6 +294,7 @@
     HQ.setHour(0, true);
     if (HQ.map) HQ.map.init();
     HQ.setView(location.hash === "#list" ? "list" : "map");
+    startTimers();
     intro();
   }
   async function boot() {

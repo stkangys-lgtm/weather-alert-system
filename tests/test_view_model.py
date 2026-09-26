@@ -189,6 +189,12 @@ class BuildLatestTests(unittest.TestCase):
         self.assertEqual({"mm": 31.0, "site": "5355accc"}, national["max_rain"])
         self.assertTrue(national["summary"].startswith("후포에 지금 시간당 31mm(관측)의 매우 강한 비, 예보는 1mm 미만."))
 
+    def test_now_carries_precipitation_kind(self):
+        onset = build([make_item(current=dict(obs(rn1="0"), PTY="빗방울"))])["sites"][0]["now"]
+        dry = build([make_item(current=obs(rn1="0"))])["sites"][0]["now"]
+        snow = build([make_item(current=dict(obs(rn1="2", t1h="-3"), PTY="눈"))])["sites"][0]["now"]
+        self.assertEqual(("rain", None, "snow"), (onset["precip"], dry["precip"], snow["precip"]))
+
     def test_rain_sites_count_onset_but_not_snow(self):
         onset = make_item(current=dict(obs(rn1="0"), PTY="비"))
         snow = make_item(site=site_cfg("연희·연남동 공공주택"), current=dict(obs(rn1="2", t1h="-3"), PTY="눈"))

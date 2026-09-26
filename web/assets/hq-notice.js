@@ -4,6 +4,9 @@
   const { $, $$, esc, fmt } = WX;
   const HQ = window.HQ, state = HQ.state;
   let lastFocus = null;
+  // 모달이 열린 동안 나머지 화면은 초점·화면 읽기에서 뺀다(닫으면 원래대로).
+  const PAGE = ["#map", "header.top", "#banner", "#sheet", "#detail", ".legend", ".mapctl", "#scrub", "#tableView"];
+  let saved = null;
 
   function open(site) {
     const L = state.latest;
@@ -12,6 +15,8 @@
     $("#mNote").textContent = `${WX.kst(L.generated_at).hm} 수집 자료 기준 · 기상청 관측·예보`;
     $("#mText").textContent = site ? site.notice : L.national.notice;
     document.body.classList.add("modal-open");
+    saved = PAGE.map(sel => { const el = $(sel); const was = el.inert; el.inert = true; return [el, was]; });
+    $("#modal").inert = false;
     $("#scrim").classList.add("open");
     $("#modal").classList.add("open");
     $("#mCopy").focus();
@@ -21,6 +26,9 @@
     document.body.classList.remove("modal-open");
     $("#scrim").classList.remove("open");
     $("#modal").classList.remove("open");
+    $("#modal").inert = true;
+    if (saved) saved.forEach(([el, was]) => { el.inert = was; });
+    saved = null;
     if (lastFocus && lastFocus.focus) lastFocus.focus();
     return true;
   }

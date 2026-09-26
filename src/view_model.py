@@ -166,6 +166,9 @@ def is_pinned(view):
 def finish_site(view, now):
     """고정 여부·요약 문장·전파 문안을 채우고 허용 목록 필드만 남긴다."""
     view["pinned"] = is_pinned(view)
+    if view["now"]:
+        # 화면이 비·눈 여부를 Python과 같은 기준으로 쓰도록 판단 결과를 싣는다("rain"|"snow"|None).
+        view["now"] = dict(view["now"], precip=narrative.precipitation(view["now"]))
     view["summary"] = narrative.site_summary(view, now)
     view["notice"] = narrative.site_notice(view, now)
     return {key: view[key] for key in SITE_FIELDS}

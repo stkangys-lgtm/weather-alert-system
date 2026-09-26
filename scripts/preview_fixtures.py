@@ -7,6 +7,8 @@ docs/data/latest.json의 현장 목록·위치를 바탕으로 상황별 자료�
 - partial: 일부 현장 이전 자료 + 1곳 자료 없음
 - night: 운영시간 뒤(다음 수집 내일 04:17) + 특보 확인 실패
 - escape: 현장명·문장에 <, &, " 가 들어간 경우(글자로만 보여야 함)
+- noforecast: 1곳 예보 없음(단기예보 일부 실패)
+- onset: 비가 막 시작된 현장(강수량 0, 강수형태 빗방울) 1곳 + 비 1곳
 """
 
 import copy
@@ -45,17 +47,23 @@ def _finish(latest):
     return latest
 
 
-def build_fixtures(base):
-    """상황별 시험 자료(이름 → latest.json 형태 dict)."""
-    fixtures = {}
-
-    rain = copy.deepcopy(base)
-    for site in rain["sites"]:  # 그날 실제 날씨와 무관하게 같은 결과가 나오도록 비·특보·법정을 비운다
+def _calm(latest):
+    """그날 실제 날씨와 무관하게 같은 결과가 나오도록 비·특보·법정을 비운 사본."""
+    latest = copy.deepcopy(latest)
+    for site in latest["sites"]:
         site.update(warnings=[], legal=[])
         if site["now"]:
             site["now"].update(rain_mm=0.0, pty="없음")
         for hour in site["hourly"]:
             hour.update(rain_mm=0.0, rain_label="0", pty="없음")
+    return latest
+
+
+def build_fixtures(base):
+    """상황별 시험 자료(이름 → latest.json 형태 dict)."""
+    fixtures = {}
+
+    rain = _calm(base)
     located = [s for s in rain["sites"] if s["now"]]
     for site, mm in zip(located, RAIN_NOW):
         site["now"].update(rain_mm=mm, pty="비")
@@ -93,6 +101,17 @@ def build_fixtures(base):
     escape = copy.deepcopy(base)
     escape["sites"][0].update(name='오리온 <b>진천</b> & "시험" 현장', short='<i>진천</i> & "시험"')
     fixtures["escape"] = _finish(escape)
+
+    noforecast = copy.deepcopy(base)
+    noforecast["status"]["forecast"] = "partial"
+    noforecast["sites"][2]["hourly"] = []
+    fixtures["noforecast"] = _finish(noforecast)
+
+    onset = _calm(base)
+    wet = [s for s in onset["sites"] if s["now"]]
+    wet[0]["now"].update(rain_mm=0.0, pty="빗방울")
+    wet[1]["now"].update(rain_mm=2.0, pty="비")
+    fixtures["onset"] = _finish(onset)
     return fixtures
 
 

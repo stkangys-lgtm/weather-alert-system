@@ -80,8 +80,11 @@
     if (h === 0) {
       const now = site.now;
       if (!now) return null;
-      return { temp: now.temp, feels: now.feels, rain: now.rain_mm, rainText: WX.fmt(now.rain_mm), wind: now.wind,
-               humidity: now.humidity, pty: now.pty, sky: null, pop: null, observed: true };
+      // 강수량이 0.1mm 미만이어도 Python이 비로 판단(now.precip)했으면 빗방울로 보인다.
+      const onset = now.precip === "rain" && !((now.rain_mm || 0) >= WX.RAIN_BINS[0]);
+      return { temp: now.temp, feels: now.feels, rain: onset ? WX.RAIN_BINS[0] : now.rain_mm,
+               rainText: onset ? "<0.1" : WX.fmt(now.rain_mm), wind: now.wind, humidity: now.humidity,
+               pty: now.pty, precip: now.precip, sky: null, pop: null, observed: true };
     }
     if (!site._byTime) {
       site._byTime = new Map();
@@ -93,31 +96,45 @@
              humidity: hour.humidity, pty: hour.pty, sky: hour.sky, pop: hour.pop, observed: false };
   };
 
-  // 상단 수집 상태(설계서 3.2·5.6·6). 실패는 회색으로 두고 주황·빨강을 쓰지 않는다.
-  WX.collectionStatus = latest => {
-    const g = WX.kst(latest.generated_at);
+  // 상단 수집 상태(설계서 3.2·5.6·6). 실패·지연은 회색으로 두고 주황·빨강을 쓰지 않는다.
+  // 보는 사람의 지금 시각(now)과 비교해, 예정된 다음 수집이 45분 넘게 지나면 "수집 지연"으로 표시한다.
+  WX.STALL_MS = 45 * 60 * 1000;
+  WX.collectionStatus = (latest, now = Date.now()) => {
+    const g = WX.kst(latest.generated_at), today = WX.kst(now);
     const n = latest.schedule && latest.schedule.next_run_at ? WX.kst(latest.schedule.next_run_at) : null;
-    const nextDay = n && n.date !== g.date;
-    const next = n ? `다음 수집 <b class="num">${nextDay ? "내일 " : ""}${n.hm}</b>` : "";
-    const current = (latest.status || {}).current;
+    const dayDiff = x => Math.round((Date.UTC(x.y, x.m - 1, x.d) - Date.UTC(today.y, today.m - 1, today.d)) / 86400000);
+    const stamp = x => (dayDiff(x) === 0 ? x.hm : `${x.m}/${x.d} ${x.hm}`);
+    const nextText = x => (dayDiff(x) === 0 ? x.hm : dayDiff(x) === 1 ? `내일 ${x.hm}` : `${x.m}/${x.d} ${x.hm}`);
+    const next = n ? `다음 수집 <b class="num">${nextText(n)}</b>` : "";
+    const status = latest.status || {};
     const failed = latest.sites.filter(s => s.state !== "ok").length;
-    if (current === "failed") {
+    if (n && now > n.ms + WX.STALL_MS) {
+      return { level: "fail", html: `수집 지연 · 마지막 수집 <b class="num">${stamp(g)}</b>`,
+               short: `<b class="num">${stamp(g)}</b> 수집 지연`,
+               banner: `수집이 지연되고 있습니다 · 마지막 수집 ${stamp(g)} (예정된 ${stamp(n)} 수집이 없었습니다)` };
+    }
+    if (status.current === "failed") {
       const shown = latest.sites.filter(s => s.as_of).map(s => new Date(s.as_of).getTime());
-      const obs = shown.length ? `${WX.kst(Math.max(...shown)).hm} 관측 자료 표시 중` : "표시할 관측 자료 없음";
-      return { level: "fail", html: `<b class="num">${g.hm}</b> 수집 실패 · ${obs}`,
-               short: `<b class="num">${g.hm}</b> 수집 실패`, banner: `${g.hm} 수집 실패 · ${obs}` };
+      const obs = shown.length ? `${stamp(WX.kst(Math.max(...shown)))} 관측 자료 표시 중` : "표시할 관측 자료 없음";
+      return { level: "fail", html: `<b class="num">${stamp(g)}</b> 수집 실패 · ${obs}`,
+               short: `<b class="num">${stamp(g)}</b> 수집 실패`, banner: `${stamp(g)} 수집 실패 · ${obs}` };
     }
-    if (current === "partial") {
-      return { level: "warn", html: `<b class="num">${g.hm}</b> 수집 · ${failed}곳 실패 · ${next}`,
-               short: `<b class="num">${g.hm}</b> · ${failed}곳 실패`,
-               banner: `${g.hm} 수집에서 ${failed}개 현장의 관측 자료를 받지 못해 이전 자료 또는 "자료 없음"으로 표시합니다.` };
+    if (status.current === "partial") {
+      return { level: "warn", html: `<b class="num">${stamp(g)}</b> 수집 · ${failed}곳 실패 · ${next}`,
+               short: `<b class="num">${stamp(g)}</b> · ${failed}곳 실패`,
+               banner: `${stamp(g)} 수집에서 ${failed}개 현장의 관측 자료를 받지 못해 이전 자료 또는 "자료 없음"으로 표시합니다.` };
     }
-    if (nextDay) {
-      return { level: "ok", html: `마지막 수집 <b class="num">${g.hm}</b> · ${next}`,
-               short: `마지막 <b class="num">${g.hm}</b>`, banner: null };
+    if (status.forecast && status.forecast !== "ok") {
+      return { level: "warn", html: `<b class="num">${stamp(g)}</b> 수집 · 예보 ${status.forecast === "failed" ? "수집 실패" : "일부 실패"} · ${next}`,
+               short: `<b class="num">${stamp(g)}</b> · 예보 실패`,
+               banner: `${stamp(g)} 수집에서 예보 자료를 받지 못한 현장이 있어 해당 현장은 "예보 자료 없음"으로 표시합니다.` };
     }
-    return { level: "ok", html: `정상 수집 · <b class="num">${g.hm}</b> 수집 · ${next}`,
-             short: `<b class="num">${g.hm}</b> 수집`, banner: null };
+    if (n && n.date !== g.date) {
+      return { level: "ok", html: `마지막 수집 <b class="num">${stamp(g)}</b> · ${next}`,
+               short: `마지막 <b class="num">${stamp(g)}</b>`, banner: null };
+    }
+    return { level: "ok", html: `정상 수집 · <b class="num">${stamp(g)}</b> 수집 · ${next}`,
+             short: `<b class="num">${stamp(g)}</b> 수집`, banner: null };
   };
 
   WX.warningChip = w => {
@@ -141,11 +158,21 @@
     const asked = new URLSearchParams(location.search).get("data");
     return asked && /^[\w\-./]+\.json$/.test(asked) && !asked.includes("//") ? asked : fallback;
   };
+  // 화면 자료 모양 점검: 맞지 않으면 그리기 전에 "불러오지 못했습니다" 안내로 보낸다(반쯤 그린 화면 방지).
+  WX.validLatest = data => {
+    const isObj = v => !!v && typeof v === "object" && !Array.isArray(v);
+    const isTime = v => typeof v === "string" && isFinite(new Date(v).getTime());
+    if (!isObj(data) || data.schema !== 1 || !Array.isArray(data.sites) || !data.sites.length) return false;
+    if (!isTime(data.generated_at) || !isObj(data.status) || !isObj(data.national) || !isObj(data.schedule)) return false;
+    return data.sites.every(s => isObj(s) && typeof s.id === "string" && typeof s.name === "string" && typeof s.short === "string"
+      && typeof s.state === "string" && Array.isArray(s.warnings) && Array.isArray(s.legal) && Array.isArray(s.hourly)
+      && (s.as_of == null || isTime(s.as_of)));
+  };
   WX.load = async url => {
     const res = await fetch(url, { cache: "no-cache" });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    if (!data || data.schema !== 1 || !Array.isArray(data.sites)) throw new Error("화면 자료 형식이 맞지 않습니다");
+    if (!WX.validLatest(data)) throw new Error("화면 자료 형식이 맞지 않습니다");
     return data;
   };
 

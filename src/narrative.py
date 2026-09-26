@@ -19,6 +19,7 @@ from src.intensity import DRIZZLE_MAX_MM, fmt_number, is_snow, rain_term, wind_t
 FORBIDDEN_WORDS = ("선제", "기준 도달", "주의 단계", "경계 단계")
 FORECAST_HORIZON_HOURS = 12
 NO_DATA = "관측 자료를 받지 못했습니다."
+NO_FORECAST = "예보 자료가 없습니다."  # 예보를 받지 못한 현장을 "비 예보 없음"으로 적지 않는다
 
 
 def contains_forbidden(text):
@@ -143,6 +144,20 @@ def _observed_phrase(observed):
     return None
 
 
+def _forecast_while_wet(hourly, ref):
+    if not hourly:
+        return NO_FORECAST
+    phrase = _forecast_rain_phrase(hourly, ref)
+    return f"예보는 {phrase}." if phrase else "예보상 12시간 안에 비 예보가 없습니다."
+
+
+def _forecast_while_dry(hourly, ref):
+    if not hourly:
+        return NO_FORECAST
+    wet = _first_rain(hourly)
+    return f"예보상 {_hour_label(wet['at'], ref)}부터 비(강수확률 {wet['pop']}%)." if wet else "24시간 안에 비 예보가 없습니다."
+
+
 def site_summary(view, now=None):
     """now(생성 시각)는 수집 실패로 이어받은 전날 관측일 때 날짜를 바르게 적는 데 쓴다."""
     if not _has_data(view):
@@ -153,13 +168,10 @@ def site_summary(view, now=None):
     observed_phrase = _observed_phrase(observed)
     if observed_phrase:
         parts.append(f"{_lead(view, ref)} {observed_phrase}.")
-        phrase = _forecast_rain_phrase(view["hourly"], ref)
-        parts.append(f"예보는 {phrase}." if phrase else "예보상 12시간 안에 비 예보가 없습니다.")
+        parts.append(_forecast_while_wet(view["hourly"], ref))
     else:
         parts.append("지금은 비가 없습니다." if view["state"] == "ok" else f"{_lead(view, ref)} 비가 없습니다.")
-        wet = _first_rain(view["hourly"])
-        parts.append(f"예보상 {_hour_label(wet['at'], ref)}부터 비(강수확률 {wet['pop']}%)." if wet
-                     else "24시간 안에 비 예보가 없습니다.")
+        parts.append(_forecast_while_dry(view["hourly"], ref))
     wind = observed.get("wind")
     term = wind_term(wind)
     if term:
@@ -268,11 +280,14 @@ def _observation_lines(view, ref):
             what = f"시간당 {_amount(rain)}의 {term}{_subject(term)} 관측되고 있습니다."
         lines.append(f"{when}, {view['name']} 현장에 {what}")
         phrase = _forecast_rain_phrase(view["hourly"], ref)
-        lines.append(f"(기상청 예보: {phrase})" if phrase else "(기상청 예보: 12시간 안에 비 예보 없음)")
+        lines.append("(기상청 예보 자료 없음)" if not view["hourly"]
+                     else f"(기상청 예보: {phrase})" if phrase else "(기상청 예보: 12시간 안에 비 예보 없음)")
     else:
         lines.append(f"{when}, {view['name']} 현장에는 비가 관측되지 않았습니다.")
         wet = _first_rain(view["hourly"])
-        if wet:
+        if not view["hourly"]:
+            lines.append("(기상청 예보 자료 없음)")
+        elif wet:
             lines.append(f"다만 예보상 {_hour_label(wet['at'], ref)}부터 비(강수확률 {wet['pop']}%)가 "
                          "있으니 작업 계획에 참고하여 주시기 바랍니다.")
     term = wind_term(now.get("wind"))

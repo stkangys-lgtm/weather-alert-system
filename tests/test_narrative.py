@@ -36,7 +36,8 @@ class SiteSummaryTests(unittest.TestCase):
                          site_summary(make_view(hourly=LATER_RAIN)))
 
     def test_no_rain_no_forecast(self):
-        self.assertEqual("지금은 비가 없습니다. 24시간 안에 비 예보가 없습니다.", site_summary(make_view()))
+        dry = [hour("2026-09-25T18:00:00+09:00"), hour("2026-09-25T19:00:00+09:00")]
+        self.assertEqual("지금은 비가 없습니다. 24시간 안에 비 예보가 없습니다.", site_summary(make_view(hourly=dry)))
 
     def test_stale_uses_observation_hour(self):
         text = site_summary(make_view(rain=5.6, state="stale", as_of="2026-09-25T15:00:00+09:00"))
@@ -151,6 +152,21 @@ class PrecipitationTypeTests(unittest.TestCase):
                  make_view(rain=0.5, pty="눈날림", name="오리온수협 목포 김공장", short="목포 김공장")]
         self.assertTrue(national_summary(sites, True).startswith(
             "후포에 지금 눈(관측), 1시간 강수량 2mm. 그 밖에 1곳에 비, 1곳에 눈."), national_summary(sites, True))
+
+
+class MissingForecastTests(unittest.TestCase):
+    """예보를 받지 못한 현장(hourly 없음)을 "비 예보 없음"으로 적지 않는다."""
+
+    def test_summary_says_forecast_missing(self):
+        self.assertEqual("지금은 비가 없습니다. 예보 자료가 없습니다.", site_summary(make_view(hourly=[])))
+        self.assertEqual("지금 시간당 31mm(관측)의 매우 강한 비. 예보 자료가 없습니다.",
+                         site_summary(make_view(rain=31, hourly=[])))
+
+    def test_notice_says_forecast_missing(self):
+        self.assertIn("(기상청 예보 자료 없음)", site_notice(make_view(rain=31, hourly=[])))
+        self.assertIn("(기상청 예보 자료 없음)", site_notice(make_view(hourly=[])))
+        dry = [hour("2026-09-25T18:00:00+09:00")]
+        self.assertNotIn("예보 자료 없음", site_notice(make_view(hourly=dry)))
 
 
 class NationalNoticeTests(unittest.TestCase):

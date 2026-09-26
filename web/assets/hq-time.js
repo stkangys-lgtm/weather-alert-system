@@ -55,5 +55,5 @@
       HQ.setHour(moves[e.key]);
     });
   }
-  HQ.time = { init, render, stop };
+  HQ.time = { init, render, stop, retick: ticks };
 })();
