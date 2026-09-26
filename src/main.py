@@ -25,6 +25,7 @@ from src.state_monitor import (
     save_state,
     state_age_minutes,
 )
+from src.view_model import publish_latest
 from src.warning_client import get_active_warnings, match_warnings_to_sites, warning_display_level
 
 NCST_HEADER = [
@@ -43,6 +44,7 @@ LEGACY_MAP_PATH = os.path.join(DOCS_DIR, "map.html")
 STATE_PATH = os.path.join(DOCS_DIR, "weather-state.json")
 LATEST_ALERT_PATH = os.path.join(DOCS_DIR, "latest-alert.txt")
 NOTIFICATION_OUTBOX_PATH = os.path.join(DOCS_DIR, "notification-outbox.json")
+LATEST_PATH = os.path.join(DOCS_DIR, "data", "latest.json")
 
 # 공고문은 매시간이 아니라 오전 7시, 오후 1시(KST) 실행 시에만 생성한다 (단톡방 공유용, 하루 2회면 충분).
 ANNOUNCEMENT_HOURS = {7, 13}
@@ -220,6 +222,16 @@ def write_map(collected, now_str, mid_forecasts):
             f.write(html)
 
 
+def write_latest_view(collected, mid_forecasts, now):
+    """화면용 공개 데이터를 쓴다. 실패해도 기존 대시보드·알림 산출물은 계속 만든다."""
+    try:
+        latest = publish_latest(LATEST_PATH, collected, mid_forecasts, now.astimezone())
+        print(f"[화면 데이터] 현장 {len(latest['sites'])}곳 · 실황 {latest['status']['current']} · "
+              f"특보 {latest['status']['warnings']} · 다음 수집 {latest['schedule']['next_run_at'][11:16]}")
+    except Exception as e:
+        print(f"[화면 데이터 오류] latest.json을 만들지 못했습니다(기존 화면은 계속 생성): {e}")
+
+
 def update_weather_state(collected, mid_forecasts, generated_at_iso, now_str):
     """이전 실행과 비교하고, 변화가 있을 때만 최신 알림 문안을 갱신한다."""
     previous = load_state(STATE_PATH)
@@ -287,7 +299,8 @@ def main():
     breaker = CircuitBreaker()
     collected = collect_site_data(config.SITES, breaker=breaker)
     attach_weather_warnings(collected, breaker=breaker)
-    mid_forecasts = collect_mid_forecasts(config.SITES, breaker=breaker)
+    mid_forecasts = collect_mid_forecasts(config.SITES, breaker=breaker, now=now)
+    write_latest_view(collected, mid_forecasts, now)
     state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
     delivery = process_notifications(
         NOTIFICATION_OUTBOX_PATH,

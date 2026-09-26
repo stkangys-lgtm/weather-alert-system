@@ -12,7 +12,7 @@ import requests
 
 BASE_URL = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0"
 
-PTY_CODE = {"0": "없음", "1": "비", "2": "비/눈", "3": "눈", "5": "빗방울", "6": "빗방울눈날림", "7": "눈날림"}
+PTY_CODE = {"0": "없음", "1": "비", "2": "비/눈", "3": "눈", "4": "소나기", "5": "빗방울", "6": "빗방울눈날림", "7": "눈날림"}
 SKY_CODE = {"1": "맑음", "3": "구름많음", "4": "흐림"}
 
 _VFCST_BASE_HOURS = ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
@@ -81,6 +81,12 @@ def _latest_vfcst_base_time(now=None):
     # 자정~02:10 사이: 전날 23시 발표 자료를 사용
     yesterday = now - timedelta(days=1)
     return yesterday.strftime("%Y%m%d"), "2300"
+
+
+def forecast_base_datetime(now=None):
+    """지금 조회되는 최신 단기예보의 발표시각(한국시각, 시간대 정보 없음)."""
+    base_date, base_time = _latest_vfcst_base_time(now)
+    return datetime.strptime(base_date + base_time, "%Y%m%d%H%M")
 
 
 def get_current_weather(api_key, nx, ny, now=None, timeout=10, retries=RETRY_COUNT, breaker=None):
