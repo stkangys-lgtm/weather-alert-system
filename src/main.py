@@ -16,6 +16,7 @@ from src.feels_like import compute_feels_like
 from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
 from src.map_dashboard import build_map_html
 from src.notification_queue import process_notifications
+from src.publish import check_latest, private_values, publish
 from src.state_monitor import (
     build_alert_message,
     build_snapshot,
@@ -232,6 +233,20 @@ def write_latest_view(collected, mid_forecasts, now):
         print(f"[화면 데이터 오류] latest.json을 만들지 못했습니다(기존 화면은 계속 생성): {e}")
 
 
+def publish_screens():
+    """web/ 화면을 docs/에 게시한다. 실패해도 수집·알림 산출물은 계속 만든다."""
+    try:
+        blocked = private_values(config.SITES)
+        leaked = check_latest(LATEST_PATH, blocked)
+        if leaked:
+            os.remove(LATEST_PATH)
+            print(f"[화면 게시 중단] latest.json에 공개하면 안 되는 내용({', '.join(leaked)})이 있어 파일을 지웠습니다.")
+        files = publish(blocked=blocked)
+        print(f"[화면 게시] {len(files)}개 파일")
+    except Exception as e:
+        print(f"[화면 게시 오류] 새 화면을 게시하지 못했습니다(수집·알림은 계속): {e}")
+
+
 def update_weather_state(collected, mid_forecasts, generated_at_iso, now_str):
     """이전 실행과 비교하고, 변화가 있을 때만 최신 알림 문안을 갱신한다."""
     previous = load_state(STATE_PATH)
@@ -301,6 +316,7 @@ def main():
     attach_weather_warnings(collected, breaker=breaker)
     mid_forecasts = collect_mid_forecasts(config.SITES, breaker=breaker, now=now)
     write_latest_view(collected, mid_forecasts, now)
+    publish_screens()
     state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
     delivery = process_notifications(
         NOTIFICATION_OUTBOX_PATH,
