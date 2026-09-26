@@ -26,3 +26,6 @@ logs/
 handoff/
 output/
 tmp/
+
+# brainstorming visual companion mockups (local only)
+.superpowers/
