@@ -162,10 +162,14 @@ def build_site_view(item, mid_entries, previous_site, now):
     site = item["site"]
     current = now_values(item.get("current"))
     obs = observed_at(item.get("current"))
+    legal = [{"status": s.get("status"), "title": s.get("title"), "article": s.get("article")}
+             for s in item.get("legal_signals") or [] if s.get("work_type") != "site_profile"]
     if current is not None:
         state, as_of = "ok", (obs or now).isoformat()
     elif previous_site and previous_site.get("now"):
+        # 법정 신호는 이번 실황 없이 계산되어 "데이터 부족"이 되므로 이어받은 관측값과 함께 직전 판정을 쓴다.
         state, current, as_of = "stale", previous_site["now"], previous_site.get("as_of")
+        legal = previous_site.get("legal") or []
     else:
         state, as_of = "missing", None
 
@@ -193,8 +197,7 @@ def build_site_view(item, mid_entries, previous_site, now):
         "daily": daily,
         "warnings": [{"kind": w.get("kind"), "title": w.get("title"), "level": w.get("level")}
                      for w in item.get("weather_warnings") or []],
-        "legal": [{"status": s.get("status"), "title": s.get("title"), "article": s.get("article")}
-                  for s in item.get("legal_signals") or [] if s.get("work_type") != "site_profile"],
+        "legal": legal,
         "legal_profile": bool(site.get("work_types") or site.get("active_work_types")),
     }
     view["summary"] = narrative.site_summary(view)

@@ -223,6 +223,18 @@ class BuildLatestTests(unittest.TestCase):
         self.assertTrue(site["summary"].startswith("17시 관측 기준 시간당 31mm(관측)"))
         self.assertEqual("failed", latest["status"]["current"])
 
+    def test_stale_site_keeps_last_good_legal_signals(self):
+        stop = {"status": "법정 작업중지", "work_type": "steel_erection", "title": "철골작업 중지",
+                "article": "제383조", "reason": "강우 1mm 이상", "actions": []}
+        gap = {"status": "데이터 부족", "work_type": "steel_erection", "title": "철골작업 판정 불가",
+               "article": "제383조", "reason": "실황 없음", "actions": []}
+        site = site_cfg(work_types=["steel_erection"], active_work_types=["steel_erection"])
+        previous = build([make_item(site=site, legal=[stop])])
+        latest = build([make_item(site=site, current=None, legal=[gap])], previous=previous,
+                       now=NOW + timedelta(minutes=30))
+        self.assertEqual(previous["sites"][0]["legal"], latest["sites"][0]["legal"])
+        self.assertEqual(1, latest["national"]["legal"])
+
     def test_hourly_falls_back_to_previous_forecast(self):
         previous = build([make_item()])
         later = NOW + timedelta(hours=2)
