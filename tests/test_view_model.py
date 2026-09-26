@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import subprocess
 import tempfile
 import unittest
 from datetime import date, datetime, timedelta
@@ -251,6 +252,17 @@ class LatestFileTests(unittest.TestCase):
             second = publish_latest(path, [make_item(current=None)], {}, NOW + timedelta(minutes=30))
             self.assertEqual("stale", second["sites"][0]["state"])
             self.assertEqual(first["sites"][0]["now"], second["sites"][0]["now"])
+
+    def test_latest_json_is_committed_by_the_workflow(self):
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        try:
+            result = subprocess.run(["git", "check-ignore", "-q", "docs/data/latest.json"], cwd=root,
+                                    capture_output=True)
+        except OSError:
+            self.skipTest("git 없음")
+        if result.returncode == 128:
+            self.skipTest("git 저장소 밖")
+        self.assertEqual(1, result.returncode, "docs/data/latest.json이 .gitignore에 걸려 게시되지 않습니다")
 
 
 if __name__ == "__main__":
