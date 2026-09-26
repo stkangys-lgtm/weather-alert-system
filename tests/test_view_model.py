@@ -210,6 +210,13 @@ class BuildLatestTests(unittest.TestCase):
         self.assertEqual(1, latest["national"]["warnings"])
         self.assertTrue(latest["sites"][0]["summary"].startswith("기상청 호우주의보 발효 중."))
 
+    def test_preliminary_warning_is_not_counted_as_in_effect(self):
+        preliminary = {"kind": "예비특보", "title": "강풍 예비특보", "level": "예비특보", "areas": ["경상북도(울진)"]}
+        latest = build([make_item(warnings=[preliminary])])
+        self.assertEqual(0, latest["national"]["warnings"])
+        self.assertEqual([{"kind": "예비특보", "title": "강풍 예비특보", "level": "예비특보"}],
+                         latest["sites"][0]["warnings"])
+
     def test_warning_failure_status(self):
         self.assertEqual("failed", build([make_item(available=False)], warnings_ok=False)["status"]["warnings"])
 

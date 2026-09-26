@@ -253,7 +253,7 @@ def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_
         },
         "schedule": {"window": WINDOW_LABEL, "next_run_at": _kst_iso(next_collection_at(now))},
         "national": {
-            "warnings": sum(1 for s in sites if s["warnings"]),
+            "warnings": sum(1 for s in sites if any(narrative.is_official_warning(w) for w in s["warnings"])),
             "legal": sum(1 for s in sites if any(l["status"] in ACTIONABLE_LEGAL for l in s["legal"])),
             "rain_sites": sum(1 for s in live if (s["now"].get("rain_mm") or 0) >= DRIZZLE_MAX_MM),
             "max_rain": _top(sites, "rain_mm", "mm"),

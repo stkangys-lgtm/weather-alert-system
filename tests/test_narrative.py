@@ -60,6 +60,33 @@ class SiteSummaryTests(unittest.TestCase):
         self.assertTrue(site_summary(make_view(rain=31, warnings=warning)).startswith("기상청 호우주의보 발효 중."))
 
 
+PRE_WIND = {"kind": "예비특보", "title": "강풍 예비특보", "level": "예비특보"}
+PRE_TIMED = {"kind": "예비특보", "title": "09월 27일 새벽(00시~06시)", "level": "예비특보"}
+
+
+class PreliminaryWarningTests(unittest.TestCase):
+    def test_summary_says_announced_not_in_effect(self):
+        text = site_summary(make_view(warnings=[PRE_WIND]))
+        self.assertTrue(text.startswith("기상청 강풍 예비특보 발표."), text)
+        self.assertNotIn("발효", text)
+        self.assertTrue(site_summary(make_view(warnings=[PRE_TIMED])).startswith(
+            "기상청 예비특보(09월 27일 새벽(00시~06시)) 발표."))
+
+    def test_official_and_preliminary_together(self):
+        official = {"kind": "기상특보", "title": "호우주의보", "level": "주의보"}
+        self.assertTrue(site_summary(make_view(warnings=[official, PRE_WIND])).startswith(
+            "기상청 호우주의보 발효 중. 기상청 강풍 예비특보 발표."))
+
+    def test_notice_says_announced(self):
+        text = site_notice(make_view(warnings=[PRE_WIND]))
+        self.assertIn("기상청 강풍 예비특보가 발표되었습니다.", text)
+        self.assertNotIn("발효", text)
+
+    def test_national_counts_only_official_warnings_as_in_effect(self):
+        text = national_summary([make_view(warnings=[PRE_WIND])], True)
+        self.assertIn("기상청 특보는 없습니다. 예비특보는 1개 현장에 발표되어 있습니다.", text)
+
+
 class NationalSummaryTests(unittest.TestCase):
     def sites(self):
         return [make_view(rain=31, hourly=HUPO_HOURLY),

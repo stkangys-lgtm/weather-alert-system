@@ -72,8 +72,29 @@ def _lead(view):
     return f"{datetime.fromisoformat(view['as_of']).hour}시 관측 기준"
 
 
+PRELIMINARY = "예비특보"
+
+
+def is_official_warning(warning):
+    return warning.get("kind") != PRELIMINARY
+
+
 def _warning_titles(view):
-    return "·".join(w["title"] for w in view["warnings"])
+    """(발효 중인 기상특보 제목들, 발표된 예비특보 표기들). 예비특보는 발효가 아니라 발표로 구분한다."""
+    official = "·".join(w["title"] for w in view["warnings"] if is_official_warning(w))
+    preliminary = "·".join(w["title"] if PRELIMINARY in (w.get("title") or "") else f"{PRELIMINARY}({w.get('title')})"
+                           for w in view["warnings"] if not is_official_warning(w))
+    return official, preliminary
+
+
+def _warning_sentences(view):
+    official, preliminary = _warning_titles(view)
+    parts = []
+    if official:
+        parts.append(f"기상청 {official} 발효 중.")
+    if preliminary:
+        parts.append(f"기상청 {preliminary} 발표.")
+    return parts
 
 
 def site_summary(view):
@@ -82,9 +103,7 @@ def site_summary(view):
     now = view["now"]
     ref = datetime.fromisoformat(view["as_of"]).date()
     rain = now.get("rain_mm") or 0
-    parts = []
-    if view["warnings"]:
-        parts.append(f"기상청 {_warning_titles(view)} 발효 중.")
+    parts = _warning_sentences(view)
     if rain >= DRIZZLE_MAX_MM:
         parts.append(f"{_lead(view)} 시간당 {fmt_number(rain)}mm(관측)의 {rain_term(rain)}.")
         phrase = _forecast_rain_phrase(view["hourly"], ref)
@@ -128,13 +147,14 @@ def national_summary(sites, warnings_ok):
             parts.append(f"그 밖에 {len(rainy) - 1}곳에 비.")
     else:
         parts.append("비 오는 현장은 없습니다.")
-    warned = sum(1 for s in sites if s["warnings"])
+    warned = sum(1 for s in sites if any(is_official_warning(w) for w in s["warnings"]))
+    announced = sum(1 for s in sites if any(not is_official_warning(w) for w in s["warnings"]))
     if not warnings_ok:
         parts.append("기상청 특보는 확인하지 못했습니다.")
-    elif warned:
-        parts.append(f"기상청 특보가 {warned}개 현장에 발효 중입니다.")
     else:
-        parts.append("기상청 특보는 없습니다.")
+        parts.append(f"기상청 특보가 {warned}개 현장에 발효 중입니다." if warned else "기상청 특보는 없습니다.")
+        if announced:
+            parts.append(f"예비특보는 {announced}개 현장에 발표되어 있습니다.")
     failed = sum(1 for s in sites if s["state"] != "ok")
     if failed:
         parts.append(f"{failed}개 현장은 이번 수집에 실패했습니다.")
@@ -165,8 +185,11 @@ def site_notice(view):
     when = at.strftime("%Y-%m-%d %H:%M") + " 관측 기준"
     now = view["now"]
     rain = now.get("rain_mm") or 0
-    if view["warnings"]:
-        lines.append(f"기상청 {_warning_titles(view)}가 발효 중입니다.")
+    official, preliminary = _warning_titles(view)
+    if official:
+        lines.append(f"기상청 {official}가 발효 중입니다.")
+    if preliminary:
+        lines.append(f"기상청 {preliminary}가 발표되었습니다.")
     if rain >= DRIZZLE_MAX_MM:
         lines.append(f"{when}, {view['name']} 현장에 시간당 {fmt_number(rain)}mm의 {rain_term(rain)}가 관측되고 있습니다.")
         phrase = _forecast_rain_phrase(view["hourly"], at.date())
