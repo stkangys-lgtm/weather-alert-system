@@ -18,15 +18,19 @@
 - GitHub 저장소: `https://github.com/stkangys-lgtm/weather-alert-system`
 - 운영 브랜치: `main`
 - 공개 관제 화면: `https://stkangys-lgtm.github.io/weather-alert-system/`
-- 현장 카드 화면: `https://stkangys-lgtm.github.io/weather-alert-system/sites.html`
+- 새 본사 화면: 위 주소(`docs/index.html` ← `web/index.html`). 현장 목록 표는 주소 끝 `#list`
+- 이전 화면(2주간 병행, 5단계에서 정리): `…/old/index.html`(지도), `…/old/sites.html`(카드). `map.html`·`sites.html`은 이동 안내 페이지
 - 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **135개 통과** (2026-09-26 갱신)
+- 전체 테스트: **152개 통과** (2026-09-26 갱신)
 
 ### 대시보드 리디자인 진행 (2026-09-26~)
 
 - 설계: `design/specs/2026-09-26-dashboard-redesign-design.md`, 계획: `design/plans/`
 - 1단계(데이터 층): 매 실행마다 `docs/data/latest.json` 생성. 기존 화면·알림은 그대로.
 - 중기예보 날짜를 발표일 기준으로 수정(새벽 실행 하루 밀림 해결).
+- 2단계(본사 화면): 화면 원본은 `web/`(HTML·CSS·JS, 빌드 도구 없음). 수집 실행 뒤 `src/publish.py`가 점검(외부 파일 무결성 해시·전화번호·금지어·비공개 값) 후 `docs/`로 복사한다.
+  화면을 고칠 때는 `web/`만 수정하고 `docs/`의 게시본은 직접 고치지 않는다.
+  로컬 확인: `python3 -m src.publish` → `python3 scripts/preview_fixtures.py`(시험 자료: 비·수집 실패·일부 실패·야간·특수문자) → `.superpowers/preview`를 정적 서버로 열고 `site/index.html?data=../fixtures/rain.json`. `?map=svg`는 자체 지도 강제.
 
 ### 이번 세션(2026-09-20)에서 추가된 것
 
@@ -91,8 +95,11 @@ CLAUDE.md에 기록할 것.
 - `src/alert_rules.py`: 정기 공고문 생성. `_situational_title`·`_situational_closing`
   헬퍼가 카테고리 조합에 따라 【제목】과 마무리 문단을 자동 조립.
 - `src/notification_queue.py`: 알림 대기열, 중복 방지, 재시도, shadow/live 제어
-- `src/map_dashboard.py`: 지도 중심 본사 관제 화면
-- `src/dashboard.py`: 현장별 카드 화면
+- `src/map_dashboard.py`: 지도 중심 본사 관제 화면 — 이전 화면(docs/old/), 5단계에서 삭제 예정
+- `src/dashboard.py`: 현장별 카드 화면 — 이전 화면(docs/old/), 5단계에서 삭제 예정
+- `src/publish.py`: `web/` → `docs/` 게시와 게시 전 점검, 이전 화면 경로(`docs/old/`)
+- `web/`: 새 화면 원본 — `index.html`(본사), `assets/common.js`(공통), `geo.js`(지도·자체 지도 전환), `hq*.js`(본사 모듈), `tokens.css`·`app.css`·`hq.css`, `icons.svg`, `brand/`(공식 로고, 가공 금지)
+- `scripts/preview_fixtures.py`: 화면 확인용 시험 자료 생성(공개 폴더 밖)
 - `src/weekly_work_importer.py`: 회의자료 XLSX에서 현장명과 금주 공종만 선별 (PDF 미지원)
 - `config.example.py`: 현장·공종·특보 구역 설정 예시
 - `README.md`: 설치 및 운영 설명

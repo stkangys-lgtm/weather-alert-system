@@ -97,16 +97,33 @@
       });
       if (members.length > 1) group(members);
     });
+    mergeOverlaps();
     declutter(pts);
+  }
+
+  const hit = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
+  function chipBox(g) {
+    const p = adapter.project(g.lon, g.lat), w = g.el.offsetWidth, h = g.el.offsetHeight;
+    return { l: p.x - w / 2 - 2, r: p.x + w / 2 + 2, t: p.y - h / 2 - 2, b: p.y + h / 2 + 2 };
+  }
+  // 묶음 칩끼리 겹치면(좁은 화면에서 전국을 볼 때 등) 두 묶음을 하나로 합친다.
+  function mergeOverlaps() {
+    for (let round = 0; round < 12; round++) {
+      const boxes = groups.map(chipBox);
+      let pair = null;
+      for (let i = 0; i < groups.length && !pair; i++) {
+        for (let j = i + 1; j < groups.length && !pair; j++) if (hit(boxes[i], boxes[j])) pair = [groups[i], groups[j]];
+      }
+      if (!pair) return;
+      pair.forEach(g => g.handle.remove());
+      groups = groups.filter(g => !pair.includes(g));
+      group(pair[0].sites.concat(pair[1].sites).sort(priority));
+    }
   }
 
   // 묶이지 않은 표식끼리 이름표가 겹치면 우선순위가 낮은 쪽은 점만 남긴다(선택·특보·법정 현장은 항상 이름표).
   function declutter(pts) {
-    const hit = (a, b) => a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b;
-    const placed = groups.map(g => {
-      const p = adapter.project(g.lon, g.lat), w = g.el.offsetWidth, h = g.el.offsetHeight;
-      return { l: p.x - w / 2, r: p.x + w / 2, t: p.y - h / 2, b: p.y + h / 2 };
-    });
+    const placed = groups.map(chipBox);
     pts.filter(x => !x.m.el.classList.contains("hid"))
       .sort((a, b) => (a.m.site === state.sel ? -1 : b.m.site === state.sel ? 1 : priority(a.m.site, b.m.site)))
       .forEach(({ m, p }) => {
@@ -130,8 +147,8 @@
     el.type = "button";
     el.className = "cl";
     el.style.setProperty("--c", HQ.isRain(wv) ? WX.rainColor(wv.rain) : "#9aa4ae");
-    el.innerHTML = `<span class="n">${sites.length}</span>${esc(lead.short)} 외 ${sites.length - 1} · `
-      + (HQ.isRain(wv) ? `비 최대 ${esc(wv.rainText)}` : "비 없음");
+    el.innerHTML = `<span class="n">${sites.length}</span><span class="t">${esc(lead.short)} 외 ${sites.length - 1} · `
+      + (HQ.isRain(wv) ? `비 최대 ${esc(wv.rainText)}` : "비 없음") + "</span>";
     el.setAttribute("aria-label", `${sites.map(s => s.name).join(", ")} 묶음. 누르면 확대합니다.`);
     el.addEventListener("click", e => {
       e.stopPropagation();
@@ -141,7 +158,7 @@
     });
     const lon = sites.reduce((sum, s) => sum + s.lon, 0) / sites.length;
     const lat = sites.reduce((sum, s) => sum + s.lat, 0) / sites.length;
-    groups.push({ el, lon, lat, handle: adapter.addMarker(el, lon, lat, "center") });
+    groups.push({ el, lon, lat, sites, handle: adapter.addMarker(el, lon, lat, "center") });
   }
 
   function focus(site, fly) {
