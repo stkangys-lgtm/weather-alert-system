@@ -225,6 +225,23 @@ class BuildLatestTests(unittest.TestCase):
         self.assertEqual([{"kind": "예비특보", "title": "강풍 예비특보", "level": "예비특보"}],
                          latest["sites"][0]["warnings"])
 
+    def test_pinned_for_official_warning_or_actionable_legal(self):
+        official = {"kind": "기상특보", "title": "호우주의보", "level": "주의보"}
+        preliminary = {"kind": "예비특보", "title": "강풍 예비특보", "level": "예비특보"}
+        stop = {"status": "법정 작업중지", "work_type": "steel_erection", "title": "철골작업 중지",
+                "article": "제383조", "reason": "", "actions": []}
+        gap = dict(stop, status="데이터 부족", title="철골작업 판정 불가")
+        cases = [(make_item(warnings=[official]), True), (make_item(warnings=[preliminary]), False),
+                 (make_item(legal=[stop]), True), (make_item(legal=[gap]), False), (make_item(), False)]
+        for item, expected in cases:
+            with self.subTest(expected=expected):
+                self.assertIs(expected, build([item])["sites"][0]["pinned"])
+
+    def test_national_notice_is_published(self):
+        notice = build([make_item()])["national"]["notice"]
+        self.assertTrue(notice.startswith("■ 공지드립니다.\n\n2026-09-25 17:00 관측 기준"))
+        self.assertTrue(notice.endswith("감사합니다."))
+
     def test_warning_failure_status(self):
         self.assertEqual("failed", build([make_item(available=False)], warnings_ok=False)["status"]["warnings"])
 

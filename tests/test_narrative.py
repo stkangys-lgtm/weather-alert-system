@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime, timedelta, timezone
 
-from src.narrative import contains_forbidden, national_summary, site_notice, site_summary
+from src.narrative import contains_forbidden, national_notice, national_summary, site_notice, site_summary
 
 
 def hour(at, mm=0.0, label="0", pop=30):
@@ -153,6 +153,41 @@ class PrecipitationTypeTests(unittest.TestCase):
             "후포에 지금 눈(관측), 1시간 강수량 2mm. 그 밖에 1곳에 비, 1곳에 눈."), national_summary(sites, True))
 
 
+class NationalNoticeTests(unittest.TestCase):
+    def test_rain_and_warning_in_house_style(self):
+        sites = [make_view(rain=31, hourly=HUPO_HOURLY, warnings=[HEAVY_RAIN_WARNING]),
+                 make_view(rain=2.0, name="연희·연남동 공공주택", short="연희·연남"),
+                 make_view(name="오리온수협 목포 김공장", short="목포 김공장")]
+        self.assertEqual("\n".join([
+            "■ 공지드립니다.", "",
+            "2026-09-25 17:00 관측 기준 현장 기상 현황을 공유드립니다.",
+            "기상청 호우경보가 후포 현장에 발효 중입니다.",
+            "후포、연희·연남 현장에 비가 관측되고 있으며, 가장 많은 곳은 후포 현장으로 시간당 31mm의 매우 강한 비입니다.",
+            "", "【수방 안전관리 사항】",
+            "ㅇ 배수로 및 침사지 주변 이물질 정비", "ㅇ 토사 유실 우려 구간 덮개 보양", "ㅇ 침수 우려 구역 내 장비 안전지대 이동",
+            "", "각 현장에서는 수방 조치가 실제 이행될 수 있도록 관리하여 주시기 바랍니다.",
+            "", "감사합니다."]), national_notice(sites, True))
+
+    def test_preliminary_is_announced_and_many_sites_are_summarized(self):
+        rainy = [make_view(rain=5 - k, name=f"현장{k}", short=f"현장{k}") for k in range(5)]
+        rainy[1]["warnings"] = [PRE_WIND]
+        text = national_notice(rainy, True)
+        self.assertIn("기상청 강풍 예비특보가 현장1 현장에 발표되었습니다.", text)
+        self.assertIn("현장0、현장1、현장2 등 5개 현장에 비가 관측되고 있으며", text)
+
+    def test_no_rain_no_warning(self):
+        text = national_notice([make_view()], True)
+        self.assertIn("비가 관측된 현장은 없습니다.", text)
+        self.assertIn("기상청 특보는 발표되지 않았습니다.", text)
+        self.assertNotIn("【", text)
+
+    def test_all_missing_and_warning_failure(self):
+        text = national_notice([make_view(state="missing")], False)
+        self.assertIn("이번 수집에서 관측 자료를 받지 못했습니다.", text)
+        self.assertIn("기상청 특보는 확인하지 못했습니다.", text)
+        self.assertTrue(text.endswith("감사합니다."))
+
+
 class NationalSummaryTests(unittest.TestCase):
     def sites(self):
         return [make_view(rain=31, hourly=HUPO_HOURLY),
@@ -212,6 +247,7 @@ class ForbiddenWordTests(unittest.TestCase):
             for text in (site_summary(view), site_notice(view)):
                 self.assertEqual([], contains_forbidden(text), text)
         self.assertEqual([], contains_forbidden(national_summary(views, True)))
+        self.assertEqual([], contains_forbidden(national_notice(views, True)))
 
 
 if __name__ == "__main__":
