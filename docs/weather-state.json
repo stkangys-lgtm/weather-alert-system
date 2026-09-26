@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-26T10:59:53+09:00",
+  "updated_at": "2026-09-26T16:45:09+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -33,7 +33,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -56,7 +56,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -85,7 +85,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -108,7 +108,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -134,14 +134,10 @@
       "weather_warnings_available": true
     },
     "양산 부산대병원": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
-      ],
-      "observation_id": "20260926-1000",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/26(토)",
@@ -170,7 +166,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -196,17 +192,15 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20260926-1000",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
+      "level": "주의",
+      "categories": [
+        "호우"
       ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 6.7mm"
+      ],
+      "observation_id": "20260926-1600",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -228,7 +222,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -257,7 +251,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -286,7 +280,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -315,7 +309,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -338,7 +332,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -367,14 +361,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20260926-1600",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -396,7 +384,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -425,7 +413,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -448,7 +436,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -471,7 +459,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -494,14 +482,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
-      "forecast_risks": [
-        {
-          "date": "9/26(토)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20260926-1600",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -523,7 +505,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -546,7 +528,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20260926-1000",
+      "observation_id": "20260926-1600",
       "forecast_risks": [
         {
           "date": "9/30(수)",
@@ -572,205 +554,27 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-09-26T10:59:53+09:00",
-  "last_change_at": "2026-09-26T10:35:58+09:00",
+  "last_success_at": "2026-09-26T16:45:09+09:00",
+  "last_change_at": "2026-09-26T16:45:09+09:00",
   "last_changes": [
     {
-      "site_name": "전 현장",
-      "type": "기상특보 수집 정상화",
-      "from_level": "수집 장애",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": [
-        "기상청 특보 API 수신이 정상화되었습니다."
-      ]
-    },
-    {
-      "site_name": "오리온 진천신공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/30(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/30(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
       "site_name": "양산 부산대병원",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "위험 상승",
+      "from_level": "정상",
       "to_level": "주의",
       "categories": [
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.9mm"
-      ]
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "주의",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/26(토) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/30(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/26(토) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/30(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/30(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "9/30(수) 흐리고 비 예보, 강수확률 최고 60%"
+        "시스템 선제알림(주의) · 시간당 강우 6.7mm"
       ]
     }
   ]
