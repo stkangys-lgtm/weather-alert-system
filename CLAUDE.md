@@ -21,7 +21,7 @@
 - 새 본사 화면: 위 주소(`docs/index.html` ← `web/index.html`). 현장 목록 표는 주소 끝 `#list`
 - 이전 화면(2주간 병행, 5단계에서 정리): `…/old/index.html`(지도), `…/old/sites.html`(카드). `map.html`·`sites.html`은 이동 안내 페이지
 - 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **152개 통과** (2026-09-26 갱신)
+- 전체 테스트: **155개 통과** (2026-09-26 갱신)
 
 ### 대시보드 리디자인 진행 (2026-09-26~)
 
