@@ -271,6 +271,21 @@ class LatestFileTests(unittest.TestCase):
             self.assertEqual("stale", second["sites"][0]["state"])
             self.assertEqual(first["sites"][0]["now"], second["sites"][0]["now"])
 
+    def test_publish_ignores_structurally_broken_previous_file(self):
+        broken_files = [
+            {"schema": 1, "sites": "abc"},
+            {"schema": 1, "sites": [{"id": "5355accc", "now": {"rain_mm": "31"}, "as_of": "2026-09-25T17:00:00+09:00",
+                                     "hourly": [{"temp": 20}], "daily": [{"x": 1}]}]},
+        ]
+        for broken in broken_files:
+            with self.subTest(broken=broken), tempfile.TemporaryDirectory() as d:
+                path = os.path.join(d, "latest.json")
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump(broken, f)
+                latest = publish_latest(path, [make_item(current=None, forecast=[])], {}, NOW)
+                self.assertEqual("missing", latest["sites"][0]["state"])
+                self.assertEqual(latest, load_latest(path))
+
     def test_latest_json_is_committed_by_the_workflow(self):
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         try:

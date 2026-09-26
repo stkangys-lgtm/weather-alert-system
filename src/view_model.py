@@ -292,14 +292,26 @@ def write_latest(path, data):
 
 def publish_latest(path, collected, mid_forecasts, now):
     now = _as_kst(now)
-    latest = build_latest(
-        collected,
-        mid_forecasts,
-        previous=load_latest(path),
-        now=now,
-        warnings_ok=all(item.get("weather_warnings_available", True) for item in collected),
-        forecast_issued_at=forecast_base_datetime(now),
-        mid_issued_at=mid_issue_datetime(now),
-    )
+
+    def build(previous):
+        return build_latest(
+            collected,
+            mid_forecasts,
+            previous=previous,
+            now=now,
+            warnings_ok=all(item.get("weather_warnings_available", True) for item in collected),
+            forecast_issued_at=forecast_base_datetime(now),
+            mid_issued_at=mid_issue_datetime(now),
+        )
+
+    previous = load_latest(path)
+    try:
+        latest = build(previous)
+    except Exception as error:
+        if previous is None:
+            raise
+        # 같은 파일을 매번 다시 읽으므로 여기서 멈추면 이후 갱신이 모두 막힌다.
+        print(f"[화면 데이터] 직전 파일 형식이 맞지 않아 무시하고 새로 만듭니다: {type(error).__name__}")
+        latest = build(None)
     write_latest(path, latest)
     return latest
