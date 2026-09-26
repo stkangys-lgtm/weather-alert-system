@@ -4,16 +4,29 @@
 시각은 모두 한국시각(+09:00)으로 표기한다.
 """
 
+import json
+import os
 import re
+import tempfile
 from datetime import datetime, timedelta, timezone
 
+from src import narrative
 from src.feels_like import compute_feels_like
-from src.intensity import fmt_number
+from src.intensity import DRIZZLE_MAX_MM, fmt_number
+from src.kma_client import forecast_base_datetime
+from src.legal_rules import STATUS_ACTION, STATUS_STOP, STATUS_VERIFY
+from src.mid_client import mid_issue_datetime
+from src.schedule import WINDOW_LABEL, next_collection_at
+from src.site_profile import region_label, short_name, site_id
 
 KST = timezone(timedelta(hours=9))
 HOURLY_COUNT = 24
 DAILY_COUNT = 10
 FULL_DAY_HOURS = 12
+SCHEMA_VERSION = 1
+SITE_FIELDS = ("id", "name", "short", "category", "region", "lat", "lon", "state", "as_of", "now",
+               "hourly", "daily", "warnings", "legal", "legal_profile", "summary", "notice")
+ACTIONABLE_LEGAL = {STATUS_STOP, STATUS_ACTION, STATUS_VERIFY}
 
 
 def _num(value):
@@ -130,3 +143,151 @@ def daily_series(forecast, mid_entries, today):
         else:
             days.append(_missing_day(day))
     return days
+
+
+def build_site_view(item, mid_entries, previous_site, now):
+    """수집 결과 한 건 → 허용 목록 필드만 있는 공개용 현장 항목."""
+    site = item["site"]
+    current = now_values(item.get("current"))
+    obs = observed_at(item.get("current"))
+    if current is not None:
+        state, as_of = "ok", (obs or now).isoformat()
+    elif previous_site and previous_site.get("now"):
+        state, current, as_of = "stale", previous_site["now"], previous_site.get("as_of")
+    else:
+        state, as_of = "missing", None
+
+    hourly = hourly_series(item.get("forecast"), obs or now)
+    if not hourly and previous_site:
+        hourly = [h for h in previous_site.get("hourly") or []
+                  if datetime.fromisoformat(h["at"]) > now][:HOURLY_COUNT]
+    daily = daily_series(item.get("forecast"), mid_entries, now.date())
+    if all(day["missing"] for day in daily) and previous_site:
+        carried = [d for d in previous_site.get("daily") or [] if d["date"] > now.date().isoformat()]
+        daily = carried[:DAILY_COUNT] or daily
+
+    view = {
+        "id": site_id(site),
+        "name": site["site_name"],
+        "short": short_name(site),
+        "category": site.get("category"),
+        "region": region_label(site),
+        "lat": site.get("lat"),
+        "lon": site.get("lon"),
+        "state": state,
+        "as_of": as_of,
+        "now": current,
+        "hourly": hourly,
+        "daily": daily,
+        "warnings": [{"kind": w.get("kind"), "title": w.get("title"), "level": w.get("level")}
+                     for w in item.get("weather_warnings") or []],
+        "legal": [{"status": s.get("status"), "title": s.get("title"), "article": s.get("article")}
+                  for s in item.get("legal_signals") or [] if s.get("work_type") != "site_profile"],
+        "legal_profile": bool(site.get("work_types") or site.get("active_work_types")),
+    }
+    view["summary"] = narrative.site_summary(view)
+    view["notice"] = narrative.site_notice(view)
+    return {key: view[key] for key in SITE_FIELDS}
+
+
+def _collection_status(done, total):
+    if total and done == total:
+        return "ok"
+    return "failed" if done == 0 else "partial"
+
+
+def _top(sites, key, unit_key):
+    candidates = [s for s in sites if s["state"] != "missing" and s["now"] and s["now"].get(key) is not None]
+    if not candidates:
+        return None
+    best = max(candidates, key=lambda s: s["now"][key])
+    return {unit_key: best["now"][key], "site": best["id"]}
+
+
+def _kst_iso(value):
+    if value is None:
+        return None
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=KST)
+    return value.astimezone(KST).isoformat(timespec="seconds")
+
+
+def _as_kst(now):
+    return now.astimezone(KST) if now.tzinfo else now.replace(tzinfo=KST)
+
+
+def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_issued_at, mid_issued_at):
+    now = _as_kst(now)
+    previous_sites = {s.get("id"): s for s in (previous or {}).get("sites") or []}
+    sites = [build_site_view(item, mid_forecasts.get(item["site"]["site_name"], []),
+                             previous_sites.get(site_id(item["site"])), now)
+             for item in collected]
+    fresh = [s for s in sites if s["state"] == "ok"]
+    live = [s for s in sites if s["state"] != "missing" and s["now"]]
+    return {
+        "schema": SCHEMA_VERSION,
+        "generated_at": _kst_iso(now),
+        "observed_at": max((s["as_of"] for s in fresh), default=None),
+        "forecast_issued_at": _kst_iso(forecast_issued_at),
+        "mid_issued_at": _kst_iso(mid_issued_at),
+        "status": {
+            "current": _collection_status(len(fresh), len(sites)),
+            "forecast": _collection_status(sum(1 for item in collected if item.get("forecast")), len(collected)),
+            "warnings": "ok" if warnings_ok else "failed",
+            "radar": "off",
+        },
+        "schedule": {"window": WINDOW_LABEL, "next_run_at": _kst_iso(next_collection_at(now))},
+        "national": {
+            "warnings": sum(1 for s in sites if s["warnings"]),
+            "legal": sum(1 for s in sites if any(l["status"] in ACTIONABLE_LEGAL for l in s["legal"])),
+            "rain_sites": sum(1 for s in live if (s["now"].get("rain_mm") or 0) >= DRIZZLE_MAX_MM),
+            "max_rain": _top(sites, "rain_mm", "mm"),
+            "max_wind": _top(sites, "wind", "ms"),
+            "max_temp": _top(sites, "temp", "c"),
+            "summary": narrative.national_summary(sites, warnings_ok),
+        },
+        "radar": None,
+        "sites": sites,
+    }
+
+
+def load_latest(path):
+    """직전 latest.json. 없거나 깨졌거나 스키마가 다르면 None."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if not isinstance(data, dict) or data.get("schema") != SCHEMA_VERSION:
+        return None
+    return data
+
+
+def write_latest(path, data):
+    """임시 파일에 쓴 뒤 교체해 반쯤 쓰인 파일이 게시되지 않게 한다."""
+    directory = os.path.dirname(path) or "."
+    os.makedirs(directory, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(prefix=".latest-", suffix=".json", dir=directory)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, separators=(",", ":"))
+        os.replace(tmp, path)
+    except BaseException:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        raise
+
+
+def publish_latest(path, collected, mid_forecasts, now):
+    now = _as_kst(now)
+    latest = build_latest(
+        collected,
+        mid_forecasts,
+        previous=load_latest(path),
+        now=now,
+        warnings_ok=all(item.get("weather_warnings_available", True) for item in collected),
+        forecast_issued_at=forecast_base_datetime(now),
+        mid_issued_at=mid_issue_datetime(now),
+    )
+    write_latest(path, latest)
+    return latest
