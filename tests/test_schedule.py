@@ -1,4 +1,5 @@
 import os
+import re
 import unittest
 from datetime import datetime, timedelta, timezone
 
@@ -33,8 +34,8 @@ class ScheduleTests(unittest.TestCase):
         path = os.path.join(os.path.dirname(__file__), "..", ".github", "workflows", "collector.yml")
         with open(path, encoding="utf-8") as f:
             text = f.read()
-        self.assertIn('cron: "17 0-8,19-23 * * *"', text)
-        self.assertIn('cron: "47 0-8,19-23 * * *"', text)
+        self.assertEqual(["17 0-8,19-23 * * *", "47 0-8,19-23 * * *"],
+                         sorted(re.findall(r'cron:\s*["\']([^"\']+)["\']', text)))
 
 
 if __name__ == "__main__":
