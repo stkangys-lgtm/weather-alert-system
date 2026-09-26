@@ -20,7 +20,7 @@
 - 공개 관제 화면: `https://stkangys-lgtm.github.io/weather-alert-system/`
 - 현장 카드 화면: `https://stkangys-lgtm.github.io/weather-alert-system/sites.html`
 - 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **112개 통과** (2026-09-26 갱신)
+- 전체 테스트: **135개 통과** (2026-09-26 갱신)
 
 ### 대시보드 리디자인 진행 (2026-09-26~)
 
