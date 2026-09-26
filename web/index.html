@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b4775">
+<title>현대아산 기상안전 관제 · 본사</title>
+<link rel="icon" type="image/svg+xml" href="assets/brand/hdasan-symbol.svg">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" integrity="sha384-V1aeodcjJTo8c7lEQKPTnsMG6Yk8y6O/1kzqU/BCXw78Yw1W8XYFJGgjYa3oInYZ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha384-MinO0mNliZ3vwppuPOUnGa+iq619pfMhLVUXfC4LHwSCvF9H+6P/KO4Q7qBOYV5V" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/hq.css">
+<script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" integrity="sha384-SYKAG6cglRMN0RVvhNeBY0r3FYKNOJtznwA0v7B5Vp9tr31xAHsZC0DqkQ/pZDmj" crossorigin="anonymous" async onload="window.__maplibreLoaded=true" onerror="window.__maplibreFailed=true"></script>
+<script src="assets/common.js" defer></script>
+<script src="assets/hq.js" defer></script>
+</head>
+<body data-view="map">
+<div id="map" class="map" role="region" aria-label="전국 현장 지도"></div>
+<div class="mapmsg" id="mapMsg" role="status"></div>
+
+<header class="top">
+  <div class="brand fade intro-hide"><img class="logo-img" src="assets/brand/hdasan-signature-ko.png" alt="현대아산"><b>기상안전 관제</b><small>본사</small></div>
+  <nav class="seg glass fade intro-hide" id="nav" aria-label="화면 전환"><span class="pill"></span><button type="button" class="on" data-v="map" aria-pressed="true">전국 관제</button><button type="button" data-v="list" aria-pressed="false">현장 목록</button><button type="button" data-v="notice">전파 문안</button></nav>
+  <div class="live glass fade intro-hide" id="live" role="status"></div>
+</header>
+<div class="banner" id="banner" role="status" hidden></div>
+
+<aside class="sheet glass fade intro-hide" id="sheet" aria-label="전국 요약과 현장 목록">
+  <button type="button" class="handle" data-sheet="sheet" aria-label="목록 펼치기·접기"></button>
+  <div class="sum">
+    <div class="eyebrow"><span id="siteCount">전국 현장</span><span class="when" id="when"></span></div>
+    <p class="sentence" id="sentence"></p>
+    <div class="chips" id="warnFail" hidden><span class="chip mute"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-alert"/></svg>특보 확인 실패</span></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi zero"><div class="v num" data-k="warn">0</div><div class="l">기상특보</div></div>
+    <div class="kpi zero"><div class="v num" data-k="legal">0</div><div class="l">법정조치</div></div>
+    <div class="kpi"><div class="v num"><span data-k="rainN">0</span><small>곳</small></div><div class="l">비 오는 현장</div></div>
+    <div class="kpi"><div class="v num"><span data-k="rainMax">0</span><small>mm</small></div><div class="l" id="rainMaxL">최대 시간당</div></div>
+  </div>
+  <div class="lhead"><b>현장</b><div class="mseg" id="sortSeg" role="group" aria-label="정렬"><span class="pill"></span><button type="button" class="on" data-m="rain">비</button><button type="button" data-m="wind">바람</button><button type="button" data-m="temp">기온</button></div></div>
+  <div class="list" id="list"></div>
+</aside>
+
+<section class="detail glass" id="detail" aria-label="선택한 현장" aria-live="polite">
+  <button type="button" class="handle" data-sheet="detail" aria-label="상세 펼치기·접기"></button>
+  <div class="dhead"><div><div class="cat" id="dCat"></div><h2 id="dName"></h2></div><button type="button" class="x" id="dClose" aria-label="상세 닫기"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-x"/></svg></button></div>
+  <div class="dbody">
+    <div class="hero" id="hero"><div class="t1"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-clock"/></svg><span id="hWhen"></span></div><div class="t2 num" id="hTemp" data-suffix="°">-</div><p class="t3" id="hSent"></p></div>
+    <div class="chips" id="dChips"></div>
+    <div class="tiles" id="dTiles"></div>
+    <div class="card"><h3>앞으로 24시간 <span>칸을 누르면 그 시각으로 이동</span></h3>
+      <div class="tl" id="tl">
+        <div class="cursor" id="cursor" data-label="지금"></div>
+        <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-drop"/></svg>비</span><div class="cells" id="cR"></div></div>
+        <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-wind"/></svg>바람</span><div class="cells" id="cW"></div></div>
+        <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-temp"/></svg>기온</span><div class="spark" id="spark"></div></div>
+        <div class="hours" id="hours"></div>
+      </div>
+      <p class="note" id="tlNote"></p>
+    </div>
+    <div class="card"><div class="info" id="dLegal"></div></div>
+  </div>
+  <div class="actions"><button type="button" class="btn pri" id="bNotice"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-copy"/></svg>전파 문안</button><a class="btn sec" id="bSite" hidden><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-ext"/></svg>현장 화면</a></div>
+</section>
+
+<div class="legend glass fade intro-hide" role="note" aria-label="비 범례"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-drop"/></svg><b>비 mm/h</b><span class="ramp"><i style="background:var(--r0)"></i><i style="background:var(--r1)"></i><i style="background:var(--r2)"></i><i style="background:var(--r3)"></i><i style="background:var(--r4)"></i></span><span class="ticks2 num"><span>0.1</span><span>1</span><span>3</span><span>15</span><span>30+</span></span><span class="src">자료: 기상청</span></div>
+<div class="mapctl fade intro-hide"><button type="button" class="glass" id="zIn" aria-label="확대"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-plus"/></svg></button><button type="button" class="glass" id="zOut" aria-label="축소"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-minus"/></svg></button><button type="button" class="glass" id="zHome" aria-label="전국 보기"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-home"/></svg></button></div>
+
+<div class="scrub glass fade intro-hide" id="scrub">
+  <button type="button" class="play" id="play" aria-label="재생"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-play"/></svg></button>
+  <div class="track" id="track" role="slider" tabindex="0" aria-label="표시 시각" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0"><div class="rail"><div class="fill" id="fill"></div></div><div class="ticks" id="ticks"></div><div class="knob" id="knob"></div><div class="bubble" id="bubble"></div></div>
+</div>
+
+<section class="tableview glass" id="tableView" aria-label="현장 목록" hidden>
+  <header><b>현장 목록</b><span id="tvWhen" class="mute"></span></header>
+  <div class="tvscroll"><table><thead><tr><th scope="col">현장</th><th scope="col">지역</th><th scope="col">관측</th><th scope="col" class="num">기온</th><th scope="col" class="num">비 mm/h</th><th scope="col" class="num">바람 m/s</th><th scope="col" class="num">습도</th><th scope="col">특보·법정</th><th scope="col">요약</th></tr></thead><tbody id="tvBody"></tbody></table></div>
+</section>
+
+<div class="scrim" id="scrim"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><header><b id="mTitle">전파 문안</b><button type="button" class="x" id="mClose" aria-label="닫기"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-x"/></svg></button></header><p class="mnote" id="mNote"></p><pre id="mText"></pre><footer><button type="button" class="btn sec" id="mCancel">닫기</button><button type="button" class="btn pri" id="mCopy"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-copy"/></svg>문안 복사</button></footer></div>
+<div class="toast" id="toast" role="status"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-check"/></svg><span></span></div>
+
+<div class="loadfail" id="loadfail" role="alert" hidden><div><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-alert"/></svg><b>화면 자료를 불러오지 못했습니다</b><p>잠시 뒤 다시 시도해 주세요. 계속되면 관리자에게 알려 주세요.</p><button type="button" class="btn pri" id="retry"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-refresh"/></svg>다시 시도</button></div></div>
+</body>
+</html>
