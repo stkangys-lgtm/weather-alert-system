@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-26T16:45:09+09:00",
+  "updated_at": "2026-09-26T17:00:03+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -554,7 +554,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-09-26T16:45:09+09:00",
+  "last_success_at": "2026-09-26T17:00:03+09:00",
   "last_change_at": "2026-09-26T16:45:09+09:00",
   "last_changes": [
     {
