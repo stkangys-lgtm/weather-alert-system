@@ -22,6 +22,7 @@ class SiteProfileTests(unittest.TestCase):
     def test_region_from_known_mapping(self):
         self.assertEqual("경상북도 울진군", region_label({"site_name": "후포 공공하수처리"}))
         self.assertEqual("서울특별시 서대문구", region_label({"site_name": "연희·연남동 공공주택"}))
+        self.assertEqual("경상남도 양산시", region_label({"site_name": "양산 부산대병원"}))
 
     def test_region_from_config_and_override(self):
         site = {"site_name": "새 현장", "warning_regions": ["화성시", "화성"], "warning_provinces": ["경기도"]}

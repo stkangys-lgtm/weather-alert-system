@@ -29,6 +29,16 @@ class WarningClientTests(unittest.TestCase):
         self.assertEqual(1, len(matched["군포복합개발"]))
         self.assertEqual([], matched["시흥능곡 주변도로"])
 
+    def test_yangsan_hospital_matches_yangsan_only(self):
+        # 현장 DB 주소: 경남 양산시 물금읍
+        site = [{"site_name": "양산 부산대병원"}]
+        yangsan = parse_warning_status("o 호우경보 : 경상남도(양산, 김해)")
+        self.assertEqual(["경상남도(양산, 김해)"], match_warnings_to_sites(site, yangsan)["양산 부산대병원"][0]["matched_areas"])
+        other = parse_warning_status("o 호우경보 : 경상남도(창원, 김해)")
+        self.assertEqual([], match_warnings_to_sites(site, other)["양산 부산대병원"])
+        whole = parse_warning_status("o 강풍주의보 : 경상남도")
+        self.assertEqual(1, len(match_warnings_to_sites(site, whole)["양산 부산대병원"]))
+
     def test_province_wide_warning_and_marine_filter(self):
         warnings = parse_warning_status(
             "o 강풍주의보 : 충청북도, 서해중부앞바다"
