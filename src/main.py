@@ -1,5 +1,5 @@
 """기상청 API로 현장별 기상 데이터를 수집해 Google Sheets에 기록하고,
-이상기상 여부를 판정해 공고문 텍스트와 대시보드(docs/index.html)를 생성한다.
+이상기상 여부를 판정해 공고문 텍스트·화면 데이터(docs/data/latest.json)·이전 대시보드(docs/old/)를 생성한다.
 
 실행 (프로젝트 루트에서, 가상환경 활성화 후):
     python -m src.main
@@ -16,7 +16,7 @@ from src.feels_like import compute_feels_like
 from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
 from src.map_dashboard import build_map_html
 from src.notification_queue import process_notifications
-from src.publish import check_latest, private_values, publish
+from src.publish import OLD_MAP_PATH, OLD_SITES_PATH, check_latest, private_values, publish
 from src.state_monitor import (
     build_alert_message,
     build_snapshot,
@@ -39,9 +39,9 @@ FCST_HEADER = ["기록시각", "현장명", "담당자", "예보일자", "예보
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
 ANNOUNCEMENT_PATH = os.path.join(DOCS_DIR, "announcement.txt")
-DASHBOARD_PATH = os.path.join(DOCS_DIR, "sites.html")
-MAP_PATH = os.path.join(DOCS_DIR, "index.html")
-LEGACY_MAP_PATH = os.path.join(DOCS_DIR, "map.html")
+# 이전 화면은 새 본사 화면 전환 뒤 2주간 docs/old/에 계속 만든다(설계서 9절 2단계).
+DASHBOARD_PATH = OLD_SITES_PATH
+MAP_PATH = OLD_MAP_PATH
 STATE_PATH = os.path.join(DOCS_DIR, "weather-state.json")
 LATEST_ALERT_PATH = os.path.join(DOCS_DIR, "latest-alert.txt")
 NOTIFICATION_OUTBOX_PATH = os.path.join(DOCS_DIR, "notification-outbox.json")
@@ -186,7 +186,7 @@ def write_dashboard(collected, now_str, mid_forecasts, generated_at_iso=None, re
         last_change_at=last_change_at,
         missing_site_count=sum(1 for item in collected if item["current"] is None),
     )
-    os.makedirs(DOCS_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(DASHBOARD_PATH), exist_ok=True)
     with open(DASHBOARD_PATH, "w", encoding="utf-8") as f:
         f.write(html)
 
@@ -216,11 +216,9 @@ def write_map(collected, now_str, mid_forecasts):
             "weather_warnings_available": item.get("weather_warnings_available", True),
         })
     html = build_map_html(now_str, site_rows)
-    os.makedirs(DOCS_DIR, exist_ok=True)
-    # 지도 화면을 기본 진입점으로 사용하고, 기존 map.html 주소도 호환한다.
-    for path in (MAP_PATH, LEGACY_MAP_PATH):
-        with open(path, "w", encoding="utf-8") as f:
-            f.write(html)
+    os.makedirs(os.path.dirname(MAP_PATH), exist_ok=True)
+    with open(MAP_PATH, "w", encoding="utf-8") as f:
+        f.write(html)
 
 
 def write_latest_view(collected, mid_forecasts, now):

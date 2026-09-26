@@ -88,6 +88,14 @@ class OldScreenTests(unittest.TestCase):
         self.assertEqual(os.path.join(DOCS_DIR, "old", "index.html"), OLD_MAP_PATH)
         self.assertEqual(os.path.join(DOCS_DIR, "old", "sites.html"), OLD_SITES_PATH)
 
+    def test_moved_pages_point_to_new_and_old_screens(self):
+        for name, new, old in (("map.html", "./", "old/index.html"), ("sites.html", "./#list", "old/sites.html")):
+            with self.subTest(name=name):
+                with open(os.path.join(WEB_DIR, name), encoding="utf-8") as f:
+                    html = f.read()
+                self.assertIn(f'href="{new}"', html)
+                self.assertIn(f'href="{old}"', html)
+
 
 class RealWebTests(unittest.TestCase):
     @unittest.skipUnless(os.path.isdir(WEB_DIR), "web/ 없음")

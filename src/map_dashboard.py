@@ -172,7 +172,7 @@ button { -webkit-tap-highlight-color:transparent; }
       <div class="section-head"><b>법정 조치·현장 확인</b><span>작업·실측 기반</span></div><div class="legal-list" id="legalSignals"></div>
       <div class="section-head"><b>시간대별 예보</b><span>좌우로 밀어 보기</span></div><div class="forecast" id="forecast"></div>
       <div class="section-head"><b>예상 특이기상</b><span>향후 10일</span></div><div class="event-list" id="events"></div>
-      <div class="actions"><a class="action primary" href="latest-alert.txt">전파 문안 보기</a><a class="action" href="sites.html">전체 현장 목록</a></div>
+      <div class="actions"><a class="action primary" href="../latest-alert.txt">전파 문안 보기</a><a class="action" href="sites.html">전체 현장 목록</a></div>
     </div></aside>
   </section>
 </main>
