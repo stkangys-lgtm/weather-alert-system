@@ -87,6 +87,28 @@ class PreliminaryWarningTests(unittest.TestCase):
         self.assertIn("기상청 특보는 없습니다. 예비특보는 1개 현장에 발표되어 있습니다.", text)
 
 
+HEAVY_RAIN_WARNING = {"kind": "기상특보", "title": "호우경보", "level": "경보"}
+
+
+class MissingSiteWarningTests(unittest.TestCase):
+    def test_summary_keeps_official_warning(self):
+        self.assertEqual("기상청 호우경보 발효 중. 관측 자료를 받지 못했습니다.",
+                         site_summary(make_view(state="missing", warnings=[HEAVY_RAIN_WARNING])))
+
+    def test_notice_keeps_warning_and_actions(self):
+        text = site_notice(make_view(state="missing", warnings=[HEAVY_RAIN_WARNING]))
+        self.assertIn("기상청 호우경보가 발효 중입니다.", text)
+        self.assertIn("후포 공공하수처리 현장은 이번에 관측 자료를 받지 못했습니다.", text)
+        self.assertIn("【수방 안전관리 사항】", text)
+        self.assertTrue(text.endswith("감사합니다."))
+
+    def test_national_keeps_warning_count_without_any_observation(self):
+        self.assertEqual("관측 자료를 받지 못했습니다. 기상청 특보가 1개 현장에 발효 중입니다.",
+                         national_summary([make_view(state="missing", warnings=[HEAVY_RAIN_WARNING])], True))
+        self.assertEqual("관측 자료를 받지 못했습니다. 기상청 특보는 확인하지 못했습니다.",
+                         national_summary([make_view(state="missing")], False))
+
+
 class NationalSummaryTests(unittest.TestCase):
     def sites(self):
         return [make_view(rain=31, hourly=HUPO_HOURLY),

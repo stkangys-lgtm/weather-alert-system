@@ -97,9 +97,13 @@ def _warning_sentences(view):
     return parts
 
 
+def _has_data(view):
+    return view["state"] != "missing" and bool(view.get("now"))
+
+
 def site_summary(view):
-    if view["state"] == "missing" or not view.get("now"):
-        return NO_DATA
+    if not _has_data(view):
+        return " ".join(_warning_sentences(view) + [NO_DATA])
     now = view["now"]
     ref = datetime.fromisoformat(view["as_of"]).date()
     rain = now.get("rain_mm") or 0
@@ -131,13 +135,13 @@ def _next_hours_phrase(hourly):
 
 
 def national_summary(sites, warnings_ok):
-    live = [s for s in sites if s["state"] != "missing" and s.get("now")]
-    if not live:
-        return NO_DATA
+    live = [s for s in sites if _has_data(s)]
     rainy = sorted((s for s in live if (s["now"].get("rain_mm") or 0) >= DRIZZLE_MAX_MM),
                    key=lambda s: -s["now"]["rain_mm"])
     parts = []
-    if rainy:
+    if not live:
+        parts.append(NO_DATA)
+    elif rainy:
         top = rainy[0]
         mm = top["now"]["rain_mm"]
         when = "지금 " if top["state"] == "ok" else f"{datetime.fromisoformat(top['as_of']).hour}시 관측 기준 "
@@ -152,17 +156,21 @@ def national_summary(sites, warnings_ok):
     if not warnings_ok:
         parts.append("기상청 특보는 확인하지 못했습니다.")
     else:
-        parts.append(f"기상청 특보가 {warned}개 현장에 발효 중입니다." if warned else "기상청 특보는 없습니다.")
+        if warned:
+            parts.append(f"기상청 특보가 {warned}개 현장에 발효 중입니다.")
+        elif live:
+            parts.append("기상청 특보는 없습니다.")
         if announced:
             parts.append(f"예비특보는 {announced}개 현장에 발표되어 있습니다.")
     failed = sum(1 for s in sites if s["state"] != "ok")
-    if failed:
+    if failed and live:
         parts.append(f"{failed}개 현장은 이번 수집에 실패했습니다.")
     return " ".join(parts)
 
 
 def _categories(view):
-    rain = view["now"].get("rain_mm") or 0
+    now = view.get("now") or {}
+    rain = now.get("rain_mm") or 0
     found = set()
     for warning in view["warnings"]:
         for category in CATEGORY_ORDER:
@@ -170,26 +178,39 @@ def _categories(view):
                 found.add(category)
     if rain >= DRIZZLE_MAX_MM:
         found.add(CATEGORY_RAIN)
-    if wind_term(view["now"].get("wind")) in ("강한 바람", "매우 강한 바람"):
+    if wind_term(now.get("wind")) in ("강한 바람", "매우 강한 바람"):
         found.add(CATEGORY_WIND)
     return [category for category in CATEGORY_ORDER if category in found]
 
 
 def site_notice(view):
     lines = ["■ 공지드립니다.", ""]
-    if view["state"] == "missing" or not view.get("now"):
-        lines += [f"{view['name']} 현장은 이번에 관측 자료를 받지 못했습니다.",
-                  "현장에서 기상 상황을 직접 확인하여 주시기 바랍니다.", "", "감사합니다."]
-        return "\n".join(lines)
-    at = datetime.fromisoformat(view["as_of"])
-    when = at.strftime("%Y-%m-%d %H:%M") + " 관측 기준"
-    now = view["now"]
-    rain = now.get("rain_mm") or 0
     official, preliminary = _warning_titles(view)
     if official:
         lines.append(f"기상청 {official}가 발효 중입니다.")
     if preliminary:
         lines.append(f"기상청 {preliminary}가 발표되었습니다.")
+    if _has_data(view):
+        lines += _observation_lines(view)
+    else:
+        lines += [f"{view['name']} 현장은 이번에 관측 자료를 받지 못했습니다.",
+                  "현장에서 기상 상황을 직접 확인하여 주시기 바랍니다."]
+    categories = _categories(view)
+    if categories:
+        lines += ["", f"【{_situational_title(categories)}】"]
+        for category in categories:
+            lines += [f"ㅇ {action}" for action in ACTION_ITEMS[category]]
+        lines += ["", _situational_closing(categories)]
+    lines += ["", "감사합니다."]
+    return "\n".join(lines)
+
+
+def _observation_lines(view):
+    lines = []
+    at = datetime.fromisoformat(view["as_of"])
+    when = at.strftime("%Y-%m-%d %H:%M") + " 관측 기준"
+    now = view["now"]
+    rain = now.get("rain_mm") or 0
     if rain >= DRIZZLE_MAX_MM:
         lines.append(f"{when}, {view['name']} 현장에 시간당 {fmt_number(rain)}mm의 {rain_term(rain)}가 관측되고 있습니다.")
         phrase = _forecast_rain_phrase(view["hourly"], at.date())
@@ -203,11 +224,4 @@ def site_notice(view):
     term = wind_term(now.get("wind"))
     if term:
         lines.append(f"바람은 {fmt_number(now['wind'])}m/s({term})입니다.")
-    categories = _categories(view)
-    if categories:
-        lines += ["", f"【{_situational_title(categories)}】"]
-        for category in categories:
-            lines += [f"ㅇ {action}" for action in ACTION_ITEMS[category]]
-        lines += ["", _situational_closing(categories)]
-    lines += ["", "감사합니다."]
-    return "\n".join(lines)
+    return lines
