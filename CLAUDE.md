@@ -20,7 +20,13 @@
 - 공개 관제 화면: `https://stkangys-lgtm.github.io/weather-alert-system/`
 - 현장 카드 화면: `https://stkangys-lgtm.github.io/weather-alert-system/sites.html`
 - 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **59개 통과** (2026-09-20 갱신)
+- 전체 테스트: **112개 통과** (2026-09-26 갱신)
+
+### 대시보드 리디자인 진행 (2026-09-26~)
+
+- 설계: `design/specs/2026-09-26-dashboard-redesign-design.md`, 계획: `design/plans/`
+- 1단계(데이터 층): 매 실행마다 `docs/data/latest.json` 생성. 기존 화면·알림은 그대로.
+- 중기예보 날짜를 발표일 기준으로 수정(새벽 실행 하루 밀림 해결).
 
 ### 이번 세션(2026-09-20)에서 추가된 것
 
@@ -71,6 +77,11 @@ CLAUDE.md에 기록할 것.
 ## 주요 파일
 
 - `src/main.py`: 실행 진입점과 전체 흐름
+- `src/view_model.py`: 화면용 공개 데이터 `docs/data/latest.json` 조립(허용 목록 필드만), 마지막 정상 자료 유지
+- `src/narrative.py`: 현장·전국 요약 문장과 전파 문안(금지어 검사 포함)
+- `src/intensity.py`: 기상청 예보용어(2025-06-11) 강수·바람 세기 표현
+- `src/site_profile.py`: 현장 공개 ID·짧은 이름·지역
+- `src/schedule.py`: 다음 수집 시각(워크플로 일정 변경 시 함께 수정)
 - `src/collection.py`: 실황·예보 병렬 수집. 격자 캐시·회로 차단(`CircuitBreaker`) 포함.
   실황·예보·중기·특보 호출이 하나의 breaker를 공유한다.
 - `src/warning_client.py`: 공공데이터포털 공식 기상특보 수집 및 현장 매칭
