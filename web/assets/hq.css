@@ -168,14 +168,18 @@ body.hasdetail .mapctl { right: 424px; }
 .legend .src { color: var(--muted-ink); font-size: 10.5px; border-left: 1px solid var(--line); padding-left: 10px; }
 
 /* 지도 표식 */
-.mk { position: relative; display: flex; align-items: center; gap: 6px; cursor: pointer; transform: scale(0); transition: transform .5s var(--spring); }
-.mk.in { transform: scale(1); }
+/* 표식 위치는 지도 라이브러리가 요소의 position·transform으로 정하므로 .mk 자체에는 둘 다 주지 않는다.
+   튀어 오르는 효과는 안쪽 요소의 scale 속성으로 준다. */
+.mk { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+.mk .d, .mk .lab { scale: 0; }
+.mk .lab { transform-origin: left center; }
+.mk.in .d, .mk.in .lab { scale: 1; }
 .mk .d { width: 14px; height: 14px; border-radius: 50%; background: var(--c, var(--dry)); border: 3px solid #fff; box-shadow: 0 2px 6px rgba(16, 24, 32, .3);
-  transition: background .4s, transform .35s var(--spring), box-shadow .3s; flex: none; }
+  transition: background .4s, transform .35s var(--spring), box-shadow .3s, scale .5s var(--spring); flex: none; }
 .mk.big .d { width: 18px; height: 18px; }
 .mk.alert .d { box-shadow: 0 0 0 2px var(--warn), 0 2px 6px rgba(16, 24, 32, .3); }
 .mk .lab { display: inline-flex; align-items: center; gap: 3px; background: rgba(253, 253, 253, .95); border-radius: 9px; padding: 4px 8px; font-size: 12px;
-  font-weight: 700; color: var(--ink); white-space: nowrap; box-shadow: 0 2px 8px rgba(16, 24, 32, .16); transition: background .3s, color .3s, transform .3s var(--spring); }
+  font-weight: 700; color: var(--ink); white-space: nowrap; box-shadow: 0 2px 8px rgba(16, 24, 32, .16); transition: background .3s, color .3s, transform .3s var(--spring), scale .5s var(--spring); }
 .mk .lab .ic { width: 12px; height: 12px; color: var(--warn); }
 .mk .lab em { font-style: normal; font-weight: 800; margin-left: 2px; }
 .mk .lab .mu { font-weight: 600; color: var(--muted-ink); margin-left: 2px; }
@@ -186,6 +190,7 @@ body.hasdetail .mapctl { right: 424px; }
 .mk:hover .lab { transform: translateY(-1px); }
 .mk.hid { display: none; }
 .mk.nolab .lab { display: none; }
+.mk.nolab:hover .lab, .mk.nolab:focus-visible .lab { display: inline-flex; }
 .cl { display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 999px; background: rgba(253, 253, 253, .95);
   box-shadow: 0 4px 14px rgba(16, 24, 32, .22); font-weight: 700; font-size: 12.5px; white-space: nowrap; transition: transform .3s var(--spring); }
 .cl:hover { transform: scale(1.04); }
