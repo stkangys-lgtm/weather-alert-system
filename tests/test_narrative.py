@@ -47,6 +47,14 @@ class SiteSummaryTests(unittest.TestCase):
         self.assertIn("바람 9.5m/s(강한 바람).", site_summary(make_view(wind=9.5)))
         self.assertNotIn("바람", site_summary(make_view(wind=3.9)))
 
+    def test_forecast_amount_unit_placement(self):
+        heavy = [hour("2026-09-25T18:00:00+09:00", 50.0, "50 이상", 90)]
+        self.assertIn("예보는 18시 최대 50mm 이상.", site_summary(make_view(rain=31, hourly=heavy)))
+        ranged = [hour("2026-09-25T18:00:00+09:00", 30.0, "30~50", 90)]
+        self.assertIn("예보는 18시 최대 30~50mm.", site_summary(make_view(rain=31, hourly=ranged)))
+        national = national_summary([make_view(rain=31, hourly=heavy)], True)
+        self.assertIn("예보는 50mm 이상.", national)
+
     def test_official_warning_first(self):
         warning = [{"kind": "기상특보", "title": "호우주의보", "level": "주의보"}]
         self.assertTrue(site_summary(make_view(rain=31, warnings=warning)).startswith("기상청 호우주의보 발효 중."))

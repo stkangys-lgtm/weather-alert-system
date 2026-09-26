@@ -44,6 +44,15 @@ def _first_rain(hourly):
     return next((h for h in hourly if _rain_mm(h) > 0), None)
 
 
+def _mm_text(label):
+    """rain_label → 단위를 붙인 문구. "<1"→"1mm 미만", "50 이상"→"50mm 이상", "30~50"→"30~50mm"."""
+    if label == "<1":
+        return "1mm 미만"
+    if label.endswith(" 이상"):
+        return f"{label[:-3]}mm 이상"
+    return f"{label}mm"
+
+
 def _forecast_rain_phrase(hourly, ref_date):
     wet = [h for h in hourly[:FORECAST_HORIZON_HOURS] if _rain_mm(h) > 0]
     if not wet:
@@ -53,7 +62,7 @@ def _forecast_rain_phrase(hourly, ref_date):
     if {h["rain_label"] for h in wet} == {"<1"}:
         amount = "1mm 미만"
     else:
-        amount = f"최대 {max(wet, key=_rain_mm)['rain_label']}mm"
+        amount = f"최대 {_mm_text(max(wet, key=_rain_mm)['rain_label'])}"
     return f"{span} {amount}"
 
 
@@ -99,9 +108,7 @@ def _next_hours_phrase(hourly):
     peak = max(upcoming, key=_rain_mm)
     if _rain_mm(peak) == 0:
         return ", 예보는 비 없음"
-    if peak["rain_label"] == "<1":
-        return ", 예보는 1mm 미만"
-    return f", 예보는 {peak['rain_label']}mm"
+    return f", 예보는 {_mm_text(peak['rain_label'])}"
 
 
 def national_summary(sites, warnings_ok):
