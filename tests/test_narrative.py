@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime, timedelta, timezone
 
 from src.narrative import contains_forbidden, national_summary, site_notice, site_summary
 
@@ -107,6 +108,26 @@ class MissingSiteWarningTests(unittest.TestCase):
                          national_summary([make_view(state="missing", warnings=[HEAVY_RAIN_WARNING])], True))
         self.assertEqual("관측 자료를 받지 못했습니다. 기상청 특보는 확인하지 못했습니다.",
                          national_summary([make_view(state="missing")], False))
+
+
+NEXT_MORNING = datetime(2026, 9, 26, 4, 17, tzinfo=timezone(timedelta(hours=9)))
+
+
+class OvernightStaleTests(unittest.TestCase):
+    def view(self, rain=0.0):
+        return make_view(rain=rain, state="stale", as_of="2026-09-25T17:00:00+09:00",
+                         hourly=[hour("2026-09-26T05:00:00+09:00"), hour("2026-09-26T07:00:00+09:00", 2.0, "2", 60)])
+
+    def test_summary_labels_forecast_against_today(self):
+        self.assertEqual("9/25 17시 관측 기준 비가 없습니다. 예보상 7시부터 비(강수확률 60%).",
+                         site_summary(self.view(), now=NEXT_MORNING))
+
+    def test_notice_labels_forecast_against_today(self):
+        self.assertIn("다만 예보상 7시부터 비(강수확률 60%)", site_notice(self.view(), now=NEXT_MORNING))
+
+    def test_national_names_observation_day(self):
+        self.assertTrue(national_summary([self.view(rain=5.6)], True, now=NEXT_MORNING).startswith(
+            "후포에 9/25 17시 관측 기준 시간당 5.6mm(관측)의 비"))
 
 
 class NationalSummaryTests(unittest.TestCase):

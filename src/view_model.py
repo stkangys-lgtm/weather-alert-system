@@ -200,8 +200,8 @@ def build_site_view(item, mid_entries, previous_site, now):
         "legal": legal,
         "legal_profile": bool(site.get("work_types") or site.get("active_work_types")),
     }
-    view["summary"] = narrative.site_summary(view)
-    view["notice"] = narrative.site_notice(view)
+    view["summary"] = narrative.site_summary(view, now)
+    view["notice"] = narrative.site_notice(view, now)
     return {key: view[key] for key in SITE_FIELDS}
 
 
@@ -259,7 +259,7 @@ def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_
             "max_rain": _top(sites, "rain_mm", "mm"),
             "max_wind": _top(sites, "wind", "ms"),
             "max_temp": _top(sites, "temp", "c"),
-            "summary": narrative.national_summary(sites, warnings_ok),
+            "summary": narrative.national_summary(sites, warnings_ok, now),
         },
         "radar": None,
         "sites": sites,

@@ -242,6 +242,12 @@ class BuildLatestTests(unittest.TestCase):
         self.assertEqual(previous["sites"][0]["legal"], latest["sites"][0]["legal"])
         self.assertEqual(1, latest["national"]["legal"])
 
+    def test_overnight_stale_summary_is_dated(self):
+        previous = build([make_item()])
+        morning = datetime(2026, 9, 26, 4, 17, tzinfo=KST)
+        site = build([make_item(current=None)], previous=previous, now=morning)["sites"][0]
+        self.assertTrue(site["summary"].startswith("9/25 17시 관측 기준 시간당 31mm(관측)"), site["summary"])
+
     def test_hourly_falls_back_to_previous_forecast(self):
         previous = build([make_item()])
         later = NOW + timedelta(hours=2)
