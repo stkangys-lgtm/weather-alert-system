@@ -105,6 +105,14 @@ class SeriesTests(unittest.TestCase):
                          (days[3]["sky"], days[3]["pop"], days[3]["tmin"], days[3]["tmax"], days[3]["source"]))
         self.assertTrue(days[4]["missing"])
 
+    def test_daily_sky_is_snow_only_for_snow_types(self):
+        cases = [("소나기", "비"), ("4", "비"), ("비/눈", "비"), ("빗방울눈날림", "비"), ("눈", "눈"), ("눈날림", "눈")]
+        for pty, expected in cases:
+            with self.subTest(pty=pty):
+                rows = fc_rows(datetime(2026, 9, 26, 0, 0), 24)
+                rows[14]["PTY"] = pty
+                self.assertEqual(expected, daily_series(rows, [], date(2026, 9, 25))[0]["sky"])
+
 
 NOW = datetime(2026, 9, 25, 17, 47, tzinfo=KST)
 _UNSET = object()

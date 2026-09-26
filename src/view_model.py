@@ -12,7 +12,7 @@ from datetime import datetime, timedelta, timezone
 
 from src import narrative
 from src.feels_like import compute_feels_like
-from src.intensity import DRIZZLE_MAX_MM, fmt_number
+from src.intensity import DRIZZLE_MAX_MM, fmt_number, is_snow
 from src.kma_client import forecast_base_datetime
 from src.legal_rules import STATUS_ACTION, STATUS_STOP, STATUS_VERIFY
 from src.mid_client import mid_issue_datetime
@@ -114,7 +114,7 @@ def _short_day(day, rows):
     tmx = next((_num(r.get("TMX")) for r in rows if _num(r.get("TMX")) is not None), None)
     ptys = {r.get("PTY") for r in rows} - {None, "", "없음"}
     if ptys:
-        sky = "눈" if all("비" not in p and "빗방울" not in p for p in ptys) else "비"
+        sky = "눈" if all(is_snow(p) for p in ptys) else "비"
     else:
         skies = [r.get("SKY") for r in rows if r.get("SKY")]
         sky = max(skies, key=skies.count) if skies else None

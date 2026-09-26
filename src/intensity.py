@@ -14,6 +14,11 @@ DRIZZLE_MAX_MM = 0.1
 _RAIN_STEPS = ((3, "약한 비"), (15, "비"), (30, "강한 비"))
 _WIND_NOTICE_MIN = 4
 _WIND_STEPS = ((9, "약간 강한 바람"), (14, "강한 바람"))
+SNOW_TYPES = ("눈", "눈날림")  # 강수형태 중 비가 섞이지 않은 눈. 비/눈·빗방울눈날림·소나기는 비로 본다.
+
+
+def is_snow(pty):
+    return pty in SNOW_TYPES
 
 
 def rain_term(mm):
