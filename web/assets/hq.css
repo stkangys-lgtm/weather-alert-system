@@ -103,7 +103,7 @@ html, body { height: 100%; overflow: hidden; }
 .tile .l .ic { width: 13px; height: 13px; }
 .tile .v { font-size: 20px; font-weight: 800; letter-spacing: -.03em; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .tile .v small { font-size: 11px; color: var(--muted-ink); font-weight: 700; margin-left: 1px; letter-spacing: 0; }
-.tl { position: relative; touch-action: pan-y; cursor: pointer; }
+.tl { position: relative; touch-action: pan-y; cursor: pointer; margin-top: 26px; }  /* 위쪽 여백: 시각 표시 자리 */
 .tl-row { display: grid; grid-template-columns: 40px 1fr; align-items: center; gap: 6px; margin-top: 6px; }
 .tl-row > span { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--ink2); font-weight: 600; }
 .tl-row > span .ic { width: 12px; height: 12px; }
