@@ -47,8 +47,9 @@ class NowValuesTests(unittest.TestCase):
     CURRENT = {"base_date": "20260925", "base_time": "1700", "T1H": "18.6", "RN1": "31", "WSD": "4.1", "REH": "95"}
 
     def test_now_values(self):
-        self.assertEqual({"temp": 18.6, "feels": 18.6, "rain_mm": 31.0, "wind": 4.1, "humidity": 95},
+        self.assertEqual({"temp": 18.6, "feels": 18.6, "rain_mm": 31.0, "wind": 4.1, "humidity": 95, "pty": None},
                          now_values(self.CURRENT))
+        self.assertEqual("비", now_values(dict(self.CURRENT, PTY="비"))["pty"])
 
     def test_kma_missing_markers_are_not_published_as_values(self):
         current = dict(self.CURRENT, T1H="-998.9", RN1="-998.9", WSD="999", REH="-999")
@@ -187,6 +188,13 @@ class BuildLatestTests(unittest.TestCase):
         self.assertEqual((0, 0, 1), (national["warnings"], national["legal"], national["rain_sites"]))
         self.assertEqual({"mm": 31.0, "site": "5355accc"}, national["max_rain"])
         self.assertTrue(national["summary"].startswith("후포에 지금 시간당 31mm(관측)의 매우 강한 비, 예보는 1mm 미만."))
+
+    def test_rain_sites_count_onset_but_not_snow(self):
+        onset = make_item(current=dict(obs(rn1="0"), PTY="비"))
+        snow = make_item(site=site_cfg("연희·연남동 공공주택"), current=dict(obs(rn1="2", t1h="-3"), PTY="눈"))
+        dry = make_item(site=site_cfg("오리온수협 목포 김공장"), current=obs(rn1="0"))
+        self.assertEqual(1, build([onset, dry])["national"]["rain_sites"])
+        self.assertEqual(0, build([snow, dry])["national"]["rain_sites"])
 
     def test_profile_gap_is_not_a_legal_signal(self):
         site = build([make_item()])["sites"][0]

@@ -12,7 +12,7 @@ from datetime import datetime, timedelta, timezone
 
 from src import narrative
 from src.feels_like import compute_feels_like
-from src.intensity import DRIZZLE_MAX_MM, fmt_number, is_snow
+from src.intensity import fmt_number, is_snow
 from src.kma_client import forecast_base_datetime
 from src.legal_rules import STATUS_ACTION, STATUS_STOP, STATUS_VERIFY
 from src.mid_client import mid_issue_datetime
@@ -86,7 +86,7 @@ def now_values(current):
     temp, wind, humidity = _num(current.get("T1H")), _num(current.get("WSD")), _int(current.get("REH"))
     feels = compute_feels_like(temp, humidity, wind)
     return {"temp": temp, "feels": feels if feels is not None else temp, "rain_mm": rain,
-            "wind": wind, "humidity": humidity}
+            "wind": wind, "humidity": humidity, "pty": current.get("PTY")}
 
 
 def _forecast_time(row):
@@ -255,7 +255,7 @@ def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_
         "national": {
             "warnings": sum(1 for s in sites if any(narrative.is_official_warning(w) for w in s["warnings"])),
             "legal": sum(1 for s in sites if any(l["status"] in ACTIONABLE_LEGAL for l in s["legal"])),
-            "rain_sites": sum(1 for s in live if (s["now"].get("rain_mm") or 0) >= DRIZZLE_MAX_MM),
+            "rain_sites": sum(1 for s in live if narrative.precipitation(s["now"]) == "rain"),
             "max_rain": _top(sites, "rain_mm", "mm"),
             "max_wind": _top(sites, "wind", "ms"),
             "max_temp": _top(sites, "temp", "c"),

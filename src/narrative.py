@@ -14,7 +14,7 @@ from src.alert_rules import (
     _situational_closing,
     _situational_title,
 )
-from src.intensity import DRIZZLE_MAX_MM, fmt_number, rain_term, wind_term
+from src.intensity import DRIZZLE_MAX_MM, fmt_number, is_snow, rain_term, wind_term
 
 FORBIDDEN_WORDS = ("선제", "기준 도달", "주의 단계", "경계 단계")
 FORECAST_HORIZON_HOURS = 12
@@ -108,16 +108,47 @@ def _has_data(view):
     return view["state"] != "missing" and bool(view.get("now"))
 
 
+def _subject(word):
+    """받침에 맞는 주격 조사: 비가, 빗방울이, 눈이."""
+    last = ord(word[-1]) - 0xAC00
+    return "이" if 0 <= last < 11172 and last % 28 else "가"
+
+
+def precipitation(observed):
+    """관측 강수 → None / "rain" / "snow". 강수량이 0이어도 강수형태가 있으면 내리기 시작한 것으로 본다."""
+    pty = (observed or {}).get("pty")
+    if is_snow(pty):
+        return "snow"
+    if ((observed or {}).get("rain_mm") or 0) >= DRIZZLE_MAX_MM or (pty and pty != "없음"):
+        return "rain"
+    return None
+
+
+def _amount(rain):
+    return f"{fmt_number(rain)}mm" if rain >= DRIZZLE_MAX_MM else f"{DRIZZLE_MAX_MM}mm 미만"
+
+
+def _observed_phrase(observed):
+    """"시간당 31mm(관측)의 매우 강한 비" / "눈(관측), 1시간 강수량 2mm". 강수가 없으면 None."""
+    kind = precipitation(observed)
+    rain = observed.get("rain_mm") or 0
+    if kind == "snow":
+        return f"{observed['pty']}(관측), 1시간 강수량 {_amount(rain)}"
+    if kind == "rain":
+        return f"시간당 {_amount(rain)}(관측)의 {rain_term(rain) or '빗방울'}"
+    return None
+
+
 def site_summary(view, now=None):
     """now(생성 시각)는 수집 실패로 이어받은 전날 관측일 때 날짜를 바르게 적는 데 쓴다."""
     if not _has_data(view):
         return " ".join(_warning_sentences(view) + [NO_DATA])
     ref = _ref_date(view, now)
     observed = view["now"]
-    rain = observed.get("rain_mm") or 0
     parts = _warning_sentences(view)
-    if rain >= DRIZZLE_MAX_MM:
-        parts.append(f"{_lead(view, ref)} 시간당 {fmt_number(rain)}mm(관측)의 {rain_term(rain)}.")
+    observed_phrase = _observed_phrase(observed)
+    if observed_phrase:
+        parts.append(f"{_lead(view, ref)} {observed_phrase}.")
         phrase = _forecast_rain_phrase(view["hourly"], ref)
         parts.append(f"예보는 {phrase}." if phrase else "예보상 12시간 안에 비 예보가 없습니다.")
     else:
@@ -144,19 +175,19 @@ def _next_hours_phrase(hourly):
 
 def national_summary(sites, warnings_ok, now=None):
     live = [s for s in sites if _has_data(s)]
-    rainy = sorted((s for s in live if (s["now"].get("rain_mm") or 0) >= DRIZZLE_MAX_MM),
-                   key=lambda s: -s["now"]["rain_mm"])
+    wet = sorted((s for s in live if precipitation(s["now"])), key=lambda s: -(s["now"].get("rain_mm") or 0))
     parts = []
     if not live:
         parts.append(NO_DATA)
-    elif rainy:
-        top = rainy[0]
-        mm = top["now"]["rain_mm"]
+    elif wet:
+        top, others = wet[0], wet[1:]
         when = _lead(top, _ref_date(top, now))
-        parts.append(f"{top['short']}에 {when} 시간당 {fmt_number(mm)}mm(관측)의 {rain_term(mm)}"
-                     f"{_next_hours_phrase(top['hourly'])}.")
-        if len(rainy) > 1:
-            parts.append(f"그 밖에 {len(rainy) - 1}곳에 비.")
+        parts.append(f"{top['short']}에 {when} {_observed_phrase(top['now'])}{_next_hours_phrase(top['hourly'])}.")
+        counts = [f"{n}곳에 {word}" for word, n in
+                  (("비", sum(1 for s in others if precipitation(s["now"]) == "rain")),
+                   ("눈", sum(1 for s in others if precipitation(s["now"]) == "snow"))) if n]
+        if counts:
+            parts.append(f"그 밖에 {', '.join(counts)}.")
     else:
         parts.append("비 오는 현장은 없습니다.")
     warned = sum(1 for s in sites if any(is_official_warning(w) for w in s["warnings"]))
@@ -184,7 +215,7 @@ def _categories(view):
         for category in CATEGORY_ORDER:
             if category in (warning.get("title") or ""):
                 found.add(category)
-    if rain >= DRIZZLE_MAX_MM:
+    if rain >= DRIZZLE_MAX_MM and precipitation(now) == "rain":
         found.add(CATEGORY_RAIN)
     if wind_term(now.get("wind")) in ("강한 바람", "매우 강한 바람"):
         found.add(CATEGORY_WIND)
@@ -219,8 +250,14 @@ def _observation_lines(view, ref):
     when = at.strftime("%Y-%m-%d %H:%M") + " 관측 기준"
     now = view["now"]
     rain = now.get("rain_mm") or 0
-    if rain >= DRIZZLE_MAX_MM:
-        lines.append(f"{when}, {view['name']} 현장에 시간당 {fmt_number(rain)}mm의 {rain_term(rain)}가 관측되고 있습니다.")
+    kind = precipitation(now)
+    if kind:
+        if kind == "snow":
+            what = f"{now['pty']}{_subject(now['pty'])} 관측되고 있습니다(1시간 강수량 {_amount(rain)})."
+        else:
+            term = rain_term(rain) or "빗방울"
+            what = f"시간당 {_amount(rain)}의 {term}{_subject(term)} 관측되고 있습니다."
+        lines.append(f"{when}, {view['name']} 현장에 {what}")
         phrase = _forecast_rain_phrase(view["hourly"], ref)
         lines.append(f"(기상청 예보: {phrase})" if phrase else "(기상청 예보: 12시간 안에 비 예보 없음)")
     else:

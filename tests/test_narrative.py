@@ -18,8 +18,9 @@ LATER_RAIN = [hour("2026-09-25T18:00:00+09:00"), hour("2026-09-25T19:00:00+09:00
 
 
 def make_view(rain=0.0, wind=1.0, state="ok", as_of="2026-09-25T17:00:00+09:00", hourly=None,
-              warnings=None, name="후포 공공하수처리", short="후포"):
-    now = None if state == "missing" else {"temp": 18.6, "feels": 18.6, "rain_mm": rain, "wind": wind, "humidity": 95}
+              warnings=None, name="후포 공공하수처리", short="후포", pty=None):
+    now = None if state == "missing" else {"temp": 18.6, "feels": 18.6, "rain_mm": rain, "wind": wind, "humidity": 95,
+                                           "pty": pty}
     return {"id": "5355accc", "name": name, "short": short, "state": state,
             "as_of": None if state == "missing" else as_of, "now": now,
             "hourly": hourly or [], "daily": [], "warnings": warnings or [], "legal": [], "legal_profile": False}
@@ -128,6 +129,28 @@ class OvernightStaleTests(unittest.TestCase):
     def test_national_names_observation_day(self):
         self.assertTrue(national_summary([self.view(rain=5.6)], True, now=NEXT_MORNING).startswith(
             "후포에 9/25 17시 관측 기준 시간당 5.6mm(관측)의 비"))
+
+
+class PrecipitationTypeTests(unittest.TestCase):
+    def test_rain_onset_is_not_called_dry(self):
+        text = site_summary(make_view(rain=0.0, pty="비", hourly=LATER_RAIN))
+        self.assertTrue(text.startswith("지금 시간당 0.1mm 미만(관측)의 빗방울. 예보는 21시 최대 2mm."), text)
+        self.assertNotIn("비가 없습니다", text)
+        self.assertIn("현장에 시간당 0.1mm 미만의 빗방울이 관측되고 있습니다.", site_notice(make_view(rain=0.0, pty="비")))
+
+    def test_snow_is_not_called_rain(self):
+        view = make_view(rain=2.0, pty="눈")
+        self.assertTrue(site_summary(view).startswith("지금 눈(관측), 1시간 강수량 2mm."), site_summary(view))
+        notice = site_notice(view)
+        self.assertIn("후포 공공하수처리 현장에 눈이 관측되고 있습니다(1시간 강수량 2mm).", notice)
+        self.assertNotIn("약한 비", notice)
+        self.assertNotIn("【", notice)
+
+    def test_national_separates_snow(self):
+        sites = [make_view(rain=2.0, pty="눈"), make_view(rain=1.0, pty="비", name="연희·연남동 공공주택", short="연희·연남"),
+                 make_view(rain=0.5, pty="눈날림", name="오리온수협 목포 김공장", short="목포 김공장")]
+        self.assertTrue(national_summary(sites, True).startswith(
+            "후포에 지금 눈(관측), 1시간 강수량 2mm. 그 밖에 1곳에 비, 1곳에 눈."), national_summary(sites, True))
 
 
 class NationalSummaryTests(unittest.TestCase):
