@@ -16,7 +16,7 @@ from src.feels_like import compute_feels_like
 from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
 from src.map_dashboard import build_map_html
 from src.notification_queue import process_notifications
-from src.publish import OLD_MAP_PATH, OLD_SITES_PATH, check_latest, private_values, publish
+from src.publish import OLD_MAP_PATH, OLD_SITES_PATH, check_latest, private_values, publish, write_site_manifests
 from src.state_monitor import (
     build_alert_message,
     build_snapshot,
@@ -240,7 +240,8 @@ def publish_screens():
             os.remove(LATEST_PATH)
             print(f"[화면 게시 중단] latest.json에 공개하면 안 되는 내용({', '.join(leaked)})이 있어 파일을 지웠습니다.")
         files = publish(blocked=blocked)
-        print(f"[화면 게시] {len(files)}개 파일")
+        manifests = write_site_manifests(LATEST_PATH)
+        print(f"[화면 게시] {len(files)}개 파일 · 현장 홈 화면 설정 {len(manifests)}곳")
     except Exception as e:
         print(f"[화면 게시 오류] 새 화면을 게시하지 못했습니다(수집·알림은 계속): {e}")
 

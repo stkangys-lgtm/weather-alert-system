@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b4775">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="기상안전">
+<title>현대아산 기상안전 · 현장</title>
+<link rel="icon" type="image/svg+xml" href="assets/brand/hdasan-symbol.svg">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" id="manifest" href="manifest.webmanifest">
+<script>
+  // 홈 화면에 추가하면 이 현장 주소로 열리도록, 수집 실행이 만든 현장별 매니페스트(manifests/<ID>)를 연결한다.
+  (function () {
+    var id = new URLSearchParams(location.search).get("id");
+    if (id && /^[A-Za-z0-9_-]{1,64}$/.test(id)) document.getElementById("manifest").href = "manifests/" + id + ".webmanifest";
+  })();
+</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" integrity="sha384-V1aeodcjJTo8c7lEQKPTnsMG6Yk8y6O/1kzqU/BCXw78Yw1W8XYFJGgjYa3oInYZ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha384-MinO0mNliZ3vwppuPOUnGa+iq619pfMhLVUXfC4LHwSCvF9H+6P/KO4Q7qBOYV5V" crossorigin="anonymous">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/site.css">
+<script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" integrity="sha384-SYKAG6cglRMN0RVvhNeBY0r3FYKNOJtznwA0v7B5Vp9tr31xAHsZC0DqkQ/pZDmj" crossorigin="anonymous" async onload="window.__maplibreLoaded=true" onerror="window.__maplibreFailed=true"></script>
+<script src="assets/common.js" defer></script>
+<script src="assets/geo.js" defer></script>
+<script src="assets/parts.js" defer></script>
+<script src="assets/site.js" defer></script>
+<script src="assets/site-map.js" defer></script>
+</head>
+<body>
+<div id="map" class="map" role="region" aria-label="현장 주변 지도"></div>
+<div class="mapmsg" id="mapMsg" role="status"></div>
+
+<header class="top">
+  <div class="brand"><img class="logo-img" src="assets/brand/hdasan-signature-ko.png" alt="현대아산"><b>기상안전</b></div>
+  <div class="live glass" id="live" role="status"></div>
+</header>
+
+<section class="sheet" id="sheet" data-snap="half" aria-label="현장 날씨">
+  <button type="button" class="grab" id="grab" aria-label="시트 펼치기·접기" aria-expanded="false"><i></i></button>
+  <div class="sc" id="sc">
+    <div class="ttl"><div class="names"><h1 id="name"></h1><div class="sub" id="sub"></div></div><button type="button" class="nowchip" id="nowchip" disabled>지금</button></div>
+    <p class="banner" id="banner" role="status" hidden></p>
+    <div class="hero" id="hero">
+      <div class="k"><svg class="ic" aria-hidden="true"><use id="hIcon" href="assets/icons.svg#i-cloud"/></svg><span id="hK"></span></div>
+      <div class="t num" id="hT" data-suffix="°">-</div>
+      <div class="m" id="hM"></div>
+      <p class="s" id="hS"></p>
+    </div>
+    <div class="stack">
+      <div class="chips" id="chips"></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="card"><h3>앞으로 24시간 <span>좌우로 문지르면 그 시각 예보</span></h3>
+        <div class="tl" id="tl" role="slider" tabindex="0" aria-label="예보 시각" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0">
+          <div class="cursor" id="cursor" data-label="지금"></div>
+          <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-drop"/></svg>비</span><div class="cells" id="cR"></div></div>
+          <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-wind"/></svg>바람</span><div class="cells" id="cW"></div></div>
+          <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-temp"/></svg>기온</span><div class="spark" id="spark"></div></div>
+          <div class="hours" id="hours"></div>
+        </div>
+        <p class="note" id="tlNote"></p>
+        <div class="readout" id="readout" aria-live="polite"></div>
+      </div>
+      <div class="card mapcard"><div class="mapcta"><div><b>현장 주변 지도</b><span>시트를 내려 현장 주변 지도를 넓게 봅니다</span></div><button type="button" class="go" id="goMap">지도로 보기<svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-chev"/></svg></button></div></div>
+      <div class="card"><h3>10일 예보 <span>단기 3일 + 중기</span></h3><div id="d10"></div></div>
+      <div class="card"><div class="info" id="legal"></div></div>
+      <div class="card"><h3>전파 문안 <span>사내 문체</span></h3><div class="nt" id="nt"></div><button type="button" class="more" id="ntMore">전체 보기</button><button type="button" class="btn pri wide" id="copy"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-copy"/></svg>문안 복사</button></div>
+      <p class="foot">자료: 기상청 · 지도: © OpenStreetMap 기여자, OpenFreeMap, OpenMapTiles · 현대아산 안전경영팀</p>
+    </div>
+  </div>
+</section>
+
+<section class="picker" id="picker" aria-labelledby="pickTitle" hidden>
+  <div class="pickbox"><h1 id="pickTitle">현장 선택</h1><p id="pickMsg"></p><div class="picklist" id="pickList"></div>
+    <p class="foot">현장 화면을 휴대폰 홈 화면에 추가하면 다음부터 바로 열립니다.</p></div>
+</section>
+
+<div class="toast" id="toast" role="status"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-check"/></svg><span></span></div>
+<div class="loadfail" id="loadfail" role="alert" hidden><div><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-alert"/></svg><b>화면 자료를 불러오지 못했습니다</b><p>잠시 뒤 다시 시도해 주세요. 계속되면 관리자에게 알려 주세요.</p><button type="button" class="btn pri" id="retry"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-refresh"/></svg>다시 시도</button></div></div>
+</body>
+</html>

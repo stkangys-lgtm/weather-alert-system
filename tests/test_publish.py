@@ -15,6 +15,7 @@ from src.publish import (
     external_tag_problems,
     private_values,
     publish,
+    write_site_manifests,
 )
 
 GOOD_HEAD = ('<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>'
@@ -95,6 +96,31 @@ class OldScreenTests(unittest.TestCase):
                     html = f.read()
                 self.assertIn(f'href="{new}"', html)
                 self.assertIn(f'href="{old}"', html)
+
+
+class SiteManifestTests(unittest.TestCase):
+    def test_site_manifests_start_at_their_site_and_drop_old_ones(self):
+        with tempfile.TemporaryDirectory() as d:
+            latest = os.path.join(d, "data", "latest.json")
+            write(latest, json.dumps({"sites": [
+                {"id": "5355accc", "short": "후포", "name": "후포 공공하수처리"},
+                {"id": "a/b\"<x>", "short": "이상", "name": "잘못된 ID"},
+            ]}, ensure_ascii=False))
+            write(os.path.join(d, "manifests", "oldsite.webmanifest"), "{}")
+            self.assertEqual(["5355accc.webmanifest"], write_site_manifests(latest, d))
+            self.assertEqual(["5355accc.webmanifest"], sorted(os.listdir(os.path.join(d, "manifests"))))
+            with open(os.path.join(d, "manifests", "5355accc.webmanifest"), encoding="utf-8") as f:
+                data = json.load(f)
+            self.assertEqual(("현대아산 기상안전 · 후포", "후포", "../site.html?id=5355accc", "../", "#2b4775"),
+                             (data["name"], data["short_name"], data["start_url"], data["scope"], data["theme_color"]))
+            self.assertEqual(["../assets/icons/app-192.png", "../assets/icons/app-512.png"],
+                             [icon["src"] for icon in data["icons"]])
+
+    def test_unreadable_latest_keeps_existing_manifests(self):
+        with tempfile.TemporaryDirectory() as d:
+            write(os.path.join(d, "manifests", "5355accc.webmanifest"), "{}")
+            self.assertEqual([], write_site_manifests(os.path.join(d, "none.json"), d))
+            self.assertEqual(["5355accc.webmanifest"], os.listdir(os.path.join(d, "manifests")))
 
 
 class RealWebTests(unittest.TestCase):
