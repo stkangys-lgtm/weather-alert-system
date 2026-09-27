@@ -13,7 +13,7 @@
 현장 센서 설치처럼 비용·허가·접근이 필요한 방식은 최소화하고, 기상청 공개 API와 기존 업무
 자료를 우선 활용한다.
 
-## 현재 운영 상태 (2026-09-20)
+## 현재 운영 상태 (2026-09-27)
 
 - GitHub 저장소: `https://github.com/stkangys-lgtm/weather-alert-system`
 - 운영 브랜치: `main`
@@ -22,7 +22,7 @@
 - 현장 화면: `…/site.html?id=현장ID` (ID 없으면 현장 선택 목록). 본사 상세의 "현장 화면" 버튼으로 연결. 휴대폰 홈 화면에 추가하면 그 현장으로 바로 열린다(`docs/manifests/<ID>.webmanifest`, 수집 실행이 생성)
 - 이전 화면(2주간 병행, 5단계에서 정리): `…/old/index.html`(지도), `…/old/sites.html`(카드). `map.html`·`sites.html`은 이동 안내 페이지
 - 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **161개 통과** (2026-09-26 갱신)
+- 전체 테스트: **164개 통과** (2026-09-27 갱신). `config.py`가 없는 PC에서도 가짜 값(`tests/secretless_env.py`)으로 모두 돈다
 
 ### 대시보드 리디자인 진행 (2026-09-26~)
 
@@ -31,8 +31,26 @@
 - 중기예보 날짜를 발표일 기준으로 수정(새벽 실행 하루 밀림 해결).
 - 2단계(본사 화면): 화면 원본은 `web/`(HTML·CSS·JS, 빌드 도구 없음). 수집 실행 뒤 `src/publish.py`가 점검(외부 파일 무결성 해시·전화번호·금지어·비공개 값) 후 `docs/`로 복사한다.
   화면을 고칠 때는 `web/`만 수정하고 `docs/`의 게시본은 직접 고치지 않는다.
-  로컬 확인: `python3 -m src.publish` → `python3 scripts/preview_fixtures.py`(시험 자료: 비·수집 실패·일부 실패·야간·특수문자) → `.superpowers/preview`를 정적 서버로 열고 `site/index.html?data=../fixtures/rain.json`. `?map=svg`는 자체 지도 강제.
-- 3단계(현장 화면·홈 화면 추가): `web/site.html`·`site.css`·`site.js`(본문)·`site-map.js`(지도·시트). 본사 상세와 현장 화면이 함께 쓰는 부품은 `web/assets/parts.js`와 `app.css` 끝 절. 화면 확인은 `node scripts/ui_check.mjs <단계.json>`(헤드리스 Chrome, 임시 프로필) — 앱 미리보기 창이 가려지면 지도가 그려지지 않으므로 이 도구로 본다.
+  로컬 확인: `python3 -m src.publish`(web/ → docs/) → `python3 scripts/preview_fixtures.py`(시험 자료: rain·failed·partial·night·escape·noforecast·onset → `.superpowers/preview/fixtures/`) → 저장소 폴더를 정적 서버로 열고(`python3 -m http.server 8765`) `http://localhost:8765/docs/index.html?data=../.superpowers/preview/fixtures/rain.json` 또는 `docs/site.html?data=…&id=현장ID`. `?map=svg`는 자체 지도 강제. 시험 자료는 만든 뒤 시간이 지나면 "수집 지연"이 뜨는 게 정상.
+  로컬 `src.publish`로 바뀐 `docs/`는 커밋하지 않고 `git checkout -- docs && git clean -fd docs`로 되돌린다(공개본은 자동 수집이 올린다).
+- 3단계(현장 화면·홈 화면 추가, 2026-09-27 배포): `web/site.html`·`site.css`·`site.js`(본문)·`site-map.js`(지도·시트). 본사 상세와 현장 화면이 함께 쓰는 부품은 `web/assets/parts.js`와 `app.css` 끝 절. 계획서 `design/plans/2026-09-27-phase3-site-ui.md`.
+- 승인된 시안: `design/prototypes/`(본사·현장 인터랙티브 시안, README 참고).
+- 화면 확인: `node scripts/ui_check.mjs <단계.json>`(헤드리스 Chrome/Edge, 임시 프로필, 브라우저 위치 자동 탐색·`CHROME` 환경변수로 지정 가능) — 앱 미리보기 창이 가려지면 지도가 그려지지 않으므로 이 도구로 본다. 휴대폰 동작은 마우스(`click`·`drag`)만으로는 스크롤 충돌을 못 잡으므로 손가락 단계(`touch`·`swipe`·`tap`)로 확인한다. 시계를 바꿔 보려면 `initScript`. JS 부품 단위 확인은 node `vm`으로 `common.js`·`parts.js`를 읽어 확인(점검 환경에서 `ctx.window = ctx` 필요).
+
+#### 다음 단계
+- **4단계(레이더)**: 설계서 5.8절. 공공데이터포털 레이더영상 API(기존 `KMA_API_KEY`로 호출 확인됨)는 배경·범례가 들어간 완성 이미지(LCC 투영)라, 서버에서 강수 색 추출 → 좌표 보정 → 우리 파랑 단계로 다시 칠해 지도에 겹친다. 먼저 좌표 보정 시험(오차 5km 이내)을 하고, 통과 못 하면 "레이더 원본 영상 보기" 카드로 대체. 시안의 비구름 버튼·"주변 비구름" 카드 참고.
+- **5단계(정리)**: `docs/old/`·`src/map_dashboard.py`·`src/dashboard.py` 등 이전 화면 삭제(2주 병행 뒤).
+- 사용자 결정 대기: 전파 문안 조치 항목이 붙는 조건(현재 비 0.1mm/h·바람 9m/s부터 — 사내 기준 없음).
+
+#### 미룬 작은 개선(필요할 때 처리)
+- 3단계: 키보드 초점이 반쯤 내린 시트 밖으로 감(`.sc` scroll-padding, "지도로 보기" 뒤 초점 이동) / iOS 홈 화면 이름이 모두 "기상안전" / 현장 선택 화면에서 홈 화면 추가 시 본사 앱 / `publish._SAFE_ID.match`가 끝 줄바꿈 허용(fullmatch) / 문지를 때 같은 시각도 다시 그림 / "관측 · 맑음"의 하늘은 다음 시각 예보값 / 중기 기온만 빠진 날도 "예보 자료 없음" / 선택 화면으로 열린 뒤 갱신으로 현장이 생기면 지도 미시작 / 자체(SVG) 지도에서 "지도로 보기" 확대 없음·창 크기 변경 시 재중심 / 선택 화면 위 빈 띠·실패 표시·이름 변경 시 홈 화면 다시 추가 안내 / `ui_check` 실패 시 브라우저 정리(try/finally) / `mobile-web-app-capable` 추가 / 갱신 뒤 고른 시각을 칸 위치로 유지. 실기기(아이폰·삼성 인터넷) 설치 확인은 사용자가 한다.
+- 2단계: 1280×720 등 중간 폭에서 범례·지도 버튼 겹침 / 전체 수집 실패 시 요약 라벨 / 선택 이름표가 묶음에 가려짐·경보 지도 고리 주황 / '50 이상mm'·'MM/H' 표기 / 동작 줄이기 설정 시 flyTo / aria-live 과다·정렬 aria-pressed / 1.3초 자동 선택이 사용자 선택을 덮음 / publish 검사 예외(작은따옴표·`//` 주소)·`publish_screens` 테스트.
+- 1단계: 단기예보 실패 시 일별 날짜별 이어받기 / 이어받은 now·hourly·daily 재필터 / `issued_at` 실제값 / `main.py` import 보호.
+
+#### 디자인 작업 방식(사용자 합의)
+- "완성 시안"은 정적 그림이 아니라 실제 크기로 눌러 볼 수 있는 인터랙티브 시안으로 보여 준다(참고 기준: Flighty — 전체 지도 + 떠 있는 유리 패널 + 큰 숫자 하나 + 짧은 상태 글자).
+- CI 원색은 쨍하다고 싫어함 → 같은 색상에서 채도를 낮춘 딥 네이비(#2b4775) 계열. 로고만 공식 원색.
+- 위험은 사내 "기준/등급"을 만들지 말고 조건·수치 그대로("비 31mm/h"). 빨강·주황은 기상청 특보·법정 조치에만(아이콘 동반), 시스템 상태는 회색.
 
 ### 이번 세션(2026-09-20)에서 추가된 것
 
@@ -115,10 +133,20 @@ CLAUDE.md에 기록할 것.
 
 ### 1. 현장 주소 DB 연계
 
-사용자가 업무용 컴퓨터의 현장 주소 DB를 추후 제공할 예정이다. 파일을 받으면 먼저 열 구조와
-개인정보 포함 여부를 확인하고, 원본 전체를 저장소에 올리지 않는다. 필요한 최소 필드는 현장명,
-주소 또는 위경도, 활성 여부다. 주소에서 위경도를 얻어야 할 경우 무료이면서 이용약관상 허용된
-방식을 검토하고, 추측 매칭 결과는 사용자 확인을 받는다.
+현장 목록·정확한 주소의 원천은 **업무용 PC에 있는 사업장 현황 엑셀 DB(민감자료)**다. 경로는 저장소에
+적지 않는다 — 처음 필요할 때 사용자에게 경로를 물어본다. 이 파일에는 담당자 이름·연락처·이메일 같은
+개인정보 열이 있으므로 **공사명·공종·주소(시·군 단위까지)만 읽고, 개인정보 열은 읽어 출력하거나
+저장·커밋하지 않는다.** 파일 내용·목록을 저장소에 올리지 않는다.
+
+- 2026-09-26 대조: 관제 대상 21곳 중 20곳 지역 일치, 양산 부산대병원은 경남 양산시로 바로잡음.
+  DB에만 있고 관제 대상이 아닌 현장의 추가 여부는 사용자 판단 대기.
+- 다음 과제(사용자 요청, 아직 설계 전): 현장을 추가할 때 DB를 활용해 한 번에 갱신하는 방법.
+  지금 현장 정보는 GitHub Secret `SITES_JSON`(운영 목록), `src/warning_client.KNOWN_SITE_REGIONS`(특보 구역),
+  `src/site_profile.SITE_SHORT_NAMES`(짧은 이름)에 흩어져 있다 → 로컬에서 DB를 읽어 이 셋을 함께
+  갱신하는 도구가 후보. 설계안을 먼저 사용자에게 보여 주고 승인받는다.
+
+필요한 최소 필드는 현장명, 주소 또는 위경도, 활성 여부다. 주소에서 위경도를 얻어야 할 경우 무료이면서
+이용약관상 허용된 방식을 검토하고, 추측 매칭 결과는 사용자 확인을 받는다.
 
 연계 결과에는 가능하면 다음 값을 채운다.
 
@@ -176,6 +204,25 @@ CLAUDE.md에 기록할 것.
 방식은 보안이 아니다. 실제 로그인 구현 전에는 인증·DB·권한통제가 가능한 별도 백엔드 구조를
 먼저 제안하고 사용자 승인을 받아야 한다.
 
+## 새 PC에서 이어 하기 (2026-09-27, 4단계부터 업무용 PC)
+
+1. 설치: Git, GitHub CLI(`gh auth login`으로 로그인), Python 3.9 이상(`pip install -r requirements.txt`),
+   Node 22 이상(화면 확인 도구), Chrome(없으면 Windows의 Edge를 대신 씀), Claude Code.
+2. 저장소 받기: `git clone https://github.com/stkangys-lgtm/weather-alert-system.git`
+3. Claude Code 플러그인: 이 저장소의 `.claude/settings.json`에 적어 두어, 저장소 폴더를 신뢰하면 설치를
+   안내한다. 안내가 없으면 터미널에서 직접 설치한다.
+   ```bash
+   claude plugin marketplace add obra/superpowers-marketplace
+   claude plugin install superpowers@superpowers-marketplace
+   claude plugin marketplace add anthropics/claude-code
+   claude plugin install frontend-design@claude-code-plugins
+   ```
+   superpowers는 계획서 작성 → 단계별 실행 → 최종 검토 방식(1~3단계와 같게 계획서는 `design/plans/`, 최종 검토는 가장 성능 좋은 모델),
+   frontend-design은 화면 디자인 보조다.
+4. 비밀 설정: `config.py`·`credentials/`는 git에 없다. 테스트는 없어도 통과한다. 실제 기상청 호출이 필요한
+   확인(4단계 레이더 시험 등)에는 사용자가 이 두 가지를 USB 등으로 직접 복사한다 — 채팅에 붙여 넣게 하지 않는다.
+5. Windows: 이 문서의 `python3`은 `python` 또는 `py -3`으로 바꿔 실행한다.
+
 ## 작업 시작 절차
 
 ```bash
@@ -189,7 +236,7 @@ python3 -m unittest discover -s tests -v
 받고, 사용자의 미커밋 변경이 있으면 보존한다. 충돌 시 자동 생성된 문서만 보고 소스 변경을
 덮어쓰지 않는다.
 
-로컬 실제 실행에는 git에서 제외된 `config.py`와 인증정보가 필요하다. 값이 없으면 사용자에게
+로컬 실제 실행(수집·발송 흐름)에는 git에서 제외된 `config.py`와 인증정보가 필요하다(테스트·화면 확인에는 불필요). 값이 없으면 사용자에게
 키 자체를 채팅에 붙여 넣으라고 요구하지 말고, 로컬 파일 또는 GitHub Secrets에 안전하게
 설정하도록 안내한다.
 
