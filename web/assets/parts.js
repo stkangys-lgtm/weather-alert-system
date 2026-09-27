@@ -94,14 +94,30 @@
   };
 
   // 칸을 누르거나 좌우로 문지르면 그 시각으로. 초점이 있으면 ←→ 키(화면 전체 키 처리와 겹치지 않게 전달을 막는다).
+  // 손가락·펜은 타임라인 위에서 시작한 세로 밀기가 화면 스크롤이므로, 좌우로 움직이거나 그냥 눌렀다 뗄 때만 시각을 바꾼다.
   P.scrub = (els, count, onHour, onStart) => {
-    let dragging = false;
+    const SLOP = 8;
+    let mode = null, x0 = 0, y0 = 0;   // mode: "drag" 문지르는 중, "wait" 손가락이 어느 쪽으로 갈지 기다리는 중
     const at = e => { const r = els.rain.getBoundingClientRect(); return Math.floor(((e.clientX - r.left) / r.width) * count()); };
-    els.tl.addEventListener("pointerdown", e => { dragging = true; els.tl.setPointerCapture(e.pointerId); if (onStart) onStart(); onHour(at(e)); });
-    els.tl.addEventListener("pointermove", e => { if (dragging) onHour(at(e)); });
-    const end = () => { dragging = false; };
-    els.tl.addEventListener("pointerup", end);
-    els.tl.addEventListener("pointercancel", end);
+    const begin = e => {
+      mode = "drag";
+      try { els.tl.setPointerCapture(e.pointerId); } catch (error) { /* 이미 떨어진 손가락 */ }
+      if (onStart) onStart();
+      onHour(at(e));
+    };
+    els.tl.addEventListener("pointerdown", e => {
+      if (e.pointerType === "mouse") { begin(e); return; }
+      mode = "wait"; x0 = e.clientX; y0 = e.clientY;
+    });
+    els.tl.addEventListener("pointermove", e => {
+      if (mode === "drag") { onHour(at(e)); return; }
+      if (mode !== "wait") return;
+      const dx = Math.abs(e.clientX - x0), dy = Math.abs(e.clientY - y0);
+      if (dx > SLOP && dx > dy) begin(e);
+      else if (dy > SLOP) mode = null;
+    });
+    els.tl.addEventListener("pointerup", e => { if (mode === "wait") begin(e); mode = null; });
+    els.tl.addEventListener("pointercancel", () => { mode = null; });
     els.tl.addEventListener("keydown", e => {
       const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
       if (!step) return;

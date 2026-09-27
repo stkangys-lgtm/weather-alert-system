@@ -3,7 +3,10 @@
 // 사용: node scripts/ui_check.mjs steps.json
 //   steps.json = {"width":1440,"height":900,"mobile":false,"steps":[{"nav":url,"after":ms}|{"wait":ms}|{"eval":js,"label":s}
 //                |{"click":jsElementExpr,"label":s,"after":ms}|{"drag":jsElementExpr,"dx":px,"dy":px,"after":ms}
-//                |{"key":"ArrowRight","after":ms}|{"size":[w,h,mobile]}|{"shot":path}]}
+//                |{"key":"ArrowRight","after":ms}|{"size":[w,h,mobile]}|{"shot":path}
+//                |{"touch":true}  손가락 입력 켜기 — 아래 swipe·tap 앞에 둔다
+//                |{"swipe":jsElementExpr,"fx":0~1,"dx":px,"dy":px,"speed":px/s,"after":ms}|{"tap":jsElementExpr,"after":ms}
+//                |{"initScript":js}  다음 페이지부터 먼저 실행(예: 시계 바꾸기)]}
 import { spawn } from "node:child_process";
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -82,6 +85,17 @@ for (const step of spec.steps) {
       await send("Input.dispatchMouseEvent", { type: "mouseReleased", x: x + dx, y: y + dy, button: "left", clickCount: 1 });
     }
     out.push({ drag: step.label || step.drag.slice(0, 60), ok: !!xy });
+    await sleep(step.after ?? 800);
+  }
+  if (step.touch) await send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 });
+  if (step.initScript) await send("Page.addScriptToEvaluateOnNewDocument", { source: step.initScript });
+  if (step.swipe || step.tap) {
+    const expr = step.swipe || step.tap, fx = step.fx ?? 0.5;
+    const res = await send("Runtime.evaluate", { expression: `(() => { const el = ${expr}; if (!el) return false; const r = el.getBoundingClientRect(); return [r.left + r.width * ${fx}, r.top + r.height / 2]; })()`, returnByValue: true });
+    const xy = res.result.result.value;
+    if (xy && step.swipe) await send("Input.synthesizeScrollGesture", { x: xy[0], y: xy[1], xDistance: step.dx || 0, yDistance: step.dy || 0, gestureSourceType: "touch", speed: step.speed || 800 });
+    if (xy && step.tap) await send("Input.synthesizeTapGesture", { x: xy[0], y: xy[1], gestureSourceType: "touch" });
+    out.push({ [step.swipe ? "swipe" : "tap"]: step.label || expr.slice(0, 60), ok: !!xy });
     await sleep(step.after ?? 800);
   }
   if (step.key) {
