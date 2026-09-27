@@ -11,8 +11,13 @@ import { spawn } from "node:child_process";
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { findChrome } from "./find_chrome.mjs";
 
-const CHROME = process.env.CHROME || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const CHROME = findChrome();
+if (!CHROME) {
+  console.error("Chrome(또는 Windows의 Edge)을 찾지 못했습니다. CHROME 환경변수에 브라우저 실행 파일 경로를 넣어 주세요.");
+  process.exit(1);
+}
 const spec = JSON.parse(readFileSync(process.argv[2], "utf8"));
 const port = 9333 + Math.floor(Math.random() * 500);
 const profile = mkdtempSync(join(tmpdir(), "ui-check-"));
