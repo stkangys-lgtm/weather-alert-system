@@ -5,6 +5,7 @@ credentials/
 !src/kr_map_data.json
 !docs/weather-state.json
 !docs/data/*.json
+!.claude/settings.json
 
 # 개인 설정 파일 (config.example.py를 복사해서 만든 실제 설정)
 config.py
@@ -31,3 +32,6 @@ tmp/
 # brainstorming visual companion mockups (local only)
 .superpowers/
 .worktrees/
+
+# Claude Code: 저장소 공용 설정(.claude/settings.json)만 올리고 PC별 권한 설정은 제외
+.claude/settings.local.json

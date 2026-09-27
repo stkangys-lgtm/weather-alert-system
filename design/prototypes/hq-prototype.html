@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20285.3906%20221.1953%22%20role%3D%22img%22%20aria-label%3D%22%ED%98%84%EB%8C%80%EC%95%84%EC%82%B0%20%EC%8B%AC%EB%B3%BC%22%3E%3Cpath%20fill%3D%22%23FABE00%22%20d%3D%22M127.6836%200%200%20221.1953h30.0586L142.7148%2026.0234Z%22/%3E%3Cpath%20fill%3D%22%23009944%22%20d%3D%22M30.0586%20221.1953%20157.7344%200l127.6563%20221.1953Z%22/%3E%3C/svg%3E">
+<title>기상안전 관제 · 본사 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --page:#eef2f5; --surface:#fdfdfd; --glass:rgba(252,253,254,.80); --glass-line:rgba(255,255,255,.65);
+  --ink:#19273c; --ink2:#4d5560; --muted:#8a939d; --line:rgba(15,30,50,.08);
+  --primary:#2b4775; --primary-2:#3a5a8f; --tint:#eaf1fb; --sage:#597f60;
+  --r0:#cde2fb; --r1:#9ec5f4; --r2:#5598e7; --r3:#256abf; --r4:#0d366b; --cell:#e7ecf1;
+  --w0:#e7ecf1; --w1:#c9e6dd; --w2:#6fb9a2; --w3:#2a7d66;
+  --crit:#a3201f; --crit-bg:#fbe3e3; --warn:#7a5200; --warn-bg:#fdf0d2;
+  --shadow:0 1px 2px rgba(15,30,50,.05), 0 10px 30px rgba(15,30,50,.10), 0 30px 80px rgba(15,30,50,.08);
+  --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.34,1.56,.64,1);
+  --radius:22px;
+}
+* { box-sizing:border-box; }
+html, body { margin:0; height:100%; overflow:hidden; background:var(--page); color:var(--ink); font-family:"Pretendard", system-ui, -apple-system, sans-serif; font-size:14px; -webkit-font-smoothing:antialiased; }
+button { font:inherit; color:inherit; border:0; background:none; cursor:pointer; }
+.num { font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
+.ic { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+#map { position:fixed; inset:0; }
+.mapmsg { position:fixed; left:50%; top:50%; transform:translate(-50%,-50%); padding:12px 16px; border-radius:14px; background:var(--surface); box-shadow:var(--shadow); color:var(--ink2); font-size:13px; opacity:0; pointer-events:none; transition:opacity .4s; z-index:2; }
+.mapmsg.show { opacity:1; }
+.maplibregl-ctrl-attrib { font-size:10px; opacity:.7; }
+.glass { background:var(--glass); backdrop-filter:blur(22px) saturate(1.5); -webkit-backdrop-filter:blur(22px) saturate(1.5); border:1px solid var(--glass-line); box-shadow:var(--shadow); }
+
+/* ── top bar ── */
+.top { position:fixed; top:16px; left:16px; right:16px; display:flex; align-items:center; gap:12px; z-index:5; pointer-events:none; }
+.top > * { pointer-events:auto; }
+.brand { display:flex; align-items:center; gap:10px; height:48px; padding:0 16px 0 10px; border-radius:16px; }
+.logo { display:flex; align-items:center; gap:7px; height:30px; padding:0 9px; border:1.5px dashed #a9b2bc; border-radius:9px; font-size:11px; font-weight:700; color:#6d7782; white-space:nowrap; }
+.logo i { width:16px; height:16px; border-radius:4px; background:linear-gradient(135deg,#FABE00 0 50%,#009944 50%); }
+.brand b { font-size:15px; letter-spacing:-.2px; } .brand small { color:var(--muted); font-size:12px; margin-left:2px; }
+.seg { position:relative; display:flex; padding:4px; border-radius:14px; gap:2px; margin:0 auto; }
+.seg button { position:relative; z-index:1; height:36px; padding:0 16px; border-radius:10px; font-weight:600; color:var(--ink2); transition:color .25s var(--ease); white-space:nowrap; }
+.seg button.on { color:#fff; }
+.seg .pill { position:absolute; top:4px; height:36px; border-radius:10px; background:var(--primary); box-shadow:0 4px 12px rgba(43,71,117,.35); transition:transform .45s var(--spring), width .45s var(--spring); }
+.live { display:flex; align-items:center; gap:10px; height:48px; padding:0 16px; border-radius:16px; font-size:13px; color:var(--ink2); white-space:nowrap; }
+.live .dot { width:9px; height:9px; border-radius:50%; background:var(--sage); box-shadow:0 0 0 0 rgba(89,127,96,.45); animation:beat 2.4s infinite; }
+@keyframes beat { 0% { box-shadow:0 0 0 0 rgba(89,127,96,.45); } 70% { box-shadow:0 0 0 9px rgba(89,127,96,0); } 100% { box-shadow:0 0 0 0 rgba(89,127,96,0); } }
+.live b { color:var(--ink); } .live .sep { width:1px; height:18px; background:var(--line); }
+
+/* ── left sheet ── */
+.sheet { position:fixed; top:80px; left:16px; bottom:104px; width:388px; border-radius:var(--radius); display:flex; flex-direction:column; overflow:hidden; z-index:4; }
+.sum { padding:18px 20px 16px; border-bottom:1px solid var(--line); }
+.eyebrow { font-size:12px; font-weight:700; color:var(--muted); letter-spacing:.02em; display:flex; justify-content:space-between; align-items:center; }
+.eyebrow .when { color:var(--primary); background:var(--tint); border-radius:999px; padding:3px 9px; font-size:11.5px; transition:background .3s; }
+.sentence { font-size:17px; line-height:1.5; letter-spacing:-.2px; margin-top:8px; font-weight:500; min-height:52px; }
+.sentence b { font-weight:800; }
+.kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:0; border-bottom:1px solid var(--line); }
+.kpi { padding:14px 12px 14px 20px; border-right:1px solid var(--line); }
+.kpi:last-child { border-right:0; }
+.kpi .v { font-size:28px; font-weight:800; letter-spacing:-.03em; line-height:1.05; }
+.kpi .v small { font-size:12px; font-weight:700; color:var(--muted); margin-left:2px; letter-spacing:0; }
+.kpi .l { font-size:11.5px; color:var(--muted); margin-top:4px; font-weight:600; white-space:nowrap; }
+.kpi.zero .v { color:#b5bdc6; }
+.lhead { display:flex; align-items:center; justify-content:space-between; padding:14px 20px 8px; }
+.lhead b { font-size:13px; color:var(--ink2); }
+.mseg { position:relative; display:flex; padding:3px; background:rgba(15,30,50,.05); border-radius:10px; }
+.mseg button { position:relative; z-index:1; height:28px; padding:0 12px; border-radius:8px; font-size:12.5px; font-weight:700; color:var(--muted); transition:color .25s; }
+.mseg button.on { color:var(--ink); }
+.mseg .pill { position:absolute; top:3px; height:28px; border-radius:8px; background:var(--surface); box-shadow:0 1px 3px rgba(15,30,50,.15); transition:transform .4s var(--spring), width .4s var(--spring); }
+.list { flex:1; overflow:auto; padding:0 10px 12px; scrollbar-width:thin; }
+.row { display:grid; grid-template-columns:70px 1fr 14px; gap:10px; align-items:center; padding:11px 10px; border-radius:14px; cursor:pointer; transition:background .2s; position:relative; }
+.row:hover { background:rgba(15,30,50,.04); }
+.row.sel { background:var(--tint); }
+.row.sel::before { content:""; position:absolute; left:0; top:12px; bottom:12px; width:3px; border-radius:3px; background:var(--primary); }
+.row .big { text-align:left; }
+.row .big .v { font-size:26px; font-weight:800; letter-spacing:-.03em; line-height:1; }
+.row .big .u { font-size:10px; font-weight:800; color:var(--muted); letter-spacing:.06em; margin-top:3px; }
+.row .nm { font-weight:700; font-size:14.5px; letter-spacing:-.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row .st { font-size:12px; color:var(--ink2); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row .st .w { color:var(--warn); font-weight:700; } .row .st .c { color:var(--crit); font-weight:700; }
+.strip { display:grid; grid-template-columns:repeat(12,1fr); gap:2px; margin-top:7px; }
+.strip i { height:5px; border-radius:2px; background:var(--cell); transition:background .4s; }
+.row .chev { color:#b5bdc6; }
+.row.dim .big .v { color:#aeb6bf; }
+
+/* ── detail ── */
+.detail { position:fixed; top:80px; right:16px; bottom:104px; width:392px; border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; z-index:4; transform:translateX(calc(100% + 24px)); opacity:0; transition:transform .6s var(--spring), opacity .35s var(--ease); }
+.detail.open { transform:none; opacity:1; }
+.dhead { display:flex; justify-content:space-between; align-items:flex-start; padding:18px 20px 12px; }
+.dhead .cat { font-size:12px; color:var(--muted); font-weight:600; }
+.dhead h2 { margin:3px 0 0; font-size:21px; letter-spacing:-.4px; }
+.x { width:32px; height:32px; border-radius:50%; display:grid; place-items:center; background:rgba(15,30,50,.06); color:var(--ink2); transition:background .2s, transform .2s; }
+.x:hover { background:rgba(15,30,50,.1); transform:rotate(90deg); }
+.dbody { flex:1; overflow:auto; padding:0 16px 16px; display:flex; flex-direction:column; gap:12px; scrollbar-width:thin; }
+.hero { position:relative; overflow:hidden; border-radius:18px; padding:18px; color:#fff; background:linear-gradient(160deg,#30405a 0%,#4c5d78 55%,#7d8a9f 100%); transition:background .6s; min-height:152px; }
+.hero.clear { background:linear-gradient(160deg,#4a78b0 0%,#7fa6d3 60%,#b9d0ea 100%); }
+.hero.cloudy { background:linear-gradient(160deg,#556275 0%,#7d8898 60%,#a7b0bd 100%); }
+.hero::after { content:""; position:absolute; inset:-40px; background-image:repeating-linear-gradient(104deg, rgba(255,255,255,.0) 0 10px, rgba(255,255,255,.22) 10px 11px, rgba(255,255,255,0) 11px 22px); opacity:0; transition:opacity .6s; animation:rain .55s linear infinite; pointer-events:none; -webkit-mask-image:linear-gradient(180deg,#000,transparent 85%); mask-image:linear-gradient(180deg,#000,transparent 85%); }
+.hero.rain::after { opacity:1; }
+.hero.heavy::after { background-image:repeating-linear-gradient(104deg, rgba(255,255,255,0) 0 6px, rgba(255,255,255,.3) 6px 7.2px, rgba(255,255,255,0) 7.2px 13px); animation-duration:.4s; }
+@keyframes rain { from { transform:translate(0,0); } to { transform:translate(-6px,26px); } }
+.hero .wm { position:absolute; right:-18px; bottom:-26px; width:126px; height:126px; border:2px dashed rgba(255,255,255,.22); border-radius:18px; transform:rotate(-8deg); display:grid; place-items:center; text-align:center; font-size:10px; color:rgba(255,255,255,.38); line-height:1.3; }
+.hero .t1 { display:flex; align-items:center; gap:6px; font-size:12.5px; opacity:.85; font-weight:600; position:relative; }
+.hero .t2 { font-size:64px; font-weight:800; letter-spacing:-.05em; line-height:1; margin-top:8px; position:relative; }
+.hero .t3 { font-size:14.5px; margin-top:8px; line-height:1.45; max-width:88%; position:relative; }
+.chips { display:flex; gap:6px; flex-wrap:wrap; }
+.chip { display:inline-flex; align-items:center; gap:5px; height:26px; padding:0 10px; border-radius:999px; font-size:12px; font-weight:600; background:rgba(15,30,50,.05); color:var(--ink2); }
+.chip.warn { background:var(--warn-bg); color:var(--warn); } .chip.crit { background:var(--crit-bg); color:var(--crit); }
+.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.tile { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:10px 10px 9px; }
+.tile .l { display:flex; align-items:center; gap:4px; font-size:11.5px; color:var(--muted); font-weight:600; }
+.tile .l .ic { width:13px; height:13px; }
+.tile .v { font-size:21px; font-weight:800; letter-spacing:-.03em; margin-top:4px; }
+.tile .v small { font-size:11px; color:var(--muted); font-weight:700; margin-left:1px; letter-spacing:0; }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:14px; }
+.card h3 { margin:0 0 10px; font-size:13px; color:var(--ink2); display:flex; justify-content:space-between; align-items:center; }
+.card h3 span { font-weight:500; color:var(--muted); font-size:11.5px; }
+.tl { position:relative; }
+.tl-row { display:grid; grid-template-columns:40px 1fr; align-items:center; gap:6px; margin-top:6px; }
+.tl-row > span { display:flex; align-items:center; gap:4px; font-size:11.5px; color:var(--ink2); font-weight:600; }
+.tl-row > span .ic { width:12px; height:12px; }
+.cells { display:grid; grid-template-columns:repeat(25,1fr); gap:2px; }
+.cells i { height:16px; border-radius:3px; background:var(--cell); transform-origin:bottom; transform:scaleY(.2); opacity:0; transition:transform .5s var(--spring), opacity .3s, background .4s; }
+.tl.shown .cells i { transform:none; opacity:1; }
+.cells i.now { box-shadow:inset 0 0 0 1.5px var(--ink); }
+.hours { display:grid; grid-template-columns:repeat(25,1fr); gap:2px; margin-left:46px; font-size:10px; color:var(--muted); }
+.hours b { font-weight:500; text-align:center; white-space:nowrap; } .hours b.k { color:var(--ink); font-weight:800; }
+.spark { height:40px; position:relative; }
+.spark svg { width:100%; height:40px; display:block; overflow:visible; }
+.spark path.line { fill:none; stroke:var(--ink2); stroke-width:1.8; stroke-linejoin:round; stroke-dasharray:600; stroke-dashoffset:600; transition:stroke-dashoffset 1.1s var(--ease); }
+.tl.shown .spark path.line { stroke-dashoffset:0; }
+.spark path.area { fill:url(#tgrad); opacity:0; transition:opacity .8s .3s; } .tl.shown .spark path.area { opacity:1; }
+.spark .lo, .spark .hi { position:absolute; right:0; font-size:10px; color:var(--muted); } .spark .hi { top:-4px; } .spark .lo { bottom:-2px; }
+.cursor { position:absolute; top:-2px; bottom:0; width:2px; border-radius:2px; background:var(--primary); left:0; transition:left .35s var(--spring); pointer-events:none; }
+.cursor::before { content:attr(data-label); position:absolute; top:-18px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:800; color:var(--primary); white-space:nowrap; }
+.note { font-size:11px; color:var(--muted); margin-top:10px; line-height:1.45; }
+.info { display:flex; gap:10px; font-size:12.5px; color:var(--ink2); line-height:1.5; } .info .ic { color:var(--muted); margin-top:2px; }
+.info a { color:var(--primary); font-weight:700; text-decoration:none; }
+.actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:12px 16px 16px; border-top:1px solid var(--line); background:rgba(253,253,253,.6); }
+.btn { height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; gap:7px; font-weight:800; font-size:14px; transition:transform .15s var(--ease), box-shadow .2s, background .2s; }
+.btn:active { transform:scale(.97); }
+.btn.pri { background:var(--primary); color:#fff; box-shadow:0 6px 16px rgba(43,71,117,.32); } .btn.pri:hover { background:var(--primary-2); }
+.btn.sec { background:var(--surface); border:1px solid var(--line); } .btn.sec:hover { background:#f5f7f9; }
+
+/* ── scrubber ── */
+.scrub { position:fixed; left:50%; bottom:20px; transform:translateX(-50%); width:min(720px, calc(100vw - 32px)); height:68px; border-radius:20px; display:flex; align-items:center; gap:14px; padding:0 18px 0 12px; z-index:5; }
+.play { width:44px; height:44px; border-radius:50%; background:var(--primary); color:#fff; display:grid; place-items:center; flex:none; box-shadow:0 6px 16px rgba(43,71,117,.32); transition:transform .15s; }
+.play:active { transform:scale(.92); } .play .ic { width:18px; height:18px; fill:currentColor; stroke:none; }
+.track { position:relative; flex:1; height:44px; cursor:pointer; touch-action:none; }
+.rail { position:absolute; left:0; right:0; top:14px; height:6px; border-radius:3px; background:var(--cell); overflow:hidden; }
+.rail .fill { position:absolute; left:0; top:0; bottom:0; background:linear-gradient(90deg,var(--primary),var(--primary-2)); border-radius:3px; transition:width .35s var(--spring); }
+.ticks { position:absolute; left:0; right:0; top:26px; display:flex; justify-content:space-between; font-size:10.5px; color:var(--muted); }
+.ticks b { font-weight:600; width:0; display:flex; justify-content:center; white-space:nowrap; } .ticks b.k { color:var(--ink); font-weight:800; }
+.knob { position:absolute; top:6px; width:22px; height:22px; margin-left:-11px; border-radius:50%; background:#fff; box-shadow:0 0 0 5px rgba(43,71,117,.18), 0 2px 8px rgba(15,30,50,.25); transition:left .35s var(--spring), transform .2s; }
+.track.drag .knob { transform:scale(1.18); transition:transform .2s; }
+.bubble { position:absolute; bottom:52px; transform:translateX(-50%); background:var(--ink); color:#fff; font-size:12px; font-weight:700; padding:6px 10px; border-radius:10px; white-space:nowrap; transition:left .35s var(--spring); box-shadow:0 6px 18px rgba(15,30,50,.25); }
+.bubble::after { content:""; position:absolute; left:50%; bottom:-5px; width:10px; height:10px; background:var(--ink); transform:translateX(-50%) rotate(45deg); border-radius:2px; }
+
+/* ── map chrome ── */
+.mapctl { position:fixed; right:424px; bottom:104px; display:flex; flex-direction:column; gap:8px; z-index:3; transition:right .6s var(--spring); }
+body.nodetail .mapctl { right:16px; }
+.mapctl button { width:42px; height:42px; border-radius:14px; display:grid; place-items:center; color:var(--ink2); }
+.mapctl button.on { background:var(--primary); color:#fff; border-color:transparent; }
+.legend { position:fixed; left:420px; bottom:104px; border-radius:14px; padding:9px 12px; display:flex; align-items:center; gap:10px; font-size:11.5px; color:var(--ink2); z-index:3; transition:opacity .4s; }
+.legend .ramp { display:flex; gap:2px; } .legend .ramp i { width:20px; height:8px; border-radius:2px; }
+.legend .ticks2 { display:flex; gap:12px; color:var(--muted); font-size:10.5px; }
+.legend .src { color:var(--muted); font-size:10.5px; border-left:1px solid var(--line); padding-left:10px; }
+body.norain .legend { opacity:0; }
+
+/* ── markers ── */
+.mk { position:relative; display:flex; align-items:center; gap:6px; cursor:pointer; transform:scale(0); transition:transform .5s var(--spring); }
+.mk.in { transform:scale(1); }
+.mk .d { width:14px; height:14px; border-radius:50%; background:var(--c, #b8c0c9); border:3px solid #fff; box-shadow:0 2px 6px rgba(15,30,50,.3); transition:background .4s, transform .35s var(--spring), box-shadow .3s; }
+.mk.big .d { width:18px; height:18px; }
+.mk .lab { background:rgba(253,253,253,.95); border-radius:9px; padding:4px 8px; font-size:12px; font-weight:700; color:var(--ink); white-space:nowrap; box-shadow:0 2px 8px rgba(15,30,50,.16); transition:background .3s, color .3s, transform .3s var(--spring); }
+.mk .lab em { font-style:normal; font-weight:800; margin-left:3px; } .mk .lab .mu { font-weight:600; color:var(--muted); margin-left:3px; }
+.mk.sel .d { transform:scale(1.3); box-shadow:0 0 0 6px rgba(43,71,117,.25), 0 2px 8px rgba(15,30,50,.3); }
+.mk.sel .lab { background:var(--primary); color:#fff; } .mk.sel .lab .mu { color:rgba(255,255,255,.75); }
+.mk:hover .lab { transform:translateY(-1px); }
+.mk.hid { display:none; }
+.cl { display:flex; align-items:center; gap:8px; padding:6px 12px 6px 6px; border-radius:999px; background:rgba(253,253,253,.95); box-shadow:0 4px 14px rgba(15,30,50,.22); cursor:pointer; font-weight:700; font-size:12.5px; transform:scale(0); transition:transform .5s var(--spring); white-space:nowrap; }
+.cl.in { transform:scale(1); } .cl:hover { transform:scale(1.04); }
+.cl .n { width:26px; height:26px; border-radius:50%; display:grid; place-items:center; color:#fff; background:var(--c); font-weight:800; }
+.cl.hid { display:none; }
+
+/* ── modal & toast ── */
+.scrim { position:fixed; inset:0; background:rgba(15,25,40,.28); backdrop-filter:blur(4px); opacity:0; pointer-events:none; transition:opacity .3s; z-index:9; }
+.scrim.open { opacity:1; pointer-events:auto; }
+.modal { position:fixed; left:50%; top:50%; width:min(560px, calc(100vw - 32px)); max-height:80vh; transform:translate(-50%,-46%) scale(.96); opacity:0; pointer-events:none; transition:transform .5s var(--spring), opacity .25s; z-index:10; border-radius:24px; background:var(--surface); box-shadow:var(--shadow); display:flex; flex-direction:column; overflow:hidden; }
+.modal.open { transform:translate(-50%,-50%) scale(1); opacity:1; pointer-events:auto; }
+.modal header { display:flex; justify-content:space-between; align-items:center; padding:18px 20px 10px; } .modal header b { font-size:17px; }
+.modal pre { margin:0 20px; padding:16px; background:#f4f6f8; border-radius:14px; font-family:inherit; font-size:13.5px; line-height:1.65; white-space:pre-wrap; overflow:auto; max-height:52vh; color:var(--ink); }
+.modal footer { display:flex; gap:8px; padding:14px 20px 18px; } .modal footer .btn { flex:1; }
+.toast { position:fixed; left:50%; bottom:104px; transform:translate(-50%,20px); opacity:0; background:var(--ink); color:#fff; padding:12px 16px; border-radius:14px; display:flex; align-items:center; gap:8px; font-weight:700; font-size:13.5px; box-shadow:var(--shadow); transition:transform .45s var(--spring), opacity .25s; z-index:11; pointer-events:none; }
+.toast.show { transform:translate(-50%,0); opacity:1; }
+.toast .ic { color:#8fe0b4; }
+
+/* ── intro ── */
+.intro-hide { opacity:0; transform:translateY(-10px); }
+.sheet.intro-hide { transform:translateX(-24px); }
+.fade { transition:opacity .6s var(--ease), transform .7s var(--spring); }
+.row.pre { opacity:0; transform:translateX(-10px); } .row { transition:background .2s, opacity .45s var(--ease), transform .45s var(--ease); }
+.proto { position:fixed; left:16px; bottom:24px; font-size:11px; color:var(--muted); z-index:2; max-width:380px; line-height:1.4; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
+.brand { background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+.logo-img { display:block; width:auto; }
+</style>
+</head>
+<body class="nodetail">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+<symbol id="i-wind" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></symbol>
+<symbol id="i-temp" viewBox="0 0 24 24"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></symbol>
+<symbol id="i-hum" viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5Z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+<symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/></symbol>
+<symbol id="i-rain" viewBox="0 0 24 24"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+<linearGradient id="tgrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5598e7" stop-opacity=".22"/><stop offset="1" stop-color="#5598e7" stop-opacity="0"/></linearGradient>
+</defs></svg>
+
+<div id="map"></div>
+<div class="mapmsg" id="mapMsg">지도를 불러오지 못했습니다. 목록과 상세 정보는 그대로 사용할 수 있습니다.</div>
+
+<header class="top">
+  <div class="brand glass fade intro-hide"><img class="logo-img" style="height:26px" src="data:image/png;base64,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" alt="현대아산"><b>기상안전 관제</b><small>본사</small></div>
+  <nav class="seg glass fade intro-hide" id="nav"><span class="pill"></span><button class="on" data-v="map">전국 관제</button><button data-v="list">현장 목록</button><button data-v="notice">전파 문안</button></nav>
+  <div class="live glass fade intro-hide"><span class="dot"></span><span>정상 수집 · <b>17:50</b> 갱신</span><span class="sep"></span><span>다음 갱신 <b class="num" id="nextup">18:17</b></span></div>
+</header>
+
+<aside class="sheet glass fade intro-hide" id="sheet">
+  <div class="sum">
+    <div class="eyebrow"><span>지금 전국 21개 현장</span><span class="when" id="when">17:50 실측</span></div>
+    <div class="sentence" id="sentence"></div>
+  </div>
+  <div class="kpis">
+    <div class="kpi zero"><div class="v num" data-k="warn">0</div><div class="l">기상특보</div></div>
+    <div class="kpi zero"><div class="v num" data-k="legal">0</div><div class="l">법정조치</div></div>
+    <div class="kpi"><div class="v num"><span data-k="rainN">0</span><small>곳</small></div><div class="l">비 오는 현장</div></div>
+    <div class="kpi"><div class="v num"><span data-k="rainMax">0</span><small>mm</small></div><div class="l" id="rainMaxL">최대 시간당</div></div>
+  </div>
+  <div class="lhead"><b>현장</b><div class="mseg" id="sortSeg"><span class="pill"></span><button class="on" data-m="r">비</button><button data-m="w">바람</button><button data-m="t">기온</button></div></div>
+  <div class="list" id="list"></div>
+</aside>
+
+<section class="detail glass" id="detail" aria-live="polite">
+  <div class="dhead"><div><div class="cat" id="dCat"></div><h2 id="dName"></h2></div><button class="x" id="dClose" aria-label="닫기"><svg class="ic"><use href="#i-x"/></svg></button></div>
+  <div class="dbody">
+    <div class="hero" id="hero"><div class="t1"><svg class="ic"><use href="#i-rain"/></svg><span id="hWhen"></span></div><div class="t2 num" id="hTemp" data-suffix="°"></div><div class="t3" id="hSent"></div></div>
+    <div class="chips" id="dChips"></div>
+    <div class="tiles" id="dTiles"></div>
+    <div class="card"><h3>앞으로 24시간 <span id="tlSrc">굵은 칸 = 실측</span></h3>
+      <div class="tl" id="tl">
+        <div class="cursor" id="cursor" data-label="지금"></div>
+        <div class="tl-row"><span><svg class="ic"><use href="#i-drop"/></svg>비</span><div class="cells" id="cR"></div></div>
+        <div class="tl-row"><span><svg class="ic"><use href="#i-wind"/></svg>바람</span><div class="cells" id="cW"></div></div>
+        <div class="tl-row"><span><svg class="ic"><use href="#i-temp"/></svg>기온</span><div class="spark" id="spark"></div></div>
+        <div class="hours" id="hours"></div>
+      </div>
+      <div class="note" id="tlNote"></div>
+    </div>
+    <div class="card"><div class="info"><svg class="ic"><use href="#i-info"/></svg><div>작업 정보가 등록되지 않아 <b>법정 기준(타워크레인·철골·폭염 작업 등)</b>은 확인하지 않았습니다. <a href="#">등록 방법</a></div></div></div>
+  </div>
+  <div class="actions"><button class="btn pri" id="bNotice"><svg class="ic"><use href="#i-copy"/></svg>전파 문안</button><button class="btn sec" id="bSite"><svg class="ic"><use href="#i-ext"/></svg>현장 화면</button></div>
+</section>
+
+<div class="legend glass fade intro-hide"><svg class="ic" style="width:14px;height:14px;color:#256abf"><use href="#i-drop"/></svg><b>비 mm/h</b><span class="ramp"><i style="background:#cde2fb"></i><i style="background:#9ec5f4"></i><i style="background:#5598e7"></i><i style="background:#256abf"></i><i style="background:#0d366b"></i></span><span class="ticks2"><span>0.1</span><span>1</span><span>3</span><span>10</span><span>30+</span></span><span class="src">비구름: 프로토타입 예시 · 자료 기상청</span></div>
+<div class="mapctl fade intro-hide"><button class="glass on" id="layerBtn" title="비구름 레이어"><svg class="ic"><use href="#i-rain"/></svg></button><button class="glass" id="zIn" title="확대"><svg class="ic"><use href="#i-plus"/></svg></button><button class="glass" id="zOut" title="축소"><svg class="ic"><use href="#i-minus"/></svg></button><button class="glass" id="zHome" title="전국 보기"><svg class="ic"><use href="#i-home"/></svg></button></div>
+
+<div class="scrub glass fade intro-hide" id="scrub">
+  <button class="play" id="play" aria-label="재생"><svg class="ic"><use href="#i-play"/></svg></button>
+  <div class="track" id="track"><div class="rail"><div class="fill" id="fill"></div></div><div class="ticks" id="ticks"></div><div class="knob" id="knob"></div><div class="bubble" id="bubble">지금 · 17:50 실측</div></div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"><header><b id="mTitle">전파 문안</b><button class="x" id="mClose" aria-label="닫기"><svg class="ic"><use href="#i-x"/></svg></button></header><pre id="mText"></pre><footer><button class="btn sec" id="mCancel">닫기</button><button class="btn pri" id="mCopy"><svg class="ic"><use href="#i-copy"/></svg>문안 복사</button></footer></div>
+<div class="toast" id="toast"><svg class="ic"><use href="#i-check"/></svg><span id="toastT"></span></div>
+
+<script>const SITES = [{"name":"오리온 진천신공장","short":"진천 신공장","cat":"건축","lat":36.87,"lon":127.44,"grp":"jin","now":{"t":20.2,"feels":22.9,"r":1.5,"w":0.7,"reh":85},"fc":[{"h":"18","d":"09/25","t":21.0,"r":3.0,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":20.0,"r":0.5,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"20","d":"09/25","t":19.0,"r":2.0,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":19.0,"r":1.0,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"22","d":"09/25","t":19.0,"r":1.0,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":18.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"00","d":"09/26","t":18.0,"r":1.0,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"01","d":"09/26","t":18.0,"r":2.0,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"02","d":"09/26","t":17.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":17.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"04","d":"09/26","t":17.0,"r":0,"w":0.9,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"05","d":"09/26","t":17.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"06","d":"09/26","t":17.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"07","d":"09/26","t":17.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"08","d":"09/26","t":18.0,"r":0,"w":0.9,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"09","d":"09/26","t":20.0,"r":0,"w":0.9,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"10","d":"09/26","t":21.0,"r":0,"w":1.1,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"11","d":"09/26","t":22.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"12","d":"09/26","t":24.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"13","d":"09/26","t":25.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"14","d":"09/26","t":25.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"15","d":"09/26","t":26.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"16","d":"09/26","t":26.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"17","d":"09/26","t":24.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":65}],"warn":[],"legal":[]},{"name":"오리온 진천 기숙사","short":"진천 기숙사","cat":"건축","lat":36.84,"lon":127.4,"grp":"jin","now":{"t":20.0,"feels":22.9,"r":2.0,"w":0.2,"reh":90},"fc":[{"h":"18","d":"09/25","t":19.0,"r":3.0,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"19","d":"09/25","t":19.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"20","d":"09/25","t":19.0,"r":2.0,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"21","d":"09/25","t":18.0,"r":2.0,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":18.0,"r":1.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":18.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"00","d":"09/26","t":18.0,"r":1.0,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"01","d":"09/26","t":18.0,"r":2.0,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"02","d":"09/26","t":18.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":17.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"04","d":"09/26","t":17.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"05","d":"09/26","t":17.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"06","d":"09/26","t":17.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"07","d":"09/26","t":17.0,"r":0,"w":1.4,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"08","d":"09/26","t":17.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"09","d":"09/26","t":18.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"10","d":"09/26","t":19.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"11","d":"09/26","t":21.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"12","d":"09/26","t":22.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"13","d":"09/26","t":23.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"14","d":"09/26","t":24.0,"r":0,"w":0.8,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"15","d":"09/26","t":25.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"16","d":"09/26","t":24.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"17","d":"09/26","t":23.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":65}],"warn":[],"legal":[]},{"name":"연희·연남동 공공주택","short":"연희·연남","cat":"건축","lat":37.5665,"lon":126.9351,"grp":"cap","now":{"t":18.9,"feels":18.9,"r":10.0,"w":0.2,"reh":85},"fc":[{"h":"18","d":"09/25","t":22.0,"r":3.0,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":21.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"20","d":"09/25","t":20.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":20.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":20.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":19.0,"r":0.5,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":19.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":19.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":18.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":18.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":18.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"07","d":"09/26","t":18.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"08","d":"09/26","t":19.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"09","d":"09/26","t":21.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"10","d":"09/26","t":22.0,"r":0,"w":1.1,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"11","d":"09/26","t":24.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"12","d":"09/26","t":25.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"13","d":"09/26","t":26.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"14","d":"09/26","t":27.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"15","d":"09/26","t":27.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"16","d":"09/26","t":27.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"17","d":"09/26","t":26.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":55}],"warn":[],"legal":[]},{"name":"청정고원 스포츠센터","short":"태백","cat":"건축","lat":37.1637,"lon":128.9856,"grp":null,"now":{"t":17.8,"feels":17.8,"r":0.4,"w":0.9,"reh":95},"fc":[{"h":"18","d":"09/25","t":16.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"19","d":"09/25","t":15.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"20","d":"09/25","t":15.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"21","d":"09/25","t":15.0,"r":2.0,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"22","d":"09/25","t":15.0,"r":1.0,"w":0.6,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"23","d":"09/25","t":15.0,"r":1.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"00","d":"09/26","t":15.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"01","d":"09/26","t":14.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"02","d":"09/26","t":14.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"03","d":"09/26","t":14.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"04","d":"09/26","t":14.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"05","d":"09/26","t":14.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"06","d":"09/26","t":13.0,"r":0,"w":0.6,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"07","d":"09/26","t":14.0,"r":0,"w":0.6,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"08","d":"09/26","t":15.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"09","d":"09/26","t":16.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"10","d":"09/26","t":17.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"11","d":"09/26","t":18.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"12","d":"09/26","t":19.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"13","d":"09/26","t":20.0,"r":0,"w":1.1,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"14","d":"09/26","t":20.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"15","d":"09/26","t":20.0,"r":0,"w":0.8,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"16","d":"09/26","t":19.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"17","d":"09/26","t":18.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":85}],"warn":[],"legal":[]},{"name":"LX 논현 업무시설","short":"논현","cat":"건축","lat":37.5115,"lon":127.0339,"grp":"cap","now":{"t":20.2,"feels":22.8,"r":1.5,"w":2.0,"reh":80},"fc":[{"h":"18","d":"09/25","t":23.0,"r":3.0,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"19","d":"09/25","t":22.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"20","d":"09/25","t":22.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"21","d":"09/25","t":21.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"22","d":"09/25","t":21.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"23","d":"09/25","t":21.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"00","d":"09/26","t":20.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"01","d":"09/26","t":20.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"02","d":"09/26","t":20.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"03","d":"09/26","t":19.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":19.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":19.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":19.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"07","d":"09/26","t":19.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"08","d":"09/26","t":20.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"09","d":"09/26","t":21.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"10","d":"09/26","t":22.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"11","d":"09/26","t":24.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"12","d":"09/26","t":25.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"13","d":"09/26","t":26.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"14","d":"09/26","t":27.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"15","d":"09/26","t":28.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"16","d":"09/26","t":27.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"17","d":"09/26","t":26.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":50}],"warn":[],"legal":[]},{"name":"양산 부산대병원","short":"양산","cat":"건축","lat":35.3266448,"lon":129.0079543,"grp":null,"now":{"t":24.9,"feels":26.3,"r":0.0,"w":1.9,"reh":75},"fc":[{"h":"18","d":"09/25","t":23.0,"r":0,"w":0.6,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"19","d":"09/25","t":23.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"20","d":"09/25","t":22.0,"r":0,"w":1.6,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"21","d":"09/25","t":22.0,"r":0.5,"w":1.6,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"22","d":"09/25","t":21.0,"r":0.5,"w":1.7,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"23","d":"09/25","t":21.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"00","d":"09/26","t":21.0,"r":0.5,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"01","d":"09/26","t":21.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"02","d":"09/26","t":20.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":75},{"h":"03","d":"09/26","t":20.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":75},{"h":"04","d":"09/26","t":20.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"05","d":"09/26","t":19.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"06","d":"09/26","t":19.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"07","d":"09/26","t":19.0,"r":1.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"08","d":"09/26","t":20.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"09","d":"09/26","t":20.0,"r":0.5,"w":0.6,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"10","d":"09/26","t":21.0,"r":2.0,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"11","d":"09/26","t":22.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"12","d":"09/26","t":22.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"13","d":"09/26","t":23.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"14","d":"09/26","t":24.0,"r":1.0,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":75},{"h":"15","d":"09/26","t":25.0,"r":2.0,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":75},{"h":"16","d":"09/26","t":24.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"17","d":"09/26","t":23.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":80}],"warn":[],"legal":[]},{"name":"군포복합개발","short":"군포","cat":"건축","lat":37.3616,"lon":126.9351,"grp":"cap","now":{"t":20.4,"feels":22.8,"r":1.9,"w":1.7,"reh":90},"fc":[{"h":"18","d":"09/25","t":21.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"19","d":"09/25","t":20.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"20","d":"09/25","t":20.0,"r":2.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":20.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":19.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":19.0,"r":0.5,"w":1.0,"pop":70,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":18.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":18.0,"r":0,"w":1.7,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":18.0,"r":0,"w":1.4,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":18.0,"r":0,"w":1.6,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":18.0,"r":0,"w":1.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"07","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":90},{"h":"08","d":"09/26","t":19.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"09","d":"09/26","t":21.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"10","d":"09/26","t":22.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"11","d":"09/26","t":23.0,"r":0,"w":0.8,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"12","d":"09/26","t":25.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"13","d":"09/26","t":26.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"14","d":"09/26","t":27.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"15","d":"09/26","t":27.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"16","d":"09/26","t":26.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"17","d":"09/26","t":25.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":65}],"warn":[],"legal":[]},{"name":"오리온수협 목포 김공장","short":"목포","cat":"건축","lat":34.7936,"lon":126.3819,"grp":null,"now":{"t":25.6,"feels":26.2,"r":0.0,"w":2.3,"reh":70},"fc":[{"h":"18","d":"09/25","t":25.0,"r":0,"w":2.9,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"19","d":"09/25","t":24.0,"r":0,"w":3.2,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"20","d":"09/25","t":23.0,"r":0,"w":3.7,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"21","d":"09/25","t":22.0,"r":0.5,"w":3.6,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"22","d":"09/25","t":22.0,"r":0.5,"w":2.6,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"23","d":"09/25","t":22.0,"r":0.5,"w":2.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"00","d":"09/26","t":21.0,"r":0.5,"w":3.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":21.0,"r":0.5,"w":3.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":21.0,"r":0.5,"w":4.0,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":21.0,"r":0.5,"w":4.1,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"04","d":"09/26","t":21.0,"r":2.0,"w":4.4,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"05","d":"09/26","t":20.0,"r":4.0,"w":4.3,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"06","d":"09/26","t":20.0,"r":6.0,"w":2.9,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"07","d":"09/26","t":20.0,"r":8.0,"w":2.8,"pop":70,"sky":"흐림","pty":"비","reh":95},{"h":"08","d":"09/26","t":21.0,"r":5.0,"w":2.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"09","d":"09/26","t":21.0,"r":4.0,"w":3.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"10","d":"09/26","t":22.0,"r":2.0,"w":3.4,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"11","d":"09/26","t":23.0,"r":2.0,"w":3.2,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"12","d":"09/26","t":23.0,"r":2.0,"w":3.3,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"13","d":"09/26","t":24.0,"r":1.0,"w":3.3,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"14","d":"09/26","t":24.0,"r":0,"w":3.3,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"15","d":"09/26","t":24.0,"r":0,"w":3.0,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"16","d":"09/26","t":24.0,"r":0,"w":2.0,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"17","d":"09/26","t":23.0,"r":0,"w":1.9,"pop":30,"sky":"흐림","pty":"없음","reh":85}],"warn":[],"legal":[]},{"name":"렉서스 동탄 네트워크","short":"동탄","cat":"건축","lat":37.2046,"lon":127.1178,"grp":"cap","now":{"t":19.9,"feels":19.9,"r":3.0,"w":0.7,"reh":80},"fc":[{"h":"18","d":"09/25","t":22.0,"r":0.5,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"19","d":"09/25","t":21.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"20","d":"09/25","t":21.0,"r":2.0,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":20.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"22","d":"09/25","t":20.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":19.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":1.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":19.0,"r":0.5,"w":1.6,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"02","d":"09/26","t":19.0,"r":0,"w":1.8,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"03","d":"09/26","t":19.0,"r":0,"w":2.0,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":18.0,"r":0,"w":1.9,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":19.0,"r":0,"w":1.9,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":18.0,"r":0,"w":2.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"07","d":"09/26","t":18.0,"r":0,"w":2.0,"pop":20,"sky":"구름많음","pty":"없음","reh":85},{"h":"08","d":"09/26","t":20.0,"r":0,"w":1.3,"pop":20,"sky":"구름많음","pty":"없음","reh":80},{"h":"09","d":"09/26","t":21.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"10","d":"09/26","t":23.0,"r":0,"w":1.1,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"11","d":"09/26","t":24.0,"r":0,"w":0.8,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"12","d":"09/26","t":25.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"13","d":"09/26","t":26.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"14","d":"09/26","t":27.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"15","d":"09/26","t":27.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"16","d":"09/26","t":27.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"17","d":"09/26","t":26.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":60}],"warn":[],"legal":[]},{"name":"화천군부대 시설공사","short":"화천","cat":"건축","lat":38.0454,"lon":127.6672,"grp":null,"now":{"t":19.9,"feels":19.9,"r":1.5,"w":1.8,"reh":85},"fc":[{"h":"18","d":"09/25","t":19.0,"r":2.0,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":18.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"20","d":"09/25","t":18.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":17.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":17.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":17.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":16.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":16.0,"r":0.5,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":16.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":16.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"04","d":"09/26","t":16.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"05","d":"09/26","t":15.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"06","d":"09/26","t":15.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"07","d":"09/26","t":15.0,"r":0,"w":0.4,"pop":20,"sky":"구름많음","pty":"없음","reh":90},{"h":"08","d":"09/26","t":16.0,"r":0,"w":0.2,"pop":20,"sky":"구름많음","pty":"없음","reh":90},{"h":"09","d":"09/26","t":18.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"10","d":"09/26","t":20.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"11","d":"09/26","t":22.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"12","d":"09/26","t":23.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"13","d":"09/26","t":24.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"14","d":"09/26","t":25.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"15","d":"09/26","t":25.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"16","d":"09/26","t":25.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"17","d":"09/26","t":23.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":60}],"warn":[],"legal":[]},{"name":"반얀트리호텔 근생동","short":"반얀트리","cat":"건축","lat":37.558,"lon":127.0035,"grp":"cap","now":{"t":20.5,"feels":22.8,"r":5.6,"w":1.0,"reh":85},"fc":[{"h":"18","d":"09/25","t":23.0,"r":3.0,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":22.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"20","d":"09/25","t":21.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"21","d":"09/25","t":21.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":20.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"23","d":"09/25","t":20.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"01","d":"09/26","t":19.0,"r":1.0,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"02","d":"09/26","t":19.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"03","d":"09/26","t":19.0,"r":0,"w":1.4,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":19.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":19.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"07","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"08","d":"09/26","t":19.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"09","d":"09/26","t":21.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"10","d":"09/26","t":22.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"11","d":"09/26","t":24.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"12","d":"09/26","t":25.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"13","d":"09/26","t":26.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"14","d":"09/26","t":27.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"15","d":"09/26","t":27.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"16","d":"09/26","t":27.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"17","d":"09/26","t":26.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":50}],"warn":[],"legal":[]},{"name":"포항~안동2 국도건설공사","short":"안동","cat":"토목","lat":36.4383,"lon":128.8853,"grp":null,"now":{"t":21.6,"feels":23.8,"r":0.0,"w":0.3,"reh":90},"fc":[{"h":"18","d":"09/25","t":20.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"19","d":"09/25","t":19.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"20","d":"09/25","t":19.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":19.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":18.0,"r":2.0,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":18.0,"r":3.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":18.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":18.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":17.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":17.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"04","d":"09/26","t":17.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"05","d":"09/26","t":17.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"06","d":"09/26","t":16.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"07","d":"09/26","t":16.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"08","d":"09/26","t":17.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"09","d":"09/26","t":19.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"10","d":"09/26","t":20.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"11","d":"09/26","t":21.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"12","d":"09/26","t":22.0,"r":0,"w":1.1,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"13","d":"09/26","t":23.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"14","d":"09/26","t":24.0,"r":0,"w":1.0,"pop":20,"sky":"구름많음","pty":"없음","reh":70},{"h":"15","d":"09/26","t":24.0,"r":0,"w":0.9,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"16","d":"09/26","t":24.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":65},{"h":"17","d":"09/26","t":23.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":70}],"warn":[],"legal":[]},{"name":"시흥능곡 주변도로","short":"시흥","cat":"토목","lat":37.3946,"lon":126.8092,"grp":"cap","now":{"t":19.2,"feels":19.2,"r":1.0,"w":1.6,"reh":85},"fc":[{"h":"18","d":"09/25","t":23.0,"r":0.5,"w":2.0,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":21.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"20","d":"09/25","t":21.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"21","d":"09/25","t":20.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"22","d":"09/25","t":20.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":19.0,"r":1.0,"w":0.7,"pop":70,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":19.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":19.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":18.0,"r":0,"w":1.5,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":18.0,"r":0,"w":1.5,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":18.0,"r":0,"w":1.7,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"06","d":"09/26","t":18.0,"r":0,"w":1.6,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"07","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":90},{"h":"08","d":"09/26","t":20.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"09","d":"09/26","t":21.0,"r":0,"w":1.4,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"10","d":"09/26","t":23.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"11","d":"09/26","t":24.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"12","d":"09/26","t":25.0,"r":0,"w":0.8,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"13","d":"09/26","t":26.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"14","d":"09/26","t":27.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"15","d":"09/26","t":28.0,"r":0,"w":1.4,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"16","d":"09/26","t":27.0,"r":0,"w":1.6,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"17","d":"09/26","t":26.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":65}],"warn":[],"legal":[]},{"name":"뇌죽천 하천재해예방","short":"곡성","cat":"토목","lat":35.1858,"lon":127.2453,"grp":null,"now":{"t":22.2,"feels":24.2,"r":0.0,"w":0.4,"reh":80},"fc":[{"h":"18","d":"09/25","t":21.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"19","d":"09/25","t":20.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"20","d":"09/25","t":20.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"21","d":"09/25","t":19.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"22","d":"09/25","t":19.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":18.0,"r":0.5,"w":1.4,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":18.0,"r":0.5,"w":1.6,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"01","d":"09/26","t":18.0,"r":0.5,"w":1.6,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"02","d":"09/26","t":18.0,"r":0.5,"w":1.5,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":17.0,"r":0.5,"w":1.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"04","d":"09/26","t":17.0,"r":0.5,"w":1.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"05","d":"09/26","t":17.0,"r":0.5,"w":1.6,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"06","d":"09/26","t":17.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"07","d":"09/26","t":17.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":100},{"h":"08","d":"09/26","t":17.0,"r":1.0,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":100},{"h":"09","d":"09/26","t":18.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":100},{"h":"10","d":"09/26","t":19.0,"r":3.0,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"11","d":"09/26","t":21.0,"r":4.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"12","d":"09/26","t":22.0,"r":0.5,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"13","d":"09/26","t":23.0,"r":0,"w":1.6,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"14","d":"09/26","t":23.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"15","d":"09/26","t":24.0,"r":0,"w":1.4,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"16","d":"09/26","t":23.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"17","d":"09/26","t":23.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":85}],"warn":[],"legal":[]},{"name":"산솔면 하수처리장","short":"영월","cat":"토목","lat":37.1836,"lon":128.4612,"grp":null,"now":{"t":20.9,"feels":23.3,"r":0.2,"w":1.7,"reh":85},"fc":[{"h":"18","d":"09/25","t":18.0,"r":3.0,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":17.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"20","d":"09/25","t":17.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"21","d":"09/25","t":17.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"22","d":"09/25","t":16.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"23","d":"09/25","t":16.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"00","d":"09/26","t":15.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"01","d":"09/26","t":15.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"02","d":"09/26","t":15.0,"r":0.5,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":15.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"04","d":"09/26","t":15.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"05","d":"09/26","t":15.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"06","d":"09/26","t":15.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"07","d":"09/26","t":15.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"08","d":"09/26","t":16.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"09","d":"09/26","t":18.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"10","d":"09/26","t":19.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"11","d":"09/26","t":21.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"12","d":"09/26","t":22.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"13","d":"09/26","t":23.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"14","d":"09/26","t":24.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"15","d":"09/26","t":24.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"16","d":"09/26","t":23.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"17","d":"09/26","t":22.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":65}],"warn":[],"legal":[]},{"name":"단월정수장 시설공사","short":"충주","cat":"토목","lat":36.9558,"lon":127.9419,"grp":null,"now":{"t":20.2,"feels":22.5,"r":0.6,"w":0.7,"reh":85},"fc":[{"h":"18","d":"09/25","t":20.0,"r":2.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":19.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"20","d":"09/25","t":19.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":19.0,"r":2.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":18.0,"r":2.0,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":18.0,"r":2.0,"w":0.6,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":17.0,"r":0.5,"w":0.6,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":17.0,"r":5.0,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"02","d":"09/26","t":17.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":17.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"04","d":"09/26","t":16.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"05","d":"09/26","t":17.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"06","d":"09/26","t":16.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"07","d":"09/26","t":17.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"08","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"09","d":"09/26","t":19.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"10","d":"09/26","t":21.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"11","d":"09/26","t":22.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"12","d":"09/26","t":23.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"13","d":"09/26","t":24.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"14","d":"09/26","t":25.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"15","d":"09/26","t":25.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"16","d":"09/26","t":25.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"17","d":"09/26","t":24.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":65}],"warn":[],"legal":[]},{"name":"후포 공공하수처리","short":"후포","cat":"토목","lat":36.6772,"lon":129.4514,"grp":null,"now":{"t":18.6,"feels":18.6,"r":31.0,"w":4.1,"reh":85},"fc":[{"h":"18","d":"09/25","t":21.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"19","d":"09/25","t":20.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"20","d":"09/25","t":19.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":19.0,"r":0.5,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":19.0,"r":0.5,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":19.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":18.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":18.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":18.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":18.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"04","d":"09/26","t":18.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"05","d":"09/26","t":17.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"06","d":"09/26","t":17.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"07","d":"09/26","t":18.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"08","d":"09/26","t":19.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"09","d":"09/26","t":20.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"10","d":"09/26","t":21.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"11","d":"09/26","t":22.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"12","d":"09/26","t":23.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"13","d":"09/26","t":23.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"14","d":"09/26","t":24.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"15","d":"09/26","t":24.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"16","d":"09/26","t":23.0,"r":0,"w":0.6,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"17","d":"09/26","t":22.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":75}],"warn":[],"legal":[]},{"name":"동해안 바닷가 자동차길","short":"강릉","cat":"토목","lat":37.8925,"lon":128.8302,"grp":null,"now":{"t":19.3,"feels":19.3,"r":2.0,"w":1.4,"reh":85},"fc":[{"h":"18","d":"09/25","t":20.0,"r":0.5,"w":0.4,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":19.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"20","d":"09/25","t":18.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":18.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":18.0,"r":1.0,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":18.0,"r":1.0,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":18.0,"r":0.5,"w":0.6,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"01","d":"09/26","t":17.0,"r":0.5,"w":1.4,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"02","d":"09/26","t":17.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"03","d":"09/26","t":17.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":17.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":17.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":16.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"07","d":"09/26","t":17.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"08","d":"09/26","t":19.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"09","d":"09/26","t":20.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"10","d":"09/26","t":21.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"11","d":"09/26","t":22.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"12","d":"09/26","t":23.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"13","d":"09/26","t":23.0,"r":0,"w":1.5,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"14","d":"09/26","t":24.0,"r":0,"w":1.6,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"15","d":"09/26","t":24.0,"r":0,"w":1.7,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"16","d":"09/26","t":23.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"17","d":"09/26","t":22.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":75}],"warn":[],"legal":[]},{"name":"풍각지구 정비사업","short":"청도","cat":"토목","lat":35.6531,"lon":128.6819,"grp":null,"now":{"t":23.6,"feels":25.3,"r":0.0,"w":0.3,"reh":80},"fc":[{"h":"18","d":"09/25","t":22.0,"r":0,"w":0.6,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"19","d":"09/25","t":21.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"20","d":"09/25","t":20.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"21","d":"09/25","t":20.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":19.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"23","d":"09/25","t":19.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":19.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":18.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":18.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"04","d":"09/26","t":18.0,"r":0,"w":0.7,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"05","d":"09/26","t":18.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"06","d":"09/26","t":18.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"07","d":"09/26","t":17.0,"r":2.0,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"08","d":"09/26","t":18.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"09","d":"09/26","t":19.0,"r":3.0,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"10","d":"09/26","t":20.0,"r":1.0,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"11","d":"09/26","t":20.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"12","d":"09/26","t":21.0,"r":2.0,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"13","d":"09/26","t":22.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"14","d":"09/26","t":23.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"15","d":"09/26","t":23.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"16","d":"09/26","t":23.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"17","d":"09/26","t":22.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":80}],"warn":[],"legal":[]},{"name":"영주 가흥정수장","short":"영주","cat":"토목","lat":36.8098,"lon":128.6236,"grp":null,"now":{"t":19.8,"feels":19.8,"r":0.0,"w":0.3,"reh":85},"fc":[{"h":"18","d":"09/25","t":21.0,"r":2.0,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":20.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"20","d":"09/25","t":19.0,"r":0.5,"w":0.6,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":19.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":18.0,"r":0.5,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":18.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":18.0,"r":2.0,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"01","d":"09/26","t":17.0,"r":0.5,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"02","d":"09/26","t":17.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":17.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"04","d":"09/26","t":16.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"05","d":"09/26","t":16.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"06","d":"09/26","t":16.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"07","d":"09/26","t":16.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":95},{"h":"08","d":"09/26","t":17.0,"r":0,"w":0.5,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"09","d":"09/26","t":19.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"10","d":"09/26","t":20.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"11","d":"09/26","t":21.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"12","d":"09/26","t":22.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"13","d":"09/26","t":23.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"14","d":"09/26","t":24.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"15","d":"09/26","t":24.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"16","d":"09/26","t":24.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"17","d":"09/26","t":23.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":70}],"warn":[],"legal":[]},{"name":"송산그린시티 용수공급시설","short":"송산","cat":"토목","lat":37.1856,"lon":126.6425,"grp":"cap","now":{"t":18.9,"feels":18.9,"r":2.5,"w":5.5,"reh":80},"fc":[{"h":"18","d":"09/25","t":22.0,"r":0.5,"w":2.6,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"19","d":"09/25","t":22.0,"r":0.5,"w":2.6,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"20","d":"09/25","t":21.0,"r":0.5,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"21","d":"09/25","t":21.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"22","d":"09/25","t":20.0,"r":0.5,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"23","d":"09/25","t":20.0,"r":1.0,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":1.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":19.0,"r":0.5,"w":1.6,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":19.0,"r":0,"w":1.8,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"03","d":"09/26","t":19.0,"r":0,"w":2.0,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":19.0,"r":0,"w":2.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":19.0,"r":0,"w":2.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":19.0,"r":0,"w":2.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"07","d":"09/26","t":19.0,"r":0,"w":2.0,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"08","d":"09/26","t":20.0,"r":0,"w":2.0,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"09","d":"09/26","t":21.0,"r":0,"w":1.9,"pop":0,"sky":"맑음","pty":"없음","reh":80},{"h":"10","d":"09/26","t":22.0,"r":0,"w":1.6,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"11","d":"09/26","t":23.0,"r":0,"w":1.3,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"12","d":"09/26","t":24.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"13","d":"09/26","t":25.0,"r":0,"w":0.3,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"14","d":"09/26","t":26.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"15","d":"09/26","t":26.0,"r":0,"w":1.5,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"16","d":"09/26","t":26.0,"r":0,"w":1.4,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"17","d":"09/26","t":25.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70}],"warn":[],"legal":[]}];</script>
+<script>
+(() => {
+const RAMP = ["#cde2fb","#9ec5f4","#5598e7","#256abf","#0d366b"], BINS = [0.1,1,3,10,30];
+const WIND = ["#e7ecf1","#c9e6dd","#6fb9a2","#2a7d66"];
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = s => document.querySelector(s);
+const state = { h:0, sel:null, sort:"r", rainLayer:true };
+const NOWLABEL = "17:50";
+
+const rStep = v => { let s = -1; BINS.forEach((b,i) => { if (v >= b) s = i; }); return s; };
+const rCol = v => { const s = rStep(v); return s < 0 ? "#b8c0c9" : RAMP[s]; };
+const rCell = v => { const s = rStep(v); return s < 0 ? "var(--cell)" : RAMP[s]; };
+const wCol = v => WIND[v < 1 ? 0 : v < 4 ? 1 : v < 9 ? 2 : 3];
+const val = (s, h) => h === 0 ? { t:s.now.t, r:s.now.r, w:s.now.w, reh:s.now.reh, sky:null, pop:null } : s.fc[h-1];
+const fmtR = (r, h) => (h > 0 && r === 0.5) ? "<1" : (r >= 10 ? Math.round(r) : r.toFixed(r % 1 ? 1 : 0));
+const hourLabel = h => { if (h === 0) return "지금"; const f = SITES[0].fc[h-1]; return (f.d !== SITES[0].fc[0].d ? "내일 " : "") + Number(f.h) + "시"; };
+const whenLabel = h => h === 0 ? `${NOWLABEL} 실측` : `${hourLabel(h)} 예보`;
+
+function tween(el, to, dec = 0, dur = 700) {
+  const from = parseFloat(el.dataset.v || "0"); el.dataset.v = to;
+  if (REDUCED || from === to) { el.textContent = to.toFixed(dec) + (el.dataset.suffix || ""); return; }
+  const t0 = performance.now();
+  const suf = el.dataset.suffix || "", token = (el._tw = (el._tw || 0) + 1);
+  const step = now => { if (el._tw !== token) return; const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = (from + (to - from) * e).toFixed(dec) + suf; if (p < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+  setTimeout(() => { if (el._tw === token) el.textContent = to.toFixed(dec) + suf; }, dur + 60);
+}
+
+/* ── summary sentence ── */
+function sentence(h) {
+  const vs = SITES.map(s => ({ s, v: val(s, h) }));
+  const rainy = vs.filter(x => x.v.r > 0).sort((a,b) => b.v.r - a.v.r);
+  const warn = SITES.filter(s => s.warn.length).length;
+  const tail = warn ? `기상청 특보 ${warn}건이 발효 중입니다.` : "기상청 특보는 없습니다.";
+  if (!rainy.length) return `${h === 0 ? "지금" : hourLabel(h) + " 예보상"} 비 오는 현장이 없습니다. ${tail}`;
+  const top = rainy[0];
+  if (h === 0) {
+    const f = top.s.fc.slice(0, 6).map(x => x.r).reduce((a,b) => Math.max(a,b), 0);
+    const gap = f < top.v.r / 4 ? `(예보는 ${f <= 0.5 ? "1mm 미만" : f + "mm"})` : "";
+    return `<b>${top.s.short}에 지금 시간당 ${fmtR(top.v.r, 0)}mm</b>의 ${top.v.r >= 15 ? "강한 비" : "비"}가 관측됩니다${gap}. 그 밖에 ${rainy.length - 1}곳에 비. ${tail}`;
+  }
+  return `${hourLabel(h)} 예보상 <b>${rainy.length}곳에 비</b>, 가장 많은 곳은 ${top.s.short}(${fmtR(top.v.r, h)}mm). ${tail}`;
+}
+
+/* ── list ── */
+const UNIT = { r:"MM/H", w:"M/S", t:"°C" };
+function statusLine(s, h) {
+  if (s.warn.length) return `<span class="w">${s.warn[0].title} 발효</span>`;
+  if (s.legal.length) return `<span class="w">법정 확인 필요</span>`;
+  const v = val(s, h), fc = s.fc.slice(h, h + 12);
+  const nextRain = fc.findIndex(x => x.r > 0);
+  if (v.r > 0) {
+    const wet = fc.filter(x => x.r > 0);
+    if (!wet.length) return `${h === 0 ? "지금 비" : "비"} · 예보상 곧 그침`;
+    const mx = Math.max(...wet.map(x => x.r));
+    return `${h === 0 ? "지금 비" : "비"} · 예보상 ${Number(wet[wet.length - 1].h)}시까지 ${mx <= 0.5 ? "약한 비" : "비"}`;
+  }
+  if (nextRain >= 0) return `예보상 ${Number(fc[nextRain].h)}시부터 비`;
+  const sky = (fc[0] || {}).sky || "맑음"; return `${sky} · 특보 없음`;
+}
+function buildList() {
+  const L = $("#list"); L.innerHTML = "";
+  SITES.forEach((s, i) => {
+    const el = document.createElement("div"); el.className = "row pre"; el.dataset.i = i;
+    el.innerHTML = `<div class="big"><div class="v num"></div><div class="u"></div></div><div><div class="nm">${s.name}</div><div class="st"></div><div class="strip">${"<i></i>".repeat(12)}</div></div><svg class="ic chev"><use href="#i-chev"/></svg>`;
+    el.onclick = () => select(i, true);
+    L.appendChild(el); s.row = el;
+  });
+}
+function metric(s, h, m) { const v = val(s, h); return m === "r" ? v.r : m === "w" ? v.w : v.t; }
+function renderList(animateOrder) {
+  const h = state.h, m = state.sort;
+  const order = SITES.map((s, i) => i).sort((a, b) => {
+    const pa = SITES[a].warn.length || SITES[a].legal.length, pb = SITES[b].warn.length || SITES[b].legal.length;
+    if (pa !== pb) return pb - pa;
+    return metric(SITES[b], h, m) - metric(SITES[a], h, m);
+  });
+  const first = new Map(); if (animateOrder && !REDUCED) SITES.forEach(s => first.set(s.row, s.row.getBoundingClientRect().top));
+  const L = $("#list"); order.forEach(i => L.appendChild(SITES[i].row));
+  SITES.forEach(s => {
+    const v = metric(s, h, m), r = s.row;
+    r.querySelector(".v").textContent = m === "r" ? fmtR(v, h) : m === "w" ? v.toFixed(1) : v.toFixed(1);
+    r.querySelector(".u").textContent = UNIT[m];
+    r.classList.toggle("dim", m === "r" ? v === 0 : m === "w" ? v < 1 : false);
+    r.querySelector(".st").innerHTML = statusLine(s, h);
+    const cells = r.querySelectorAll(".strip i");
+    cells.forEach((c, k) => { const f = k === 0 ? val(s, h) : s.fc[h + k - 1]; c.style.background = !f ? "var(--cell)" : m === "w" ? wCol(f.w) : m === "t" ? `rgba(25,39,60,${Math.max(.08, Math.min(.7, (f.t - 12) / 22))})` : rCell(f.r); });
+  });
+  if (first.size) SITES.forEach(s => { const d = first.get(s.row) - s.row.getBoundingClientRect().top; if (d) { s.row.style.transition = "none"; s.row.style.transform = `translateY(${d}px)`; requestAnimationFrame(() => { s.row.style.transition = ""; s.row.style.transform = ""; }); } });
+}
+
+/* ── KPIs ── */
+function renderKpis() {
+  const h = state.h, vs = SITES.map(s => val(s, h).r);
+  const rainy = vs.filter(v => v > 0), mx = Math.max(0, ...vs);
+  tween($('[data-k="rainN"]'), rainy.length);
+  const mxEl = $('[data-k="rainMax"]');
+  if (h > 0 && mx === 0.5) { mxEl.dataset.v = 0.5; mxEl.textContent = "<1"; }
+  else tween(mxEl, mx, mx >= 10 || mx % 1 === 0 ? 0 : 1);
+  const top = SITES[vs.indexOf(mx)];
+  $("#rainMaxL").textContent = mx > 0 ? `최대 · ${top.short}` : "최대 시간당";
+  $("#when").textContent = whenLabel(h);
+  $("#sentence").innerHTML = sentence(h);
+}
+
+/* ── map ── */
+let map, markers = [], clusters = {};
+const GROUPS = { cap: { name:"수도권", zoom:8.2 }, jin: { name:"진천", zoom:10 } };
+function markerHTML(s, h) {
+  const v = val(s, h);
+  return v.r > 0 ? `<b>${s.short}</b><em class="num">${fmtR(v.r, h)}</em>` : `<b>${s.short}</b><span class="mu num">${v.t.toFixed(1)}°</span>`;
+}
+function buildMap() {
+  map = new maplibregl.Map({ container:"map", style:"https://tiles.openfreemap.org/styles/positron", bounds:[[125.6,34.1],[130.1,38.75]],
+    fitBoundsOptions:{ padding:{ left:420, right:40, top:90, bottom:110 } }, attributionControl:{ compact:true }, dragRotate:false, pitchWithRotate:false });
+  map.on("load", () => {
+    map.getStyle().layers.forEach(l => {
+      if (l.type !== "symbol") return;
+      if (/label_(city|town|state|country)|water_name/.test(l.id)) {
+        map.setLayoutProperty(l.id, "text-field", ["coalesce", ["get","name:ko"], ["get","name:nonlatin"], ["get","name"]]);
+        map.setPaintProperty(l.id, "text-color", "#8a939d"); map.setPaintProperty(l.id, "text-halo-color", "rgba(255,255,255,.9)");
+      } else map.setLayoutProperty(l.id, "visibility", "none");
+    });
+    map.addSource("rain", { type:"geojson", data:rainGeo(0) });
+    map.addLayer({ id:"rain", type:"heatmap", source:"rain", paint:{
+      "heatmap-weight":["interpolate",["linear"],["get","r"],0,0,0.5,0.18,3,0.45,10,0.75,30,1],
+      "heatmap-intensity":["interpolate",["linear"],["zoom"],5,0.9,9,1.6],
+      "heatmap-radius":["interpolate",["exponential",1.6],["zoom"],5,48,7,92,9,170,11,400],
+      "heatmap-color":["interpolate",["linear"],["heatmap-density"],0,"rgba(205,226,251,0)",0.12,"rgba(205,226,251,.55)",0.3,"rgba(158,197,244,.7)",0.5,"rgba(85,152,231,.75)",0.75,"rgba(37,106,191,.8)",1,"rgba(13,54,107,.85)"],
+      "heatmap-opacity":0.75 } });
+    SITES.forEach((s, i) => {
+      const el = document.createElement("div"); el.className = "mk"; el.innerHTML = `<span class="d"></span><span class="lab"></span>`;
+      el.onclick = e => { e.stopPropagation(); select(i, true); };
+      const mk = new maplibregl.Marker({ element:el, anchor:"left", offset:[-7,0] }).setLngLat([s.lon, s.lat]).addTo(map);
+      markers.push({ s, el, mk });
+    });
+    Object.entries(GROUPS).forEach(([g, info]) => {
+      const mem = SITES.filter(s => s.grp === g); const lon = mem.reduce((a,s) => a + s.lon, 0) / mem.length, lat = mem.reduce((a,s) => a + s.lat, 0) / mem.length;
+      const el = document.createElement("div"); el.className = "cl";
+      el.onclick = e => { e.stopPropagation(); map.flyTo({ center:[lon,lat], zoom:info.zoom + .3, padding:pad(), speed:1.1, essential:true }); };
+      clusters[g] = { el, mem, mk:new maplibregl.Marker({ element:el }).setLngLat([lon, lat]).addTo(map) };
+    });
+    renderMarkers(); map.on("zoom", applyClusters); applyClusters();
+    mapReady = true; clearTimeout(mapFail); $("#mapMsg").classList.remove("show"); introMap();
+  });
+  // 숨은 탭에서는 브라우저가 그리기를 늦추므로, 화면이 보이는 동안의 대기 시간만 센다.
+  let waited = 0; const tick = () => { if (mapReady) return; if (!document.hidden) waited += 500;
+    if (waited >= 9000) $("#mapMsg").classList.add("show"); else mapFail = setTimeout(tick, 500); };
+  mapFail = setTimeout(tick, 500);
+}
+let mapReady = false, mapFail = null;
+function rainGeo(h) { return { type:"FeatureCollection", features:SITES.map(s => ({ type:"Feature", properties:{ r:val(s,h).r }, geometry:{ type:"Point", coordinates:[s.lon, s.lat] } })) }; }
+function renderMarkers() {
+  const h = state.h;
+  markers.forEach(({ s, el }) => { const v = val(s, h); el.style.setProperty("--c", v.r > 0 ? rCol(v.r) : "#b8c0c9"); el.classList.toggle("big", v.r >= 10); el.querySelector(".lab").innerHTML = markerHTML(s, h); el.classList.toggle("sel", state.sel === s); });
+  Object.values(clusters).forEach(c => { const mx = Math.max(...c.mem.map(s => val(s,h).r)); c.el.style.setProperty("--c", mx > 0 ? rCol(mx) : "#9aa4ae");
+    c.el.innerHTML = `<span class="n">${c.mem.length}</span>${GROUPS[c.mem[0].grp].name} · ${mx > 0 ? `비 최대 ${fmtR(mx,h)}` : "비 없음"}`; });
+  if (map && map.getSource && map.getSource("rain")) map.getSource("rain").setData(rainGeo(h));
+}
+function applyClusters() {
+  if (!map || !markers.length) return;
+  const z = map.getZoom();
+  Object.entries(clusters).forEach(([g, c]) => { const on = z < GROUPS[g].zoom; c.el.classList.toggle("hid", !on); c.mem.forEach(s => markers.find(m => m.s === s).el.classList.toggle("hid", on && state.sel !== s)); });
+}
+const pad = () => ({ left:420, right:document.body.classList.contains("nodetail") ? 40 : 430, top:90, bottom:110 });
+
+/* ── detail ── */
+function heroClass(s, h) { const v = val(s,h); if (v.r >= 15) return "rain heavy"; if (v.r > 0) return "rain"; const sky = h === 0 ? (s.fc[0] || {}).sky : v.sky; return sky === "맑음" ? "clear" : "cloudy"; }
+function heroSentence(s, h) {
+  const v = val(s, h), fc = s.fc.slice(h, h + 12);
+  if (h === 0 && v.r > 0) { const mx = Math.max(0, ...s.fc.slice(0,6).map(f => f.r)); const rain = s.fc.filter(f => f.r > 0).slice(0, 12);
+    const span = rain.length ? `${Number(rain[0].h)}시~${Number(rain[rain.length-1].h)}시 ${mx <= 0.5 ? "약한 비" : "비"}` : "비 그침";
+    return `<b>지금 시간당 ${fmtR(v.r,0)}mm의 ${v.r >= 15 ? "강한 비" : "비"}.</b> 기상청 예보는 ${span}.`; }
+  const nextRain = fc.findIndex(x => x.r > 0);
+  if (v.r > 0) return `<b>${hourLabel(h)} 예보상 시간당 ${fmtR(v.r,h)}mm 비.</b>`;
+  return nextRain >= 0 ? `<b>${h === 0 ? "지금은 비 없음." : hourLabel(h) + " 예보상 비 없음."}</b> ${Number(fc[nextRain].h)}시부터 비 예보.` : `<b>${h === 0 ? "지금" : hourLabel(h)} 특이 기상 없음.</b> 12시간 내 비 예보도 없습니다.`;
+}
+function renderDetail(first) {
+  const s = state.sel; if (!s) return; const h = state.h, v = val(s, h);
+  $("#dCat").textContent = `${s.cat} 현장`; $("#dName").textContent = s.name;
+  const hero = $("#hero"); hero.className = "hero " + heroClass(s, h);
+  $("#hWhen").textContent = whenLabel(h); tween($("#hTemp"), v.t, 1, 600);
+  $("#hSent").innerHTML = heroSentence(s, h);
+  $("#dChips").innerHTML = (s.warn.length ? s.warn.map(w => `<span class="chip warn">${w.title}</span>`).join("") : `<span class="chip">기상특보 없음</span>`) + (s.legal.length ? `<span class="chip warn">법정 확인 필요</span>` : `<span class="chip">법정조치 해당 없음</span>`);
+  const feels = h === 0 ? s.now.feels : v.t;
+  const tiles = [["i-drop","비",fmtR(v.r,h),"mm/h"],["i-wind","바람",v.w.toFixed(1),"m/s"],["i-temp","체감",feels.toFixed(1),"°"],["i-hum","습도",v.reh ?? "-","%"]];
+  $("#dTiles").innerHTML = tiles.map(([ic,l,n,u]) => `<div class="tile"><div class="l"><svg class="ic"><use href="#${ic}"/></svg>${l}</div><div class="v num">${n}<small>${u}</small></div></div>`).join("");
+  if (first) buildTimeline(s);
+  moveCursor();
+}
+function buildTimeline(s) {
+  const tl = $("#tl"); tl.classList.remove("shown");
+  const all = [ { r:s.now.r, w:s.now.w, t:s.now.t }, ...s.fc.slice(0, 24) ];
+  $("#cR").innerHTML = all.map((f, k) => `<i class="${k===0?"now":""}" style="background:${rCell(f.r)};transition-delay:${k*18}ms" title="${k===0?"지금 실측":hourLabel(k)+" 예보"} · ${fmtR(f.r,k)}mm"></i>`).join("");
+  $("#cW").innerHTML = all.map((f, k) => `<i class="${k===0?"now":""}" style="background:${wCol(f.w)};transition-delay:${k*18+120}ms" title="${f.w}m/s"></i>`).join("");
+  const ts = all.map(f => f.t), lo = Math.min(...ts), hi = Math.max(...ts), n = all.length;
+  const pts = ts.map((t, k) => [((k + .5) / n) * 100, 34 - ((t - lo) / Math.max(1, hi - lo)) * 28 + 2]);
+  const d = pts.map((p, k) => (k ? "L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2)).join(" ");
+  $("#spark").innerHTML = `<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path class="area" d="${d} L${pts[n-1][0]} 40 L${pts[0][0]} 40 Z"/><path class="line" d="${d}" vector-effect="non-scaling-stroke" pathLength="600"/></svg><span class="hi num">${hi}°</span><span class="lo num">${lo}°</span>`;
+  $("#hours").innerHTML = all.map((f, k) => `<b class="${k===0?"k":""}">${k===0?"지금":(k%3===0?Number(s.fc[k-1].h):"")}</b>`).join("");
+  const dry = s.fc.slice(0,24).every(f => f.r === 0);
+  $("#tlNote").textContent = `지금 칸은 ${NOWLABEL} 실측, 나머지는 기상청 단기예보(14시 발표)입니다.` + (s.now.r > 5 && s.fc.slice(0,3).every(f => f.r <= 0.5) ? " 실측이 예보보다 훨씬 많습니다." : "") + (dry && s.now.r === 0 ? " 24시간 내 비 예보가 없습니다." : "");
+  requestAnimationFrame(() => requestAnimationFrame(() => tl.classList.add("shown")));
+}
+function moveCursor() {
+  const cells = $("#cR"); if (!cells.firstChild) return;
+  const c = cells.children[state.h], tl = $("#tl").getBoundingClientRect(), r = c.getBoundingClientRect();
+  const cur = $("#cursor"); cur.style.left = (r.left - tl.left + r.width / 2 - 1) + "px"; cur.dataset.label = state.h === 0 ? "지금" : hourLabel(state.h);
+}
+function select(i, fly) {
+  const s = SITES[i], first = state.sel !== s; state.sel = s;
+  SITES.forEach(x => x.row.classList.toggle("sel", x === s));
+  document.body.classList.remove("nodetail"); $("#detail").classList.add("open");
+  renderMarkers(); applyClusters(); renderDetail(first);
+  if (fly && map) map.flyTo({ center:[s.lon, s.lat], zoom:Math.max(map.getZoom(), s.grp === "cap" ? 10.6 : s.grp === "jin" ? 11.5 : 8.5), padding:pad(), speed:REDUCED ? 10 : 0.9, curve:1.35, essential:true });
+  s.row.scrollIntoView({ block:"nearest", behavior:REDUCED ? "auto" : "smooth" });
+}
+function closeDetail() { state.sel = null; $("#detail").classList.remove("open"); document.body.classList.add("nodetail"); SITES.forEach(x => x.row.classList.remove("sel")); renderMarkers(); applyClusters(); }
+
+/* ── scrubber ── */
+const MAXH = 24;
+function buildTicks() { $("#ticks").innerHTML = Array.from({ length:MAXH + 1 }, (_, h) => `<b class="${h===0?"k":""}">${h===0?"지금":(h%3===0?hourLabel(h).replace("내일 ",""):"")}</b>`).join(""); }
+function setHour(h, fromUser) {
+  h = Math.max(0, Math.min(MAXH, Math.round(h))); if (h === state.h && fromUser !== "force") return; state.h = h;
+  const pct = h / MAXH * 100; $("#knob").style.left = pct + "%"; $("#fill").style.width = pct + "%";
+  const b = $("#bubble"); b.style.left = pct + "%"; b.textContent = h === 0 ? `지금 · ${NOWLABEL} 실측` : `${hourLabel(h)} 예보`;
+  renderKpis(); renderList(true); renderMarkers(); if (state.sel) renderDetail(false);
+}
+function bindScrub() {
+  const tr = $("#track"); let drag = false;
+  const at = e => { const r = tr.getBoundingClientRect(); return (e.clientX - r.left) / r.width * MAXH; };
+  tr.addEventListener("pointerdown", e => { drag = true; tr.classList.add("drag"); tr.setPointerCapture(e.pointerId); stop(); setHour(at(e), true); });
+  tr.addEventListener("pointermove", e => { if (drag) setHour(at(e), true); });
+  tr.addEventListener("pointerup", () => { drag = false; tr.classList.remove("drag"); });
+  document.addEventListener("keydown", e => { if (e.target.closest && e.target.closest("input")) return; if (e.key === "ArrowRight") setHour(state.h + 1, true); if (e.key === "ArrowLeft") setHour(state.h - 1, true); if (e.key === "Escape") { closeModal(); } });
+  let timer = null; const btn = $("#play");
+  function stop() { clearInterval(timer); timer = null; btn.querySelector("use").setAttribute("href", "#i-play"); }
+  btn.onclick = () => { if (timer) return stop(); if (state.h >= MAXH) setHour(0, true); btn.querySelector("use").setAttribute("href", "#i-pause");
+    timer = setInterval(() => { if (state.h >= MAXH) return stop(); setHour(state.h + 1, true); }, 650); };
+}
+
+/* ── segmented controls ── */
+function segPill(seg) { const on = seg.querySelector("button.on"), pill = seg.querySelector(".pill"); pill.style.width = on.offsetWidth + "px"; pill.style.transform = `translateX(${on.offsetLeft - 4 + (seg.id === "sortSeg" ? 1 : 0)}px)`; }
+function bindSegs() {
+  const nav = $("#nav");
+  nav.querySelectorAll("button").forEach(b => b.onclick = () => { if (b.dataset.v === "notice") { openNotice(null); return; }
+    nav.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); segPill(nav);
+    if (b.dataset.v === "list") toast("현장 목록 화면은 다음 프로토타입에서 보여드립니다"); });
+  const ss = $("#sortSeg");
+  ss.querySelectorAll("button").forEach(b => b.onclick = () => { ss.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); segPill(ss); state.sort = b.dataset.m; renderList(true); });
+  segPill(nav); segPill(ss);
+}
+
+/* ── notice modal ── */
+const ACTIONS = { r:["배수로 및 침사지 주변 이물질 정비","토사 유실 우려 구간 덮개 보양","침수 우려 구역 내 장비 안전지대 이동"] };
+function noticeText(s) {
+  const lines = ["■ 공지드립니다.", ""];
+  if (!s) {
+    const rainy = SITES.filter(x => x.now.r > 0).sort((a,b) => b.now.r - a.now.r);
+    lines.push(`2026-09-25 ${NOWLABEL} 기준 현장 기상현황을 공유드립니다.`, "", `${rainy.slice(0,3).map(x => x.short).join("、")} 등 ${rainy.length}개 현장에 비가 관측되고 있으며,`, `특히 ${rainy[0].short} 현장은 시간당 ${fmtR(rainy[0].now.r,0)}mm의 강한 비가 관측되고 있습니다.`, "기상청 특보는 발표되지 않았습니다.", "", "【수방 안전관리 사항】");
+  } else if (s.now.r > 0) {
+    lines.push(`2026-09-25 ${NOWLABEL} 기준, ${s.name} 현장에 시간당 ${fmtR(s.now.r,0)}mm의 ${s.now.r >= 15 ? "강한 비가" : "비가"} 관측되고 있습니다.`);
+    if (s.now.r > 5 && s.fc.slice(0,3).every(f => f.r <= 0.5)) lines.push("(기상청 예보는 1mm 미만으로, 실측과 차이가 있습니다.)");
+    lines.push("", "【수방 안전관리 사항】");
+  } else { lines.push(`2026-09-25 ${NOWLABEL} 기준, ${s.name} 현장은 특이 기상상황이 없습니다.`, ""); return lines.concat(["감사합니다."]).join("\n"); }
+  ACTIONS.r.forEach(a => lines.push("ㅇ " + a));
+  lines.push("", "각 현장에서는 수방 조치가 실제 이행될 수 있도록 관리하여 주시기 바랍니다.", "", "감사합니다.");
+  return lines.join("\n");
+}
+function openNotice(s) { $("#mTitle").textContent = s ? `전파 문안 · ${s.short}` : "전파 문안 · 전 현장"; $("#mText").textContent = noticeText(s); $("#scrim").classList.add("open"); $("#modal").classList.add("open"); }
+function closeModal() { $("#scrim").classList.remove("open"); $("#modal").classList.remove("open"); }
+function toast(t) { $("#toastT").textContent = t; const el = $("#toast"); el.classList.add("show"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("show"), 2200); }
+
+/* ── intro ── */
+function introPanels() {
+  const els = [...document.querySelectorAll(".intro-hide")];
+  els.forEach((el, k) => setTimeout(() => el.classList.remove("intro-hide"), REDUCED ? 0 : 80 + k * 70));
+  setTimeout(() => { renderKpis();
+    [...$("#list").children].forEach((r, k) => setTimeout(() => r.classList.remove("pre"), REDUCED ? 0 : k * 35)); }, REDUCED ? 0 : 350);
+  setTimeout(() => {
+    select(SITES.indexOf([...SITES].sort((a,b) => b.now.r - a.now.r)[0]), false);
+    if (mapReady) map.fitBounds([[125.6,34.1],[130.1,38.75]], { padding:pad(), duration:REDUCED ? 0 : 1200 });
+  }, REDUCED ? 0 : 1300);
+}
+function introMap() {
+  const c = map.getCenter();
+  markers.slice().sort((a, b) => Math.hypot(a.s.lon - c.lng, a.s.lat - c.lat) - Math.hypot(b.s.lon - c.lng, b.s.lat - c.lat))
+    .forEach((m, k) => setTimeout(() => m.el.classList.add("in"), REDUCED ? 0 : 150 + k * 40));
+  Object.values(clusters).forEach(c2 => setTimeout(() => c2.el.classList.add("in"), REDUCED ? 0 : 500));
+  renderMarkers(); applyClusters();
+  map.fitBounds([[125.6,34.1],[130.1,38.75]], { padding:pad(), duration:REDUCED ? 0 : 1000 });
+}
+
+/* ── wire up ── */
+buildList(); buildTicks(); bindScrub(); bindSegs(); renderList(false); setHour(0, "force");
+$("#dClose").onclick = closeDetail; $("#bNotice").onclick = () => openNotice(state.sel);
+$("#bSite").onclick = () => toast("현장 화면(모바일) 프로토타입은 다음 단계에서 보여드립니다");
+$("#mClose").onclick = closeModal; $("#mCancel").onclick = closeModal; $("#scrim").onclick = closeModal;
+$("#mCopy").onclick = async () => { try { await navigator.clipboard.writeText($("#mText").textContent); } catch (e) {} closeModal(); toast("전파 문안을 복사했습니다"); };
+$("#layerBtn").onclick = () => { state.rainLayer = !state.rainLayer; $("#layerBtn").classList.toggle("on", state.rainLayer); document.body.classList.toggle("norain", !state.rainLayer); if (map.getLayer("rain")) map.setLayoutProperty("rain", "visibility", state.rainLayer ? "visible" : "none"); };
+$("#zIn").onclick = () => map.zoomIn(); $("#zOut").onclick = () => map.zoomOut();
+$("#zHome").onclick = () => map.fitBounds([[125.6,34.1],[130.1,38.75]], { padding:pad(), duration:REDUCED ? 0 : 1200 });
+map = null; buildMap(); introPanels();
+window.addEventListener("resize", () => { segPill($("#nav")); segPill($("#sortSeg")); moveCursor(); });
+window.__proto = { setHour: h => setHour(h, true), select: i => select(i, true) };
+})();
+</script>
+</body>
+</html>

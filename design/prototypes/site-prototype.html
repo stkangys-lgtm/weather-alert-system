@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20285.3906%20221.1953%22%20role%3D%22img%22%20aria-label%3D%22%ED%98%84%EB%8C%80%EC%95%84%EC%82%B0%20%EC%8B%AC%EB%B3%BC%22%3E%3Cpath%20fill%3D%22%23FABE00%22%20d%3D%22M127.6836%200%200%20221.1953h30.0586L142.7148%2026.0234Z%22/%3E%3Cpath%20fill%3D%22%23009944%22%20d%3D%22M30.0586%20221.1953%20157.7344%200l127.6563%20221.1953Z%22/%3E%3C/svg%3E">
+<title>기상안전 · 현장 프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --page:#eef2f5; --surface:#fdfdfd; --glass:rgba(252,253,254,.82); --glass-line:rgba(255,255,255,.7);
+  --ink:#19273c; --ink2:#4d5560; --muted:#8a939d; --line:rgba(15,30,50,.08);
+  --primary:#2b4775; --primary-2:#3a5a8f; --tint:#eaf1fb; --sage:#597f60; --cell:#e7ecf1;
+  --warn:#7a5200; --warn-bg:#fdf0d2; --crit:#a3201f; --crit-bg:#fbe3e3;
+  --shadow:0 1px 2px rgba(15,30,50,.05), 0 10px 30px rgba(15,30,50,.10), 0 30px 80px rgba(15,30,50,.08);
+  --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.34,1.56,.64,1); --snap:cubic-bezier(.22,1.2,.36,1);
+}
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { margin:0; height:100%; background:#dfe5eb; color:var(--ink); font-family:"Pretendard", system-ui, -apple-system, sans-serif; -webkit-font-smoothing:antialiased; }
+button { font:inherit; color:inherit; border:0; background:none; cursor:pointer; }
+.num { font-variant-numeric:tabular-nums; }
+.ic { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+
+/* ── desktop stage with phone frame ── */
+.stage { min-height:100%; display:flex; align-items:center; justify-content:center; gap:48px; padding:32px; background:radial-gradient(1200px 700px at 30% 20%, #f4f7fa, #dde4ea); }
+.side { width:300px; color:var(--ink2); font-size:14px; line-height:1.6; }
+.side h1 { font-size:24px; letter-spacing:-.5px; color:var(--ink); margin:0 0 6px; }
+.side p { margin:0 0 16px; }
+.side .pick { display:flex; flex-direction:column; gap:8px; }
+.side .pick button { text-align:left; padding:12px 14px; border-radius:14px; background:rgba(253,253,253,.7); border:1px solid var(--line); font-weight:700; color:var(--ink); transition:background .2s, box-shadow .2s, transform .15s; }
+.side .pick button small { display:block; font-weight:500; color:var(--muted); font-size:12px; margin-top:2px; }
+.side .pick button.on { background:var(--surface); box-shadow:0 0 0 2px var(--primary), var(--shadow); }
+.side .pick button:active { transform:scale(.98); }
+.side .tips { margin-top:18px; font-size:12.5px; color:var(--muted); }
+.side .tips li { margin:3px 0; }
+.phone { position:relative; width:390px; height:844px; border-radius:54px; background:#0c0d0e; padding:11px; box-shadow:0 40px 90px rgba(15,30,50,.35), inset 0 0 0 2px #2a2c2f; flex:none; }
+.screen { position:relative; width:100%; height:100%; border-radius:44px; overflow:hidden; background:var(--page); isolation:isolate; }
+.island { position:absolute; top:10px; left:50%; transform:translateX(-50%); width:118px; height:34px; border-radius:20px; background:#000; z-index:30; }
+.sbar { position:absolute; top:0; left:0; right:0; height:52px; display:flex; justify-content:space-between; align-items:center; padding:6px 30px 0; font-size:15px; font-weight:700; z-index:25; color:var(--ink); pointer-events:none; }
+@media (max-width:560px) { .stage { padding:0; display:block; } .side { display:none; } .phone { width:100vw; height:100dvh; border-radius:0; padding:0; box-shadow:none; } .screen { border-radius:0; } .island, .sbar { display:none; } }
+
+/* ── map & top ── */
+#map { position:absolute; inset:0; }
+.maplibregl-ctrl-attrib { font-size:9px; }
+.top { position:absolute; top:54px; left:14px; right:14px; display:flex; align-items:center; gap:8px; z-index:10; transition:opacity .3s; }
+.glass { background:var(--glass); backdrop-filter:blur(20px) saturate(1.5); -webkit-backdrop-filter:blur(20px) saturate(1.5); border:1px solid var(--glass-line); box-shadow:var(--shadow); }
+.brand { display:flex; align-items:center; gap:8px; height:42px; padding:0 12px 0 8px; border-radius:14px; }
+.logo { display:flex; align-items:center; gap:5px; height:26px; padding:0 7px; border:1.5px dashed #a9b2bc; border-radius:8px; font-size:10px; font-weight:700; color:#6d7782; }
+.logo i { width:14px; height:14px; border-radius:3px; background:linear-gradient(135deg,#FABE00 0 50%,#009944 50%); }
+.brand b { font-size:14px; }
+.live { margin-left:auto; display:flex; align-items:center; gap:6px; height:42px; padding:0 12px; border-radius:14px; font-size:12.5px; color:var(--ink2); font-weight:600; }
+.live .dot { width:8px; height:8px; border-radius:50%; background:var(--sage); animation:beat 2.4s infinite; }
+@keyframes beat { 0% { box-shadow:0 0 0 0 rgba(89,127,96,.45); } 70% { box-shadow:0 0 0 8px rgba(89,127,96,0); } 100% { box-shadow:0 0 0 0 rgba(89,127,96,0); } }
+.fab { position:absolute; right:14px; z-index:9; width:42px; height:42px; border-radius:14px; display:grid; place-items:center; color:var(--ink2); transition:bottom .55s var(--snap), background .2s, color .2s; }
+.fab.on { background:var(--primary); color:#fff; }
+.me { position:relative; width:22px; height:22px; border-radius:50%; background:var(--primary); border:4px solid #fff; box-shadow:0 2px 10px rgba(15,30,50,.35); }
+.me::after { content:""; position:absolute; inset:-14px; border-radius:50%; border:2px solid rgba(43,71,117,.45); animation:ring 2.2s infinite var(--ease); }
+@keyframes ring { from { transform:scale(.4); opacity:1; } to { transform:scale(1.4); opacity:0; } }
+.mlab { position:absolute; left:20px; top:-4px; white-space:nowrap; background:rgba(253,253,253,.95); padding:4px 9px; border-radius:9px; font-size:12px; font-weight:800; box-shadow:0 2px 8px rgba(15,30,50,.18); }
+
+/* ── bottom sheet ── */
+.sheet { position:absolute; left:0; right:0; bottom:0; height:calc(100% - 44px); z-index:12; background:var(--page); border-radius:28px 28px 0 0; box-shadow:0 -10px 40px rgba(15,30,50,.16); transform:translateY(var(--y, 55%)); transition:transform .55s var(--snap); display:flex; flex-direction:column; }
+.sheet.drag { transition:none; }
+.grab { flex:none; height:26px; display:grid; place-items:center; cursor:grab; touch-action:none; }
+.grab i { width:40px; height:5px; border-radius:3px; background:rgba(15,30,50,.18); }
+.sc { flex:1; overflow-y:auto; overscroll-behavior:contain; padding:0 16px 28px; scrollbar-width:none; }
+.sc::-webkit-scrollbar { display:none; }
+.sheet.peek .sc { overflow:hidden; }
+.ttl { display:flex; justify-content:space-between; align-items:flex-end; padding:2px 4px 12px; }
+.ttl h1 { margin:0; font-size:23px; letter-spacing:-.5px; }
+.ttl .sub { font-size:12.5px; color:var(--muted); font-weight:600; margin-top:3px; }
+.ttl .nowchip { font-size:12px; font-weight:800; color:var(--primary); background:var(--tint); border-radius:999px; padding:5px 10px; white-space:nowrap; transition:opacity .2s; }
+.ttl .nowchip.back { cursor:pointer; background:var(--primary); color:#fff; }
+.hero { position:relative; overflow:hidden; border-radius:24px; padding:20px 20px 18px; color:#fff; background:linear-gradient(160deg,#30405a 0%,#4c5d78 55%,#7d8a9f 100%); transition:background .6s; }
+.hero.clear { background:linear-gradient(160deg,#4a78b0 0%,#7fa6d3 62%,#b9d0ea 100%); }
+.hero.cloudy { background:linear-gradient(160deg,#556275 0%,#7d8898 60%,#a7b0bd 100%); }
+.hero::after { content:""; position:absolute; inset:-40px; background-image:repeating-linear-gradient(104deg, rgba(255,255,255,0) 0 10px, rgba(255,255,255,.22) 10px 11px, rgba(255,255,255,0) 11px 22px); opacity:0; transition:opacity .6s; animation:rain .55s linear infinite; pointer-events:none; -webkit-mask-image:linear-gradient(180deg,#000,transparent 85%); mask-image:linear-gradient(180deg,#000,transparent 85%); }
+.hero.rain::after { opacity:1; }
+.hero.heavy::after { background-image:repeating-linear-gradient(104deg, rgba(255,255,255,0) 0 6px, rgba(255,255,255,.3) 6px 7.2px, rgba(255,255,255,0) 7.2px 13px); animation-duration:.4s; }
+@keyframes rain { from { transform:translate(0,0); } to { transform:translate(-6px,26px); } }
+.hero .sun { position:absolute; right:-30px; top:-30px; width:150px; height:150px; border-radius:50%; background:radial-gradient(circle, rgba(255,240,200,.55), rgba(255,240,200,0) 65%); opacity:0; transition:opacity .6s; animation:glow 6s ease-in-out infinite; }
+.hero.clear .sun { opacity:1; }
+@keyframes glow { 50% { transform:scale(1.12); } }
+.hero .wm { position:absolute; right:-20px; bottom:-28px; width:132px; height:132px; border:2px dashed rgba(255,255,255,.2); border-radius:20px; transform:rotate(-8deg); display:grid; place-items:center; text-align:center; font-size:10px; color:rgba(255,255,255,.36); line-height:1.3; }
+.hero .k { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; opacity:.9; position:relative; }
+.hero .t { font-size:80px; font-weight:800; letter-spacing:-.06em; line-height:.95; margin:10px 0 4px; position:relative; }
+.hero .m { font-size:13px; opacity:.85; position:relative; }
+.hero .s { font-size:16px; line-height:1.45; margin-top:12px; position:relative; max-width:92%; letter-spacing:-.2px; }
+.stack { display:flex; flex-direction:column; gap:12px; margin-top:12px; }
+.rv { opacity:0; transform:translateY(14px); transition:opacity .5s var(--ease), transform .6s var(--ease); }
+.rv.in { opacity:1; transform:none; }
+.chips { display:flex; gap:6px; flex-wrap:wrap; }
+.chip { display:inline-flex; align-items:center; gap:5px; height:30px; padding:0 12px; border-radius:999px; font-size:13px; font-weight:600; background:rgba(15,30,50,.06); color:var(--ink2); }
+.chip.warn { background:var(--warn-bg); color:var(--warn); } .chip.crit { background:var(--crit-bg); color:var(--crit); }
+.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.tile { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:12px 10px; text-align:center; }
+.tile .l { display:flex; justify-content:center; align-items:center; gap:4px; font-size:12px; color:var(--muted); font-weight:600; }
+.tile .l .ic { width:13px; height:13px; }
+.tile .v { font-size:22px; font-weight:800; letter-spacing:-.03em; margin-top:4px; }
+.tile .u { font-size:11px; color:var(--muted); font-weight:700; }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:16px; }
+.card h3 { margin:0 0 12px; font-size:14px; color:var(--ink2); display:flex; justify-content:space-between; align-items:center; }
+.card h3 span { font-weight:500; font-size:12px; color:var(--muted); }
+.tl { position:relative; touch-action:pan-y; }
+.tl-row { display:grid; grid-template-columns:40px 1fr; gap:6px; align-items:center; margin-top:7px; }
+.tl-row > span { display:flex; align-items:center; gap:4px; font-size:12px; color:var(--ink2); font-weight:600; }
+.tl-row > span .ic { width:12px; height:12px; }
+.cells { display:grid; grid-template-columns:repeat(25,1fr); gap:2px; cursor:ew-resize; }
+.cells i { height:20px; border-radius:4px; background:var(--cell); transform-origin:bottom; transform:scaleY(.2); opacity:0; transition:transform .5s var(--spring), opacity .3s, background .4s; }
+.tl.shown .cells i { transform:none; opacity:1; }
+.cells i.now { box-shadow:inset 0 0 0 1.5px var(--ink); }
+.spark { position:relative; height:44px; } .spark svg { width:100%; height:44px; display:block; overflow:visible; }
+.spark .line { fill:none; stroke:var(--ink2); stroke-width:1.8; stroke-dasharray:600; stroke-dashoffset:600; transition:stroke-dashoffset 1.1s var(--ease); } .tl.shown .spark .line { stroke-dashoffset:0; }
+.spark .area { fill:url(#tg); opacity:0; transition:opacity .8s .3s; } .tl.shown .spark .area { opacity:1; }
+.spark .hi, .spark .lo { position:absolute; right:0; font-size:10.5px; color:var(--muted); } .spark .hi { top:-6px; } .spark .lo { bottom:-4px; }
+.hours { display:grid; grid-template-columns:repeat(25,1fr); gap:2px; margin:6px 0 0 46px; font-size:10.5px; color:var(--muted); }
+.hours b { font-weight:500; text-align:center; white-space:nowrap; } .hours b.k { color:var(--ink); font-weight:800; }
+.cursor { position:absolute; top:-4px; bottom:18px; width:2px; border-radius:2px; background:var(--primary); left:0; transition:left .25s var(--spring); pointer-events:none; }
+.readout { margin-top:12px; display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:14px; background:var(--tint); color:var(--ink); font-size:13px; font-weight:600; min-height:42px; }
+.readout b { color:var(--primary); font-weight:800; }
+.readout .hint { color:var(--muted); font-weight:500; }
+.radar-cta { display:flex; align-items:center; gap:12px; }
+.radar-cta .thumb { width:64px; height:64px; border-radius:16px; flex:none; background:radial-gradient(circle at 60% 45%, #0d366bdd 0 14%, #256abf99 26%, #9ec5f455 44%, transparent 60%), linear-gradient(160deg,#e3e9ee,#d3dbe2); position:relative; }
+.radar-cta .thumb::after { content:""; position:absolute; left:55%; top:42%; width:9px; height:9px; border-radius:50%; background:var(--primary); border:2px solid #fff; }
+.radar-cta b { display:block; font-size:15px; } .radar-cta span { font-size:12.5px; color:var(--muted); }
+.radar-cta .go { margin-left:auto; color:var(--primary); font-weight:800; font-size:13px; display:flex; align-items:center; gap:2px; white-space:nowrap; flex:none; }
+.d10 { display:grid; grid-template-columns:30px 22px 38px 30px 1fr 30px; gap:8px; align-items:center; padding:9px 0; border-top:1px solid var(--line); font-size:14px; }
+.d10:first-of-type { border-top:0; padding-top:2px; }
+.d10 .dw { font-weight:700; } .d10 .dw.today { color:var(--primary); }
+.d10 .ic { width:18px; height:18px; color:var(--ink2); }
+.d10 .pop { font-size:12px; font-weight:800; color:#256abf; }
+.d10 .mn { text-align:right; color:var(--muted); } .d10 .mx { font-weight:700; }
+.rb { height:6px; border-radius:3px; background:var(--cell); position:relative; overflow:hidden; }
+.rb i { position:absolute; top:0; bottom:0; border-radius:3px; background:linear-gradient(90deg,#8fb1d6,#e0b27a); transform-origin:left; transform:scaleX(0); transition:transform .8s var(--ease); }
+.card.in .rb i { transform:scaleX(1); }
+.d10.gap { color:var(--muted); font-size:13px; } .d10.gap .gt { grid-column:3 / 7; }
+.info { display:flex; gap:10px; font-size:13.5px; color:var(--ink2); line-height:1.55; } .info .ic { width:18px; height:18px; color:var(--muted); margin-top:1px; }
+.info a { color:var(--primary); font-weight:700; text-decoration:none; }
+.nt { background:var(--page); border-radius:14px; padding:12px 14px; font-size:13px; line-height:1.65; white-space:pre-wrap; max-height:150px; overflow:hidden; position:relative; color:var(--ink2); transition:max-height .5s var(--ease); }
+.nt.open { max-height:600px; }
+.nt:not(.open)::after { content:""; position:absolute; left:0; right:0; bottom:0; height:40px; background:linear-gradient(transparent,var(--page)); }
+.more { display:block; margin:8px auto 0; font-size:12.5px; font-weight:700; color:var(--primary); }
+.btn { width:100%; height:52px; border-radius:16px; display:flex; align-items:center; justify-content:center; gap:8px; font-weight:800; font-size:15.5px; background:var(--primary); color:#fff; box-shadow:0 8px 20px rgba(43,71,117,.3); margin-top:12px; transition:transform .15s var(--ease), background .2s; }
+.btn:active { transform:scale(.97); }
+.foot { text-align:center; font-size:11.5px; color:var(--muted); padding:8px 0 4px; }
+.toast { position:absolute; left:50%; bottom:34px; transform:translate(-50%,20px); opacity:0; background:var(--ink); color:#fff; padding:13px 16px; border-radius:16px; display:flex; align-items:center; gap:8px; font-weight:700; font-size:14px; box-shadow:var(--shadow); transition:transform .45s var(--spring), opacity .25s; z-index:40; pointer-events:none; white-space:nowrap; }
+.toast.show { transform:translate(-50%,0); opacity:1; } .toast .ic { color:#8fe0b4; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } .rv { opacity:1; transform:none; } }
+.brand { background:#fff !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+.logo-img { display:block; width:auto; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></symbol>
+<symbol id="i-wind" viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></symbol>
+<symbol id="i-temp" viewBox="0 0 24 24"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></symbol>
+<symbol id="i-hum" viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></symbol>
+<symbol id="i-rain" viewBox="0 0 24 24"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><path d="M16 14v6"/><path d="M8 14v6"/><path d="M12 16v6"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></symbol>
+<symbol id="i-csun" viewBox="0 0 24 24"><path d="M12 2v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M20 12h2"/><path d="m19.07 4.93-1.41 1.41"/><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+<linearGradient id="tg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5598e7" stop-opacity=".22"/><stop offset="1" stop-color="#5598e7" stop-opacity="0"/></linearGradient>
+</defs></svg>
+
+<div class="stage">
+  <div class="side">
+    <h1>현장 화면 프로토타입</h1>
+    <p>현장 안전관리자가 휴대폰으로 <b>자기 현장 하나</b>를 보는 화면입니다. 오늘 17:50 실측과 기상청 예보(단기·중기) 실제 값입니다.</p>
+    <div class="pick" id="pick"></div>
+    <ul class="tips">
+      <li>아래 시트를 위아래로 끌어 보세요.</li>
+      <li>24시간 타임라인을 좌우로 문지르면 그 시각 예보가 위에 표시됩니다.</li>
+      <li>"주변 비구름 보기"를 누르면 지도가 펼쳐집니다.</li>
+      <li>휴대폰으로 이 주소를 열면 액자 없이 전체 화면으로 보입니다.</li>
+    </ul>
+  </div>
+  <div class="phone"><div class="screen" id="screen">
+    <div class="island"></div><div class="sbar"><span>9:41</span><span>●●● ◒</span></div>
+    <div id="map"></div>
+    <div class="top"><div class="brand glass"><img class="logo-img" style="height:22px" src="data:image/png;base64,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" alt="현대아산"><b>기상안전</b></div><div class="live glass"><span class="dot"></span><span id="liveT">17:50 실측</span></div></div>
+    <button class="fab glass on" id="layerBtn" aria-label="비구름 레이어"><svg class="ic"><use href="#i-layers"/></svg></button>
+    <section class="sheet" id="sheet">
+      <div class="grab" id="grab"><i></i></div>
+      <div class="sc" id="sc">
+        <div class="ttl"><div><h1 id="name"></h1><div class="sub" id="sub"></div></div><span class="nowchip" id="nowchip">지금</span></div>
+        <div class="hero" id="hero"><div class="sun"></div>
+          <div class="k"><svg class="ic" id="hIc"><use href="#i-rain"/></svg><span id="hK"></span></div>
+          <div class="t num" id="hT" data-suffix="°">0°</div><div class="m" id="hM"></div><div class="s" id="hS"></div></div>
+        <div class="stack">
+          <div class="chips rv" id="chips"></div>
+          <div class="tiles rv" id="tiles"></div>
+          <div class="card rv"><h3>앞으로 24시간 <span>굵은 칸 = 실측</span></h3>
+            <div class="tl" id="tl"><div class="cursor" id="cursor"></div>
+              <div class="tl-row"><span><svg class="ic"><use href="#i-drop"/></svg>비</span><div class="cells" id="cR"></div></div>
+              <div class="tl-row"><span><svg class="ic"><use href="#i-wind"/></svg>바람</span><div class="cells" id="cW"></div></div>
+              <div class="tl-row"><span><svg class="ic"><use href="#i-temp"/></svg>기온</span><div class="spark" id="spark"></div></div>
+              <div class="hours" id="hours"></div></div>
+            <div class="readout" id="readout"></div></div>
+          <div class="card rv"><div class="radar-cta"><div class="thumb"></div><div><b>주변 비구름</b><span>레이더 17:50 · 자료 기상청</span></div><button class="go" id="goMap">지도로 보기<svg class="ic"><use href="#i-chev"/></svg></button></div></div>
+          <div class="card rv" id="d10card"><h3>10일 예보 <span>단기 3일 + 중기</span></h3><div id="d10"></div></div>
+          <div class="card rv"><div class="info"><svg class="ic"><use href="#i-info"/></svg><div>작업 정보가 등록되지 않아 <b>법정 기준(타워크레인·철골·폭염 작업 등)</b>은 확인하지 않았습니다. <a href="#">등록 방법</a></div></div></div>
+          <div class="card rv"><h3>전파 문안 <span>사내 문체</span></h3><div class="nt" id="nt"></div><button class="more" id="ntMore">전체 보기</button><button class="btn" id="copy"><svg class="ic"><use href="#i-copy"/></svg>문안 복사</button></div>
+          <div class="foot">자료: 기상청 · 현대아산 안전경영팀</div>
+        </div>
+      </div>
+    </section>
+    <div class="toast" id="toast"><svg class="ic"><use href="#i-check"/></svg><span id="toastT"></span></div>
+  </div></div>
+</div>
+
+<script>const DATA = {"demo":[{"name":"후포 공공하수처리","short":"후포","cat":"토목","lat":36.6772,"lon":129.4514,"grp":null,"now":{"t":18.6,"feels":18.6,"r":31.0,"w":4.1,"reh":85},"fc":[{"h":"18","d":"09/25","t":21.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"19","d":"09/25","t":20.0,"r":0,"w":0.4,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"20","d":"09/25","t":19.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":19.0,"r":0.5,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":19.0,"r":0.5,"w":0.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":19.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":18.0,"r":0.5,"w":0.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":18.0,"r":0.5,"w":0.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":18.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":18.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"04","d":"09/26","t":18.0,"r":0,"w":0.2,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"05","d":"09/26","t":17.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"06","d":"09/26","t":17.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"07","d":"09/26","t":18.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"08","d":"09/26","t":19.0,"r":0,"w":0.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"09","d":"09/26","t":20.0,"r":0,"w":0.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"10","d":"09/26","t":21.0,"r":0,"w":0.8,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"11","d":"09/26","t":22.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"12","d":"09/26","t":23.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"13","d":"09/26","t":23.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"14","d":"09/26","t":24.0,"r":0,"w":1.2,"pop":0,"sky":"맑음","pty":"없음","reh":70},{"h":"15","d":"09/26","t":24.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"16","d":"09/26","t":23.0,"r":0,"w":0.6,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"17","d":"09/26","t":22.0,"r":0,"w":0.6,"pop":0,"sky":"맑음","pty":"없음","reh":75}],"warn":[],"legal":[],"region":"경북 울진군","daily":[{"date":"09/26","dow":"토","sky":"비","pop":60,"tmin":17.0,"tmax":24.0,"src":"단기"},{"date":"09/27","dow":"일","sky":"맑음","pop":0,"tmin":16.0,"tmax":26.0,"src":"단기"},{"date":"09/28","dow":"월","sky":"구름많음","pop":30,"tmin":18.0,"tmax":26.0,"src":"단기"},{"date":"09/29","dow":"화","sky":"구름많음","pop":10,"tmin":18.0,"tmax":18.0,"src":"단기"},{"date":"09/30","dow":"수","sky":"구름많음","pop":20,"tmin":20,"tmax":28,"src":"중기"},{"date":"10/01","dow":"목","sky":"맑음","pop":10,"tmin":17,"tmax":23,"src":"중기"},{"date":"10/02","dow":"금","sky":"맑음","pop":10,"tmin":13,"tmax":22,"src":"중기"},{"date":"10/03","dow":"토","sky":"맑음","pop":10,"tmin":15,"tmax":22,"src":"중기"},{"date":"10/04","dow":"일","sky":"구름많음","pop":20,"tmin":16,"tmax":23,"src":"중기"},{"date":"10/05","dow":"월","sky":"구름많음","pop":20,"tmin":16,"tmax":22,"src":"중기"}]},{"name":"연희·연남동 공공주택","short":"연희·연남","cat":"건축","lat":37.5665,"lon":126.9351,"grp":"cap","now":{"t":18.9,"feels":18.9,"r":10.0,"w":0.2,"reh":85},"fc":[{"h":"18","d":"09/25","t":22.0,"r":3.0,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"19","d":"09/25","t":21.0,"r":0.5,"w":0.8,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"20","d":"09/25","t":20.0,"r":0.5,"w":0.9,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"21","d":"09/25","t":20.0,"r":0.5,"w":0.5,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"22","d":"09/25","t":20.0,"r":0.5,"w":0.7,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"23","d":"09/25","t":19.0,"r":0.5,"w":1.2,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"00","d":"09/26","t":19.0,"r":0.5,"w":1.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":19.0,"r":0.5,"w":1.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":19.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":90},{"h":"03","d":"09/26","t":18.0,"r":0,"w":1.3,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"04","d":"09/26","t":18.0,"r":0,"w":1.0,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"05","d":"09/26","t":18.0,"r":0,"w":1.1,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"06","d":"09/26","t":18.0,"r":0,"w":1.2,"pop":30,"sky":"흐림","pty":"없음","reh":85},{"h":"07","d":"09/26","t":18.0,"r":0,"w":1.0,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"08","d":"09/26","t":19.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":85},{"h":"09","d":"09/26","t":21.0,"r":0,"w":0.9,"pop":0,"sky":"맑음","pty":"없음","reh":75},{"h":"10","d":"09/26","t":22.0,"r":0,"w":1.1,"pop":0,"sky":"맑음","pty":"없음","reh":65},{"h":"11","d":"09/26","t":24.0,"r":0,"w":0.7,"pop":0,"sky":"맑음","pty":"없음","reh":60},{"h":"12","d":"09/26","t":25.0,"r":0,"w":0.4,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"13","d":"09/26","t":26.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":55},{"h":"14","d":"09/26","t":27.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"15","d":"09/26","t":27.0,"r":0,"w":0.5,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"16","d":"09/26","t":27.0,"r":0,"w":0.2,"pop":0,"sky":"맑음","pty":"없음","reh":50},{"h":"17","d":"09/26","t":26.0,"r":0,"w":0.1,"pop":0,"sky":"맑음","pty":"없음","reh":55}],"warn":[],"legal":[],"region":"서울 서대문구","daily":[{"date":"09/26","dow":"토","sky":"비","pop":60,"tmin":18.0,"tmax":27.0,"src":"단기"},{"date":"09/27","dow":"일","sky":"맑음","pop":30,"tmin":18.0,"tmax":27.0,"src":"단기"},{"date":"09/28","dow":"월","sky":"흐림","pop":30,"tmin":18.0,"tmax":26.0,"src":"단기"},{"date":"09/29","dow":"화","sky":"구름많음","pop":10,"tmin":17.0,"tmax":17.0,"src":"단기"},{"date":"09/30","dow":"수","sky":"비","pop":60,"tmin":16,"tmax":24,"src":"중기"},{"date":"10/01","dow":"목","sky":"맑음","pop":20,"tmin":12,"tmax":20,"src":"중기"},{"date":"10/02","dow":"금","sky":"맑음","pop":10,"tmin":9,"tmax":21,"src":"중기"},{"date":"10/03","dow":"토","sky":"맑음","pop":10,"tmin":10,"tmax":23,"src":"중기"},{"date":"10/04","dow":"일","sky":"구름많음","pop":20,"tmin":10,"tmax":23,"src":"중기"},{"date":"10/05","dow":"월","sky":"구름많음","pop":20,"tmin":11,"tmax":22,"src":"중기"}]},{"name":"오리온수협 목포 김공장","short":"목포","cat":"건축","lat":34.7936,"lon":126.3819,"grp":null,"now":{"t":25.6,"feels":26.2,"r":0.0,"w":2.3,"reh":70},"fc":[{"h":"18","d":"09/25","t":25.0,"r":0,"w":2.9,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"19","d":"09/25","t":24.0,"r":0,"w":3.2,"pop":30,"sky":"흐림","pty":"없음","reh":70},{"h":"20","d":"09/25","t":23.0,"r":0,"w":3.7,"pop":30,"sky":"흐림","pty":"없음","reh":75},{"h":"21","d":"09/25","t":22.0,"r":0.5,"w":3.6,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"22","d":"09/25","t":22.0,"r":0.5,"w":2.6,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"23","d":"09/25","t":22.0,"r":0.5,"w":2.9,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"00","d":"09/26","t":21.0,"r":0.5,"w":3.1,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"01","d":"09/26","t":21.0,"r":0.5,"w":3.3,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"02","d":"09/26","t":21.0,"r":0.5,"w":4.0,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"03","d":"09/26","t":21.0,"r":0.5,"w":4.1,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"04","d":"09/26","t":21.0,"r":2.0,"w":4.4,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"05","d":"09/26","t":20.0,"r":4.0,"w":4.3,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"06","d":"09/26","t":20.0,"r":6.0,"w":2.9,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"07","d":"09/26","t":20.0,"r":8.0,"w":2.8,"pop":70,"sky":"흐림","pty":"비","reh":95},{"h":"08","d":"09/26","t":21.0,"r":5.0,"w":2.7,"pop":60,"sky":"흐림","pty":"비","reh":95},{"h":"09","d":"09/26","t":21.0,"r":4.0,"w":3.0,"pop":60,"sky":"흐림","pty":"비","reh":90},{"h":"10","d":"09/26","t":22.0,"r":2.0,"w":3.4,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"11","d":"09/26","t":23.0,"r":2.0,"w":3.2,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"12","d":"09/26","t":23.0,"r":2.0,"w":3.3,"pop":60,"sky":"흐림","pty":"비","reh":85},{"h":"13","d":"09/26","t":24.0,"r":1.0,"w":3.3,"pop":60,"sky":"흐림","pty":"비","reh":80},{"h":"14","d":"09/26","t":24.0,"r":0,"w":3.3,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"15","d":"09/26","t":24.0,"r":0,"w":3.0,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"16","d":"09/26","t":24.0,"r":0,"w":2.0,"pop":30,"sky":"흐림","pty":"없음","reh":80},{"h":"17","d":"09/26","t":23.0,"r":0,"w":1.9,"pop":30,"sky":"흐림","pty":"없음","reh":85}],"warn":[],"legal":[],"region":"전남 목포시","daily":[{"date":"09/26","dow":"토","sky":"비","pop":70,"tmin":20.0,"tmax":24.0,"src":"단기"},{"date":"09/27","dow":"일","sky":"흐림","pop":30,"tmin":19.0,"tmax":27.0,"src":"단기"},{"date":"09/28","dow":"월","sky":"흐림","pop":30,"tmin":20.0,"tmax":26.0,"src":"단기"},{"date":"09/29","dow":"화","sky":"흐림","pop":30,"tmin":20.0,"tmax":20.0,"src":"단기"},{"date":"09/30","dow":"수","sky":"구름많음","pop":20,"tmin":18,"tmax":26,"src":"중기"},{"date":"10/01","dow":"목","sky":"맑음","pop":10,"tmin":18,"tmax":22,"src":"중기"},{"date":"10/02","dow":"금","sky":"맑음","pop":10,"tmin":15,"tmax":22,"src":"중기"},{"date":"10/03","dow":"토","sky":"맑음","pop":10,"tmin":14,"tmax":23,"src":"중기"},{"date":"10/04","dow":"일","sky":"구름많음","pop":20,"tmin":14,"tmax":22,"src":"중기"},{"date":"10/05","dow":"월","sky":"구름많음","pop":20,"tmin":14,"tmax":23,"src":"중기"}]}]}; const ALL = [{"lon":127.44,"lat":36.87,"r":1.5},{"lon":127.4,"lat":36.84,"r":2.0},{"lon":126.9351,"lat":37.5665,"r":10.0},{"lon":128.9856,"lat":37.1637,"r":0.4},{"lon":127.0339,"lat":37.5115,"r":1.5},{"lon":129.0079543,"lat":35.3266448,"r":0.0},{"lon":126.9351,"lat":37.3616,"r":1.9},{"lon":126.3819,"lat":34.7936,"r":0.0},{"lon":127.1178,"lat":37.2046,"r":3.0},{"lon":127.6672,"lat":38.0454,"r":1.5},{"lon":127.0035,"lat":37.558,"r":5.6},{"lon":128.8853,"lat":36.4383,"r":0.0},{"lon":126.8092,"lat":37.3946,"r":1.0},{"lon":127.2453,"lat":35.1858,"r":0.0},{"lon":128.4612,"lat":37.1836,"r":0.2},{"lon":127.9419,"lat":36.9558,"r":0.6},{"lon":129.4514,"lat":36.6772,"r":31.0},{"lon":128.8302,"lat":37.8925,"r":2.0},{"lon":128.6819,"lat":35.6531,"r":0.0},{"lon":128.6236,"lat":36.8098,"r":0.0},{"lon":126.6425,"lat":37.1856,"r":2.5}];</script>
+<script>
+(() => {
+const RAMP = ["#cde2fb","#9ec5f4","#5598e7","#256abf","#0d366b"], BINS = [0.1,1,3,10,30], WIND = ["#e7ecf1","#c9e6dd","#6fb9a2","#2a7d66"];
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = s => document.querySelector(s);
+const rStep = v => { let s = -1; BINS.forEach((b,i) => { if (v >= b) s = i; }); return s; };
+const rCell = v => { const s = rStep(v); return s < 0 ? "var(--cell)" : RAMP[s]; };
+const wCol = v => WIND[v < 1 ? 0 : v < 4 ? 1 : v < 9 ? 2 : 3];
+const fmtR = (r, fc) => (fc && r === 0.5) ? "<1" : (r >= 10 ? String(Math.round(r)) : String(+r.toFixed(1)));
+let S = DATA.demo[0], hSel = 0, map, meMarker;
+
+function tween(el, to, dec = 0, dur = 750) {
+  const from = parseFloat(el.dataset.v || "0"); el.dataset.v = to; const suf = el.dataset.suffix || "";
+  const tok = (el._tw = (el._tw || 0) + 1);
+  if (REDUCED || from === to) { el.textContent = to.toFixed(dec) + suf; return; }
+  const t0 = performance.now();
+  const step = now => { if (el._tw !== tok) return; const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.textContent = (from + (to - from) * e).toFixed(dec) + suf; if (p < 1) requestAnimationFrame(step); };
+  requestAnimationFrame(step); setTimeout(() => { if (el._tw === tok) el.textContent = to.toFixed(dec) + suf; }, dur + 60);
+}
+const pt = h => h === 0 ? { t:S.now.t, r:S.now.r, w:S.now.w, reh:S.now.reh, sky:null } : S.fc[h - 1];
+const hLabel = h => h === 0 ? "지금" : (S.fc[h-1].d !== S.fc[0].d ? "내일 " : "") + Number(S.fc[h-1].h) + "시";
+
+/* ── hero & summary ── */
+function skyOf(h) { const v = pt(h); if (v.r > 0) return v.r >= 15 ? "heavy" : "rain"; const sky = h === 0 ? (S.fc[0] || {}).sky : v.sky; return sky === "맑음" ? "clear" : "cloudy"; }
+function summary() {
+  const v = S.now, fc = S.fc, wet = fc.filter(f => f.r > 0);
+  const d1 = S.daily[0];
+  if (v.r > 0) {
+    const mx = Math.max(0, ...fc.slice(0, 6).map(f => f.r));
+    const span = wet.length ? `${Number(wet[0].h)}시~${Number(wet[wet.length-1].h)}시 ${Math.max(...wet.map(f=>f.r)) <= 0.5 ? "약한 비" : "비"}` : "곧 그침";
+    const gap = v.r > 5 && mx <= 0.5 ? " 실측이 예보보다 훨씬 많습니다." : "";
+    return `<b>지금 시간당 ${fmtR(v.r)}mm의 ${v.r >= 15 ? "강한 비" : "비"}.</b> 기상청 예보는 ${span}.${gap}`;
+  }
+  if (wet.length) return `<b>지금은 비가 없습니다.</b> 예보상 ${Number(wet[0].h)}시부터 비${wet[0].d !== fc[0].d ? "(내일)" : ""}, 강수확률 ${Math.max(...wet.map(f => f.pop))}%.`;
+  return `<b>특이 기상 없음.</b> 24시간 내 비 예보가 없습니다. 내일 ${d1.sky}, ${d1.tmin}°~${d1.tmax}°.`;
+}
+function renderHero(h, animate) {
+  const v = pt(h), hero = $("#hero"), sky = skyOf(h);
+  hero.className = "hero " + (sky === "heavy" ? "rain heavy" : sky);
+  $("#hIc").querySelector("use").setAttribute("href", sky === "clear" ? "#i-sun" : sky === "cloudy" ? "#i-cloud" : "#i-rain");
+  $("#hK").textContent = (h === 0 ? "17:50 실측 · " : hLabel(h) + " 예보 · ") + (v.r > 0 ? (v.r >= 15 ? "강한 비" : "비") : (sky === "clear" ? "맑음" : (h === 0 ? (S.fc[0]||{}).sky : v.sky) || "흐림"));
+  tween($("#hT"), v.t, Number.isInteger(v.t) ? 0 : 1, animate ? 750 : 350);
+  const d1 = S.daily[0];
+  $("#hM").textContent = h === 0 ? `체감 ${S.now.feels}° · 내일 최저 ${d1.tmin}° 최고 ${d1.tmax}°` : `강수확률 ${v.pop}% · 습도 ${v.reh}%`;
+  $("#hS").innerHTML = h === 0 ? summary() : (v.r > 0 ? `<b>${hLabel(h)} 시간당 ${fmtR(v.r, true)}mm 비 예보.</b>` : `<b>${hLabel(h)} 비 예보 없음.</b> ${v.sky}.`);
+  const nc = $("#nowchip"); nc.textContent = h === 0 ? "지금" : "지금으로"; nc.classList.toggle("back", h !== 0);
+  const tiles = [["i-drop","비",fmtR(v.r, h > 0),"mm/h"],["i-wind","바람",(+v.w).toFixed(1),"m/s"],["i-temp", h === 0 ? "체감" : "기온", (h === 0 ? S.now.feels : v.t).toFixed(1),"°"],["i-hum","습도",v.reh ?? "-","%"]];
+  $("#tiles").innerHTML = tiles.map(([ic,l,n,u]) => `<div class="tile"><div class="l"><svg class="ic"><use href="#${ic}"/></svg>${l}</div><div class="v num">${n}</div><div class="u">${u}</div></div>`).join("");
+}
+
+/* ── timeline with touch scrub ── */
+function buildTimeline() {
+  const tl = $("#tl"); tl.classList.remove("shown");
+  const all = [{ r:S.now.r, w:S.now.w, t:S.now.t }, ...S.fc.slice(0, 24)];
+  $("#cR").innerHTML = all.map((f, k) => `<i class="${k ? "" : "now"}" style="background:${rCell(f.r)};transition-delay:${k * 16}ms"></i>`).join("");
+  $("#cW").innerHTML = all.map((f, k) => `<i class="${k ? "" : "now"}" style="background:${wCol(f.w)};transition-delay:${k * 16 + 120}ms"></i>`).join("");
+  const ts = all.map(f => f.t), lo = Math.min(...ts), hi = Math.max(...ts), n = all.length;
+  const p = ts.map((t, k) => [((k + .5) / n) * 100, 38 - ((t - lo) / Math.max(1, hi - lo)) * 32 + 2]);
+  const d = p.map((q, k) => (k ? "L" : "M") + q[0].toFixed(2) + " " + q[1].toFixed(2)).join(" ");
+  $("#spark").innerHTML = `<svg viewBox="0 0 100 44" preserveAspectRatio="none"><path class="area" d="${d} L${p[n-1][0]} 44 L${p[0][0]} 44 Z"/><path class="line" d="${d}" vector-effect="non-scaling-stroke" pathLength="600"/></svg><span class="hi num">${hi}°</span><span class="lo num">${lo}°</span>`;
+  $("#hours").innerHTML = all.map((f, k) => `<b class="${k ? "" : "k"}">${k === 0 ? "지금" : (k % 3 === 0 ? Number(S.fc[k-1].h) : "")}</b>`).join("");
+  setTimeout(() => tl.classList.add("shown"), 60);
+  setCursor(0);
+}
+function setCursor(h) {
+  hSel = h; const c = $("#cR").children[h]; if (!c) return;
+  const tr = $("#tl").getBoundingClientRect(), r = c.getBoundingClientRect();
+  $("#cursor").style.left = (r.left - tr.left + r.width / 2 - 1) + "px";
+  const v = pt(h);
+  $("#readout").innerHTML = h === 0 ? `<span class="hint">타임라인을 좌우로 문지르면 시각별 예보가 보입니다</span>` :
+    `<b>${hLabel(h)}</b> ${v.t}° · 비 ${fmtR(v.r, true)}mm · 바람 ${v.w}m/s · 강수확률 ${v.pop}%`;
+  renderHero(h, false);
+}
+function bindScrub() {
+  const tl = $("#tl"); let on = false;
+  const at = e => { const cells = $("#cR").getBoundingClientRect(); const k = Math.floor((e.clientX - cells.left) / cells.width * 25); return Math.max(0, Math.min(24, k)); };
+  tl.addEventListener("pointerdown", e => { on = true; tl.setPointerCapture?.(e.pointerId); setCursor(at(e)); });
+  tl.addEventListener("pointermove", e => { if (on) setCursor(at(e)); });
+  tl.addEventListener("pointerup", () => { on = false; });
+  $("#nowchip").onclick = () => { if (hSel) setCursor(0); };
+}
+
+/* ── 10 day ── */
+function renderDaily() {
+  const ds = S.daily.filter(d => d.tmin != null), lo = Math.min(...ds.map(d => d.tmin)), hi = Math.max(...ds.map(d => d.tmax));
+  const icon = s => s === "비" ? "i-rain" : s === "맑음" ? "i-sun" : s === "구름많음" ? "i-csun" : "i-cloud";
+  $("#d10").innerHTML = S.daily.map((d, k) => {
+    const partial = d.tmin == null || (d.src === "단기" && d.tmin === d.tmax);
+    if (partial) return `<div class="d10 gap"><span class="dw">${d.dow}</span><span></span><span class="gt">${d.date} · 예보 자료 없음 (단기·중기 경계)</span></div>`;
+    const l = (d.tmin - lo) / (hi - lo) * 100, r = (hi - d.tmax) / (hi - lo) * 100;
+    return `<div class="d10"><span class="dw ${k ? "" : "today"}">${k ? d.dow : "내일"}</span><svg class="ic"><use href="#${icon(d.sky)}"/></svg><span class="pop">${d.pop >= 30 ? d.pop + "%" : ""}</span><span class="mn num">${d.tmin}°</span><div class="rb"><i style="left:${l.toFixed(0)}%;right:${r.toFixed(0)}%;transition-delay:${k * 50}ms"></i></div><span class="mx num">${d.tmax}°</span></div>`;
+  }).join("");
+}
+
+/* ── notice ── */
+function notice() {
+  const L = ["■ 공지드립니다.", ""], v = S.now;
+  if (v.r > 0) {
+    L.push(`2026-09-25 17:50 기준, ${S.name} 현장에 시간당 ${fmtR(v.r)}mm의 ${v.r >= 15 ? "강한 비가" : "비가"} 관측되고 있습니다.`);
+    if (v.r > 5 && S.fc.slice(0, 3).every(f => f.r <= 0.5)) L.push("(기상청 예보는 1mm 미만으로, 실측과 차이가 있습니다.)");
+    L.push("", "【수방 안전관리 사항】", "ㅇ 배수로 및 침사지 주변 이물질 정비", "ㅇ 토사 유실 우려 구간 덮개 보양", "ㅇ 침수 우려 구역 내 장비 안전지대 이동", "", "각 현장에서는 수방 조치가 실제 이행될 수 있도록 관리하여 주시기 바랍니다.");
+  } else {
+    const wet = S.fc.filter(f => f.r > 0);
+    L.push(`2026-09-25 17:50 기준, ${S.name} 현장은 특이 기상상황이 없습니다.`);
+    if (wet.length) L.push(`다만 ${wet[0].d !== S.fc[0].d ? "내일 " : ""}${Number(wet[0].h)}시부터 비 예보(강수확률 ${Math.max(...wet.map(f => f.pop))}%)가 있으니 작업 계획에 참고 바랍니다.`);
+  }
+  L.push("", "감사합니다."); return L.join("\n");
+}
+
+/* ── map ── */
+function buildMap() {
+  map = new maplibregl.Map({ container:"map", style:"https://tiles.openfreemap.org/styles/positron", center:[S.lon, S.lat], zoom:8.6, attributionControl:{ compact:true }, dragRotate:false });
+  map.on("load", () => {
+    map.getStyle().layers.forEach(l => { if (l.type !== "symbol") return;
+      if (/label_(city|town|state|village)|water_name/.test(l.id)) { map.setLayoutProperty(l.id, "text-field", ["coalesce", ["get","name:ko"], ["get","name:nonlatin"], ["get","name"]]); map.setPaintProperty(l.id, "text-color", "#8a939d"); }
+      else map.setLayoutProperty(l.id, "visibility", "none"); });
+    map.addSource("rain", { type:"geojson", data:{ type:"FeatureCollection", features:ALL.map(s => ({ type:"Feature", properties:{ r:s.r }, geometry:{ type:"Point", coordinates:[s.lon, s.lat] } })) } });
+    map.addLayer({ id:"rain", type:"heatmap", source:"rain", paint:{ "heatmap-weight":["interpolate",["linear"],["get","r"],0,0,0.5,0.18,3,0.45,10,0.75,30,1], "heatmap-intensity":1.3,
+      "heatmap-radius":["interpolate",["exponential",1.6],["zoom"],5,48,7,92,9,190,11,420],
+      "heatmap-color":["interpolate",["linear"],["heatmap-density"],0,"rgba(205,226,251,0)",0.12,"rgba(205,226,251,.55)",0.3,"rgba(158,197,244,.7)",0.5,"rgba(85,152,231,.75)",0.75,"rgba(37,106,191,.8)",1,"rgba(13,54,107,.85)"], "heatmap-opacity":0.75 } });
+    const el = document.createElement("div"); el.innerHTML = `<div class="me"></div><div class="mlab" id="mlab"></div>`;
+    meMarker = new maplibregl.Marker({ element:el }).setLngLat([S.lon, S.lat]).addTo(map); updateMe(); centerMap(false);
+  });
+}
+function updateMe() { const l = document.getElementById("mlab"); if (l) l.textContent = `${S.short} · ${S.now.r > 0 ? "비 " + fmtR(S.now.r) : S.now.t + "°"}`; }
+function sheetOffsetPx() { const sc = $("#screen").getBoundingClientRect().height; return sc * (curY / 100); }
+function centerMap(fly) { if (!map) return;
+  const opts = { center:[S.lon, S.lat], zoom:map.getZoom(), offset:[0, Math.round(-(sheetVisiblePx()) / 2 + 20)] };
+  fly && !REDUCED ? map.flyTo({ ...opts, zoom:8.6, speed:1.1, essential:true }) : map.jumpTo(opts); }
+function sheetVisiblePx() { const h = $("#screen").getBoundingClientRect().height, sheetH = h - 44; return sheetH * (1 - curY / 100); }
+
+/* ── sheet drag (snap: peek 58% / full 0%) ── */
+const SNAPS = [58, 0]; let curY = 58;
+function setY(y, animate) { curY = y; const sh = $("#sheet"); sh.classList.toggle("drag", !animate); sh.style.setProperty("--y", y + "%"); sh.classList.toggle("peek", y > 5);
+  $("#layerBtn").style.bottom = `calc(${(100 - y) * 0.94}% + 18px)`; $("#layerBtn").style.opacity = y < 20 ? 0 : 1; }
+function bindSheet() {
+  const sh = $("#sheet"), grab = $("#grab"), sc = $("#sc"); let start = null;
+  const down = e => { start = { y:e.clientY, cy:curY, t:performance.now(), h:sh.getBoundingClientRect().height }; grab.setPointerCapture?.(e.pointerId); };
+  const move = e => { if (!start) return; const dy = (e.clientY - start.y) / start.h * 100; setY(Math.max(-2, Math.min(70, start.cy + dy)), false); };
+  const up = e => { if (!start) return; const v = (e.clientY - start.y) / (performance.now() - start.t); let target = SNAPS.reduce((a, b) => Math.abs(b - curY) < Math.abs(a - curY) ? b : a);
+    if (Math.abs(v) > .4) target = v > 0 ? SNAPS[0] : SNAPS[1]; start = null; setY(target, true); setTimeout(() => centerMap(false), 560); };
+  grab.addEventListener("pointerdown", down); grab.addEventListener("pointermove", move); grab.addEventListener("pointerup", up);
+  $(".ttl").addEventListener("click", e => { if (e.target.closest("#nowchip")) return; if (curY > 5) { setY(0, true); } });
+  sc.addEventListener("scroll", () => { if (sc.scrollTop < -40) setY(SNAPS[0], true); });
+  $("#goMap").onclick = () => { sc.scrollTo({ top:0, behavior:REDUCED ? "auto" : "smooth" }); setY(62, true); setTimeout(() => centerMap(true), 350); };
+}
+
+/* ── reveal on scroll ── */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); } }), { root:$("#sc"), threshold:.15 });
+
+/* ── site switch ── */
+function load(i, first) {
+  S = DATA.demo[i]; hSel = 0;
+  document.querySelectorAll("#pick button").forEach((b, k) => b.classList.toggle("on", k === i));
+  $("#name").textContent = S.name; $("#sub").textContent = `${S.cat} · ${S.region}`;
+  $("#hT").dataset.v = "0";
+  renderHero(0, true); buildTimeline(); renderDaily();
+  $("#chips").innerHTML = (S.warn.length ? S.warn.map(w => `<span class="chip warn">${w.title}</span>`).join("") : `<span class="chip">기상특보 없음</span>`) + (S.legal.length ? `<span class="chip warn">법정 확인 필요</span>` : `<span class="chip">법정조치 해당 없음</span>`);
+  $("#nt").textContent = notice(); $("#nt").classList.remove("open"); $("#ntMore").textContent = "전체 보기";
+  document.querySelectorAll(".rv").forEach(el => { el.classList.remove("in"); io.unobserve(el); });
+  $("#d10card").classList.remove("in");
+  setTimeout(() => document.querySelectorAll(".rv").forEach((el, k) => { setTimeout(() => io.observe(el), k * 60); }), first ? 350 : 80);
+  $("#sc").scrollTop = 0;
+  if (meMarker) { meMarker.setLngLat([S.lon, S.lat]); updateMe(); centerMap(!first); }
+}
+function toast(t) { $("#toastT").textContent = t; const el = $("#toast"); el.classList.add("show"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("show"), 2200); }
+
+$("#pick").innerHTML = DATA.demo.map(s => `<button>${s.name}<small>${s.now.r > 0 ? `지금 비 ${fmtR(s.now.r)}mm/h` : `지금 비 없음 · ${s.now.t}°`}</small></button>`).join("");
+document.querySelectorAll("#pick button").forEach((b, i) => b.onclick = () => load(i, false));
+$("#copy").onclick = async () => { try { await navigator.clipboard.writeText($("#nt").textContent); } catch (e) {} toast("전파 문안을 복사했습니다"); };
+$("#ntMore").onclick = () => { const o = $("#nt").classList.toggle("open"); $("#ntMore").textContent = o ? "접기" : "전체 보기"; };
+$("#layerBtn").onclick = () => { const b = $("#layerBtn"), on = b.classList.toggle("on"); if (map && map.getLayer("rain")) map.setLayoutProperty("rain", "visibility", on ? "visible" : "none"); };
+bindSheet(); bindScrub();
+setY(SNAPS[0], false); requestAnimationFrame(() => $("#sheet").classList.remove("drag"));
+load(0, true); buildMap();
+window.__proto = { load, setCursor, setY };
+})();
+</script>
+</body>
+</html>
