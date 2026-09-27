@@ -40,7 +40,7 @@
       : site.as_of ? `${WX.kst(site.as_of).hm} 관측${site.state === "stale" ? " · 이번 수집 실패" : ""}` : "관측 자료 없음";
     $("#hK").textContent = skyText ? `${when} · ${skyText}` : when;
     WX.tween($("#hT"), v ? v.temp : null, 1, h === 0 ? 750 : 350);
-    const tomorrow = (site.daily || [])[0];
+    const next = WX.dayOffset(WX.kst(Date.now()).date, 1), tomorrow = (site.daily || []).find(d => d.date === next);
     $("#hM").textContent = h === 0
       ? [v && v.feels != null ? `체감 ${fmt(v.feels, 1)}°` : "",
          tomorrow && !tomorrow.missing && tomorrow.tmin != null ? `내일 최저 ${fmt(tomorrow.tmin, 0)}° 최고 ${fmt(tomorrow.tmax, 0)}°` : ""].filter(Boolean).join(" · ")

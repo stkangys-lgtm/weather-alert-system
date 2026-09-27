@@ -129,13 +129,15 @@
   };
 
   // 10일 예보 줄(설계서 3.3-7): 기온 범위 막대, 강수확률 30% 이상만, 자료 없는 날은 "예보 자료 없음".
-  P.daily = days => {
-    const list = days || [], known = list.filter(d => !d.missing && d.tmin != null && d.tmax != null);
+  // 오늘·내일은 보는 사람의 날짜(today, 한국 시각) 기준이고 지난 날은 뺀다.
+  P.daily = (days, today = WX.kst(Date.now()).date) => {
+    const list = (days || []).filter(d => d.date >= today), known = list.filter(d => !d.missing && d.tmin != null && d.tmax != null);
     const lo = known.length ? Math.min(...known.map(d => d.tmin)) : 0;
     const hi = known.length ? Math.max(...known.map(d => d.tmax)) : 0;
-    const span = Math.max(1, hi - lo);
-    return list.map((d, k) => {
-      const head = `<span class="dw${k === 0 ? " tomorrow" : ""}">${k === 0 ? "내일" : WX.weekday(d.date)}</span><span class="dt num">${WX.shortDate(d.date)}</span>`;
+    const span = Math.max(1, hi - lo), tomorrow = WX.dayOffset(today, 1);
+    return list.map(d => {
+      const rel = d.date === today ? "오늘" : d.date === tomorrow ? "내일" : "";
+      const head = `<span class="dw${rel ? " tomorrow" : ""}">${rel || WX.weekday(d.date)}</span><span class="dt num">${WX.shortDate(d.date)}</span>`;
       if (d.missing || d.tmin == null || d.tmax == null) return `<div class="d10 gap">${head}<span class="gt">예보 자료 없음</span></div>`;
       const left = ((d.tmin - lo) / span) * 100, right = ((hi - d.tmax) / span) * 100;
       const pop = d.pop != null && d.pop >= 30 ? `${d.pop}%` : "";

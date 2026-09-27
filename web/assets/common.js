@@ -98,7 +98,10 @@
 
   // 관측(지금)은 Python 판단(now.precip)을 따르고, 예보 시각은 예보 강수량으로 본다.
   WX.isRain = v => !!v && (v.observed && v.precip !== undefined ? v.precip === "rain" : (v.rain || 0) >= WX.RAIN_BINS[0]);
-  WX.hourText = (times, h) => (h === 0 ? "지금" : WX.hourLabel(times[h], times[0]));
+  // "내일"은 보는 사람의 오늘 기준(자정 뒤에 어제 자료를 보면 같은 시각이 "15시"로 바뀐다).
+  WX.hourText = (times, h, now = Date.now()) => (h === 0 ? "지금" : WX.hourLabel(times[h], now));
+  // "2026-09-30" + 1일 → "2026-10-01"
+  WX.dayOffset = (date, n) => new Date(Date.UTC(+date.slice(0, 4), +date.slice(5, 7) - 1, +date.slice(8, 10) + n)).toISOString().slice(0, 10);
   // 하늘 상태 글자(단기·중기 예보) → 아이콘 이름
   WX.skyIcon = sky => {
     const s = sky || "";
