@@ -101,6 +101,13 @@ class AppManifestTests(unittest.TestCase):
         self.assertIn('"manifests/" + id + ".webmanifest"', html)
         self.assertIn('<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">', html)
 
+    def test_hq_site_button_opens_new_window(self):
+        # iOS 홈 화면 앱에는 뒤로 가기가 없어, 같은 창으로 넘어가면 본사 화면으로 돌아올 수 없다.
+        html = read("index.html")
+        button = html.split('id="bSite"')[0].rsplit("<a ", 1)[1] + html.split('id="bSite"')[1].split(">", 1)[0]
+        self.assertIn('target="_blank"', button)
+        self.assertIn('rel="noopener"', button)
+
     def test_site_footer_credits_map_sources(self):
         foot = read("site.html").split('<p class="foot">')[1].split("</p>")[0]
         for name in ("OpenStreetMap", "OpenFreeMap", "OpenMapTiles"):
