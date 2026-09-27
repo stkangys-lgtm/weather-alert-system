@@ -96,6 +96,21 @@
              humidity: hour.humidity, pty: hour.pty, sky: hour.sky, pop: hour.pop, observed: false };
   };
 
+  // 관측(지금)은 Python 판단(now.precip)을 따르고, 예보 시각은 예보 강수량으로 본다.
+  WX.isRain = v => !!v && (v.observed && v.precip !== undefined ? v.precip === "rain" : (v.rain || 0) >= WX.RAIN_BINS[0]);
+  WX.hourText = (times, h) => (h === 0 ? "지금" : WX.hourLabel(times[h], times[0]));
+  // 하늘 상태 글자(단기·중기 예보) → 아이콘 이름
+  WX.skyIcon = sky => {
+    const s = sky || "";
+    if (/비|소나기/.test(s)) return "i-rain";
+    if (/눈/.test(s)) return "i-snow";
+    if (/구름/.test(s)) return "i-csun";
+    if (/맑/.test(s)) return "i-sun";
+    return "i-cloud";
+  };
+  WX.weekday = date => "일월화수목금토"[new Date(`${date}T12:00:00+09:00`).getUTCDay()];
+  WX.shortDate = date => `${Number(date.slice(5, 7))}/${Number(date.slice(8, 10))}`;
+
   // 상단 수집 상태(설계서 3.2·5.6·6). 실패·지연은 회색으로 두고 주황·빨강을 쓰지 않는다.
   // 보는 사람의 지금 시각(now)과 비교해, 예정된 다음 수집이 45분 넘게 지나면 "수집 지연"으로 표시한다.
   WX.STALL_MS = 45 * 60 * 1000;

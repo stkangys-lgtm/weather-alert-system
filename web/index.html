@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="assets/hq.css">
 <script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" integrity="sha384-SYKAG6cglRMN0RVvhNeBY0r3FYKNOJtznwA0v7B5Vp9tr31xAHsZC0DqkQ/pZDmj" crossorigin="anonymous" async onload="window.__maplibreLoaded=true" onerror="window.__maplibreFailed=true"></script>
 <script src="assets/common.js" defer></script>
+<script src="assets/parts.js" defer></script>
 <script src="assets/geo.js" defer></script>
 <script src="assets/hq.js" defer></script>
 <script src="assets/hq-map.js" defer></script>
@@ -61,7 +62,7 @@
     <div class="chips" id="dChips"></div>
     <div class="tiles" id="dTiles"></div>
     <div class="card"><h3>앞으로 24시간 <span>칸을 누르면 그 시각으로 이동</span></h3>
-      <div class="tl" id="tl">
+      <div class="tl" id="tl" role="slider" tabindex="0" aria-label="예보 시각" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0">
         <div class="cursor" id="cursor" data-label="지금"></div>
         <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-drop"/></svg>비</span><div class="cells" id="cR"></div></div>
         <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-wind"/></svg>바람</span><div class="cells" id="cW"></div></div>

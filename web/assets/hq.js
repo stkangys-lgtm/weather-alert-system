@@ -12,9 +12,8 @@
   let bound = false, timers = false;
 
   HQ.value = (site, h = state.h) => WX.valueAt(site, state.times, h);
-  // 관측(지금)은 Python 판단(now.precip)을 따르고, 예보 시각은 예보 강수량으로 본다.
-  HQ.isRain = v => !!v && (v.observed && v.precip !== undefined ? v.precip === "rain" : (v.rain || 0) >= WX.RAIN_BINS[0]);
-  HQ.hourText = h => (h === 0 ? "지금" : WX.hourLabel(state.times[h], state.times[0]));
+  HQ.isRain = WX.isRain;
+  HQ.hourText = h => WX.hourText(state.times, h);
   HQ.whenText = h => {
     if (h > 0) return `${HQ.hourText(h)} 예보`;
     return state.latest.observed_at ? `${WX.kst(state.latest.observed_at).hm} 관측` : "관측 자료 없음";

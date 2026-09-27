@@ -98,7 +98,7 @@
     return adapter;
   }
 
-  WX.createMap = ({ container, padding, onReady, onNotice }) => {
+  WX.createMap = ({ container, padding, onReady, onNotice, view }) => {
     let svg = null, ready = false, fellBack = false, started = false, waited = 0;
     const notice = mode => { if (onNotice) onNotice(mode); };
 
@@ -119,8 +119,10 @@
       started = true;
       let map;
       try {
-        map = new maplibregl.Map({ container, style: STYLE, bounds: WX.KOREA, fitBoundsOptions: { padding: padding() },
-          attributionControl: { compact: true }, dragRotate: false, pitchWithRotate: false, touchPitch: false });
+        // view가 있으면(현장 화면) 그 위치에서, 없으면(본사) 전국이 보이게 시작한다.
+        const start = view ? { center: view.center, zoom: view.zoom } : { bounds: WX.KOREA, fitBoundsOptions: { padding: padding() } };
+        map = new maplibregl.Map(Object.assign({ container, style: STYLE, attributionControl: { compact: true },
+          dragRotate: false, pitchWithRotate: false, touchPitch: false }, start));
         map.touchZoomRotate.disableRotation();
       } catch (error) {
         fallBack();
