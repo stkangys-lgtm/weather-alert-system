@@ -19,9 +19,10 @@
 - 운영 브랜치: `main`
 - 공개 관제 화면: `https://stkangys-lgtm.github.io/weather-alert-system/`
 - 새 본사 화면: 위 주소(`docs/index.html` ← `web/index.html`). 현장 목록 표는 주소 끝 `#list`
+- 현장 화면: `…/site.html?id=현장ID` (ID 없으면 현장 선택 목록). 본사 상세의 "현장 화면" 버튼으로 연결. 휴대폰 홈 화면에 추가하면 그 현장으로 바로 열린다(`docs/manifests/<ID>.webmanifest`, 수집 실행이 생성)
 - 이전 화면(2주간 병행, 5단계에서 정리): `…/old/index.html`(지도), `…/old/sites.html`(카드). `map.html`·`sites.html`은 이동 안내 페이지
 - 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **155개 통과** (2026-09-26 갱신)
+- 전체 테스트: **161개 통과** (2026-09-26 갱신)
 
 ### 대시보드 리디자인 진행 (2026-09-26~)
 
@@ -31,6 +32,7 @@
 - 2단계(본사 화면): 화면 원본은 `web/`(HTML·CSS·JS, 빌드 도구 없음). 수집 실행 뒤 `src/publish.py`가 점검(외부 파일 무결성 해시·전화번호·금지어·비공개 값) 후 `docs/`로 복사한다.
   화면을 고칠 때는 `web/`만 수정하고 `docs/`의 게시본은 직접 고치지 않는다.
   로컬 확인: `python3 -m src.publish` → `python3 scripts/preview_fixtures.py`(시험 자료: 비·수집 실패·일부 실패·야간·특수문자) → `.superpowers/preview`를 정적 서버로 열고 `site/index.html?data=../fixtures/rain.json`. `?map=svg`는 자체 지도 강제.
+- 3단계(현장 화면·홈 화면 추가): `web/site.html`·`site.css`·`site.js`(본문)·`site-map.js`(지도·시트). 본사 상세와 현장 화면이 함께 쓰는 부품은 `web/assets/parts.js`와 `app.css` 끝 절. 화면 확인은 `node scripts/ui_check.mjs <단계.json>`(헤드리스 Chrome, 임시 프로필) — 앱 미리보기 창이 가려지면 지도가 그려지지 않으므로 이 도구로 본다.
 
 ### 이번 세션(2026-09-20)에서 추가된 것
 
@@ -99,6 +101,8 @@ CLAUDE.md에 기록할 것.
 - `src/dashboard.py`: 현장별 카드 화면 — 이전 화면(docs/old/), 5단계에서 삭제 예정
 - `src/publish.py`: `web/` → `docs/` 게시와 게시 전 점검, 이전 화면 경로(`docs/old/`)
 - `web/`: 새 화면 원본 — `index.html`(본사), `assets/common.js`(공통), `geo.js`(지도·자체 지도 전환), `hq*.js`(본사 모듈), `tokens.css`·`app.css`·`hq.css`, `icons.svg`, `brand/`(공식 로고, 가공 금지)
+- `web/site.html`·`assets/site*.js`·`site.css`: 현장 화면, `assets/parts.js`: 현장 카드 공통 부품, `manifest.webmanifest`·`assets/icons/`: 홈 화면 추가
+- `scripts/ui_check.mjs`: 헤드리스 Chrome 화면 점검 도구(단계 JSON → 결과·콘솔 오류·캡처)
 - `scripts/preview_fixtures.py`: 화면 확인용 시험 자료 생성(공개 폴더 밖)
 - `src/weekly_work_importer.py`: 회의자료 XLSX에서 현장명과 금주 공종만 선별 (PDF 미지원)
 - `config.example.py`: 현장·공종·특보 구역 설정 예시

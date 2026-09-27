@@ -35,6 +35,9 @@
     open(site, first) {
       $("#detail").classList.add("open");
       $("#detail").inert = false;
+      const link = $("#bSite");
+      link.setAttribute("href", `site.html?id=${encodeURIComponent(site.id)}`);
+      link.hidden = false;
       render(first);
     },
     close() {
