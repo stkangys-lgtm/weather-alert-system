@@ -6,6 +6,10 @@
 <meta name="theme-color" content="#2b4775">
 <title>현대아산 기상안전 관제 · 본사</title>
 <link rel="icon" type="image/svg+xml" href="assets/brand/hdasan-symbol.svg">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="기상안전">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" integrity="sha384-V1aeodcjJTo8c7lEQKPTnsMG6Yk8y6O/1kzqU/BCXw78Yw1W8XYFJGgjYa3oInYZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css" integrity="sha384-MinO0mNliZ3vwppuPOUnGa+iq619pfMhLVUXfC4LHwSCvF9H+6P/KO4Q7qBOYV5V" crossorigin="anonymous">
@@ -14,6 +18,7 @@
 <link rel="stylesheet" href="assets/hq.css">
 <script id="maplibre-js" src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" integrity="sha384-SYKAG6cglRMN0RVvhNeBY0r3FYKNOJtznwA0v7B5Vp9tr31xAHsZC0DqkQ/pZDmj" crossorigin="anonymous" async onload="window.__maplibreLoaded=true" onerror="window.__maplibreFailed=true"></script>
 <script src="assets/common.js" defer></script>
+<script src="assets/parts.js" defer></script>
 <script src="assets/geo.js" defer></script>
 <script src="assets/hq.js" defer></script>
 <script src="assets/hq-map.js" defer></script>
@@ -57,7 +62,7 @@
     <div class="chips" id="dChips"></div>
     <div class="tiles" id="dTiles"></div>
     <div class="card"><h3>앞으로 24시간 <span>칸을 누르면 그 시각으로 이동</span></h3>
-      <div class="tl" id="tl">
+      <div class="tl" id="tl" role="slider" tabindex="0" aria-label="예보 시각" aria-valuemin="0" aria-valuemax="24" aria-valuenow="0">
         <div class="cursor" id="cursor" data-label="지금"></div>
         <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-drop"/></svg>비</span><div class="cells" id="cR"></div></div>
         <div class="tl-row"><span><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-wind"/></svg>바람</span><div class="cells" id="cW"></div></div>
@@ -68,7 +73,7 @@
     </div>
     <div class="card"><div class="info" id="dLegal"></div></div>
   </div>
-  <div class="actions"><button type="button" class="btn pri" id="bNotice"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-copy"/></svg>전파 문안</button><a class="btn sec" id="bSite" hidden><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-ext"/></svg>현장 화면</a></div>
+  <div class="actions"><button type="button" class="btn pri" id="bNotice"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-copy"/></svg>전파 문안</button><a class="btn sec" id="bSite" target="_blank" rel="noopener" hidden><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-ext"/></svg>현장 화면</a></div>
 </section>
 
 <div class="legend glass fade intro-hide" role="note" aria-label="비 범례"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg#i-drop"/></svg><b>비 mm/h</b><span class="ramp"><i style="background:var(--r0)"></i><i style="background:var(--r1)"></i><i style="background:var(--r2)"></i><i style="background:var(--r3)"></i><i style="background:var(--r4)"></i></span><span class="ticks2 num"><span>0.1</span><span>1</span><span>3</span><span>15</span><span>30+</span></span><span class="src">자료: 기상청</span></div>

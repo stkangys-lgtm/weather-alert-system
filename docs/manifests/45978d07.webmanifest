@@ -1,0 +1,25 @@
+{
+ "name": "현대아산 기상안전 · 송산그린시티",
+ "short_name": "송산그린시티",
+ "description": "송산그린시티 용수공급시설 현장 기상 정보",
+ "start_url": "../site.html?id=45978d07",
+ "scope": "../",
+ "display": "standalone",
+ "background_color": "#eef2f5",
+ "theme_color": "#2b4775",
+ "lang": "ko",
+ "icons": [
+  {
+   "src": "../assets/icons/app-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "../assets/icons/app-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  }
+ ]
+}
