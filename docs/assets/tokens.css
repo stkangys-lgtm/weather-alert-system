@@ -1,0 +1,31 @@
+/* 색·글꼴·움직임 토큰 — 설계서 4.2. 로고 파일 밖에서는 CI 원색을 그대로 쓰지 않는다. */
+:root {
+  color-scheme: light;
+  --page: #eef2f5;
+  --surface: #fdfdfd;
+  --glass: rgba(252, 253, 254, .80);
+  --glass-line: rgba(255, 255, 255, .65);
+  --ink: #101820;        /* 현대 Black 근사 */
+  --ink2: #4d5560;
+  --muted-ink: #686d73;  /* 작은 글자용 흐림(대비 4.5 이상) */
+  --muted: #8a8d8f;      /* 현대 Silver 근사: 아이콘·선·0 값·큰 글자 */
+  --line: rgba(16, 24, 32, .08);
+  --primary: #2b4775;    /* 버튼·선택 표시에만. 지도·타임라인 데이터 영역에는 쓰지 않는다 */
+  --primary-2: #3a5a8f;
+  --tint: #eaf1fb;
+  --sage: #597f60;
+  /* 비 범례 눈금 0.1·1·3·15·30 mm/h (기상청 예보용어 경계, 사내 위험 기준 아님) */
+  --r0: #cde2fb; --r1: #9ec5f4; --r2: #5598e7; --r3: #256abf; --r4: #0d366b;
+  /* 바람 범례 눈금 4·9·14 m/s */
+  --w0: #e7ecf1; --w1: #c9e6dd; --w2: #6fb9a2; --w3: #2a7d66;
+  --cell: #e7ecf1;
+  --dry: #b8c0c9;
+  /* 빨강·주황은 기상청 특보·법정 조치에만(아이콘 필수) */
+  --crit: #a3201f; --crit-bg: #fbe3e3;
+  --warn: #7a5200; --warn-bg: #fdf0d2;
+  --shadow: 0 1px 2px rgba(16, 24, 32, .05), 0 10px 30px rgba(16, 24, 32, .10), 0 30px 80px rgba(16, 24, 32, .08);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --radius: 22px;
+  --font: "Pretendard", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
