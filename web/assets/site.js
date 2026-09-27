@@ -166,6 +166,10 @@
     timers = true;
     setInterval(() => { if (state.latest) renderStatus(); }, STATUS_MS);
     setInterval(refresh, REFRESH_MS);
+    // 홈 화면 앱은 뒤로 가 있는 동안 타이머가 멈추므로, 다시 보이면 바로 수집 상태를 다시 판단하고 새 자료를 확인한다.
+    const resume = () => { if (document.visibilityState === "visible" && state.latest) { renderStatus(); refresh(); } };
+    document.addEventListener("visibilitychange", resume);
+    window.addEventListener("pageshow", e => { if (e.persisted) resume(); });
   }
 
   async function boot() {
