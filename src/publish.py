@@ -9,6 +9,7 @@
 로컬 확인: python -m src.publish
 """
 
+import json
 import os
 import re
 import shutil
@@ -23,6 +24,9 @@ MAP_TARGET = os.path.join("data", "kr-map.json")
 OLD_DIR = os.path.join(DOCS_DIR, "old")
 OLD_MAP_PATH = os.path.join(OLD_DIR, "index.html")
 OLD_SITES_PATH = os.path.join(OLD_DIR, "sites.html")
+MANIFEST_DIR = "manifests"
+APP_ICONS = (("assets/icons/app-192.png", "192x192"), ("assets/icons/app-512.png", "512x512"))
+_SAFE_ID = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
 
 TEXT_EXTENSIONS = (".html", ".css", ".js", ".json", ".svg", ".webmanifest", ".txt")
 PHONE_PATTERN = re.compile(r"01[016789]-?\d{3,4}-?\d{4}")
@@ -103,6 +107,48 @@ def check_latest(path, blocked=()):
         return text_problems(f.read(), blocked)
 
 
+def site_manifest(site):
+    """현장 화면을 휴대폰 홈 화면에 추가했을 때 그 현장 주소로 열리게 하는 매니페스트(설계서 5.9)."""
+    return {
+        "name": f"현대아산 기상안전 · {site['short']}",
+        "short_name": site["short"][:12],
+        "description": f"{site['name']} 현장 기상 정보",
+        "start_url": f"../site.html?id={site['id']}",
+        "scope": "../",
+        "display": "standalone",
+        "background_color": "#eef2f5",
+        "theme_color": "#2b4775",
+        "lang": "ko",
+        "icons": [{"src": f"../{src}", "sizes": size, "type": "image/png", "purpose": "any"} for src, size in APP_ICONS],
+    }
+
+
+def write_site_manifests(latest_path, docs_dir=DOCS_DIR):
+    """docs/manifests/<현장ID>.webmanifest를 만들고, 목록에서 빠진 현장의 파일은 지운다. 만든 파일 이름 목록.
+
+    latest.json을 읽지 못하면 아무것도 바꾸지 않는다. ID는 영문·숫자·_·-만 받는다(주소에 그대로 쓰이므로).
+    """
+    try:
+        with open(latest_path, encoding="utf-8") as f:
+            sites = json.load(f).get("sites") or []
+    except (OSError, ValueError, AttributeError):
+        return []
+    out = os.path.join(docs_dir, MANIFEST_DIR)
+    os.makedirs(out, exist_ok=True)
+    written = []
+    for site in sites:
+        if not isinstance(site, dict) or not _SAFE_ID.match(str(site.get("id", ""))) or not site.get("short"):
+            continue
+        name = f"{site['id']}.webmanifest"
+        with open(os.path.join(out, name), "w", encoding="utf-8") as f:
+            json.dump(site_manifest(site), f, ensure_ascii=False, indent=1)
+        written.append(name)
+    for name in os.listdir(out):
+        if name.endswith(".webmanifest") and name not in written:
+            os.remove(os.path.join(out, name))
+    return sorted(written)
+
+
 def publish(web_dir=WEB_DIR, docs_dir=DOCS_DIR, map_source=MAP_SOURCE, blocked=()):
     """점검을 통과하면 web/ 파일과 자체 지도 자료를 docs/로 복사하고, 게시한 상대 경로 목록을 돌려준다."""
     problems = check_web(web_dir, blocked)
@@ -123,4 +169,5 @@ def publish(web_dir=WEB_DIR, docs_dir=DOCS_DIR, map_source=MAP_SOURCE, blocked=(
 
 if __name__ == "__main__":
     files = publish()
-    print(f"[화면 게시] {len(files)}개 파일 → docs/")
+    manifests = write_site_manifests(os.path.join(DOCS_DIR, "data", "latest.json"))
+    print(f"[화면 게시] {len(files)}개 파일 · 현장 홈 화면 설정 {len(manifests)}곳 → docs/")
