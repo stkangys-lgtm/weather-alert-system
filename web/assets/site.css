@@ -1,0 +1,115 @@
+/* 현장 화면 배치 — 설계서 3.3. 휴대폰 우선(아래에서 끌어올리는 시트), 1024px 이상은 왼쪽 지도 + 오른쪽 내용 열. */
+html, body { height: 100%; overflow: hidden; }
+.top { position: fixed; top: calc(10px + env(safe-area-inset-top)); left: 12px; right: 12px; z-index: 5;
+  display: flex; align-items: center; gap: 8px; pointer-events: none; }
+.top > * { pointer-events: auto; }
+.brand { height: 42px; padding: 0 12px 0 10px; gap: 8px; border-radius: 14px; }
+.logo-img { height: 22px; }
+.brand b { font-size: 14px; }
+.live { margin-left: auto; height: 42px; padding: 0 12px; border-radius: 14px; font-size: 12.5px; gap: 8px; }
+.live .full { display: none; }
+.live .short { display: inline; }
+.mapmsg { top: calc(64px + env(safe-area-inset-top)); }
+
+/* 끌어올리는 시트: --yn(0 = 다 펼침)만큼 아래로 내려가 있다. 손잡이로만 끈다(타임라인 문지르기와 겹치지 않게). */
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; height: calc(100% - 60px - env(safe-area-inset-top)); z-index: 4;
+  display: flex; flex-direction: column; background: var(--page); border-radius: 28px 28px 0 0;
+  box-shadow: 0 -10px 40px rgba(16, 24, 32, .16); --yn: 20;
+  transform: translateY(calc(var(--yn) * 1%)); transition: transform .55s cubic-bezier(.22, 1.2, .36, 1); }
+.sheet.drag { transition: none; }
+.grab { flex: none; width: 100%; height: 30px; display: grid; place-items: center; cursor: grab; touch-action: none; }
+.grab i { width: 40px; height: 5px; border-radius: 3px; background: rgba(16, 24, 32, .2); }
+.sc { flex: 1; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  padding: 0 16px calc(var(--yn) * (100dvh - 60px) / 100 + 28px + env(safe-area-inset-bottom)); }
+.sheet[data-snap="map"] .sc { overflow: hidden; }
+.ttl { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; padding: 0 4px 12px; }
+.ttl h1 { margin: 0; font-size: 22px; letter-spacing: -.5px; line-height: 1.25; word-break: keep-all; overflow-wrap: anywhere; }
+.ttl .sub { font-size: 12.5px; color: var(--muted-ink); font-weight: 600; margin-top: 3px; }
+.nowchip { flex: none; font-size: 12px; font-weight: 800; color: var(--primary); background: var(--tint); border-radius: 999px; padding: 6px 11px; white-space: nowrap; }
+.nowchip.back { background: var(--primary); color: #fff; }
+.nowchip:disabled { cursor: default; }
+.banner { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; padding: 10px 12px; border-radius: 14px; background: var(--surface);
+  border: 1px solid var(--line); color: var(--ink2); font-size: 13px; font-weight: 600; }
+.banner .ic { color: var(--muted); }
+
+/* 히어로(공통 .hero 위에 크기만 바꾼다) */
+.hero { padding: 20px 20px 18px; border-radius: 24px; min-height: 0; }
+.hero .k { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; position: relative; }
+.hero .t { font-size: 76px; font-weight: 800; letter-spacing: -.06em; line-height: .95; margin: 10px 0 4px; position: relative; }
+.hero .m { font-size: 13px; position: relative; }
+.hero .s { font-size: 16px; line-height: 1.45; margin: 12px 0 0; position: relative; max-width: 94%; letter-spacing: -.2px; }
+
+.stack { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.stack .chip { min-height: 30px; font-size: 13px; }
+.tile { border-radius: 16px; }
+.card { border-radius: 20px; padding: 16px; }
+.card h3 { font-size: 14px; }
+.cells i { height: 20px; border-radius: 4px; }
+.readout { margin-top: 12px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; border-radius: 14px;
+  background: var(--tint); font-size: 13px; font-weight: 600; min-height: 42px; }
+.readout b { color: var(--primary); font-weight: 800; }
+.readout .hint { color: var(--muted-ink); font-weight: 500; }
+.mapcta { display: flex; align-items: center; gap: 12px; }
+.mapcta b { display: block; font-size: 15px; }
+.mapcta span { font-size: 12.5px; color: var(--muted-ink); }
+.mapcta .go { margin-left: auto; color: var(--primary); font-weight: 800; font-size: 13px; display: flex; align-items: center; gap: 2px; white-space: nowrap; }
+
+/* 10일 예보 */
+.d10 { display: grid; grid-template-columns: 34px 40px 20px 34px 30px 1fr 30px; gap: 8px; align-items: center; padding: 9px 0;
+  border-top: 1px solid var(--line); font-size: 14px; }
+.d10:first-child { border-top: 0; padding-top: 0; }
+.d10 .dw { font-weight: 700; }
+.d10 .dw.tomorrow { color: var(--primary); }
+.d10 .dt { font-size: 12px; color: var(--muted-ink); }
+.d10 .ic { width: 18px; height: 18px; color: var(--ink2); }
+.d10 .pop { font-size: 12px; font-weight: 800; color: var(--r3); }
+.d10 .mn { text-align: right; color: var(--muted-ink); }
+.d10 .mx { text-align: right; font-weight: 700; }
+.rb { height: 6px; border-radius: 3px; background: var(--cell); position: relative; overflow: hidden; }
+.rb i { position: absolute; top: 0; bottom: 0; border-radius: 3px; background: linear-gradient(90deg, #8fb1d6, #e0b27a); }
+.d10.gap .gt { grid-column: 3 / 8; color: var(--muted-ink); font-size: 13px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.info { font-size: 13.5px; }
+.nt { background: var(--page); border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.65; white-space: pre-wrap; max-height: 150px;
+  overflow: hidden; position: relative; color: var(--ink2); transition: max-height .5s var(--ease); user-select: text; }
+.nt.open { max-height: 1600px; }
+.nt:not(.open)::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(transparent, var(--page)); }
+.more { display: block; margin: 8px auto 0; padding: 6px 10px; font-size: 12.5px; font-weight: 700; color: var(--primary); }
+.btn.wide { width: 100%; height: 52px; margin-top: 10px; border-radius: 16px; font-size: 15.5px; }
+.foot { text-align: center; font-size: 11.5px; color: var(--muted-ink); margin: 6px 0 4px; }
+.toast { bottom: calc(24px + env(safe-area-inset-bottom)); }
+
+/* 등장 */
+.rv { opacity: 0; transform: translateY(14px); transition: opacity .5s var(--ease), transform .6s var(--ease); }
+.rv.in { opacity: 1; transform: none; }
+
+/* 지도의 현장 표식(주색은 데이터 영역에 쓰지 않으므로 잉크색 점) — 위치는 지도 라이브러리가 바깥 요소로 정한다 */
+.me { position: relative; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); border: 4px solid #fff; box-shadow: 0 2px 10px rgba(16, 24, 32, .35); }
+.me::after { content: ""; position: absolute; inset: -14px; border-radius: 50%; border: 2px solid rgba(16, 24, 32, .35); animation: ring 2.2s infinite var(--ease); }
+@keyframes ring { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
+.mlab { position: absolute; left: 24px; top: -2px; white-space: nowrap; background: rgba(253, 253, 253, .95); padding: 4px 9px; border-radius: 9px;
+  font-size: 12px; font-weight: 800; color: var(--ink); box-shadow: 0 2px 8px rgba(16, 24, 32, .18); }
+
+/* 현장 선택 */
+.picker { position: fixed; inset: 0; z-index: 8; overflow-y: auto; background: var(--page); padding: calc(70px + env(safe-area-inset-top)) 16px 32px; }
+.pickbox { max-width: 560px; margin: 0 auto; }
+.pickbox h1 { font-size: 22px; margin: 0 0 6px; }
+.pickbox > p { color: var(--ink2); margin: 0 0 14px; line-height: 1.5; }
+.picklist { display: flex; flex-direction: column; gap: 8px; }
+.pick { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; padding: 12px 14px; border-radius: 16px; background: var(--surface);
+  border: 1px solid var(--line); text-decoration: none; color: var(--ink); }
+.pick b { font-size: 15px; }
+.pick small { grid-column: 1; color: var(--muted-ink); font-size: 12px; }
+.pick .num { grid-row: 1 / 3; grid-column: 2; align-self: center; font-weight: 700; color: var(--ink2); }
+
+/* PC(1024px 이상): 왼쪽 지도(고정) + 오른쪽 내용 열(최대 560px) */
+@media (min-width: 1024px) {
+  .top { top: 16px; left: 16px; right: calc(min(560px, 46vw) + 16px); }
+  .live .full { display: inline; }
+  .live .short { display: none; }
+  .sheet { top: 0; left: auto; width: min(560px, 46vw); height: 100%; border-radius: 0; transform: none; transition: none;
+    box-shadow: -10px 0 40px rgba(16, 24, 32, .12); }
+  .sc { padding: 24px 24px 32px; }
+  .grab, .mapcard { display: none; }
+}

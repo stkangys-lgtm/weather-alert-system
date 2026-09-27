@@ -36,6 +36,12 @@ class AppManifestTests(unittest.TestCase):
         self.assertIn('<link rel="manifest" href="manifest.webmanifest">', html)
         self.assertIn('<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">', html)
 
+    def test_site_page_uses_its_own_manifest(self):
+        html = read("site.html")
+        self.assertIn('<link rel="manifest" id="manifest" href="manifest.webmanifest">', html)
+        self.assertIn("/^[A-Za-z0-9_-]{1,64}$/.test(id)", html)
+        self.assertIn('"manifests/" + id + ".webmanifest"', html)
+        self.assertIn('<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">', html)
 
 if __name__ == "__main__":
     unittest.main()
