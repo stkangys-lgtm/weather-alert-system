@@ -101,5 +101,10 @@ class AppManifestTests(unittest.TestCase):
         self.assertIn('"manifests/" + id + ".webmanifest"', html)
         self.assertIn('<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">', html)
 
+    def test_site_footer_credits_map_sources(self):
+        foot = read("site.html").split('<p class="foot">')[1].split("</p>")[0]
+        for name in ("OpenStreetMap", "OpenFreeMap", "OpenMapTiles"):
+            self.assertIn(name, foot)
+
 if __name__ == "__main__":
     unittest.main()

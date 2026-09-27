@@ -10,6 +10,7 @@ html, body { height: 100%; overflow: hidden; }
 .live .full { display: none; }
 .live .short { display: inline; }
 .mapmsg { top: calc(64px + env(safe-area-inset-top)); }
+.maplibregl-ctrl-top-left { top: calc(48px + env(safe-area-inset-top)); left: 2px; }   /* 지도 출처: 상단 막대 아래(시트에 가리지 않게) */
 
 /* 끌어올리는 시트: --yn(0 = 다 펼침)만큼 아래로 내려가 있다. 손잡이로만 끈다(타임라인 문지르기와 겹치지 않게). */
 .sheet { position: fixed; left: 0; right: 0; bottom: 0; height: calc(100% - 60px - env(safe-area-inset-top)); z-index: 4;
@@ -106,6 +107,7 @@ html, body { height: 100%; overflow: hidden; }
 /* PC(1024px 이상): 왼쪽 지도(고정) + 오른쪽 내용 열(최대 560px) */
 @media (min-width: 1024px) {
   .top { top: 16px; left: 16px; right: calc(min(560px, 46vw) + 16px); }
+  .maplibregl-ctrl-top-left { top: 54px; left: 6px; }
   .live .full { display: inline; }
   .live .short { display: none; }
   .sheet { top: 0; left: auto; width: min(560px, 46vw); height: 100%; border-radius: 0; transform: none; transition: none;

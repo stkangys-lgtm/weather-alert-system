@@ -118,7 +118,7 @@
       setSnap(desktop() ? "full" : "half", false);
       if (typeof state.site.lat !== "number" || typeof state.site.lon !== "number") return;   // 위치 없는 현장은 지도 없이
       WX.createMap({ container: $("#map"), padding: SITE.padding, view: { center: [state.site.lon, state.site.lat], zoom: 9 },
-        onReady: attach, onNotice: notice });
+        attribution: "top-left", onReady: attach, onNotice: notice });
     },
     render,
   };
