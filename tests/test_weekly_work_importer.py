@@ -4,6 +4,7 @@ import unittest
 
 from openpyxl import Workbook
 
+import secretless_env  # noqa: F401  (config.py 없는 PC에서도 src.settings를 읽을 수 있게)
 from src.weekly_work_importer import parse_weekly_work
 
 

@@ -15,6 +15,7 @@ from unittest.mock import patch
 
 import requests
 
+import secretless_env  # noqa: F401  (config.py 없는 PC에서도 src.settings를 읽을 수 있게)
 from src import kma_client
 from src.kma_client import forecast_base_datetime
 from src.mid_client import mid_issue_datetime
