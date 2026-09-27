@@ -25,7 +25,7 @@ DAILY_COUNT = 10
 FULL_DAY_HOURS = 12
 SCHEMA_VERSION = 1
 SITE_FIELDS = ("id", "name", "short", "category", "region", "lat", "lon", "state", "as_of", "now",
-               "hourly", "daily", "warnings", "legal", "legal_profile", "summary", "notice")
+               "hourly", "daily", "warnings", "legal", "legal_profile", "pinned", "summary", "notice")
 ACTIONABLE_LEGAL = {STATUS_STOP, STATUS_ACTION, STATUS_VERIFY}
 
 
@@ -157,6 +157,23 @@ def daily_series(forecast, mid_entries, today):
     return days
 
 
+def is_pinned(view):
+    """목록 맨 위 고정: 발효 중인 기상특보 또는 조치가 필요한 법정 신호가 있는 현장."""
+    return (any(narrative.is_official_warning(w) for w in view["warnings"])
+            or any(item["status"] in ACTIONABLE_LEGAL for item in view["legal"]))
+
+
+def finish_site(view, now):
+    """고정 여부·요약 문장·전파 문안을 채우고 허용 목록 필드만 남긴다."""
+    view["pinned"] = is_pinned(view)
+    if view["now"]:
+        # 화면이 비·눈 여부를 Python과 같은 기준으로 쓰도록 판단 결과를 싣는다("rain"|"snow"|None).
+        view["now"] = dict(view["now"], precip=narrative.precipitation(view["now"]))
+    view["summary"] = narrative.site_summary(view, now)
+    view["notice"] = narrative.site_notice(view, now)
+    return {key: view[key] for key in SITE_FIELDS}
+
+
 def build_site_view(item, mid_entries, previous_site, now):
     """수집 결과 한 건 → 허용 목록 필드만 있는 공개용 현장 항목."""
     site = item["site"]
@@ -200,9 +217,7 @@ def build_site_view(item, mid_entries, previous_site, now):
         "legal": legal,
         "legal_profile": bool(site.get("work_types") or site.get("active_work_types")),
     }
-    view["summary"] = narrative.site_summary(view, now)
-    view["notice"] = narrative.site_notice(view, now)
-    return {key: view[key] for key in SITE_FIELDS}
+    return finish_site(view, now)
 
 
 def _collection_status(done, total):
@@ -231,6 +246,21 @@ def _as_kst(now):
     return now.astimezone(KST) if now.tzinfo else now.replace(tzinfo=KST)
 
 
+def national_view(sites, warnings_ok, now):
+    """전국 요약 숫자·문장·전 현장 전파 문안."""
+    live = [s for s in sites if s["state"] != "missing" and s["now"]]
+    return {
+        "warnings": sum(1 for s in sites if any(narrative.is_official_warning(w) for w in s["warnings"])),
+        "legal": sum(1 for s in sites if any(item["status"] in ACTIONABLE_LEGAL for item in s["legal"])),
+        "rain_sites": sum(1 for s in live if narrative.precipitation(s["now"]) == "rain"),
+        "max_rain": _top(sites, "rain_mm", "mm"),
+        "max_wind": _top(sites, "wind", "ms"),
+        "max_temp": _top(sites, "temp", "c"),
+        "summary": narrative.national_summary(sites, warnings_ok, now),
+        "notice": narrative.national_notice(sites, warnings_ok),
+    }
+
+
 def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_issued_at, mid_issued_at):
     now = _as_kst(now)
     previous_sites = {s.get("id"): s for s in (previous or {}).get("sites") or []}
@@ -238,7 +268,6 @@ def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_
                              previous_sites.get(site_id(item["site"])), now)
              for item in collected]
     fresh = [s for s in sites if s["state"] == "ok"]
-    live = [s for s in sites if s["state"] != "missing" and s["now"]]
     return {
         "schema": SCHEMA_VERSION,
         "generated_at": _kst_iso(now),
@@ -252,15 +281,7 @@ def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_
             "radar": "off",
         },
         "schedule": {"window": WINDOW_LABEL, "next_run_at": _kst_iso(next_collection_at(now))},
-        "national": {
-            "warnings": sum(1 for s in sites if any(narrative.is_official_warning(w) for w in s["warnings"])),
-            "legal": sum(1 for s in sites if any(l["status"] in ACTIONABLE_LEGAL for l in s["legal"])),
-            "rain_sites": sum(1 for s in live if narrative.precipitation(s["now"]) == "rain"),
-            "max_rain": _top(sites, "rain_mm", "mm"),
-            "max_wind": _top(sites, "wind", "ms"),
-            "max_temp": _top(sites, "temp", "c"),
-            "summary": narrative.national_summary(sites, warnings_ok, now),
-        },
+        "national": national_view(sites, warnings_ok, now),
         "radar": None,
         "sites": sites,
     }

@@ -19,6 +19,7 @@ from src.intensity import DRIZZLE_MAX_MM, fmt_number, is_snow, rain_term, wind_t
 FORBIDDEN_WORDS = ("선제", "기준 도달", "주의 단계", "경계 단계")
 FORECAST_HORIZON_HOURS = 12
 NO_DATA = "관측 자료를 받지 못했습니다."
+NO_FORECAST = "예보 자료가 없습니다."  # 예보를 받지 못한 현장을 "비 예보 없음"으로 적지 않는다
 
 
 def contains_forbidden(text):
@@ -86,11 +87,15 @@ def is_official_warning(warning):
     return warning.get("kind") != PRELIMINARY
 
 
+def _preliminary_label(warning):
+    title = warning.get("title") or ""
+    return title if PRELIMINARY in title else f"{PRELIMINARY}({title})"
+
+
 def _warning_titles(view):
     """(발효 중인 기상특보 제목들, 발표된 예비특보 표기들). 예비특보는 발효가 아니라 발표로 구분한다."""
     official = "·".join(w["title"] for w in view["warnings"] if is_official_warning(w))
-    preliminary = "·".join(w["title"] if PRELIMINARY in (w.get("title") or "") else f"{PRELIMINARY}({w.get('title')})"
-                           for w in view["warnings"] if not is_official_warning(w))
+    preliminary = "·".join(_preliminary_label(w) for w in view["warnings"] if not is_official_warning(w))
     return official, preliminary
 
 
@@ -139,6 +144,20 @@ def _observed_phrase(observed):
     return None
 
 
+def _forecast_while_wet(hourly, ref):
+    if not hourly:
+        return NO_FORECAST
+    phrase = _forecast_rain_phrase(hourly, ref)
+    return f"예보는 {phrase}." if phrase else "예보상 12시간 안에 비 예보가 없습니다."
+
+
+def _forecast_while_dry(hourly, ref):
+    if not hourly:
+        return NO_FORECAST
+    wet = _first_rain(hourly)
+    return f"예보상 {_hour_label(wet['at'], ref)}부터 비(강수확률 {wet['pop']}%)." if wet else "24시간 안에 비 예보가 없습니다."
+
+
 def site_summary(view, now=None):
     """now(생성 시각)는 수집 실패로 이어받은 전날 관측일 때 날짜를 바르게 적는 데 쓴다."""
     if not _has_data(view):
@@ -149,13 +168,10 @@ def site_summary(view, now=None):
     observed_phrase = _observed_phrase(observed)
     if observed_phrase:
         parts.append(f"{_lead(view, ref)} {observed_phrase}.")
-        phrase = _forecast_rain_phrase(view["hourly"], ref)
-        parts.append(f"예보는 {phrase}." if phrase else "예보상 12시간 안에 비 예보가 없습니다.")
+        parts.append(_forecast_while_wet(view["hourly"], ref))
     else:
         parts.append("지금은 비가 없습니다." if view["state"] == "ok" else f"{_lead(view, ref)} 비가 없습니다.")
-        wet = _first_rain(view["hourly"])
-        parts.append(f"예보상 {_hour_label(wet['at'], ref)}부터 비(강수확률 {wet['pop']}%)." if wet
-                     else "24시간 안에 비 예보가 없습니다.")
+        parts.append(_forecast_while_dry(view["hourly"], ref))
     wind = observed.get("wind")
     term = wind_term(wind)
     if term:
@@ -222,6 +238,16 @@ def _categories(view):
     return [category for category in CATEGORY_ORDER if category in found]
 
 
+def _action_lines(categories):
+    """【제목】·ㅇ 조치 목록·이행 촉구 문단. 해당 상황이 없으면 빈 목록."""
+    if not categories:
+        return []
+    lines = ["", f"【{_situational_title(categories)}】"]
+    for category in categories:
+        lines += [f"ㅇ {action}" for action in ACTION_ITEMS[category]]
+    return lines + ["", _situational_closing(categories)]
+
+
 def site_notice(view, now=None):
     lines = ["■ 공지드립니다.", ""]
     official, preliminary = _warning_titles(view)
@@ -234,12 +260,7 @@ def site_notice(view, now=None):
     else:
         lines += [f"{view['name']} 현장은 이번에 관측 자료를 받지 못했습니다.",
                   "현장에서 기상 상황을 직접 확인하여 주시기 바랍니다."]
-    categories = _categories(view)
-    if categories:
-        lines += ["", f"【{_situational_title(categories)}】"]
-        for category in categories:
-            lines += [f"ㅇ {action}" for action in ACTION_ITEMS[category]]
-        lines += ["", _situational_closing(categories)]
+    lines += _action_lines(_categories(view))
     lines += ["", "감사합니다."]
     return "\n".join(lines)
 
@@ -259,14 +280,70 @@ def _observation_lines(view, ref):
             what = f"시간당 {_amount(rain)}의 {term}{_subject(term)} 관측되고 있습니다."
         lines.append(f"{when}, {view['name']} 현장에 {what}")
         phrase = _forecast_rain_phrase(view["hourly"], ref)
-        lines.append(f"(기상청 예보: {phrase})" if phrase else "(기상청 예보: 12시간 안에 비 예보 없음)")
+        lines.append("(기상청 예보 자료 없음)" if not view["hourly"]
+                     else f"(기상청 예보: {phrase})" if phrase else "(기상청 예보: 12시간 안에 비 예보 없음)")
     else:
         lines.append(f"{when}, {view['name']} 현장에는 비가 관측되지 않았습니다.")
         wet = _first_rain(view["hourly"])
-        if wet:
+        if not view["hourly"]:
+            lines.append("(기상청 예보 자료 없음)")
+        elif wet:
             lines.append(f"다만 예보상 {_hour_label(wet['at'], ref)}부터 비(강수확률 {wet['pop']}%)가 "
                          "있으니 작업 계획에 참고하여 주시기 바랍니다.")
     term = wind_term(now.get("wind"))
     if term:
         lines.append(f"바람은 {fmt_number(now['wind'])}m/s({term})입니다.")
     return lines
+
+
+def _site_names(sites):
+    """"후포、연희·연남" 또는 "A、B、C 등 5개"."""
+    names = "、".join(s["short"] for s in sites[:3])
+    return f"{names} 등 {len(sites)}개" if len(sites) > 3 else names
+
+
+def _national_warning_lines(sites, warnings_ok):
+    if not warnings_ok:
+        return ["기상청 특보는 확인하지 못했습니다."]
+    official, preliminary = {}, {}
+    for site in sites:
+        for warning in site["warnings"]:
+            if is_official_warning(warning):
+                names = official.setdefault(warning["title"], [])
+            else:
+                names = preliminary.setdefault(_preliminary_label(warning), [])
+            if site["short"] not in names:
+                names.append(site["short"])
+    lines = [f"기상청 {title}가 {'、'.join(names)} 현장에 발효 중입니다." for title, names in official.items()]
+    lines += [f"기상청 {title}가 {'、'.join(names)} 현장에 발표되었습니다." for title, names in preliminary.items()]
+    return lines or ["기상청 특보는 발표되지 않았습니다."]
+
+
+def national_notice(sites, warnings_ok):
+    """전 현장 전파 문안(사내 문체): 관측 시각 → 특보 → 비·눈 현장 → 조치 → 감사합니다."""
+    lines = ["■ 공지드립니다.", ""]
+    live = [s for s in sites if _has_data(s)]
+    fresh = [s for s in live if s["state"] == "ok"] or live
+    if fresh:
+        at = max(datetime.fromisoformat(s["as_of"]) for s in fresh)
+        lines.append(f"{at.strftime('%Y-%m-%d %H:%M')} 관측 기준 현장 기상 현황을 공유드립니다.")
+    else:
+        lines.append("이번 수집에서 관측 자료를 받지 못했습니다.")
+    lines += _national_warning_lines(sites, warnings_ok)
+    rainy = sorted((s for s in live if precipitation(s["now"]) == "rain"),
+                   key=lambda s: -(s["now"].get("rain_mm") or 0))
+    snowy = [s for s in live if precipitation(s["now"]) == "snow"]
+    if rainy:
+        top, mm = rainy[0], rainy[0]["now"].get("rain_mm") or 0
+        lines.append(f"{_site_names(rainy)} 현장에 비가 관측되고 있으며, 가장 많은 곳은 {top['short']} 현장으로 "
+                     f"시간당 {_amount(mm)}의 {rain_term(mm) or '빗방울'}입니다.")
+    if snowy:
+        lines.append(f"{_site_names(snowy)} 현장에 눈이 관측되고 있습니다.")
+    if live and not rainy and not snowy:
+        lines.append("비가 관측된 현장은 없습니다.")
+    failed = sum(1 for s in sites if s["state"] != "ok")
+    if failed and live:
+        lines.append(f"{failed}개 현장은 이번 수집에 실패했습니다.")
+    lines += _action_lines([c for c in CATEGORY_ORDER if any(c in _categories(s) for s in sites)])
+    lines += ["", "감사합니다."]
+    return "\n".join(lines)

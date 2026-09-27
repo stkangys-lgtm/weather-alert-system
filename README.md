@@ -18,9 +18,10 @@
 
 ## 대시보드 (GitHub Pages)
 
-매 실행마다 `docs/index.html`에 지도 중심 통합관제 화면을, `docs/sites.html`에 현장별 카드
-대시보드를 생성하고 자동 커밋합니다. 지도에서 현장을 선택하면 실황, 시간대별 예보와 향후
-특이기상을 바로 확인할 수 있습니다. **담당자 이름·연락처는 공개 페이지 특성상 포함하지 않습니다** (개인정보 보호).
+매 실행마다 `docs/data/latest.json`(화면 데이터)을 만들고, 새 본사 화면(`web/` → `docs/index.html`)이 이 파일을 불러와
+전국 지도·현장 목록·선택 현장 상세·앞으로 24시간을 보여 줍니다. 하단 시간 스크러버로 시간별 예보를 넘겨 볼 수 있고,
+"전파 문안"에서 사내 문체 문안을 복사할 수 있습니다. 이전 화면은 전환 뒤 2주간 `docs/old/`에서 함께 제공합니다.
+**담당자 이름·연락처는 공개 페이지 특성상 포함하지 않습니다** (개인정보 보호).
 공개되는 `docs/` 아래 파일에는 담당자 이름·연락처를 저장하지 않습니다. `announcement.txt`와
 `latest-alert.txt`도 Pages에서 접근할 수 있으므로 공개 가능한 기상·조치 정보만 포함합니다.
 
@@ -59,7 +60,8 @@ weather-alert-system/
 │   ├── dashboard.py       # 현장 목록 대시보드 HTML 생성
 │   ├── map_dashboard.py   # 지도 중심 통합관제 HTML 생성
 │   └── main.py            # 실행 진입점
-├── docs/                 # 지도 관제(index.html), 현장 목록(sites.html), 공고문
+├── web/                  # 새 화면 원본(HTML·CSS·JS). src/publish.py가 docs/로 게시
+├── docs/                 # 공개 폴더: 새 본사 화면, data/latest.json, 이전 화면(old/), 공고문
 ├── credentials/          # 인증정보 보관 (git에 올라가지 않음)
 └── tests/                # 테스트 코드
 ```

@@ -33,6 +33,7 @@ class MapDashboardTests(unittest.TestCase):
         self.assertIn("테스트 건축현장", html)
         self.assertIn("폭염주의", html)
         self.assertIn("sites.html", html)
+        self.assertIn('href="../latest-alert.txt"', html)
         self.assertIn("시간대별 예보", html)
         self.assertIn("작업장소 체감온도 실측 필요", html)
         self.assertIn("선제주의", html)
