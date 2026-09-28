@@ -1,4 +1,5 @@
-/* 현장 화면(설계서 3.3): 한 현장의 지금·앞으로 24시간·10일 예보·법정 안내·전파 문안.
+/* 현장 화면(설계서 3.3): 한 현장의 지금·앞으로 24시간·10일 예보·법정 안내.
+   전파 문안은 본사 안전관리자가 검토해 보내는 문서라 현장 화면에는 두지 않는다(본사 화면에만).
    문장·판단은 Python이 만든 값을 그대로 쓰고, 여기서는 표시와 상호작용만 한다. 지도·시트 끌기는 site-map.js. */
 (function () {
   "use strict";
@@ -79,12 +80,7 @@
     $("#chips").innerHTML = P.chips(site, state.latest.status.warnings === "ok");
     $("#legal").innerHTML = P.legal(site);
     $("#d10").innerHTML = P.daily(site.daily);
-    $("#nt").textContent = site.notice;
-    if (first) {
-      $("#nt").classList.remove("open");
-      $("#ntMore").textContent = "전체 보기";
-      reveal();
-    }
+    if (first) reveal();
     P.timeline(els(), site, state.times, state.latest.forecast_issued_at, label);
     SITE.setHour(first ? 0 : state.h);
   }
@@ -124,29 +120,14 @@
     return true;
   }
 
-  async function copy() {
-    if (await WX.copy($("#nt").textContent)) { WX.toast("전파 문안을 복사했습니다"); return; }
-    $("#nt").classList.add("open");
-    const range = document.createRange();
-    range.selectNodeContents($("#nt"));
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    WX.toast("자동 복사가 막혀 있습니다. 선택된 문안을 직접 복사해 주세요");
-  }
   function bind() {
     if (bound) return;
     bound = true;
     P.scrub(els(), () => state.times.length, h => SITE.setHour(h));
     $("#nowchip").addEventListener("click", () => SITE.setHour(0));
-    $("#ntMore").addEventListener("click", () => {
-      const open = $("#nt").classList.toggle("open");
-      $("#ntMore").textContent = open ? "접기" : "전체 보기";
-    });
-    $("#copy").addEventListener("click", copy);
     window.addEventListener("resize", () => { if (state.site) P.cursor(els(), state.h, SITE.hourText(state.h)); });
   }
-  // 새 자료로 바꾼다(고른 시각·펼친 문안은 그대로). 5분 갱신과 확인에 쓴다.
+  // 새 자료로 바꾼다(고른 시각은 그대로). 5분 갱신과 확인에 쓴다.
   SITE.applyLatest = latest => {
     const shown = apply(latest, false);
     if (shown && SITE.map) SITE.map.render();

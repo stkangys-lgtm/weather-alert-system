@@ -108,6 +108,14 @@ class AppManifestTests(unittest.TestCase):
         self.assertIn('target="_blank"', button)
         self.assertIn('rel="noopener"', button)
 
+    def test_site_screen_has_no_notice(self):
+        # 전파 문안은 본사 안전관리자가 검토해 현장에 보내는 문서라 현장 화면에는 두지 않는다(본사 화면에만).
+        html, js = read("site.html"), read("assets/site.js")
+        for text in ("전파 문안", "문안 복사", 'id="nt"', 'id="copy"'):
+            self.assertNotIn(text, html)
+        self.assertNotIn("notice", js)
+        self.assertIn('id="bNotice"', read("index.html"))
+
     def test_site_footer_credits_map_sources(self):
         foot = read("site.html").split('<p class="foot">')[1].split("</p>")[0]
         for name in ("OpenStreetMap", "OpenFreeMap", "OpenMapTiles"):

@@ -33,6 +33,7 @@
   화면을 고칠 때는 `web/`만 수정하고 `docs/`의 게시본은 직접 고치지 않는다.
   로컬 확인: `python3 -m src.publish`(web/ → docs/) → `python3 scripts/preview_fixtures.py`(시험 자료: rain·failed·partial·night·escape·noforecast·onset → `.superpowers/preview/fixtures/`) → 저장소 폴더를 정적 서버로 열고(`python3 -m http.server 8765`) `http://localhost:8765/docs/index.html?data=../.superpowers/preview/fixtures/rain.json` 또는 `docs/site.html?data=…&id=현장ID`. `?map=svg`는 자체 지도 강제. 시험 자료는 만든 뒤 시간이 지나면 "수집 지연"이 뜨는 게 정상.
   로컬 `src.publish`로 바뀐 `docs/`는 커밋하지 않고 `git checkout -- docs && git clean -fd docs`로 되돌린다(공개본은 자동 수집이 올린다).
+- 현장 화면에는 전파 문안을 두지 않는다(2026-09-28 사용자 결정: 본사 안전관리자가 검토해 보내는 문서). 전파 문안은 본사 화면에만. 단 `latest.json`에는 본사 화면용으로 남아 있어 공개 주소로 볼 수는 있다(실제 차단은 로그인 분리 과제).
 - 3단계(현장 화면·홈 화면 추가, 2026-09-27 배포): `web/site.html`·`site.css`·`site.js`(본문)·`site-map.js`(지도·시트). 본사 상세와 현장 화면이 함께 쓰는 부품은 `web/assets/parts.js`와 `app.css` 끝 절. 계획서 `design/plans/2026-09-27-phase3-site-ui.md`.
 - 승인된 시안: `design/prototypes/`(본사·현장 인터랙티브 시안, README 참고).
 - 화면 확인: `node scripts/ui_check.mjs <단계.json>`(헤드리스 Chrome/Edge, 임시 프로필, 브라우저 위치 자동 탐색·`CHROME` 환경변수로 지정 가능) — 앱 미리보기 창이 가려지면 지도가 그려지지 않으므로 이 도구로 본다. 휴대폰 동작은 마우스(`click`·`drag`)만으로는 스크롤 충돌을 못 잡으므로 손가락 단계(`touch`·`swipe`·`tap`)로 확인한다. 시계를 바꿔 보려면 `initScript`. JS 부품 단위 확인은 node `vm`으로 `common.js`·`parts.js`를 읽어 확인(점검 환경에서 `ctx.window = ctx` 필요).

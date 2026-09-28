@@ -76,14 +76,7 @@ html, body { height: 100%; overflow: hidden; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .info { font-size: 13.5px; }
-.nt { background: var(--page); border-radius: 14px; padding: 12px 14px; font-size: 13px; line-height: 1.65; white-space: pre-wrap; max-height: 150px;
-  overflow: hidden; position: relative; color: var(--ink2); transition: max-height .5s var(--ease); user-select: text; }
-.nt.open { max-height: 1600px; }
-.nt:not(.open)::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: linear-gradient(transparent, var(--page)); }
-.more { display: block; margin: 8px auto 0; padding: 6px 10px; font-size: 12.5px; font-weight: 700; color: var(--primary); }
-.btn.wide { width: 100%; height: 52px; margin-top: 10px; border-radius: 16px; font-size: 15.5px; }
 .foot { text-align: center; font-size: 11.5px; color: var(--muted-ink); margin: 6px 0 4px; }
-.toast { bottom: calc(24px + env(safe-area-inset-bottom)); }
 
 /* 등장 */
 .rv { opacity: 0; transform: translateY(14px); transition: opacity .5s var(--ease), transform .6s var(--ease); }
