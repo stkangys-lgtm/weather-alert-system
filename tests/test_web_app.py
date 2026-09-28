@@ -116,6 +116,14 @@ class AppManifestTests(unittest.TestCase):
         self.assertNotIn("notice", js)
         self.assertIn('id="bNotice"', read("index.html"))
 
+    def test_hq_list_table_has_no_sideways_scroll_on_phones(self):
+        # 휴대폰 폭에서는 현장 목록 표를 현장별 카드로 바꾼다(좌우 스크롤이 불편하다는 사용자 의견, 2026-09-28).
+        css, js = read("assets/hq.css"), read("assets/hq-notice.js")
+        self.assertNotIn("min-width: 760px", css)
+        self.assertIn("content: attr(data-l)", css)
+        for label in ("기온", "비 mm/h", "바람 m/s", "습도"):
+            self.assertIn(f'data-l="{label}"', js)
+
     def test_site_footer_credits_map_sources(self):
         foot = read("site.html").split('<p class="foot">')[1].split("</p>")[0]
         for name in ("OpenStreetMap", "OpenFreeMap", "OpenMapTiles"):
