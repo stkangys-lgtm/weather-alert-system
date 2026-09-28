@@ -192,14 +192,18 @@
     return { url, corners, time: WX.kst(at).hm, fresh: age >= 0 && age <= WX.RADAR_MAX_MIN };
   };
   // 비구름 켜기·끄기는 이 브라우저에만 기억한다(기본 켜짐). 저장소가 막힌 환경에서도 화면은 그대로 쓴다.
-  let radarMemo = true;   // 저장소를 못 쓸 때 이번 화면에서만 유지하는 값
+  let radarMemo = true;      // 저장소를 못 쓸 때 이번 화면에서만 유지하는 값
+  let radarMemoOnly = false; // 한 번이라도 저장소 읽기·쓰기가 실패하면, 그 뒤로는 저장소를 다시 믿지 않고 이 값만 쓴다
   WX.radarPref = {
     get() {
-      try { return window.localStorage.getItem("wx.radar") !== "0"; } catch (e) { return radarMemo; }
+      if (radarMemoOnly) return radarMemo;
+      try { return window.localStorage.getItem("wx.radar") !== "0"; }
+      catch (e) { radarMemoOnly = true; return radarMemo; }
     },
     set(on) {
       radarMemo = !!on;
-      try { window.localStorage.setItem("wx.radar", on ? "1" : "0"); } catch (e) { /* 기억하지 못해도 이번 화면에는 반영 */ }
+      try { window.localStorage.setItem("wx.radar", on ? "1" : "0"); }
+      catch (e) { radarMemoOnly = true; /* 기억하지 못해도 이번 화면에는 반영 */ }
     },
   };
 

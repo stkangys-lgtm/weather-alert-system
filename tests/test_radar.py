@@ -253,6 +253,63 @@ class UpdateTests(unittest.TestCase):
         with open(self.out, "rb") as f:
             self.assertEqual(b"old", f.read())
 
+    @patch("src.radar.requests.get")
+    def test_changed_legend_prints_cell_index_and_never_the_key(self, get):
+        bad_rgb = sample().copy()
+        bad_rgb[33 + 24 * 10, 600:606] = (1, 2, 3)  # 칸 10을 바꿔 형식 확인에 걸리게 함
+        get.side_effect = [
+            _ok(json_value=_list_response(["http://x/RDR_CMP_WRC_202609280930.png"])),
+            _ok(content=_png_bytes(bad_rgb)),
+        ]
+        buf = io.StringIO()
+
+        with contextlib.redirect_stdout(buf):
+            view = radar.update_radar("SECRETKEY", self.out, self.now)
+
+        self.assertIsNone(view)
+        output = buf.getvalue()
+        self.assertIn("[레이더 오류] 영상 형식:", output)
+        self.assertIn("칸 10", output)
+        self.assertNotIn("SECRETKEY", output)
+
+    @patch("src.radar.requests.get")
+    def test_newest_image_is_fetched_even_if_list_is_out_of_order(self, get):
+        get.side_effect = [
+            _ok(json_value=_list_response([
+                "http://x/RDR_CMP_WRC_202609280930.png",
+                "http://x/RDR_CMP_WRC_202609280915.png",
+                "http://x/RDR_CMP_WRC_202609280925.png",
+            ])),
+            _ok(content=_png_bytes()),
+        ]
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertEqual("radar.png?v=202609280930", view["image"])
+        self.assertTrue(get.call_args_list[-1].args[0].endswith("RDR_CMP_WRC_202609280930.png"))
+
+    @patch("src.radar.requests.get")
+    def test_unparseable_urls_are_skipped_when_choosing_newest(self, get):
+        get.side_effect = [
+            _ok(json_value=_list_response([
+                "http://x/other.png",
+                "http://x/RDR_CMP_WRC_202609280925.png",
+            ])),
+            _ok(content=_png_bytes()),
+        ]
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertEqual("radar.png?v=202609280925", view["image"])
+
+    @patch("src.radar.requests.get")
+    def test_all_urls_unparseable_returns_none(self, get):
+        get.return_value = _ok(json_value=_list_response(["http://x/other.png", "http://x/also-other.png"]))
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertIsNone(view)
+
     @patch("src.radar.os.replace")
     @patch("src.radar.requests.get")
     def test_save_error_keeps_old_file_and_no_leftover_temp(self, get, replace):

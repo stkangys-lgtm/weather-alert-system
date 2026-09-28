@@ -10,7 +10,6 @@ import os
 from datetime import datetime
 
 from src import alert_rules
-from src import radar
 from src import settings as config
 from src.collection import CircuitBreaker, collect_mid_forecasts, collect_site_data
 from src.dashboard import build_dashboard_html
@@ -228,12 +227,19 @@ def update_radar_safely(breaker=None):
     """레이더 영상을 받아 화면용 값과 성공 여부를 돌려준다. 예외를 밖으로 내지 않는다.
 
     `src.radar.update_radar` 자체도 실패를 삼키지만, 여기서도 한 번 더 감싸서 이
-    단계의 어떤 예외도 뒤에 오는 화면 데이터 생성을 막지 않게 한다.
+    단계의 어떤 예외도 뒤에 오는 화면 데이터 생성을 막지 않게 한다. `radar` 모듈은
+    여기서만 가져와, numpy·Pillow 등 가져오기 자체가 실패해도 나머지 수집이 막히지
+    않게 한다.
     """
     try:
-        result = radar.update_radar(config.KMA_API_KEY, RADAR_PATH, datetime.now(), breaker=breaker)
+        from src import radar
+    except ImportError as e:
+        print(f"[레이더 오류] 모듈 가져오기 실패(직전 영상 유지): {type(e).__name__}")
+        return None, False
+    try:
+        result = radar.update_radar(config.KMA_API_KEY, RADAR_PATH, datetime.now(radar.KST), breaker=breaker)
     except Exception as e:
-        print(f"[레이더 오류] 처리 중 예외로 실패했습니다(직전 영상 유지): {e}")
+        print(f"[레이더 오류] 처리 중 예외로 실패했습니다(직전 영상 유지): {type(e).__name__}")
         return None, False
     if result:
         observed = datetime.fromisoformat(result["observed_at"])

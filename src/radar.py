@@ -381,12 +381,16 @@ def update_radar(api_key: str, out_path: str, now: datetime, breaker=None, timeo
         print("[레이더 오류] 목록 조회: 영상 주소가 비어 있습니다")
         return None
 
-    url = urls[-1]
-    try:
-        when = observed_at(url)
-    except ValueError as e:
-        print(f"[레이더 오류] 목록 조회: {type(e).__name__}")
+    dated = []
+    for u in urls:
+        try:
+            dated.append((observed_at(u), u))
+        except ValueError:
+            continue
+    if not dated:
+        print("[레이더 오류] 목록 조회: 영상 주소가 비어 있습니다")
         return None
+    when, url = max(dated, key=lambda pair: pair[0])
 
     try:
         img_response = requests.get(url, timeout=timeout)
@@ -407,12 +411,15 @@ def update_radar(api_key: str, out_path: str, now: datetime, breaker=None, timeo
         with Image.open(io.BytesIO(content)) as raw:
             rgb = np.array(raw.convert("RGB"))
         overlay = render_overlay(rgb)
+    except RadarFormatError as e:
+        print(f"[레이더 오류] 영상 형식: {e}")
+        return None
     except Exception as e:
         print(f"[레이더 오류] 영상 형식: {type(e).__name__}")
         return None
 
     out_dir = os.path.dirname(out_path) or "."
-    fd, tmp_path = tempfile.mkstemp(dir=out_dir, suffix=".png")
+    fd, tmp_path = tempfile.mkstemp(dir=out_dir, prefix=".radar-", suffix=".png")
     os.close(fd)
     try:
         overlay.save(tmp_path, format="PNG")
@@ -437,5 +444,5 @@ if __name__ == "__main__":
 
     _folder = sys.argv[1] if len(sys.argv) > 1 else "tmp/radar"
     os.makedirs(_folder, exist_ok=True)
-    _result = update_radar(config.KMA_API_KEY, os.path.join(_folder, "radar.png"), datetime.now())
+    _result = update_radar(config.KMA_API_KEY, os.path.join(_folder, "radar.png"), datetime.now(KST))
     print(_result)
