@@ -188,6 +188,18 @@ body[data-view="list"] .legend, body[data-view="list"] .mapctl { visibility: hid
   .legend .src { display: none; }
   .mapctl, body.hasdetail .mapctl { right: 10px; top: 160px; bottom: auto; }
   .tableview { top: 112px; left: 0; right: 0; bottom: 0; border-radius: 22px 22px 0 0; }
-  .tableview table { min-width: 760px; }
+  /* 휴대폰: 표를 현장별 카드로 바꿔 좌우 스크롤을 없앤다(칸 제목은 data-l로 값 위에). */
+  .tableview thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .tableview tbody tr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 8px; padding: 12px 8px; border-bottom: 1px solid var(--line); }
+  .tableview tbody th, .tableview tbody td { display: block; padding: 0; border: 0; }
+  .tableview tbody th { grid-column: 1 / -1; }
+  .tableview tbody th b { font-size: 15px; }
+  .tableview td.reg, .tableview td.obs { grid-column: span 2; margin-top: 4px; font-size: 12px; color: var(--muted-ink); }
+  .tableview td.obs { text-align: right; }
+  .tableview td.num { margin-top: 10px; text-align: left; font-size: 15px; font-weight: 700; }
+  .tableview td.num::before { content: attr(data-l); display: block; font-size: 11px; font-weight: 600; color: var(--muted-ink); margin-bottom: 2px; }
+  .tableview td.flags { grid-column: 1 / -1; margin-top: 10px; }
+  .tableview td.flags.none { display: none; }
+  .tableview td.sum { grid-column: 1 / -1; min-width: 0; margin-top: 8px; font-size: 13px; }
   .toast { bottom: 50vh; }
 }

@@ -62,11 +62,12 @@
       const obs = site.state === "ok" ? `${WX.kst(site.as_of).hm} 관측`
         : site.state === "stale" ? `<span class="mute">${WX.kst(site.as_of).hm} 관측 · 이번 수집 실패</span>` : '<span class="mute">자료 없음</span>';
       return `<tr data-id="${esc(site.id)}" tabindex="0"><th scope="row"><b>${esc(site.short)}</b><small>${esc(site.name)}</small></th>`
-        + `<td>${esc(site.region || "-")}</td><td>${obs}</td>`
-        + `<td class="num">${v.temp == null ? "-" : `${fmt(v.temp, 1)}°`}</td>`
-        + `<td class="num">${esc(v.rainText == null ? "-" : v.rainText)}</td>`
-        + `<td class="num">${fmt(v.wind, 1)}</td><td class="num">${v.humidity == null ? "-" : `${v.humidity}%`}</td>`
-        + `<td>${flags.map(f => `<span class="chip ${f.c.cls || "mute"}">${WX.icon(f.icon)}${esc(f.c.text)}</span>`).join("") || '<span class="mute">없음</span>'}</td>`
+        + `<td class="reg">${esc(site.region || "-")}</td><td class="obs">${obs}</td>`
+        // data-l: 휴대폰 폭에서는 표를 현장별 카드로 바꿔(좌우 스크롤 없음) 칸 제목을 값 위에 붙인다.
+        + `<td class="num" data-l="기온">${v.temp == null ? "-" : `${fmt(v.temp, 1)}°`}</td>`
+        + `<td class="num" data-l="비 mm/h">${esc(v.rainText == null ? "-" : v.rainText)}</td>`
+        + `<td class="num" data-l="바람 m/s">${fmt(v.wind, 1)}</td><td class="num" data-l="습도">${v.humidity == null ? "-" : `${v.humidity}%`}</td>`
+        + `<td class="flags${flags.length ? "" : " none"}">${flags.map(f => `<span class="chip ${f.c.cls || "mute"}">${WX.icon(f.icon)}${esc(f.c.text)}</span>`).join("") || '<span class="mute">없음</span>'}</td>`
         + `<td class="sum">${esc(site.summary)}</td></tr>`;
     }).join("");
   }
