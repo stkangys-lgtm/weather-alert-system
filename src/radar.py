@@ -24,6 +24,7 @@ import os
 import re
 import tempfile
 from datetime import datetime, timedelta, timezone
+from urllib.parse import urlsplit
 
 import numpy as np
 import requests
@@ -96,7 +97,7 @@ _GRATICULE_TOLERANCE = 50
 # 공공데이터포털 레이더영상 API(Global Constraints 확인, 2026-09-28).
 LIST_URL = "https://apis.data.go.kr/1360000/RadarImgInfoService/getCmpImg"
 KST = timezone(timedelta(hours=9))
-_FILENAME_RE = re.compile(r"RDR_CMP_WRC_(\d{12})\.png")
+_FILENAME_RE = re.compile(r"RDR_CMP_WRC_(\d{12})\.png")  # fullmatch 대상: URL 마지막 경로 조각(파일 이름)
 
 
 class RadarFormatError(Exception):
@@ -315,9 +316,12 @@ def image_urls(item: dict) -> list[str]:
 def observed_at(url: str) -> datetime:
     """레이더 영상 주소의 파일 이름 ``RDR_CMP_WRC_YYYYMMDDHHMM.png``에서 관측시각을 얻는다.
 
-    한국시각(+09:00)으로 돌려주고, 이름 형식이 다르면 ``ValueError``를 낸다.
+    주소 경로의 마지막 조각(파일 이름)에만 정확히(fullmatch) 맞춰 봐서, 주소 다른
+    부분의 숫자열이 우연히 걸리지 않게 한다. 한국시각(+09:00)으로 돌려주고, 이름
+    형식이 다르면 ``ValueError``를 낸다.
     """
-    match = _FILENAME_RE.search(url)
+    name = os.path.basename(urlsplit(url).path)
+    match = _FILENAME_RE.fullmatch(name)
     if not match:
         raise ValueError(f"레이더 영상 파일 이름 형식이 아닙니다: {url}")
     return datetime.strptime(match.group(1), "%Y%m%d%H%M").replace(tzinfo=KST)
@@ -333,9 +337,9 @@ def _korean_date(now) -> str:
 def update_radar(api_key: str, out_path: str, now: datetime, breaker=None, timeout: int = 10):
     """레이더 최신 영상을 받아 `out_path`에 저장하고 화면용 결과를 돌려준다.
 
-    실패하면(네트워크·빈 목록·형식 변경·회로 차단 중 어떤 경우든) 기존 파일을
-    건드리지 않고 단계("목록 조회"/"영상 받기"/"영상 형식")와 예외 종류만 한 줄
-    출력한 뒤 `None`을 돌려준다. 출력에는 API 키를 넣지 않는다.
+    실패하면(네트워크·빈 목록·형식 변경·저장 오류·회로 차단 중 어떤 경우든) 기존
+    파일을 건드리지 않고 단계("목록 조회"/"영상 받기"/"영상 형식"/"영상 저장")와
+    예외 종류만 한 줄 출력한 뒤 `None`을 돌려준다. 출력에는 API 키를 넣지 않는다.
     """
     if breaker is not None and breaker.is_tripped():
         return None
@@ -413,10 +417,11 @@ def update_radar(api_key: str, out_path: str, now: datetime, breaker=None, timeo
     try:
         overlay.save(tmp_path, format="PNG")
         os.replace(tmp_path, out_path)
-    except Exception:
+    except Exception as e:
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
-        raise
+        print(f"[레이더 오류] 영상 저장: {type(e).__name__}")
+        return None
 
     return {
         "image": f"{os.path.basename(out_path)}?v={when.strftime('%Y%m%d%H%M')}",

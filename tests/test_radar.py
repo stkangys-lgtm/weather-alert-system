@@ -253,6 +253,25 @@ class UpdateTests(unittest.TestCase):
         with open(self.out, "rb") as f:
             self.assertEqual(b"old", f.read())
 
+    @patch("src.radar.os.replace")
+    @patch("src.radar.requests.get")
+    def test_save_error_keeps_old_file_and_no_leftover_temp(self, get, replace):
+        with open(self.out, "wb") as f:
+            f.write(b"old")
+        get.side_effect = [
+            _ok(json_value=_list_response(["http://x/RDR_CMP_WRC_202609280930.png"])),
+            _ok(content=_png_bytes()),
+        ]
+        replace.side_effect = OSError("disk full")
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertIsNone(view)
+        with open(self.out, "rb") as f:
+            self.assertEqual(b"old", f.read())
+        leftovers = [n for n in os.listdir(self._tmp.name) if n != "radar.png"]
+        self.assertEqual([], leftovers)
+
     @patch("src.radar.requests.get")
     def test_tripped_breaker_skips_request(self, get):
         breaker = MagicMock()
