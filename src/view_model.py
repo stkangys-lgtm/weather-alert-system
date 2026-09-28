@@ -261,13 +261,29 @@ def national_view(sites, warnings_ok, now):
     }
 
 
-def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_issued_at, mid_issued_at):
+def _radar_status(radar, radar_ok, previous):
+    """레이더 상태·값을 정한다.
+
+    `radar_ok`가 None이면 이번 실행이 레이더를 다루지 않은 것이므로 상태 "off"에
+    넘겨받은 값을 그대로 둔다. True면 "ok"에 새 값, False면 "failed"에 직전
+    `latest["radar"]`(없으면 None)를 남긴다(레이더만 실패해도 직전 영상을 보여준다).
+    """
+    if radar_ok is None:
+        return "off", radar
+    if radar_ok:
+        return "ok", radar
+    return "failed", (previous or {}).get("radar")
+
+
+def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_issued_at, mid_issued_at,
+                  radar=None, radar_ok=None):
     now = _as_kst(now)
     previous_sites = {s.get("id"): s for s in (previous or {}).get("sites") or []}
     sites = [build_site_view(item, mid_forecasts.get(item["site"]["site_name"], []),
                              previous_sites.get(site_id(item["site"])), now)
              for item in collected]
     fresh = [s for s in sites if s["state"] == "ok"]
+    radar_status, radar_value = _radar_status(radar, radar_ok, previous)
     return {
         "schema": SCHEMA_VERSION,
         "generated_at": _kst_iso(now),
@@ -278,11 +294,11 @@ def build_latest(collected, mid_forecasts, previous, now, warnings_ok, forecast_
             "current": _collection_status(len(fresh), len(sites)),
             "forecast": _collection_status(sum(1 for item in collected if item.get("forecast")), len(collected)),
             "warnings": "ok" if warnings_ok else "failed",
-            "radar": "off",
+            "radar": radar_status,
         },
         "schedule": {"window": WINDOW_LABEL, "next_run_at": _kst_iso(next_collection_at(now))},
         "national": national_view(sites, warnings_ok, now),
-        "radar": None,
+        "radar": radar_value,
         "sites": sites,
     }
 
@@ -314,7 +330,7 @@ def write_latest(path, data):
         raise
 
 
-def publish_latest(path, collected, mid_forecasts, now):
+def publish_latest(path, collected, mid_forecasts, now, radar=None, radar_ok=None):
     now = _as_kst(now)
 
     def build(previous):
@@ -326,6 +342,8 @@ def publish_latest(path, collected, mid_forecasts, now):
             warnings_ok=all(item.get("weather_warnings_available", True) for item in collected),
             forecast_issued_at=forecast_base_datetime(now),
             mid_issued_at=mid_issue_datetime(now),
+            radar=radar,
+            radar_ok=radar_ok,
         )
 
     previous = load_latest(path)

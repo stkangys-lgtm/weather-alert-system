@@ -7,6 +7,7 @@ import unittest
 from datetime import date, datetime, timedelta
 
 from src.narrative import contains_forbidden
+from src.radar import CORNERS
 from src.view_model import (
     KST,
     SITE_FIELDS,
@@ -116,6 +117,7 @@ class SeriesTests(unittest.TestCase):
 
 
 NOW = datetime(2026, 9, 25, 17, 47, tzinfo=KST)
+VIEW = {"image": "radar.png?v=202609251740", "observed_at": "2026-09-25T17:40:00+09:00", "corners": CORNERS}
 _UNSET = object()
 PROFILE_GAP = {"status": "데이터 부족", "work_type": "site_profile", "title": "현장 작업 프로필 미등록",
                "article": "판정 전제정보", "reason": "미등록", "actions": []}
@@ -152,9 +154,10 @@ def make_item(site=None, current=_UNSET, forecast=None, warnings=None, available
             "weather_warnings": warnings or [], "weather_warnings_available": available}
 
 
-def build(items, previous=None, warnings_ok=True, now=NOW):
+def build(items, previous=None, warnings_ok=True, now=NOW, radar=None, radar_ok=None):
     return build_latest(items, {}, previous=previous, now=now, warnings_ok=warnings_ok,
-                        forecast_issued_at=datetime(2026, 9, 25, 14, 0), mid_issued_at=datetime(2026, 9, 25, 6, 0))
+                        forecast_issued_at=datetime(2026, 9, 25, 14, 0), mid_issued_at=datetime(2026, 9, 25, 6, 0),
+                        radar=radar, radar_ok=radar_ok)
 
 
 class BuildLatestTests(unittest.TestCase):
@@ -296,6 +299,20 @@ class BuildLatestTests(unittest.TestCase):
     def test_partial_status(self):
         latest = build([make_item(), make_item(site=site_cfg("연희·연남동 공공주택"), current=None)])
         self.assertEqual("partial", latest["status"]["current"])
+
+    def test_radar_ok(self):
+        view = {"image": "radar.png?v=202609251740", "observed_at": "2026-09-25T17:40:00+09:00", "corners": CORNERS}
+        latest = build([make_item()], radar=view, radar_ok=True)
+        self.assertEqual(("ok", view), (latest["status"]["radar"], latest["radar"]))
+
+    def test_radar_failure_keeps_previous_image(self):
+        previous = build([make_item()], radar=VIEW, radar_ok=True)
+        latest = build([make_item()], previous=previous, radar=None, radar_ok=False)
+        self.assertEqual(("failed", VIEW), (latest["status"]["radar"], latest["radar"]))
+
+    def test_radar_failure_without_previous(self):
+        latest = build([make_item()], radar=None, radar_ok=False)
+        self.assertEqual(("failed", None), (latest["status"]["radar"], latest["radar"]))
 
 
 class LatestFileTests(unittest.TestCase):

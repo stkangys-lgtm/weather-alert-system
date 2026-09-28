@@ -1,5 +1,6 @@
 """기상청 API로 현장별 기상 데이터를 수집해 Google Sheets에 기록하고,
-이상기상 여부를 판정해 공고문 텍스트·화면 데이터(docs/data/latest.json)·이전 대시보드(docs/old/)를 생성한다.
+이상기상 여부를 판정해 공고문 텍스트·화면 데이터(docs/data/latest.json,
+docs/data/radar.png)·이전 대시보드(docs/old/)를 생성한다.
 
 실행 (프로젝트 루트에서, 가상환경 활성화 후):
     python -m src.main
@@ -9,6 +10,7 @@ import os
 from datetime import datetime
 
 from src import alert_rules
+from src import radar
 from src import settings as config
 from src.collection import CircuitBreaker, collect_mid_forecasts, collect_site_data
 from src.dashboard import build_dashboard_html
@@ -46,6 +48,7 @@ STATE_PATH = os.path.join(DOCS_DIR, "weather-state.json")
 LATEST_ALERT_PATH = os.path.join(DOCS_DIR, "latest-alert.txt")
 NOTIFICATION_OUTBOX_PATH = os.path.join(DOCS_DIR, "notification-outbox.json")
 LATEST_PATH = os.path.join(DOCS_DIR, "data", "latest.json")
+RADAR_PATH = os.path.join(DOCS_DIR, "data", "radar.png")
 
 # 공고문은 매시간이 아니라 오전 7시, 오후 1시(KST) 실행 시에만 생성한다 (단톡방 공유용, 하루 2회면 충분).
 ANNOUNCEMENT_HOURS = {7, 13}
@@ -221,10 +224,30 @@ def write_map(collected, now_str, mid_forecasts):
         f.write(html)
 
 
-def write_latest_view(collected, mid_forecasts, now):
+def update_radar_safely(breaker=None):
+    """레이더 영상을 받아 화면용 값과 성공 여부를 돌려준다. 예외를 밖으로 내지 않는다.
+
+    `src.radar.update_radar` 자체도 실패를 삼키지만, 여기서도 한 번 더 감싸서 이
+    단계의 어떤 예외도 뒤에 오는 화면 데이터 생성을 막지 않게 한다.
+    """
+    try:
+        result = radar.update_radar(config.KMA_API_KEY, RADAR_PATH, datetime.now(), breaker=breaker)
+    except Exception as e:
+        print(f"[레이더 오류] 처리 중 예외로 실패했습니다(직전 영상 유지): {e}")
+        return None, False
+    if result:
+        observed = datetime.fromisoformat(result["observed_at"])
+        print(f"[레이더] {observed.strftime('%H:%M')} 영상")
+        return result, True
+    print("[레이더] 이번 수집 실패(직전 영상 유지)")
+    return None, False
+
+
+def write_latest_view(collected, mid_forecasts, now, radar_view=None, radar_ok=None):
     """화면용 공개 데이터를 쓴다. 실패해도 기존 대시보드·알림 산출물은 계속 만든다."""
     try:
-        latest = publish_latest(LATEST_PATH, collected, mid_forecasts, now.astimezone())
+        latest = publish_latest(LATEST_PATH, collected, mid_forecasts, now.astimezone(),
+                                 radar=radar_view, radar_ok=radar_ok)
         print(f"[화면 데이터] 현장 {len(latest['sites'])}곳 · 실황 {latest['status']['current']} · "
               f"특보 {latest['status']['warnings']} · 다음 수집 {latest['schedule']['next_run_at'][11:16]}")
     except Exception as e:
@@ -314,7 +337,8 @@ def main():
     collected = collect_site_data(config.SITES, breaker=breaker)
     attach_weather_warnings(collected, breaker=breaker)
     mid_forecasts = collect_mid_forecasts(config.SITES, breaker=breaker, now=now)
-    write_latest_view(collected, mid_forecasts, now)
+    radar_view, radar_ok = update_radar_safely(breaker=breaker)
+    write_latest_view(collected, mid_forecasts, now, radar_view, radar_ok)
     publish_screens()
     state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
     delivery = process_notifications(

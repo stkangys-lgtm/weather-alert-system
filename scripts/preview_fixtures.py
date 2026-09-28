@@ -9,6 +9,11 @@ docs/data/latest.json의 현장 목록·위치를 바탕으로 상황별 자료�
 - escape: 현장명·문장에 <, &, " 가 들어간 경우(글자로만 보여야 함)
 - noforecast: 1곳 예보 없음(단기예보 일부 실패)
 - onset: 비가 막 시작된 현장(강수량 0, 강수형태 빗방울) 1곳 + 비 1곳
+- radarold: 레이더 영상이 90분보다 오래됨(관측 생성시각 − 120분) + 상태 failed
+- noradar: 레이더 영상 없음(radar: None) + 상태 failed
+
+모든 자료(radarold·noradar 제외)에는 표본 레이더 영상으로 만든 "radar.png"를 가리키는
+radar 값(상태 ok)을 함께 넣는다. 실제 영상 파일은 main()이 출력 폴더에 한 번만 쓴다.
 """
 
 import copy
@@ -17,18 +22,29 @@ import os
 import sys
 from datetime import datetime, timedelta
 
+import numpy as np
+from PIL import Image
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
+from src.radar import CORNERS, render_overlay  # noqa: E402
 from src.view_model import finish_site, national_view, parse_pcp  # noqa: E402
 
 SOURCE = os.path.join(ROOT, "docs", "data", "latest.json")
 DEFAULT_OUT = os.path.join(ROOT, ".superpowers", "preview", "fixtures")
+RADAR_SAMPLE = os.path.join(ROOT, "tests", "fixtures", "radar", "RDR_CMP_WRC_202609280930.png")
+RADAR_IMAGE = "radar.png?v=fixture"
 RAIN_NOW = (31.0, 12.4, 4.2, 0.6)
 HEAVY = {"kind": "기상특보", "title": "호우경보", "level": "경보"}
 PRE = {"kind": "예비특보", "title": "강풍 예비특보", "level": "예비특보"}
 STOP = {"status": "법정 작업중지", "title": "철골작업 중지", "article": "산업안전보건기준에 관한 규칙 제383조"}
+
+
+def _radar_view(generated_at, minutes_ago):
+    observed = datetime.fromisoformat(generated_at) - timedelta(minutes=minutes_ago)
+    return {"image": RADAR_IMAGE, "observed_at": observed.isoformat(), "corners": CORNERS}
 
 
 def _pcp_text(mm):
@@ -112,7 +128,30 @@ def build_fixtures(base):
     wet[0]["now"].update(rain_mm=0.0, pty="빗방울")
     wet[1]["now"].update(rain_mm=2.0, pty="비")
     fixtures["onset"] = _finish(onset)
+
+    for latest in fixtures.values():
+        latest["radar"] = _radar_view(latest["generated_at"], 10)
+        latest["status"]["radar"] = "ok"
+
+    radarold = copy.deepcopy(fixtures["rain"])
+    radarold["radar"] = _radar_view(radarold["generated_at"], 120)
+    radarold["status"]["radar"] = "failed"
+    fixtures["radarold"] = radarold
+
+    noradar = copy.deepcopy(fixtures["rain"])
+    noradar["radar"] = None
+    noradar["status"]["radar"] = "failed"
+    fixtures["noradar"] = noradar
+
     return fixtures
+
+
+def _write_radar_png(out_dir):
+    """표본 레이더 영상으로 만든 radar.png를 출력 폴더에 쓴다."""
+    with Image.open(RADAR_SAMPLE) as img:
+        rgb = np.array(img.convert("RGB"))
+    overlay = render_overlay(rgb)
+    overlay.save(os.path.join(out_dir, "radar.png"), format="PNG")
 
 
 def main(out_dir=DEFAULT_OUT):
@@ -123,6 +162,7 @@ def main(out_dir=DEFAULT_OUT):
     for name, latest in fixtures.items():
         with open(os.path.join(out_dir, f"{name}.json"), "w", encoding="utf-8") as f:
             json.dump(latest, f, ensure_ascii=False)
+    _write_radar_png(out_dir)
     print(f"[시험 자료] {out_dir} ← {', '.join(sorted(fixtures))}")
 
 
