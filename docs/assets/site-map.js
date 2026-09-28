@@ -83,7 +83,22 @@
     if (!v) return `${state.site.short} · -`;
     return WX.isRain(v) ? `${state.site.short} · 비 ${v.rainText}` : `${state.site.short} · ${fmt(v.temp, 1)}°`;
   }
+  // 레이더 비구름(설계서 5.8): 현장 화면 지도는 늘 "지금" 자료라 시각과 무관하게, 90분 안의 영상만, 실지도에서만 보인다.
+  // 켜기·끄기는 본사와 같은 설정(WX.radarPref)을 쓴다.
+  function syncRadar() {
+    const btn = $("#layerBtn"), sub = $("#radarSub");
+    const can = !adapter || !!adapter.canRadar, on = WX.radarPref.get();   // 지도 준비 전에는 실지도로 가정
+    const info = state.latest ? WX.radarInfo(state.latest) : null;
+    const fresh = !!(info && info.fresh);
+    btn.hidden = !(adapter && adapter.canRadar);
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", String(on));
+    if (adapter) adapter.setRadar(info, can && fresh && on);
+    sub.textContent = !can ? "간단한 지도에서는 비구름을 표시하지 않습니다"
+      : fresh ? `레이더 ${info.time} · 자료: 기상청` : "레이더 자료 없음";
+  }
   function render() {
+    syncRadar();
     if (!marker || !state.site) return;
     marker.setLngLat(state.site.lon, state.site.lat);
     const text = markerText();
@@ -116,6 +131,10 @@
       started = true;
       bindSheet();
       setSnap(desktop() ? "full" : "half", false);
+      $("#layerBtn").addEventListener("click", () => { WX.radarPref.set(!WX.radarPref.get()); syncRadar(); });
+      // 수집이 멈춰 새 자료가 없어도 관측 90분이 지나면 비구름을 내린다.
+      setInterval(syncRadar, 60 * 1000);
+      syncRadar();
       if (typeof state.site.lat !== "number" || typeof state.site.lon !== "number") return;   // 위치 없는 현장은 지도 없이
       WX.createMap({ container: $("#map"), padding: SITE.padding, view: { center: [state.site.lon, state.site.lat], zoom: 9 },
         attribution: "top-left", onReady: attach, onNotice: notice });

@@ -11,6 +11,10 @@ html, body { height: 100%; overflow: hidden; }
 .live .short { display: inline; }
 .mapmsg { top: calc(64px + env(safe-area-inset-top)); }
 .maplibregl-ctrl-top-left { top: calc(48px + env(safe-area-inset-top)); left: 2px; }   /* 지도 출처: 상단 막대 아래(시트에 가리지 않게) */
+/* 비구름 버튼: 지도 오른쪽 위, 상단 막대 아래. 시트보다 아래 층이라 "펼침"에서는 시트에 가리고 "반"·"지도"에서 누른다. */
+.layerbtn { position: fixed; top: calc(62px + env(safe-area-inset-top)); right: 12px; z-index: 3; width: 42px; height: 42px;
+  border-radius: 14px; display: grid; place-items: center; color: var(--ink2); }
+.layerbtn.on { background: var(--tint); color: var(--primary); }
 
 /* 끌어올리는 시트: --yn(0 = 다 펼침)만큼 아래로 내려가 있다. 손잡이로만 끈다(타임라인 문지르기와 겹치지 않게). */
 .sheet { position: fixed; left: 0; right: 0; bottom: 0; height: calc(100% - 60px - env(safe-area-inset-top)); z-index: 4;
@@ -108,10 +112,11 @@ html, body { height: 100%; overflow: hidden; }
 @media (min-width: 1024px) {
   .top { top: 16px; left: 16px; right: calc(min(560px, 46vw) + 16px); }
   .maplibregl-ctrl-top-left { top: 54px; left: 6px; }
+  .layerbtn { top: 70px; right: calc(min(560px, 46vw) + 16px); }
   .live .full { display: inline; }
   .live .short { display: none; }
   .sheet { top: 0; left: auto; width: min(560px, 46vw); height: 100%; border-radius: 0; transform: none; transition: none;
     box-shadow: -10px 0 40px rgba(16, 24, 32, .12); }
   .sc { padding: 24px 24px 32px; }
-  .grab, .mapcard { display: none; }
+  .grab, .mapcta .go { display: none; }   /* 지도가 늘 보이므로 "지도로 보기"만 숨기고, 카드는 레이더 시각·출처를 보인다 */
 }
