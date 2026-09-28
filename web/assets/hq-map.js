@@ -51,6 +51,23 @@
       popIn();
     }
     if (state.sel) focus(state.sel, false);
+    syncRadar();
+  }
+
+  // 레이더 비구름(설계서 5.8): 관측 영상이라 "지금"에서만, 90분 안의 영상만, 실지도에서만 보인다.
+  function syncRadar() {
+    const btn = $("#layerBtn"), src = $("#radarSrc");
+    const can = !!(adapter && adapter.canRadar), on = WX.radarPref.get();
+    const info = state.latest ? WX.radarInfo(state.latest) : null;
+    const fresh = !!(info && info.fresh);
+    btn.hidden = !can;
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", String(on));
+    if (adapter) adapter.setRadar(info, can && fresh && state.h === 0 && on);
+    src.textContent = !can || !on ? "자료: 기상청"
+      : !fresh ? "레이더 자료 없음 · 자료: 기상청"
+      : state.h !== 0 ? "비구름은 지금(관측)만 표시 · 자료: 기상청"
+      : `비구름 ${info.time} 레이더 · 자료: 기상청`;
   }
 
   function popIn() {
@@ -74,6 +91,12 @@
       el.setAttribute("aria-label", `${site.name} ${el.querySelector(".lab").textContent}`);
     });
     regroup();
+  }
+
+  // 시각을 바꾸면 비구름도 다시 판단한다(표식만 다시 그리는 render와 분리).
+  function renderAll() {
+    render();
+    syncRadar();
   }
 
   function regroup() {
@@ -187,10 +210,13 @@
       $("#zIn").addEventListener("click", () => adapter && adapter.zoomIn());
       $("#zOut").addEventListener("click", () => adapter && adapter.zoomOut());
       $("#zHome").addEventListener("click", () => adapter && adapter.fitBounds(WX.KOREA, { padding: HQ.padding() }));
+      $("#layerBtn").addEventListener("click", () => { WX.radarPref.set(!WX.radarPref.get()); syncRadar(); });
+      // 수집이 멈춰 새 자료가 없어도 관측 90분이 지나면 비구름을 내린다.
+      setInterval(syncRadar, 60 * 1000);
       window.addEventListener("resize", () => adapter && adapter.resize());
       WX.createMap({ container: $("#map"), padding: HQ.padding, onReady: attach, onNotice: notice });
     },
-    render,
+    render: renderAll,
     focus,
     reload() { if (adapter) attach(adapter, true); },
   };

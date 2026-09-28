@@ -22,9 +22,30 @@
   }
 
   function maplibreAdapter(map) {
+    let radarUrl = null;
     return {
       kind: "maplibre",
       canZoom: true,
+      canRadar: true,
+      // 레이더 비구름: 영상 한 장을 지명 글자(첫 symbol 레이어) 아래에 겹친다. 현장 표식은 HTML이라 늘 위에 있다.
+      // 보일 때만 영상을 불러오고, 주소(?v=)가 바뀌면 같은 source의 영상만 바꾼다.
+      setRadar(info, visible) {
+        const shown = !!(info && visible);
+        if (!shown) {
+          if (map.getLayer("radar")) map.setLayoutProperty("radar", "visibility", "none");
+          return;
+        }
+        if (!map.getSource("radar")) {
+          const firstSymbol = map.getStyle().layers.find(layer => layer.type === "symbol");
+          map.addSource("radar", { type: "image", url: info.url, coordinates: info.corners });
+          map.addLayer({ id: "radar", type: "raster", source: "radar",
+            paint: { "raster-opacity": 0.72, "raster-fade-duration": 0 } }, firstSymbol && firstSymbol.id);
+        } else if (info.url !== radarUrl) {
+          map.getSource("radar").updateImage({ url: info.url, coordinates: info.corners });
+        }
+        radarUrl = info.url;
+        map.setLayoutProperty("radar", "visibility", "visible");
+      },
       addMarker(el, lon, lat, anchor = "center", offset = [0, 0]) {
         const marker = new maplibregl.Marker({ element: el, anchor, offset }).setLngLat([lon, lat]).addTo(map);
         return { el, remove: () => marker.remove(), setLngLat: (x, y) => marker.setLngLat([x, y]) };
@@ -69,6 +90,8 @@
     const adapter = {
       kind: "svg",
       canZoom: false,
+      canRadar: false,   // 자체 지도는 투영이 달라 비구름을 겹치지 않는다
+      setRadar() {},
       addMarker(el, lon, lat, anchor = "center", offset = [0, 0]) {
         const wrap = document.createElement("div");
         wrap.className = "svgmark";

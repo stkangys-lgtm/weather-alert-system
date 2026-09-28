@@ -176,6 +176,33 @@
     const asked = new URLSearchParams(location.search).get("data");
     return asked && /^[\w\-./]+\.json$/.test(asked) && !asked.includes("//") ? asked : fallback;
   };
+  // 레이더 비구름(설계서 5.8): 영상 경로는 latest.json 기준 상대 경로(같은 폴더의 파일 이름만 허용).
+  // 관측 뒤 90분이 지난 영상은 fresh=false → 화면은 숨기고 "레이더 자료 없음".
+  WX.RADAR_MAX_MIN = 90;
+  WX.radarInfo = (latest, now = Date.now()) => {
+    const radar = latest && latest.radar;
+    if (!radar || typeof radar.image !== "string" || !/^[\w.-]+\.png(\?v=\w+)?$/.test(radar.image)) return null;
+    const corners = radar.corners;
+    if (!Array.isArray(corners) || corners.length !== 4 || !corners.every(c => Array.isArray(c) && c.length === 2
+      && c.every(n => typeof n === "number" && isFinite(n)))) return null;
+    const at = new Date(radar.observed_at).getTime();
+    if (!isFinite(at)) return null;
+    const url = new URL(radar.image, new URL(WX.dataUrl("data/latest.json"), location.href)).href;
+    const age = (now - at) / 60000;
+    return { url, corners, time: WX.kst(at).hm, fresh: age >= 0 && age <= WX.RADAR_MAX_MIN };
+  };
+  // 비구름 켜기·끄기는 이 브라우저에만 기억한다(기본 켜짐). 저장소가 막힌 환경에서도 화면은 그대로 쓴다.
+  let radarMemo = true;   // 저장소를 못 쓸 때 이번 화면에서만 유지하는 값
+  WX.radarPref = {
+    get() {
+      try { return window.localStorage.getItem("wx.radar") !== "0"; } catch (e) { return radarMemo; }
+    },
+    set(on) {
+      radarMemo = !!on;
+      try { window.localStorage.setItem("wx.radar", on ? "1" : "0"); } catch (e) { /* 기억하지 못해도 이번 화면에는 반영 */ }
+    },
+  };
+
   // 화면 자료 모양 점검: 맞지 않으면 그리기 전에 "불러오지 못했습니다" 안내로 보낸다(반쯤 그린 화면 방지).
   WX.validLatest = data => {
     const isObj = v => !!v && typeof v === "object" && !Array.isArray(v);
