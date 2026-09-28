@@ -185,8 +185,10 @@ body[data-view="list"] .legend, body[data-view="list"] .mapctl { visibility: hid
   .dhead { padding-top: 4px; }
   .scrub { display: none; }
   .legend { left: 10px; top: 118px; bottom: auto; }
-  .legend .src { display: none; }
-  .mapctl, body.hasdetail .mapctl { right: 10px; top: 160px; bottom: auto; }
+  /* 좁은 화면: 출처·레이더 시각(공공누리 출처 표기)을 범례 둘째 줄에 두고, 지도 버튼은 그만큼 내린다. */
+  .legend { padding-bottom: 25px; }
+  .legend .src { position: absolute; left: 12px; bottom: 8px; border-left: 0; padding-left: 0; white-space: nowrap; }
+  .mapctl, body.hasdetail .mapctl { right: 10px; top: 178px; bottom: auto; }
   .tableview { top: 112px; left: 0; right: 0; bottom: 0; border-radius: 22px 22px 0 0; }
   /* 휴대폰: 표를 현장별 카드로 바꿔 좌우 스크롤을 없앤다(칸 제목은 data-l로 값 위에). */
   .tableview thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

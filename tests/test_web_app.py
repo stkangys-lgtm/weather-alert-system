@@ -124,6 +124,12 @@ class AppManifestTests(unittest.TestCase):
         for label in ("기온", "비 mm/h", "바람 m/s", "습도"):
             self.assertIn(f'data-l="{label}"', js)
 
+    def test_hq_narrow_legend_keeps_radar_source(self):
+        # 좁은 화면에서도 비구름 출처(자료: 기상청, 공공누리 1유형)와 레이더 시각을 보인다.
+        narrow = read("assets/hq.css").split("@media (max-width: 899px)")[1]
+        self.assertNotIn(".legend .src { display: none; }", narrow)
+        self.assertIn(".legend .src { position: absolute;", narrow)
+
     def test_site_footer_credits_map_sources(self):
         foot = read("site.html").split('<p class="foot">')[1].split("</p>")[0]
         for name in ("OpenStreetMap", "OpenFreeMap", "OpenMapTiles"):
