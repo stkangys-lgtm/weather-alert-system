@@ -1,10 +1,16 @@
-"""src.radar 테스트 — 레이더 영상 틀 확인, 비 단계 추출, LCC 투영, 웹 지도 영상."""
+"""src.radar 테스트 — 레이더 영상 틀 확인, 비 단계 추출, LCC 투영, 웹 지도 영상, 조회·저장."""
 
+import contextlib
+import io
 import math
 import os
+import tempfile
 import unittest
+from datetime import datetime, timedelta, timezone
+from unittest.mock import MagicMock, patch
 
 import numpy as np
+import requests
 from PIL import Image
 
 from src import radar
@@ -130,6 +136,142 @@ class OverlayTests(unittest.TestCase):
         self.assertIn(4 + 1, window(img, 32.096, 125.188))    # 30mm/h 이상
         self.assertIn(3 + 1, window(img, 32.068, 126.317))    # 15~30
         self.assertEqual({0}, window(img, 37.5665, 126.978))  # 서울, 비 없음
+
+
+def _png_bytes(rgb=None):
+    """레이더 영상을 PNG 바이트로 인코딩한다(영상 응답 흉내)."""
+    img = Image.fromarray(sample() if rgb is None else rgb)
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return buf.getvalue()
+
+
+def _list_response(urls):
+    return {
+        "response": {
+            "header": {"resultCode": "00"},
+            "body": {"items": {"item": [{"rdr-img-file": urls}]}},
+        }
+    }
+
+
+def _ok(json_value=None, content=None):
+    resp = MagicMock(status_code=200)
+    resp.raise_for_status = lambda: None
+    if json_value is not None:
+        resp.json.return_value = json_value
+    if content is not None:
+        resp.content = content
+    return resp
+
+
+class UpdateTests(unittest.TestCase):
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.out = os.path.join(self._tmp.name, "radar.png")
+        self.now = datetime(2026, 9, 28, 9, 35, tzinfo=timezone(timedelta(hours=9)))
+
+    def tearDown(self):
+        self._tmp.cleanup()
+
+    def test_image_urls_accepts_list_and_string(self):
+        a = "http://www.kma.go.kr/repositary/image/rdr/img/RDR_CMP_WRC_202609280925.png"
+        b = a.replace("0925", "0930")
+        expected = [a.replace("http://", "https://"), b.replace("http://", "https://")]
+        self.assertEqual(expected, radar.image_urls({"rdr-img-file": [a, b]}))
+        self.assertEqual(expected, radar.image_urls({"rdr-img-file": f"[{a}, {b}]"}))
+
+    def test_observed_at_from_file_name(self):
+        self.assertEqual(
+            "2026-09-28T09:30:00+09:00",
+            radar.observed_at("https://x/RDR_CMP_WRC_202609280930.png").isoformat(),
+        )
+        with self.assertRaises(ValueError):
+            radar.observed_at("https://x/other.png")
+
+    @patch("src.radar.requests.get")
+    def test_success_writes_png_and_returns_view(self, get):
+        get.side_effect = [
+            _ok(json_value=_list_response([
+                "http://x/RDR_CMP_WRC_202609280925.png",
+                "http://x/RDR_CMP_WRC_202609280930.png",
+            ])),
+            _ok(content=_png_bytes()),
+        ]
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertEqual(
+            {
+                "image": "radar.png?v=202609280930",
+                "observed_at": "2026-09-28T09:30:00+09:00",
+                "corners": radar.CORNERS,
+            },
+            view,
+        )
+        self.assertEqual(760, Image.open(self.out).width)
+        self.assertTrue(get.call_args_list[-1].args[0].endswith("RDR_CMP_WRC_202609280930.png"))
+
+    @patch("src.radar.requests.get")
+    def test_network_error_keeps_old_file(self, get):
+        with open(self.out, "wb") as f:
+            f.write(b"old")
+        get.side_effect = requests.exceptions.ConnectionError("boom")
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertIsNone(view)
+        with open(self.out, "rb") as f:
+            self.assertEqual(b"old", f.read())
+
+    @patch("src.radar.requests.get")
+    def test_empty_list_returns_none(self, get):
+        with open(self.out, "wb") as f:
+            f.write(b"old")
+        get.return_value = _ok(json_value=_list_response([]))
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertIsNone(view)
+        with open(self.out, "rb") as f:
+            self.assertEqual(b"old", f.read())
+
+    @patch("src.radar.requests.get")
+    def test_changed_frame_returns_none_and_keeps_old_file(self, get):
+        with open(self.out, "wb") as f:
+            f.write(b"old")
+        bad_rgb = sample().copy()
+        bad_rgb[33, 603] = (1, 2, 3)  # 범례 칸 한 색을 바꿔 형식 확인에 걸리게 함
+        get.side_effect = [
+            _ok(json_value=_list_response(["http://x/RDR_CMP_WRC_202609280930.png"])),
+            _ok(content=_png_bytes(bad_rgb)),
+        ]
+
+        view = radar.update_radar("KEY", self.out, self.now)
+
+        self.assertIsNone(view)
+        with open(self.out, "rb") as f:
+            self.assertEqual(b"old", f.read())
+
+    @patch("src.radar.requests.get")
+    def test_tripped_breaker_skips_request(self, get):
+        breaker = MagicMock()
+        breaker.is_tripped.return_value = True
+
+        view = radar.update_radar("KEY", self.out, self.now, breaker=breaker)
+
+        self.assertIsNone(view)
+        get.assert_not_called()
+
+    @patch("src.radar.requests.get")
+    def test_key_is_not_printed(self, get):
+        get.side_effect = requests.exceptions.ConnectionError("http://x?serviceKey=SECRETKEY")
+        buf = io.StringIO()
+
+        with contextlib.redirect_stdout(buf):
+            radar.update_radar("SECRETKEY", self.out, self.now)
+
+        self.assertNotIn("SECRETKEY", buf.getvalue())
 
 
 if __name__ == "__main__":

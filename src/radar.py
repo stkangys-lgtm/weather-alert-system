@@ -12,11 +12,21 @@
    투영해 투명 배경 팔레트 PNG를 만든다.
 
 네트워크 조회·저장(Task 2)과 화면 연동(Task 3~)은 이 모듈을 가져다 쓴다.
+
+5. `image_urls`/`observed_at`/`update_radar` — 공공데이터포털 레이더 합성 영상
+   목록을 조회해 최신 영상을 받고, `render_overlay`로 만든 결과를 원자적으로
+   저장한다(Task 2). 실패하면 기존 파일을 그대로 두고 이유를 한 줄 출력한다.
 """
 
+import io
 import math
+import os
+import re
+import tempfile
+from datetime import datetime, timedelta, timezone
 
 import numpy as np
+import requests
 from PIL import Image
 
 from src.grid_converter import DEGRAD, OLAT, OLON, RE, SLAT1, SLAT2
@@ -82,6 +92,11 @@ _FRAME_SHAPE = (620, 635, 3)
 _MAP_Y0 = 20
 _MAP_X1 = 596
 _GRATICULE_TOLERANCE = 50
+
+# 공공데이터포털 레이더영상 API(Global Constraints 확인, 2026-09-28).
+LIST_URL = "https://apis.data.go.kr/1360000/RadarImgInfoService/getCmpImg"
+KST = timezone(timedelta(hours=9))
+_FILENAME_RE = re.compile(r"RDR_CMP_WRC_(\d{12})\.png")
 
 
 class RadarFormatError(Exception):
@@ -278,3 +293,144 @@ def render_overlay(rgb: np.ndarray) -> Image.Image:
     img.putdata(indices.reshape(-1).tolist())
     img.info["transparency"] = 0
     return img
+
+
+def image_urls(item: dict) -> list[str]:
+    """레이더 목록 응답 항목의 ``rdr-img-file``을 주소 목록으로 정규화한다.
+
+    목록(list)이나 ``"[a, b]"`` 형태 문자열 어느 쪽으로 와도 되고, 목록의 마지막이
+    최신 영상이다. 주소는 ``http://``로 오지만 ``https://``로 바꿔 받는다.
+    """
+    raw = item.get("rdr-img-file")
+    if isinstance(raw, str):
+        text = raw.strip()
+        if text.startswith("[") and text.endswith("]"):
+            text = text[1:-1]
+        urls = [u.strip() for u in text.split(",") if u.strip()]
+    else:
+        urls = list(raw or [])
+    return [u.replace("http://", "https://", 1) for u in urls]
+
+
+def observed_at(url: str) -> datetime:
+    """레이더 영상 주소의 파일 이름 ``RDR_CMP_WRC_YYYYMMDDHHMM.png``에서 관측시각을 얻는다.
+
+    한국시각(+09:00)으로 돌려주고, 이름 형식이 다르면 ``ValueError``를 낸다.
+    """
+    match = _FILENAME_RE.search(url)
+    if not match:
+        raise ValueError(f"레이더 영상 파일 이름 형식이 아닙니다: {url}")
+    return datetime.strptime(match.group(1), "%Y%m%d%H%M").replace(tzinfo=KST)
+
+
+def _korean_date(now) -> str:
+    """조회 시각(자연·인식 시간 모두 허용)을 한국 날짜(YYYYMMDD)로 바꾼다."""
+    if now.tzinfo is not None:
+        now = now.astimezone(KST)
+    return now.strftime("%Y%m%d")
+
+
+def update_radar(api_key: str, out_path: str, now: datetime, breaker=None, timeout: int = 10):
+    """레이더 최신 영상을 받아 `out_path`에 저장하고 화면용 결과를 돌려준다.
+
+    실패하면(네트워크·빈 목록·형식 변경·회로 차단 중 어떤 경우든) 기존 파일을
+    건드리지 않고 단계("목록 조회"/"영상 받기"/"영상 형식")와 예외 종류만 한 줄
+    출력한 뒤 `None`을 돌려준다. 출력에는 API 키를 넣지 않는다.
+    """
+    if breaker is not None and breaker.is_tripped():
+        return None
+
+    query = {
+        "serviceKey": api_key,
+        "dataType": "JSON",
+        "pageNo": "1",
+        "numOfRows": "10",
+        "data": "CMP_WRC",
+        "time": _korean_date(now),
+    }
+
+    try:
+        response = requests.get(LIST_URL, params=query, timeout=timeout)
+        response.raise_for_status()
+        payload = response.json()["response"]
+        header = payload["header"]
+        if header["resultCode"] != "00":
+            raise RuntimeError(header["resultCode"])
+        items = payload.get("body", {}).get("items", {}).get("item") or []
+        if isinstance(items, dict):
+            items = [items]
+        if breaker is not None:
+            breaker.record_success()
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+        if breaker is not None:
+            breaker.record_failure()
+        print(f"[레이더 오류] 목록 조회: {type(e).__name__}")
+        return None
+    except Exception as e:
+        print(f"[레이더 오류] 목록 조회: {type(e).__name__}")
+        return None
+
+    urls = []
+    for item in items:
+        urls.extend(image_urls(item))
+    if not urls:
+        print("[레이더 오류] 목록 조회: 영상 주소가 비어 있습니다")
+        return None
+
+    url = urls[-1]
+    try:
+        when = observed_at(url)
+    except ValueError as e:
+        print(f"[레이더 오류] 목록 조회: {type(e).__name__}")
+        return None
+
+    try:
+        img_response = requests.get(url, timeout=timeout)
+        img_response.raise_for_status()
+        content = img_response.content
+        if breaker is not None:
+            breaker.record_success()
+    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as e:
+        if breaker is not None:
+            breaker.record_failure()
+        print(f"[레이더 오류] 영상 받기: {type(e).__name__}")
+        return None
+    except Exception as e:
+        print(f"[레이더 오류] 영상 받기: {type(e).__name__}")
+        return None
+
+    try:
+        with Image.open(io.BytesIO(content)) as raw:
+            rgb = np.array(raw.convert("RGB"))
+        overlay = render_overlay(rgb)
+    except Exception as e:
+        print(f"[레이더 오류] 영상 형식: {type(e).__name__}")
+        return None
+
+    out_dir = os.path.dirname(out_path) or "."
+    fd, tmp_path = tempfile.mkstemp(dir=out_dir, suffix=".png")
+    os.close(fd)
+    try:
+        overlay.save(tmp_path, format="PNG")
+        os.replace(tmp_path, out_path)
+    except Exception:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+        raise
+
+    return {
+        "image": f"{os.path.basename(out_path)}?v={when.strftime('%Y%m%d%H%M')}",
+        "observed_at": when.isoformat(),
+        "corners": CORNERS,
+    }
+
+
+if __name__ == "__main__":
+    import sys
+
+    from src import settings as config
+
+    _folder = sys.argv[1] if len(sys.argv) > 1 else "tmp/radar"
+    os.makedirs(_folder, exist_ok=True)
+    _result = update_radar(config.KMA_API_KEY, os.path.join(_folder, "radar.png"), datetime.now())
+    print(_result)
