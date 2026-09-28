@@ -22,7 +22,7 @@
 - 현장 화면: `…/site.html?id=현장ID` (ID 없으면 현장 선택 목록). 본사 상세의 "현장 화면" 버튼으로 연결. 휴대폰 홈 화면에 추가하면 그 현장으로 바로 열린다(`docs/manifests/<ID>.webmanifest`, 수집 실행이 생성)
 - 이전 화면(2주간 병행, 5단계에서 정리): `…/old/index.html`(지도), `…/old/sites.html`(카드). `map.html`·`sites.html`은 이동 안내 페이지
 - 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **194개 통과** (2026-09-28 갱신, 4단계 레이더 포함). `config.py`가 없는 PC에서도 가짜 값(`tests/secretless_env.py`)으로 모두 돈다
+- 전체 테스트: **202개 통과** (2026-09-28 갱신, 4단계 레이더 포함). `config.py`가 없는 PC에서도 가짜 값(`tests/secretless_env.py`)으로 모두 돈다
 
 ### 대시보드 리디자인 진행 (2026-09-26~)
 
