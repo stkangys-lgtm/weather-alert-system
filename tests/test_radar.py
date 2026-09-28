@@ -81,6 +81,18 @@ class StepTests(unittest.TestCase):
         rgb[105, 100:110] = (0, 0, 0)
         self.assertEqual(3, radar.rain_steps(rgb)[105, 105])
 
+    def test_background_pixels_at_rain_edge_are_not_filled(self):
+        # 배경(250,250,250)은 회색조지만 LINE_COLORS가 아니므로 비 옆이어도 채우지 않는다.
+        rgb = np.full((620, 635, 3), 250, np.uint8)
+        rgb[100:110, 100:110] = (255, 50, 0)
+        steps = radar.rain_steps(rgb)
+        self.assertEqual(-1, steps[105, 110])
+        self.assertEqual(-1, steps[110, 105])
+
+    def test_sample_background_pixel_stays_unfilled(self):
+        steps = radar.rain_steps(sample())
+        self.assertEqual(-1, steps[256, 575])
+
 
 class ProjectionTests(unittest.TestCase):
     def test_round_trip(self):

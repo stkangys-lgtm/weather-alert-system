@@ -74,6 +74,10 @@ CORNERS = ((122.5, 40.0), (132.0, 40.0), (132.0, 31.0), (122.5, 31.0))
 GRATICULE = (80, 80, 80)
 GRATICULE_COUNT = 3223
 
+# 선 채우기 Ruling 대상: 해안선·경계선(검정), 격자선, 어두운 경계선(2026-09-28 표본 확인).
+# 일반 배경(육지 (250,250,250)·해양 (180,180,180) 등)은 회색조라도 대상이 아니다.
+LINE_COLORS = ((0, 0, 0), GRATICULE, (30, 30, 30))
+
 _FRAME_SHAPE = (620, 635, 3)
 _MAP_Y0 = 20
 _MAP_X1 = 596
@@ -133,8 +137,9 @@ def _neighbor_rain(steps: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 def rain_steps(rgb: np.ndarray) -> np.ndarray:
     """범례 색을 우리 강수 5단계(0~4)로 재분류한다. 없음/지도 영역 밖은 −1.
 
-    Ruling(선 채우기): 해안선·경계선·격자선(검정·회색) 픽셀이라 비 색이 확인되지
-    않는 칸은, 주변 8칸 중 2칸 이상이 비이면 그중 가장 높은 단계로 채운다.
+    Ruling(선 채우기): 해안선·경계선·격자선(`LINE_COLORS`) 픽셀이라 비 색이 확인되지
+    않는 칸은, 주변 8칸 중 2칸 이상이 비이면 그중 가장 높은 단계로 채운다. 일반 배경
+    (육지·해양의 옅은 회색 등)은 채우지 않는다 — 정확히 `LINE_COLORS`인 픽셀만 대상.
     """
     h, w = rgb.shape[:2]
     steps = np.full((h, w), -1, dtype=np.int8)
@@ -151,9 +156,11 @@ def rain_steps(rgb: np.ndarray) -> np.ndarray:
         mask = (rgb == np.array(color, dtype=rgb.dtype)).all(-1) & in_map
         steps[mask] = step
 
-    gray = (rgb[..., 0] == rgb[..., 1]) & (rgb[..., 1] == rgb[..., 2])
+    is_line = np.zeros((h, w), dtype=bool)
+    for color in LINE_COLORS:
+        is_line |= (rgb == np.array(color, dtype=rgb.dtype)).all(-1)
     count, best = _neighbor_rain(steps)
-    fill_mask = gray & in_map & (steps == -1) & (count >= 2)
+    fill_mask = is_line & in_map & (steps == -1) & (count >= 2)
     steps = np.where(fill_mask, best, steps).astype(np.int8)
     return steps
 
