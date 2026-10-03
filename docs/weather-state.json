@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-03T08:16:06+09:00",
+  "updated_at": "2026-10-03T11:00:35+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -102,7 +102,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -125,7 +125,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -147,14 +147,29 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [],
+      "weather_warnings": [
+        {
+          "kind": "기상특보",
+          "title": "건조주의보",
+          "phenomenon": "건조",
+          "level": "주의보",
+          "areas": [
+            "서울(서울동남권 제외)"
+          ],
+          "announced_at": "202610031000",
+          "effective_at": "202610031000",
+          "matched_areas": [
+            "서울(서울동남권 제외)"
+          ]
+        }
+      ],
       "weather_warnings_available": true
     },
     "양산 부산대병원": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -177,7 +192,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -206,7 +221,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -235,7 +250,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -264,7 +279,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -293,7 +308,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -322,7 +337,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -345,7 +360,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -374,7 +389,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -403,7 +418,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -432,7 +447,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -461,7 +476,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -490,7 +505,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -519,7 +534,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -542,7 +557,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -565,7 +580,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261003-0700",
+      "observation_id": "20261003-1000",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -591,19 +606,19 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-03T08:16:06+09:00",
-  "last_change_at": "2026-10-03T07:59:26+09:00",
+  "last_success_at": "2026-10-03T11:00:35+09:00",
+  "last_change_at": "2026-10-03T11:00:35+09:00",
   "last_changes": [
     {
-      "site_name": "동해안 바닷가 자동차길",
-      "type": "새 예보 위험",
+      "site_name": "LX 논현 업무시설",
+      "type": "기상특보 발효",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "주의보",
       "categories": [
-        "강수 예상"
+        "건조"
       ],
       "reasons": [
-        "10/5(월) 비 예보, 강수확률 최고 60%"
+        "건조주의보 · 서울(서울동남권 제외)"
       ]
     }
   ]
