@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-03T17:08:52+09:00",
+  "updated_at": "2026-10-03T17:33:42+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -11,13 +11,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261003-1600",
-      "forecast_risks": [
-        {
-          "date": "10/5(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -40,13 +34,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261003-1600",
-      "forecast_risks": [
-        {
-          "date": "10/5(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -78,7 +66,7 @@
         {
           "date": "10/5(월)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
+          "detail": "비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -103,7 +91,13 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261003-1600",
-      "forecast_risks": [],
+      "forecast_risks": [
+        {
+          "date": "10/5(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -127,6 +121,11 @@
       "reasons": [],
       "observation_id": "20261003-1600",
       "forecast_risks": [
+        {
+          "date": "10/4(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/5(월)",
           "kind": "강수 예상",
@@ -195,6 +194,11 @@
       "observation_id": "20261003-1600",
       "forecast_risks": [
         {
+          "date": "10/4(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
           "date": "10/5(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
@@ -252,6 +256,11 @@
       "reasons": [],
       "observation_id": "20261003-1600",
       "forecast_risks": [
+        {
+          "date": "10/4(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/5(월)",
           "kind": "강수 예상",
@@ -311,9 +320,14 @@
       "observation_id": "20261003-1600",
       "forecast_risks": [
         {
+          "date": "10/4(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
           "date": "10/5(월)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
+          "detail": "비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -362,6 +376,11 @@
       "reasons": [],
       "observation_id": "20261003-1600",
       "forecast_risks": [
+        {
+          "date": "10/4(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/5(월)",
           "kind": "강수 예상",
@@ -583,6 +602,11 @@
       "observation_id": "20261003-1600",
       "forecast_risks": [
         {
+          "date": "10/4(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
           "date": "10/5(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
@@ -606,19 +630,91 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-03T17:08:52+09:00",
-  "last_change_at": "2026-10-03T11:00:35+09:00",
+  "last_success_at": "2026-10-03T17:33:42+09:00",
+  "last_change_at": "2026-10-03T17:33:42+09:00",
   "last_changes": [
     {
-      "site_name": "LX 논현 업무시설",
-      "type": "기상특보 발효",
+      "site_name": "청정고원 스포츠센터",
+      "type": "새 예보 위험",
       "from_level": null,
-      "to_level": "주의보",
+      "to_level": "정상",
       "categories": [
-        "건조"
+        "강수 예상"
       ],
       "reasons": [
-        "건조주의보 · 서울(서울동남권 제외)"
+        "10/5(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "LX 논현 업무시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/4(일) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "군포복합개발",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/4(일) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "렉서스 동탄 네트워크",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/4(일) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "반얀트리호텔 근생동",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/4(일) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "시흥능곡 주변도로",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/4(일) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/4(일) 비 예보, 강수확률 최고 60%"
       ]
     }
   ]
