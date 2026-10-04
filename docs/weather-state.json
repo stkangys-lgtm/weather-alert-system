@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-04T17:47:50+09:00",
+  "updated_at": "2026-10-04T22:13:13+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -102,7 +102,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -128,10 +128,14 @@
       "weather_warnings_available": true
     },
     "LX 논현 업무시설": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261004-1700",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+      ],
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -158,29 +162,14 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "건조주의보",
-          "phenomenon": "건조",
-          "level": "주의보",
-          "areas": [
-            "서울(서울동남권 제외)"
-          ],
-          "announced_at": "202610031000",
-          "effective_at": "202610031000",
-          "matched_areas": [
-            "서울(서울동남권 제외)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "양산 부산대병원": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -203,7 +192,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -237,7 +226,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -266,7 +255,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -300,7 +289,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -329,7 +318,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -363,7 +352,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -386,7 +375,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -420,7 +409,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -449,7 +438,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -478,7 +467,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -507,7 +496,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -530,7 +519,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/5(월)",
@@ -559,7 +548,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -575,14 +564,45 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [],
+      "weather_warnings": [
+        {
+          "kind": "기상특보",
+          "title": "강풍주의보",
+          "phenomenon": "강풍",
+          "level": "주의보",
+          "areas": [
+            "서해5도(백령도.대청도)"
+          ],
+          "announced_at": "202610041830",
+          "effective_at": "202610042100",
+          "matched_areas": [
+            "서해5도(백령도.대청도)"
+          ]
+        },
+        {
+          "kind": "예비특보",
+          "title": "10월 05일 새벽(00시~06시)",
+          "phenomenon": "10월 05일 새벽(00시~06시)",
+          "level": "예비특보",
+          "areas": [
+            "충청남도(보령도서)",
+            "전라남도(흑산도.홍도)",
+            "전북자치도(군산어청도)"
+          ],
+          "announced_at": "202610041830",
+          "effective_at": "202610042100",
+          "matched_areas": [
+            "전북자치도(군산어청도)"
+          ]
+        }
+      ],
       "weather_warnings_available": true
     },
     "영주 가흥정수장": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -605,7 +625,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261004-1700",
+      "observation_id": "20261004-2100",
       "forecast_risks": [
         {
           "date": "10/4(일)",
@@ -636,19 +656,53 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-04T17:47:50+09:00",
-  "last_change_at": "2026-10-04T17:47:50+09:00",
+  "last_success_at": "2026-10-04T22:13:13+09:00",
+  "last_change_at": "2026-10-04T22:13:13+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
+      "site_name": "LX 논현 업무시설",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
       "categories": [
-        "강수 예상"
+        "호우"
       ],
       "reasons": [
-        "10/5(월) 비 예보, 강수확률 최고 60%"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+      ]
+    },
+    {
+      "site_name": "LX 논현 업무시설",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "건조주의보 · 서울(서울동남권 제외)"
+      ]
+    },
+    {
+      "site_name": "풍각지구 정비사업",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "강풍"
+      ],
+      "reasons": [
+        "강풍주의보 · 서해5도(백령도.대청도)"
+      ]
+    },
+    {
+      "site_name": "풍각지구 정비사업",
+      "type": "예비특보 발표",
+      "from_level": null,
+      "to_level": "예비특보",
+      "categories": [
+        "10월 05일 새벽(00시~06시)"
+      ],
+      "reasons": [
+        "10월 05일 새벽(00시~06시) · 전북자치도(군산어청도)"
       ]
     }
   ]
