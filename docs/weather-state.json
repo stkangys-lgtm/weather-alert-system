@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-05T10:16:53+09:00",
+  "updated_at": "2026-10-05T11:02:17+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -33,7 +33,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -56,7 +56,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -79,7 +79,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -104,7 +104,7 @@
           "areas": [
             "강원도(태백, 평창산지)"
           ],
-          "announced_at": "202610051000",
+          "announced_at": "202610051100",
           "effective_at": "202610052100",
           "matched_areas": [
             "강원도(태백, 평창산지)"
@@ -117,7 +117,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -140,7 +140,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -163,7 +163,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -186,7 +186,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -209,7 +209,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -232,7 +232,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -255,7 +255,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -278,7 +278,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -301,7 +301,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -324,7 +324,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -347,7 +347,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -370,7 +370,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -393,7 +393,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -416,7 +416,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -439,7 +439,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -465,27 +465,13 @@
             "서해5도(백령도.대청도)",
             "충청남도(보령도서)",
             "전라남도(흑산도.홍도)",
-            "전북자치도(군산어청도)"
+            "전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
           ],
-          "announced_at": "202610051000",
+          "announced_at": "202610051100",
           "effective_at": "202610052100",
           "matched_areas": [
             "서해5도(백령도.대청도)",
-            "전북자치도(군산어청도)"
-          ]
-        },
-        {
-          "kind": "예비특보",
-          "title": "10월 05일 오후(12시~18시)",
-          "phenomenon": "10월 05일 오후(12시~18시)",
-          "level": "예비특보",
-          "areas": [
-            "전북자치도(부안위도면, 군산옥도면(어청도 제외))"
-          ],
-          "announced_at": "202610051000",
-          "effective_at": "202610052100",
-          "matched_areas": [
-            "전북자치도(부안위도면, 군산옥도면(어청도 제외))"
+            "전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
           ]
         }
       ],
@@ -495,7 +481,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -518,7 +504,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-0900",
+      "observation_id": "20261005-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -538,8 +524,8 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-05T10:16:53+09:00",
-  "last_change_at": "2026-10-05T10:16:53+09:00",
+  "last_success_at": "2026-10-05T11:02:17+09:00",
+  "last_change_at": "2026-10-05T11:02:17+09:00",
   "last_changes": [
     {
       "site_name": "청정고원 스포츠센터",
@@ -554,6 +540,16 @@
       ]
     },
     {
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "한파주의보 · 강원도(태백, 평창산지)"
+      ]
+    },
+    {
       "site_name": "풍각지구 정비사업",
       "type": "기상특보 발효",
       "from_level": null,
@@ -562,19 +558,7 @@
         "강풍"
       ],
       "reasons": [
-        "강풍주의보 · 서해5도(백령도.대청도), 전북자치도(군산어청도)"
-      ]
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "예비특보 발표",
-      "from_level": null,
-      "to_level": "예비특보",
-      "categories": [
-        "10월 05일 오후(12시~18시)"
-      ],
-      "reasons": [
-        "10월 05일 오후(12시~18시) · 전북자치도(부안위도면, 군산옥도면(어청도 제외))"
+        "강풍주의보 · 서해5도(백령도.대청도), 전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
       ]
     },
     {
@@ -585,6 +569,16 @@
       "categories": [],
       "reasons": [
         "강풍주의보 · 서해5도(백령도.대청도), 전북자치도(군산어청도)"
+      ]
+    },
+    {
+      "site_name": "풍각지구 정비사업",
+      "type": "예비특보 변경",
+      "from_level": "예비특보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "10월 05일 오후(12시~18시) · 전북자치도(부안위도면, 군산옥도면(어청도 제외))"
       ]
     }
   ]
