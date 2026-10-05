@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-05T16:41:24+09:00",
+  "updated_at": "2026-10-05T18:07:22+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -33,7 +33,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -56,7 +56,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -79,7 +79,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -117,7 +117,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -140,7 +140,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -163,7 +163,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -186,7 +186,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -209,7 +209,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -232,7 +232,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -255,7 +255,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -278,7 +278,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -301,7 +301,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -324,7 +324,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -347,7 +347,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -370,7 +370,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -393,7 +393,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -416,7 +416,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -439,7 +439,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -481,7 +481,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -504,7 +504,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261005-1600",
+      "observation_id": "20261005-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -524,7 +524,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-05T16:41:24+09:00",
+  "last_success_at": "2026-10-05T18:07:22+09:00",
   "last_change_at": "2026-10-05T16:41:24+09:00",
   "last_changes": [
     {
