@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-06T01:23:19+09:00",
+  "updated_at": "2026-10-06T09:50:12+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -97,7 +97,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -119,29 +119,14 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "한파주의보",
-          "phenomenon": "한파",
-          "level": "주의보",
-          "areas": [
-            "강원도(태백, 평창산지)"
-          ],
-          "announced_at": "202610052100",
-          "effective_at": "202610052300",
-          "matched_areas": [
-            "강원도(태백, 평창산지)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "LX 논현 업무시설": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -170,7 +155,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -193,7 +178,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -222,7 +207,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -245,7 +230,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -274,7 +259,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -303,7 +288,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -332,7 +317,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -355,7 +340,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -384,7 +369,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -407,7 +392,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -436,7 +421,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -465,7 +450,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -488,7 +473,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -517,7 +502,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -533,33 +518,14 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도(백령도.대청도)",
-            "충청남도(보령도서)",
-            "전라남도(흑산도.홍도)",
-            "전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
-          ],
-          "announced_at": "202610052100",
-          "effective_at": "202610052300",
-          "matched_areas": [
-            "서해5도(백령도.대청도)",
-            "전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "영주 가흥정수장": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -582,7 +548,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261006-0000",
+      "observation_id": "20261006-0900",
       "forecast_risks": [
         {
           "date": "10/14(수)",
@@ -608,70 +574,10 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-06T01:23:19+09:00",
-  "last_change_at": "2026-10-06T01:23:19+09:00",
+  "last_success_at": "2026-10-06T09:50:12+09:00",
+  "last_change_at": "2026-10-06T09:50:12+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "한파"
-      ],
-      "reasons": [
-        "한파주의보 · 강원도(태백, 평창산지)"
-      ]
-    },
-    {
       "site_name": "청정고원 스포츠센터",
       "type": "기상특보 해제",
       "from_level": "주의보",
@@ -682,126 +588,6 @@
       ]
     },
     {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "시흥능곡 주변도로",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "산솔면 하수처리장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "단월정수장 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "동해안 바닷가 자동차길",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "강풍주의보 · 서해5도(백령도.대청도), 전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
-      ]
-    },
-    {
       "site_name": "풍각지구 정비사업",
       "type": "기상특보 해제",
       "from_level": "주의보",
@@ -809,18 +595,6 @@
       "categories": [],
       "reasons": [
         "강풍주의보 · 서해5도(백령도.대청도), 전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
-      ]
-    },
-    {
-      "site_name": "송산그린시티 용수공급시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/14(수) 흐리고 비 예보, 강수확률 최고 60%"
       ]
     }
   ]
