@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-08T08:50:03+09:00",
+  "updated_at": "2026-10-08T15:08:49+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -97,8 +97,13 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
+        {
+          "date": "10/11(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -126,7 +131,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -155,7 +160,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/10(토)",
@@ -189,7 +194,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -218,7 +223,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/11(일)",
@@ -247,7 +252,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -276,7 +281,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -305,7 +310,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -334,7 +339,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/10(토)",
@@ -368,7 +373,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -397,7 +402,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/10(토)",
@@ -431,7 +436,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -460,7 +465,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -489,7 +494,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/11(일)",
@@ -518,7 +523,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -547,7 +552,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/10(토)",
@@ -581,7 +586,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/11(일)",
@@ -610,7 +615,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261008-0800",
+      "observation_id": "20261008-1400",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -636,88 +641,10 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-08T08:50:03+09:00",
-  "last_change_at": "2026-10-08T08:35:53+09:00",
+  "last_success_at": "2026-10-08T15:08:49+09:00",
+  "last_change_at": "2026-10-08T15:08:49+09:00",
   "last_changes": [
     {
-      "site_name": "전 현장",
-      "type": "기상특보 수집 정상화",
-      "from_level": "수집 장애",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": [
-        "기상청 특보 API 수신이 정상화되었습니다."
-      ]
-    },
-    {
-      "site_name": "오리온 진천신공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/13(화) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/13(화) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/13(화) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
       "site_name": "청정고원 스포츠센터",
       "type": "새 예보 위험",
       "from_level": null,
@@ -726,119 +653,7 @@
         "강수 예상"
       ],
       "reasons": [
-        "10/13(화) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/13(화) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/10(토) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
         "10/11(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/13(화) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/11(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/13(화) 흐리고 비 예보, 강수확률 최고 60%"
       ]
     }
   ]
