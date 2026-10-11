@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-11T10:56:03+09:00",
+  "updated_at": "2026-10-11T11:11:43+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -440,6 +440,11 @@
       "observation_id": "20261011-1000",
       "forecast_risks": [
         {
+          "date": "10/11(일)",
+          "kind": "강수 예상",
+          "detail": "소나기 예보, 강수확률 최고 60%"
+        },
+        {
           "date": "10/13(화)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
@@ -681,11 +686,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-11T10:56:03+09:00",
-  "last_change_at": "2026-10-10T18:04:43+09:00",
+  "last_success_at": "2026-10-11T11:11:43+09:00",
+  "last_change_at": "2026-10-11T11:11:43+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천신공장",
+      "site_name": "뇌죽천 하천재해예방",
       "type": "새 예보 위험",
       "from_level": null,
       "to_level": "정상",
@@ -694,30 +699,6 @@
       ],
       "reasons": [
         "10/11(일) 소나기 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/11(일) 소나기 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "포항~안동2 국도건설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/12(월) 소나기 예보, 강수확률 최고 60%"
       ]
     }
   ]
