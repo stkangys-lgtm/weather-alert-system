@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-11T11:11:43+09:00",
+  "updated_at": "2026-10-11T17:55:17+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,18 +10,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
-        {
-          "date": "10/11(일)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/12(월)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -49,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/11(일)",
@@ -88,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -117,13 +107,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
-        {
-          "date": "10/12(월)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -151,13 +136,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
-        {
-          "date": "10/12(월)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -185,7 +165,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -214,13 +194,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
-        {
-          "date": "10/12(월)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -248,8 +223,13 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
+        {
+          "date": "10/12(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -277,7 +257,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -306,7 +286,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/12(월)",
@@ -340,7 +320,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -369,18 +349,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
-        {
-          "date": "10/11(일)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/12(월)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -408,7 +378,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -437,13 +407,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
-        {
-          "date": "10/11(일)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/13(화)",
           "kind": "강수 예상",
@@ -471,13 +436,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
-        {
-          "date": "10/11(일)",
-          "kind": "강수 예상",
-          "detail": "소나기 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/12(월)",
           "kind": "강수 예상",
@@ -510,7 +470,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -539,7 +499,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -568,7 +528,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -597,7 +557,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -626,7 +586,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/12(월)",
@@ -660,7 +620,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261011-1000",
+      "observation_id": "20261011-1700",
       "forecast_risks": [
         {
           "date": "10/13(화)",
@@ -686,11 +646,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-11T11:11:43+09:00",
-  "last_change_at": "2026-10-11T11:11:43+09:00",
+  "last_success_at": "2026-10-11T17:55:17+09:00",
+  "last_change_at": "2026-10-11T17:55:17+09:00",
   "last_changes": [
     {
-      "site_name": "뇌죽천 하천재해예방",
+      "site_name": "오리온수협 목포 김공장",
       "type": "새 예보 위험",
       "from_level": null,
       "to_level": "정상",
@@ -698,7 +658,7 @@
         "강수 예상"
       ],
       "reasons": [
-        "10/11(일) 소나기 예보, 강수확률 최고 60%"
+        "10/12(월) 비 예보, 강수확률 최고 60%"
       ]
     }
   ]
