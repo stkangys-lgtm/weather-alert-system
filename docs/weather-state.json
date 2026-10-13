@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-14T01:27:11+09:00",
+  "updated_at": "2026-10-14T08:17:23+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -97,7 +97,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -126,7 +126,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -155,7 +155,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -189,7 +189,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -218,7 +218,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -252,7 +252,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -281,7 +281,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -310,7 +310,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -339,7 +339,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -368,7 +368,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -397,7 +397,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -431,7 +431,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -460,7 +460,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -489,7 +489,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -518,7 +518,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -547,7 +547,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -578,13 +578,12 @@
           "areas": [
             "서해5도(백령도.대청도)",
             "충청남도(태안, 보령도서)",
-            "전라남도(신안(흑산면제외), 흑산도.홍도)",
+            "전라남도(여수, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 완도여서도)",
             "전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)",
-            "인천(옹진)",
             "울릉도.독도"
           ],
-          "announced_at": "202610140100",
-          "effective_at": "202610140300",
+          "announced_at": "202610140730",
+          "effective_at": "202610140900",
           "matched_areas": [
             "서해5도(백령도.대청도)",
             "전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
@@ -597,7 +596,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -626,7 +625,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261014-0000",
+      "observation_id": "20261014-0700",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -652,45 +651,9 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-14T01:27:11+09:00",
-  "last_change_at": "2026-10-14T01:27:11+09:00",
+  "last_success_at": "2026-10-14T08:17:23+09:00",
+  "last_change_at": "2026-10-14T08:17:23+09:00",
   "last_changes": [
-    {
-      "site_name": "양산 부산대병원",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/19(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/19(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/19(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
     {
       "site_name": "풍각지구 정비사업",
       "type": "기상특보 발효",
@@ -710,17 +673,7 @@
       "to_level": "해제",
       "categories": [],
       "reasons": [
-        "강풍주의보 · 서해5도(백령도.대청도)"
-      ]
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "예비특보 변경",
-      "from_level": "예비특보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "10월 13일 밤(18시~24시) · 전북자치도(군산어청도)"
+        "강풍주의보 · 서해5도(백령도.대청도), 전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)"
       ]
     }
   ]
