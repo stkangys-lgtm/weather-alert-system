@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-15T07:19:03+09:00",
+  "updated_at": "2026-10-15T07:38:22+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -429,18 +429,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261015-0600",
-      "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
-        {
-          "date": "10/19(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -577,14 +566,9 @@
       "observation_id": "20261015-0600",
       "forecast_risks": [
         {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 90%"
-        },
-        {
           "date": "10/19(월)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 80%"
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -634,7 +618,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-15T07:19:03+09:00",
+  "last_success_at": "2026-10-15T07:38:22+09:00",
   "last_change_at": "2026-10-15T07:19:03+09:00",
   "last_changes": [
     {
