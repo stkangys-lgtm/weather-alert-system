@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-15T07:38:22+09:00",
+  "updated_at": "2026-10-15T09:53:18+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -91,7 +91,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -114,8 +114,19 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
-      "forecast_risks": [],
+      "observation_id": "20261015-0900",
+      "forecast_risks": [
+        {
+          "date": "10/16(금)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "10/18(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 90%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -137,7 +148,59 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
+      "forecast_risks": [
+        {
+          "date": "10/19(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
+        }
+      ],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": true
+    },
+    "군포복합개발": {
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261015-0900",
+      "forecast_risks": [],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": true
+    },
+    "오리온수협 목포 김공장": {
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -167,64 +230,18 @@
       "weather_warnings": [],
       "weather_warnings_available": true
     },
-    "군포복합개발": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261015-0600",
-      "forecast_risks": [],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
-    "오리온수협 목포 김공장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261015-0600",
-      "forecast_risks": [
-        {
-          "date": "10/19(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
     "렉서스 동탄 네트워크": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
-      "forecast_risks": [],
+      "observation_id": "20261015-0900",
+      "forecast_risks": [
+        {
+          "date": "10/18(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 80%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -246,7 +263,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/15(목)",
@@ -285,7 +302,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -308,7 +325,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -342,14 +359,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
-      "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 90%"
-        }
-      ],
+      "observation_id": "20261015-0900",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -371,7 +382,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -405,7 +416,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -428,8 +439,19 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
-      "forecast_risks": [],
+      "observation_id": "20261015-0900",
+      "forecast_risks": [
+        {
+          "date": "10/18(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 70%"
+        },
+        {
+          "date": "10/19(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -451,7 +473,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -485,7 +507,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -514,7 +536,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -563,7 +585,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/19(월)",
@@ -592,7 +614,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261015-0600",
+      "observation_id": "20261015-0900",
       "forecast_risks": [
         {
           "date": "10/18(일)",
@@ -618,23 +640,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-15T07:38:22+09:00",
-  "last_change_at": "2026-10-15T07:19:03+09:00",
+  "last_success_at": "2026-10-15T09:53:18+09:00",
+  "last_change_at": "2026-10-15T09:53:18+09:00",
   "last_changes": [
     {
-      "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "10/15(목) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
+      "site_name": "LX 논현 업무시설",
       "type": "새 예보 위험",
       "from_level": null,
       "to_level": "정상",
@@ -643,6 +653,54 @@
       ],
       "reasons": [
         "10/16(금) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "LX 논현 업무시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/18(일) 비 예보, 강수확률 최고 90%"
+      ]
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/18(일) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "렉서스 동탄 네트워크",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/18(일) 비 예보, 강수확률 최고 80%"
+      ]
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/18(일) 비 예보, 강수확률 최고 70%"
       ]
     },
     {
@@ -655,28 +713,6 @@
       ],
       "reasons": [
         "10/19(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "강풍주의보 · 서해5도(백령도.대청도)"
-      ]
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "예비특보 변경",
-      "from_level": "예비특보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "10월 15일 오후(12시~18시) · 서해5도(백령도.대청도)"
       ]
     }
   ]
