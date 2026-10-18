@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-18T20:43:39+09:00",
+  "updated_at": "2026-10-19T06:31:44+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,10 +10,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
-          "date": "10/18(일)",
+          "date": "10/20(화)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "10/21(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -39,10 +44,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
-          "date": "10/18(일)",
+          "date": "10/20(화)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "10/21(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -68,8 +78,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [
+        {
+          "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -88,24 +104,15 @@
       "weather_warnings_available": true
     },
     "청정고원 스포츠센터": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 5.7mm"
-      ],
-      "observation_id": "20261018-2000",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261019-0500",
       "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
         {
           "date": "10/21(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 13.0m/s"
+          "detail": "최대풍속 10.8m/s"
         }
       ],
       "legal_signals": [
@@ -129,8 +136,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [
+        {
+          "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -152,13 +165,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
+      "observation_id": "20261019-0500",
       "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/19(월)",
           "kind": "강수 예상",
@@ -189,39 +197,21 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도",
-            "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)",
-            "충청남도(태안, 당진, 서산, 서천, 보령(도서제외), 보령도서, 홍성동부, 홍성서부)",
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
-            "전북자치도(고창, 부안(위도면 제외), 부안위도면, 군산(옥도면 제외), 군산옥도면(어청도 제외), 군산어청도)",
-            "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)",
-            "제주도(제주도산지, 추자도, 제주시중산간)",
-            "인천(옹진, 인천영종)",
-            "울산",
-            "울릉도.독도"
-          ],
-          "announced_at": "202610182030",
-          "effective_at": "202610182100",
-          "matched_areas": [
-            "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "군포복합개발": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [
+        {
+          "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -243,13 +233,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
+      "observation_id": "20261019-0500",
       "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/19(월)",
           "kind": "강수 예상",
@@ -264,11 +249,6 @@
           "date": "10/21(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/21(수)",
-          "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.8m/s"
         }
       ],
       "legal_signals": [
@@ -285,39 +265,21 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도",
-            "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)",
-            "충청남도(태안, 당진, 서산, 서천, 보령(도서제외), 보령도서, 홍성동부, 홍성서부)",
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
-            "전북자치도(고창, 부안(위도면 제외), 부안위도면, 군산(옥도면 제외), 군산옥도면(어청도 제외), 군산어청도)",
-            "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)",
-            "제주도(제주도산지, 추자도, 제주시중산간)",
-            "인천(옹진, 인천영종)",
-            "울산",
-            "울릉도.독도"
-          ],
-          "announced_at": "202610182030",
-          "effective_at": "202610182100",
-          "matched_areas": [
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "렉서스 동탄 네트워크": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [
+        {
+          "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -339,8 +301,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [
+        {
+          "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -362,8 +330,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [
+        {
+          "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -382,24 +356,20 @@
       "weather_warnings_available": true
     },
     "포항~안동2 국도건설공사": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261018-2000",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
-          "date": "10/18(일)",
+          "date": "10/20(화)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         },
         {
-          "date": "10/19(월)",
+          "date": "10/21(수)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
+          "detail": "비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -423,8 +393,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [
+        {
+          "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -443,25 +419,11 @@
       "weather_warnings_available": true
     },
     "뇌죽천 하천재해예방": {
-      "level": "경보",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(경계) · 시간당 강우 18.5mm"
-      ],
-      "observation_id": "20261018-2000",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261019-0500",
       "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
-        {
-          "date": "10/19(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "10/20(화)",
           "kind": "강수 예상",
@@ -491,21 +453,11 @@
       "weather_warnings_available": true
     },
     "산솔면 하수처리장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 4.4mm"
-      ],
-      "observation_id": "20261018-2000",
-      "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261019-0500",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -524,17 +476,13 @@
       "weather_warnings_available": true
     },
     "단월정수장 시설공사": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.2mm"
-      ],
-      "observation_id": "20261018-2000",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
-          "date": "10/18(일)",
+          "date": "10/21(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -557,22 +505,13 @@
       "weather_warnings_available": true
     },
     "후포 공공하수처리": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261018-2000",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/19(월)",
+          "date": "10/20(화)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -591,43 +530,19 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도",
-            "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)",
-            "충청남도(태안, 당진, 서산, 서천, 보령(도서제외), 보령도서, 홍성동부, 홍성서부)",
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
-            "전북자치도(고창, 부안(위도면 제외), 부안위도면, 군산(옥도면 제외), 군산옥도면(어청도 제외), 군산어청도)",
-            "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)",
-            "제주도(제주도산지, 추자도, 제주시중산간)",
-            "인천(옹진, 인천영종)",
-            "울산",
-            "울릉도.독도"
-          ],
-          "announced_at": "202610182030",
-          "effective_at": "202610182100",
-          "matched_areas": [
-            "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "동해안 바닷가 자동차길": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
           "date": "10/21(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 12.5m/s"
+          "detail": "최대풍속 11.2m/s"
         }
       ],
       "legal_signals": [
@@ -644,49 +559,15 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도",
-            "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)",
-            "충청남도(태안, 당진, 서산, 서천, 보령(도서제외), 보령도서, 홍성동부, 홍성서부)",
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
-            "전북자치도(고창, 부안(위도면 제외), 부안위도면, 군산(옥도면 제외), 군산옥도면(어청도 제외), 군산어청도)",
-            "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)",
-            "제주도(제주도산지, 추자도, 제주시중산간)",
-            "인천(옹진, 인천영종)",
-            "울산",
-            "울릉도.독도"
-          ],
-          "announced_at": "202610182030",
-          "effective_at": "202610182100",
-          "matched_areas": [
-            "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "풍각지구 정비사업": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
+      "observation_id": "20261019-0500",
       "forecast_risks": [
-        {
-          "date": "10/18(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
-        {
-          "date": "10/19(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
         {
           "date": "10/20(화)",
           "kind": "강수 예상",
@@ -712,47 +593,19 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도",
-            "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)",
-            "충청남도(태안, 당진, 서산, 서천, 보령(도서제외), 보령도서, 홍성동부, 홍성서부)",
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
-            "전북자치도(고창, 부안(위도면 제외), 부안위도면, 군산(옥도면 제외), 군산옥도면(어청도 제외), 군산어청도)",
-            "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)",
-            "제주도(제주도산지, 추자도, 제주시중산간)",
-            "인천(옹진, 인천영종)",
-            "울산",
-            "울릉도.독도"
-          ],
-          "announced_at": "202610182030",
-          "effective_at": "202610182100",
-          "matched_areas": [
-            "전북자치도(고창, 부안(위도면 제외), 부안위도면, 군산(옥도면 제외), 군산옥도면(어청도 제외), 군산어청도)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "영주 가흥정수장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 12.0mm"
-      ],
-      "observation_id": "20261018-2000",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
-          "date": "10/18(일)",
+          "date": "10/20(화)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 80%"
+          "detail": "비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -776,12 +629,17 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261018-2000",
+      "observation_id": "20261019-0500",
       "forecast_risks": [
         {
           "date": "10/21(수)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "10/21(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 13.1m/s"
+          "detail": "최대풍속 12.4m/s"
         }
       ],
       "legal_signals": [
@@ -802,19 +660,71 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-18T20:43:39+09:00",
-  "last_change_at": "2026-10-18T20:43:39+09:00",
+  "last_success_at": "2026-10-19T06:31:44+09:00",
+  "last_change_at": "2026-10-19T06:31:44+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천 기숙사",
-      "type": "위험 해제",
-      "from_level": "경보",
+      "site_name": "오리온 진천신공장",
+      "type": "새 예보 위험",
+      "from_level": null,
       "to_level": "정상",
-      "categories": [],
-      "reasons": []
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/20(화) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "오리온 진천신공장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/21(수) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "오리온 진천 기숙사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/20(화) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "오리온 진천 기숙사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/21(수) 비 예보, 강수확률 최고 60%"
+      ]
     },
     {
       "site_name": "연희·연남동 공공주택",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/21(수) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "청정고원 스포츠센터",
       "type": "위험 해제",
       "from_level": "주의",
       "to_level": "정상",
@@ -823,22 +733,14 @@
     },
     {
       "site_name": "LX 논현 업무시설",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "기상특보 발효",
+      "type": "새 예보 위험",
       "from_level": null,
-      "to_level": "주의보",
+      "to_level": "정상",
       "categories": [
-        "강풍"
+        "강수 예상"
       ],
       "reasons": [
-        "강풍주의보 · 강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉평지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+        "10/21(수) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
@@ -853,22 +755,14 @@
     },
     {
       "site_name": "군포복합개발",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "기상특보 발효",
+      "type": "새 예보 위험",
       "from_level": null,
-      "to_level": "주의보",
+      "to_level": "정상",
       "categories": [
-        "강풍"
+        "강수 예상"
       ],
       "reasons": [
-        "강풍주의보 · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
+        "10/21(수) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
@@ -883,32 +777,42 @@
     },
     {
       "site_name": "렉서스 동탄 네트워크",
-      "type": "위험 해제",
-      "from_level": "경보",
+      "type": "새 예보 위험",
+      "from_level": null,
       "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
+      "categories": [
+        "강수 예상"
+      ],
       "reasons": [
-        "강풍주의보 · 경기도(안산, 시흥, 평택, 안성, 화성)"
+        "10/21(수) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
       "site_name": "화천군부대 시설공사",
-      "type": "위험 해제",
-      "from_level": "주의",
+      "type": "새 예보 위험",
+      "from_level": null,
       "to_level": "정상",
-      "categories": [],
-      "reasons": []
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/21(수) 비 예보, 강수확률 최고 60%"
+      ]
     },
     {
       "site_name": "반얀트리호텔 근생동",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/21(수) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "포항~안동2 국도건설공사",
       "type": "위험 해제",
       "from_level": "주의",
       "to_level": "정상",
@@ -917,18 +821,50 @@
     },
     {
       "site_name": "포항~안동2 국도건설공사",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
       "categories": [
-        "호우"
+        "강수 예상"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "10/20(화) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "포항~안동2 국도건설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/21(수) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
       "site_name": "시흥능곡 주변도로",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/21(수) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "위험 해제",
+      "from_level": "경보",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "산솔면 하수처리장",
       "type": "위험 해제",
       "from_level": "주의",
       "to_level": "정상",
@@ -936,74 +872,12 @@
       "reasons": []
     },
     {
-      "site_name": "시흥능곡 주변도로",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "강풍주의보 · 경기도(안산, 시흥, 평택, 안성, 화성)"
-      ]
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "경보",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(경계) · 시간당 강우 18.5mm"
-      ]
-    },
-    {
-      "site_name": "산솔면 하수처리장",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 4.4mm"
-      ]
-    },
-    {
       "site_name": "단월정수장 시설공사",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.2mm"
-      ]
-    },
-    {
-      "site_name": "후포 공공하수처리",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
-    },
-    {
-      "site_name": "후포 공공하수처리",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "강풍주의보 · 경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)"
-      ]
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     }
   ]
 }
