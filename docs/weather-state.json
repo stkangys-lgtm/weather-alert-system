@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-19T19:48:25+09:00",
+  "updated_at": "2026-10-19T20:16:29+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -122,7 +122,7 @@
         {
           "date": "10/21(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.4m/s"
+          "detail": "최대풍속 10.3m/s"
         }
       ],
       "legal_signals": [
@@ -583,7 +583,7 @@
         {
           "date": "10/21(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.8m/s"
+          "detail": "최대풍속 10.7m/s"
         }
       ],
       "legal_signals": [
@@ -685,7 +685,7 @@
         {
           "date": "10/21(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.8m/s"
+          "detail": "최대풍속 11.7m/s"
         }
       ],
       "legal_signals": [
@@ -706,7 +706,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-19T19:48:25+09:00",
+  "last_success_at": "2026-10-19T20:16:29+09:00",
   "last_change_at": "2026-10-19T19:48:25+09:00",
   "last_changes": [
     {
