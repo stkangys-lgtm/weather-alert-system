@@ -47,7 +47,8 @@ KNOWN_SITE_REGIONS = {
     "뇌죽천 하천재해예방": (["곡성군", "곡성"], ["전라남도"]),
     "산솔면 하수처리장": (["영월군", "영월"], ["강원도", "강원특별자치도"]),
     "단월정수장 시설공사": (["충주시", "충주"], ["충청북도"]),
-    "후포 공공하수처리": (["울진군", "울진"], ["경상북도"]),
+    # 후포는 울진 해안이라 특보구역 '울진평지'다(울진은 평지·산지로 나뉨). '울진산지' 특보는 해당 없음.
+    "후포 공공하수처리": (["울진군", "울진", "울진평지"], ["경상북도"]),
     "동해안 바닷가 자동차길": (["강릉시", "강릉"], ["강원도", "강원특별자치도"]),
     "풍각지구 정비사업": (["청도군", "청도"], ["경상북도"]),
     "영주 가흥정수장": (["영주시", "영주"], ["경상북도"]),
@@ -187,13 +188,61 @@ def _is_marine_area(area):
     return any(word in area for word in ("바다", "해역", "연안", "해상"))
 
 
+# 특보 세부구역 꼬리말: '안동북부'·'파주동북부'·'울진산지'·'평창평지' 등
+_SUBZONE_SUFFIX = re.compile(r"(?:[동서남북중]{1,2}부|평지|산지)")
+_PROVINCE_AREA = re.compile(r"^([^(]+)\((.*)\)$")
+
+
+def _compact(value):
+    return re.sub(r"\s+", "", value)
+
+
+def _zone_matches(zone, alias):
+    """구역 이름과 현장 별칭을 이름 단위로 비교한다(글자 일부 포함은 해당 아님).
+
+    '영양산지' 안에 '양산'이 들어 있어도 양산 현장이 아니다(2026-10-22 오탐).
+    '안동북부'는 '안동' 현장에, 군 전체 '울진'은 '울진평지' 현장에 해당한다.
+    """
+    names = {alias}
+    if len(alias) > 2 and alias[-1] in "시군":
+        names.add(alias[:-1])
+    for name in names:
+        if zone == name:
+            return True
+        if zone.startswith(name) and _SUBZONE_SUFFIX.fullmatch(zone[len(name):]):
+            return True
+        if name.startswith(zone) and _SUBZONE_SUFFIX.fullmatch(name[len(zone):]):
+            return True
+    return False
+
+
+def _other_side_of_pinned(zone, aliases):
+    """현장 별칭에 '울진평지'처럼 평지·산지를 적었으면 같은 군의 반대쪽('울진산지')은 해당 없음."""
+    for alias in aliases:
+        base = alias[:-2]
+        if alias.endswith(("평지", "산지")) and zone != alias and zone in (base + "평지", base + "산지"):
+            return True
+    return False
+
+
 def _matches_area(area, local, broad):
-    compact = re.sub(r"\s+", "", area)
-    if any(re.sub(r"\s+", "", alias) in compact for alias in local):
-        return True
-    # 광역명은 '경기도(일부 시군)' 같은 구역에 무조건 매칭하면 오탐이 생긴다.
-    # 세부 괄호가 없는 도·광역시 전체 특보에만 보조적으로 사용한다.
-    return "(" not in compact and any(compact == re.sub(r"\s+", "", alias) for alias in broad)
+    compact = _compact(area)
+    aliases = [_compact(alias) for alias in local]
+    if _is_marine_area(area):
+        # 해상 특보는 현장이 따로 켠 경우만 오며 구역 표기가 제각각이라 기존처럼 포함 여부로 본다.
+        return any(alias in compact for alias in aliases)
+    found = _PROVINCE_AREA.match(compact)
+    if found:
+        # '경상북도(청도, 영양산지)' → 세부구역별로 비교. '서울(서북권)'은 '서울서북권'으로도 비교한다.
+        province = found.group(1)
+        zones = [zone for zone in re.split(r"[,、]", found.group(2))
+                 if zone and not _other_side_of_pinned(zone, aliases)]
+        return any(_zone_matches(zone, alias) or _zone_matches(province + zone, alias)
+                   for zone in zones for alias in aliases)
+    # 괄호 없는 도·광역시 전체 특보('충청북도', '대전'). 광역명은 세부 괄호가 없을 때만 쓴다
+    # ('경기도(일부 시군)'에 무조건 붙이면 오탐).
+    return (any(_zone_matches(compact, alias) for alias in aliases)
+            or any(compact == _compact(alias) for alias in broad))
 
 
 def match_warnings_to_sites(sites, warnings):

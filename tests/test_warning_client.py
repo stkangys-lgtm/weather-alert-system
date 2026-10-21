@@ -39,6 +39,34 @@ class WarningClientTests(unittest.TestCase):
         whole = parse_warning_status("o 강풍주의보 : 경상남도")
         self.assertEqual(1, len(match_warnings_to_sites(site, whole)["양산 부산대병원"]))
 
+    def test_name_inside_another_zone_name_does_not_match(self):
+        # 2026-10-22 실제 한파주의보: 경북 '영양산지' 글자 안의 '양산'이 양산 현장에 잘못 붙었다.
+        warnings = parse_warning_status(
+            "o 한파주의보 : 경상북도(청도, 영주, 영양평지, 영양산지, 울진산지), "
+            "경상남도(함양중부, 거창북부, 합천남부)"
+        )
+        matched = match_warnings_to_sites([{"site_name": "양산 부산대병원"}, {"site_name": "풍각지구 정비사업"}], warnings)
+        self.assertEqual([], matched["양산 부산대병원"])
+        self.assertEqual(1, len(matched["풍각지구 정비사업"]))
+
+    def test_subzones_of_a_county(self):
+        north = parse_warning_status("o 호우주의보 : 경상북도(안동북부)")
+        self.assertEqual(1, len(match_warnings_to_sites([{"site_name": "포항~안동2 국도건설공사"}], north)
+                                ["포항~안동2 국도건설공사"]))
+        # 후포는 울진 해안(울진평지)이라 '울진산지' 특보는 해당하지 않고, 군 전체·평지 특보는 해당한다.
+        hupo = [{"site_name": "후포 공공하수처리"}]
+        for text, expected in (("경상북도(울진산지)", 0), ("경상북도(울진평지)", 1), ("경상북도(울진)", 1)):
+            with self.subTest(area=text):
+                found = match_warnings_to_sites(hupo, parse_warning_status(f"o 한파주의보 : {text}"))
+                self.assertEqual(expected, len(found["후포 공공하수처리"]))
+
+    def test_seoul_subregion_written_inside_parentheses(self):
+        site = [{"site_name": "연희·연남동 공공주택"}]
+        northwest = parse_warning_status("o 폭염주의보 : 서울(서북권, 동북권)")
+        self.assertEqual(1, len(match_warnings_to_sites(site, northwest)["연희·연남동 공공주택"]))
+        southeast = parse_warning_status("o 폭염주의보 : 서울(동남권)")
+        self.assertEqual([], match_warnings_to_sites(site, southeast)["연희·연남동 공공주택"])
+
     def test_province_wide_warning_and_marine_filter(self):
         warnings = parse_warning_status(
             "o 강풍주의보 : 충청북도, 서해중부앞바다"
