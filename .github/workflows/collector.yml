@@ -6,7 +6,18 @@ on:
     # 정각 혼잡을 피한다. UTC 기준 시간 범위는 KST보다 9시간 이전이다.
     - cron: "17 0-8,19-23 * * *"
     - cron: "47 0-8,19-23 * * *"
-  workflow_dispatch: {}
+  # GitHub 예약 실행은 자주 누락·지연되므로(2026-10 실측 하루 6~8회) 외부 예약 서비스가
+  # 한국시각 04~17시 :17·:47마다 mode=auto로 이 실행을 요청한다. 사람이 Actions 화면에서
+  # 직접 실행하면 manual(항상 수집)이다. 설정 방법: design/ops/external-trigger.md
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "manual: 항상 수집 / auto: 외부 예약 서비스용(:17 보완·:47 주 실행)"
+        type: choice
+        options:
+          - manual
+          - auto
+        default: manual
 
 concurrency:
   group: weather-collector
@@ -34,12 +45,16 @@ jobs:
       ALERT_WEBHOOK_TOKEN: ${{ secrets.ALERT_WEBHOOK_TOKEN }}
       # 기존 문체 학습·승인 전까지는 비밀값이 등록돼 있어도 외부 발송을 강제로 차단한다.
       NOTIFICATION_MODE: shadow
-      # :17은 직전 주 실행이 누락되거나 45분 이상 지연됐을 때만 실제 수집한다.
-      COLLECTION_MODE: ${{ github.event_name == 'schedule' && startsWith(github.event.schedule, '17 ') && 'backup' || 'primary' }}
-      # :17 보완 실행에서는 대량의 동일 예보행을 다시 적재하지 않는다.
-      WRITE_FORECAST_HISTORY: ${{ github.event_name != 'schedule' || startsWith(github.event.schedule, '47 ') }}
+      # 실행 종류(src/schedule.py): GitHub 예약 :17=보완(직전 수집이 45분 넘었을 때만),
+      # :47=주 실행(20분 안에 이미 수집했으면 건너뜀), 외부 예약 auto=한국시각 분으로 판단,
+      # 직접 실행=항상 수집. 보완 실행은 대량의 동일 예보행을 다시 적재하지 않는다.
+      COLLECTION_MODE: ${{ github.event_name == 'schedule' && (startsWith(github.event.schedule, '17 ') && 'backup' || 'primary') || inputs.mode || 'manual' }}
     steps:
+      # 대기열에서 기다린 실행도 직전 실행 결과(docs/)를 보도록 이벤트 당시 커밋이
+      # 아니라 브랜치 최신본을 받는다(중복 수집·푸시 거절 방지).
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:
@@ -58,4 +73,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add --all -- docs
           git diff --cached --quiet || git commit -m "대시보드 자동 갱신 [skip ci]"
-          git push
+          # 실행 중에 코드 변경이 올라왔어도 푸시가 거절되지 않도록 원격 최신본 위에 얹는다.
+          git pull --rebase origin main
+          git push origin HEAD:main

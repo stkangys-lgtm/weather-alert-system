@@ -1,6 +1,6 @@
 """화면 원본(web/)을 공개 폴더(docs/)로 게시하고, 게시 전 기본 안전 점검을 한다.
 
-- web/ 아래 파일만 덮어쓴다. docs/의 다른 파일(수집 결과·알림 대기열·이전 화면)은 건드리지 않는다.
+- web/ 아래 파일만 덮어쓴다. docs/의 다른 파일(수집 결과·알림 대기열)은 건드리지 않는다.
 - 자체 지도 원본(src/kr_map_data.json)을 docs/data/kr-map.json으로 함께 게시한다(지도 장애 시 대체 지도).
 - 외부 스크립트·스타일시트에는 무결성 해시(integrity="sha384-…")와 crossorigin이 있어야 한다.
 - 공개 파일에 전화번호 형식·금지어·설정의 비공개 값(담당자 등)이 있으면 게시하지 않는다.
@@ -21,9 +21,6 @@ WEB_DIR = os.path.join(ROOT, "web")
 DOCS_DIR = os.path.join(ROOT, "docs")
 MAP_SOURCE = os.path.join(ROOT, "src", "kr_map_data.json")
 MAP_TARGET = os.path.join("data", "kr-map.json")
-OLD_DIR = os.path.join(DOCS_DIR, "old")
-OLD_MAP_PATH = os.path.join(OLD_DIR, "index.html")
-OLD_SITES_PATH = os.path.join(OLD_DIR, "sites.html")
 MANIFEST_DIR = "manifests"
 APP_ICONS = (("assets/icons/app-192.png", "192x192"), ("assets/icons/app-512.png", "512x512"))
 _SAFE_ID = re.compile(r"^[A-Za-z0-9_-]{1,64}$")

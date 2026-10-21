@@ -4,10 +4,7 @@ import tempfile
 import unittest
 
 from src.publish import (
-    DOCS_DIR,
     MAP_TARGET,
-    OLD_MAP_PATH,
-    OLD_SITES_PATH,
     WEB_DIR,
     PublishError,
     check_latest,
@@ -84,18 +81,17 @@ class PublishTests(unittest.TestCase):
         self.assertEqual([], check_latest(os.path.join(self.docs, "none.json"), {"홍길동"}))
 
 
-class OldScreenTests(unittest.TestCase):
-    def test_old_screens_live_under_docs_old(self):
-        self.assertEqual(os.path.join(DOCS_DIR, "old", "index.html"), OLD_MAP_PATH)
-        self.assertEqual(os.path.join(DOCS_DIR, "old", "sites.html"), OLD_SITES_PATH)
+class MovedPageTests(unittest.TestCase):
+    """이전 화면(docs/old/)은 5단계에서 정리했다. 옛 주소는 새 화면으로만 안내한다."""
 
-    def test_moved_pages_point_to_new_and_old_screens(self):
-        for name, new, old in (("map.html", "./", "old/index.html"), ("sites.html", "./#list", "old/sites.html")):
+    def test_moved_pages_send_to_new_screen_only(self):
+        for name, new in (("map.html", "./"), ("sites.html", "./#list")):
             with self.subTest(name=name):
                 with open(os.path.join(WEB_DIR, name), encoding="utf-8") as f:
                     html = f.read()
                 self.assertIn(f'href="{new}"', html)
-                self.assertIn(f'href="{old}"', html)
+                self.assertIn(f'http-equiv="refresh" content="3; url={new}"', html)
+                self.assertNotIn("old/", html)
 
 
 class SiteManifestTests(unittest.TestCase):

@@ -13,6 +13,37 @@ from src import main
 KST = timezone(timedelta(hours=9))
 
 
+class MainRunModeTests(unittest.TestCase):
+    """외부 예약(auto)·GitHub 예약이 겹쳐도 직전 수집이 신선하면 외부 호출 없이 끝낸다."""
+
+    def collects(self, mode, minute, age):
+        out = io.StringIO()
+        with patch.dict("os.environ", {"COLLECTION_MODE": mode}), \
+                patch.object(main, "datetime") as fake_datetime, \
+                patch.object(main, "load_state", return_value={}), \
+                patch.object(main, "state_age_minutes", return_value=age), \
+                patch.object(main, "collect_site_data", side_effect=RuntimeError("수집 시작")) as collect, \
+                contextlib.redirect_stdout(out):
+            fake_datetime.now.return_value = datetime(2026, 10, 22, 10, minute)
+            with contextlib.suppress(RuntimeError):
+                main.main()
+        return collect.called
+
+    def test_auto_backup_minute_skips_when_recent(self):
+        self.assertFalse(self.collects("auto", 17, age=30))
+        self.assertTrue(self.collects("auto", 17, age=50))
+
+    def test_auto_primary_minute_skips_duplicate(self):
+        self.assertFalse(self.collects("auto", 47, age=5))
+        self.assertTrue(self.collects("auto", 47, age=60))
+
+    def test_github_primary_schedule_skips_duplicate(self):
+        self.assertFalse(self.collects("primary", 55, age=8))
+
+    def test_manual_always_collects(self):
+        self.assertTrue(self.collects("manual", 47, age=1))
+
+
 class UpdateRadarSafelyTests(unittest.TestCase):
     @patch("src.radar.update_radar")
     def test_success_passes_aware_kst_time(self, update_radar):

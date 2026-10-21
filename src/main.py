@@ -1,6 +1,6 @@
 """기상청 API로 현장별 기상 데이터를 수집해 Google Sheets에 기록하고,
 이상기상 여부를 판정해 공고문 텍스트·화면 데이터(docs/data/latest.json,
-docs/data/radar.png)·이전 대시보드(docs/old/)를 생성한다.
+docs/data/radar.png)를 생성한다.
 
 실행 (프로젝트 루트에서, 가상환경 활성화 후):
     python -m src.main
@@ -12,12 +12,11 @@ from datetime import datetime
 from src import alert_rules
 from src import settings as config
 from src.collection import CircuitBreaker, collect_mid_forecasts, collect_site_data
-from src.dashboard import build_dashboard_html
 from src.feels_like import compute_feels_like
 from src.forecast_analyzer import analyze_mid_term, analyze_short_term, summarize_events
-from src.map_dashboard import build_map_html
 from src.notification_queue import process_notifications
-from src.publish import OLD_MAP_PATH, OLD_SITES_PATH, check_latest, private_values, publish, write_site_manifests
+from src.publish import check_latest, private_values, publish, write_site_manifests
+from src.schedule import resolve_run_mode, skip_reason
 from src.state_monitor import (
     build_alert_message,
     build_snapshot,
@@ -28,7 +27,7 @@ from src.state_monitor import (
     state_age_minutes,
 )
 from src.view_model import publish_latest
-from src.warning_client import get_active_warnings, match_warnings_to_sites, warning_display_level
+from src.warning_client import get_active_warnings, match_warnings_to_sites
 
 NCST_HEADER = [
     "기록시각", "현장명", "담당자", "기온(°C)", "강수형태", "1시간강수량(mm)",
@@ -40,9 +39,6 @@ FCST_HEADER = ["기록시각", "현장명", "담당자", "예보일자", "예보
 
 DOCS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "docs")
 ANNOUNCEMENT_PATH = os.path.join(DOCS_DIR, "announcement.txt")
-# 이전 화면은 새 본사 화면 전환 뒤 2주간 docs/old/에 계속 만든다(설계서 9절 2단계).
-DASHBOARD_PATH = OLD_SITES_PATH
-MAP_PATH = OLD_MAP_PATH
 STATE_PATH = os.path.join(DOCS_DIR, "weather-state.json")
 LATEST_ALERT_PATH = os.path.join(DOCS_DIR, "latest-alert.txt")
 NOTIFICATION_OUTBOX_PATH = os.path.join(DOCS_DIR, "notification-outbox.json")
@@ -75,13 +71,6 @@ def attach_weather_warnings(collected, breaker=None):
             item["weather_warnings"] = []
             item["weather_warnings_available"] = False
         return []
-
-
-def _display_level(item):
-    official = warning_display_level(item.get("weather_warnings") or [])
-    internal = item["judgment"]["level"]
-    severity = {"정상": 0, "데이터없음": 1, "주의": 2, "경보": 3}
-    return max((internal, official or "정상"), key=lambda level: severity[level])
 
 
 def build_current_weather_rows(collected, now_str):
@@ -156,71 +145,6 @@ def write_announcement(collected, now_str, mid_forecasts):
         f.write(text)
     print("\n" + text + "\n")
     return text
-
-
-def write_dashboard(collected, now_str, mid_forecasts, generated_at_iso=None, recent_changes=None, last_change_at=None):
-    site_rows = []
-    for item in collected:
-        name = item["site"]["site_name"]
-        mid = mid_forecasts.get(name, [])
-        # 단기 + 중기 예보에서 특이사항 이벤트 추출
-        events = summarize_events(analyze_short_term(item["forecast"]), analyze_mid_term(mid))
-        site_rows.append({
-            "site_name": name,
-            "category": item["site"]["category"],
-            "current": item["current"] or {},
-            "forecast": item["forecast"],
-            "mid_forecast": mid,
-            "events": events,
-            "level": item["judgment"]["level"],
-            "display_level": _display_level(item),
-            "reasons": item["judgment"]["reasons"],
-            "legal_signals": item.get("legal_signals", []),
-            "legal_status": item.get("legal_status"),
-            "weather_warnings": item.get("weather_warnings", []),
-            "weather_warnings_available": item.get("weather_warnings_available", True),
-        })
-    html = build_dashboard_html(
-        now_str,
-        site_rows,
-        generated_at_iso=generated_at_iso,
-        recent_changes=recent_changes,
-        last_change_at=last_change_at,
-        missing_site_count=sum(1 for item in collected if item["current"] is None),
-    )
-    os.makedirs(os.path.dirname(DASHBOARD_PATH), exist_ok=True)
-    with open(DASHBOARD_PATH, "w", encoding="utf-8") as f:
-        f.write(html)
-
-
-def write_map(collected, now_str, mid_forecasts):
-    site_rows = []
-    for item in collected:
-        name = item["site"]["site_name"]
-        events = summarize_events(
-            analyze_short_term(item["forecast"]),
-            analyze_mid_term(mid_forecasts.get(name, [])),
-        )
-        site_rows.append({
-            "site_name": item["site"]["site_name"],
-            "category": item["site"]["category"],
-            "lat": item["site"]["lat"],
-            "lon": item["site"]["lon"],
-            "current": item["current"] or {},
-            "forecast": item["forecast"],
-            "events": events,
-            "level": item["judgment"]["level"],
-            "display_level": _display_level(item),
-            "reasons": item["judgment"]["reasons"],
-            "legal_signals": item.get("legal_signals", []),
-            "legal_status": item.get("legal_status"),
-            "weather_warnings": item.get("weather_warnings", []),
-            "weather_warnings_available": item.get("weather_warnings_available", True),
-        })
-    html = build_map_html(now_str, site_rows)
-    os.makedirs(os.path.dirname(MAP_PATH), exist_ok=True)
-    with open(MAP_PATH, "w", encoding="utf-8") as f:
-        f.write(html)
 
 
 def update_radar_safely(breaker=None):
@@ -329,12 +253,13 @@ def main():
     now_str = now.strftime("%Y-%m-%d %H:%M")
     generated_at_iso = now.astimezone().isoformat(timespec="seconds")
 
-    # :17 실행은 :47 주 실행의 지연·누락을 보완하는 용도다. 직전 자료가 신선하면
+    # :17 보완 실행과, 외부 예약·GitHub 예약이 겹친 주 실행은 직전 자료가 신선하면
     # 외부 API와 Sheets를 호출하지 않아 Actions 사용량과 API 호출량을 절약한다.
-    if os.environ.get("COLLECTION_MODE") == "backup":
-        age = state_age_minutes(load_state(STATE_PATH), now.astimezone())
-        if age is not None and age < 45:
-            print(f"[보완 실행 건너뜀] 마지막 정상 수집이 {age:.0f}분 전입니다")
+    run_mode = resolve_run_mode(os.environ.get("COLLECTION_MODE"), now)
+    if run_mode != "manual":
+        reason = skip_reason(run_mode, state_age_minutes(load_state(STATE_PATH), now.astimezone()))
+        if reason:
+            print(reason)
             return
 
     # 실황·예보·중기 호출이 공유하는 회로 차단기. 어느 한쪽에서 전면 장애가 감지되면
@@ -346,7 +271,7 @@ def main():
     radar_view, radar_ok = update_radar_safely(breaker=breaker)
     write_latest_view(collected, mid_forecasts, now, radar_view, radar_ok)
     publish_screens()
-    state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
+    _state, changes, alert_text = update_weather_state(collected, mid_forecasts, generated_at_iso, now_str)
     delivery = process_notifications(
         NOTIFICATION_OUTBOX_PATH,
         alert_text,
@@ -361,20 +286,10 @@ def main():
         f"[알림 전달: {mode_label}] "
         f"발송 {delivery['sent']}건 / 실패 {delivery['failed']}건 / 대기 {delivery['waiting']}건"
     )
-    write_forecast_history = os.environ.get("WRITE_FORECAST_HISTORY", "true").lower() == "true"
-    write_sheets_safely(collected, now_str, write_forecast=write_forecast_history)
+    write_sheets_safely(collected, now_str, write_forecast=run_mode != "backup")
 
     if now.hour in ANNOUNCEMENT_HOURS:
         write_announcement(collected, now_str, mid_forecasts)
-    write_dashboard(
-        collected,
-        now_str,
-        mid_forecasts,
-        generated_at_iso=generated_at_iso,
-        recent_changes=state.get("last_changes", []),
-        last_change_at=state.get("last_change_at"),
-    )
-    write_map(collected, now_str, mid_forecasts)
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@
 
 매 실행마다 `docs/data/latest.json`(화면 데이터)을 만들고, 새 본사 화면(`web/` → `docs/index.html`)이 이 파일을 불러와
 전국 지도·현장 목록·선택 현장 상세·앞으로 24시간을 보여 줍니다. 하단 시간 스크러버로 시간별 예보를 넘겨 볼 수 있고,
-"전파 문안"에서 사내 문체 문안을 복사할 수 있습니다. 이전 화면은 전환 뒤 2주간 `docs/old/`에서 함께 제공합니다.
+"전파 문안"에서 사내 문체 문안을 복사할 수 있습니다. 예전 주소(`map.html`·`sites.html`)는 새 화면으로 안내합니다.
 현장 안전관리자는 `site.html?id=현장ID`로 자기 현장 화면을 보고, 휴대폰 "홈 화면에 추가"로 앱처럼 쓸 수 있습니다.
 **담당자 이름·연락처는 공개 페이지 특성상 포함하지 않습니다** (개인정보 보호).
 공개되는 `docs/` 아래 파일에는 담당자 이름·연락처를 저장하지 않습니다. `announcement.txt`와
@@ -58,11 +58,9 @@ weather-alert-system/
 │   ├── alert_rules.py     # 이상기상 판정 + 공고문 텍스트 생성
 │   ├── legal_rules.py     # 작업 종류·실측값 기반 법정 조치 판정
 │   ├── state_monitor.py   # 이전 상태 비교 + 변화 알림 문안 생성
-│   ├── dashboard.py       # 현장 목록 대시보드 HTML 생성
-│   ├── map_dashboard.py   # 지도 중심 통합관제 HTML 생성
 │   └── main.py            # 실행 진입점
 ├── web/                  # 새 화면 원본(HTML·CSS·JS). src/publish.py가 docs/로 게시
-├── docs/                 # 공개 폴더: 새 본사 화면, data/latest.json, 이전 화면(old/), 공고문
+├── docs/                 # 공개 폴더: 새 본사 화면, data/latest.json, 공고문
 ├── credentials/          # 인증정보 보관 (git에 올라가지 않음)
 └── tests/                # 테스트 코드
 ```
@@ -71,6 +69,8 @@ weather-alert-system/
 
 이 저장소는 GitHub Actions로 현장 운영시간 동안 매시 17분과 47분에 자동 실행되도록 설정되어 있습니다.
 두 번의 실행으로 예약 지연·누락을 보완하며, 같은 위험상태는 다시 알리지 않습니다.
+GitHub 예약 실행은 자주 빠지므로 외부 예약 서비스(cron-job.org)가 같은 시각에 실행을 요청하고,
+겹친 요청은 한 번만 수집합니다(설정: `design/ops/external-trigger.md`).
 (야간에는 현장에 인원이 없어 실행하지 않으며, GitHub Actions 무료 사용량 절약에도 도움이 됩니다.)
 **로컬 컴퓨터를 켜둘 필요가 없고, 어느 컴퓨터에서 이 저장소를 열든 클라우드 실행에는 영향이 없습니다.**
 
