@@ -13,16 +13,20 @@
 현장 센서 설치처럼 비용·허가·접근이 필요한 방식은 최소화하고, 기상청 공개 API와 기존 업무
 자료를 우선 활용한다.
 
-## 현재 운영 상태 (2026-09-28)
+## 현재 운영 상태 (2026-10-22)
 
 - GitHub 저장소: `https://github.com/stkangys-lgtm/weather-alert-system`
 - 운영 브랜치: `main`
 - 공개 관제 화면: `https://stkangys-lgtm.github.io/weather-alert-system/`
 - 새 본사 화면: 위 주소(`docs/index.html` ← `web/index.html`). 현장 목록 표는 주소 끝 `#list`
 - 현장 화면: `…/site.html?id=현장ID` (ID 없으면 현장 선택 목록). 본사 상세의 "현장 화면" 버튼으로 연결. 휴대폰 홈 화면에 추가하면 그 현장으로 바로 열린다(`docs/manifests/<ID>.webmanifest`, 수집 실행이 생성)
-- 이전 화면(2주간 병행, 5단계에서 정리): `…/old/index.html`(지도), `…/old/sites.html`(카드). `map.html`·`sites.html`은 이동 안내 페이지
-- 자동 수집: `.github/workflows/collector.yml`
-- 전체 테스트: **205개 통과** (2026-09-28 갱신, 4단계 레이더·화면 수정 포함). `config.py`가 없는 PC에서도 가짜 값(`tests/secretless_env.py`)으로 모두 돈다
+- 이전 화면(`docs/old/`)은 5단계(2026-10-22)에서 정리했다. 예전 주소 `map.html`·`sites.html`은 3초 뒤 새 화면으로 옮겨 가는 안내 페이지
+- 자동 수집: `.github/workflows/collector.yml`. GitHub 예약 실행이 하루 6~8회만 돌아(2026-10 실측, 업무시간 공백 3~7시간)
+  외부 예약 서비스(cron-job.org)가 한국시각 04~17시 :17·:47마다 `workflow_dispatch`(`mode=auto`)를 요청하도록 했다.
+  설정 안내 `design/ops/external-trigger.md` — **토큰 발급·cron-job.org 등록은 사용자가 직접(2026-10-22 기준 미완료일 수 있음, Actions 실행 기록에
+  `workflow_dispatch`가 매시 보이면 완료)**. 겹친 요청은 `src/schedule.py`(`resolve_run_mode`·`skip_reason`)가 한 번만 수집한다.
+  GitHub 자체 예약은 예비로 남겨 두었다. 체크아웃은 `ref: main`(대기열 실행도 직전 결과를 봄), 푸시 전 `git pull --rebase`.
+- 전체 테스트: **216개 통과** (2026-10-22 갱신: 외부 예약·중복 수집, 옛 화면 정리, 특보 구역 짝짓기 수정). `config.py`가 없는 PC에서도 가짜 값(`tests/secretless_env.py`)으로 모두 돈다
 
 ### 대시보드 리디자인 진행 (2026-09-26~)
 
@@ -42,12 +46,19 @@
   결정 사항(사용자 확인 대상): ① (2026-09-28 해결) HQ 좁은 화면에서도 범례 상자 아래 줄에 레이더 시각·"자료: 기상청"을 보인다(지도 버튼은 그만큼 아래로). ② 현장 PC 화면은 3단계처럼 카드 전체를 숨기지 않고 "주변 비구름" 카드(설계 3.3 카드 6)는 보여주되 "지도로 보기"만 숨긴다(화면에 레이더 시각·출처가 있어야 한다는 제약과 일치) — 틀리면 CSS 한 줄로 되돌릴 수 있다.
 
 #### 다음 단계
-- **이어서 할 일(2026-09-28 저녁 기준)**: `design/specs/2026-09-28-notice-style-and-site-db-draft.md`의 "결정 대기" (가)~(라)를 사용자에게 받는다.
-  (다)·(라)는 집 PC에서도 가능(문체 규칙 → `src/alert_rules.py`·`src/narrative.py` 문안 생성기 수정 계획), (가)·(나)의 DB 도구 제작은
-  엑셀이 있는 업무용 PC에서만 가능하다.
+- **이어서 할 일(2026-10-22 기준)**:
+  1. 사용자 결정(2026-10-22): (다) 문안은 **현장권으로 묶기**, (라) 법정 문구는 **법령 확인 후 넣기**(확인 완료, `legal/` 9절).
+     → `design/specs/2026-10-22-notice-examples.md`의 예시 4건(오늘 실제 한파 + 폭염·호우·평상시)과 6장 질문 6개를 사용자에게 검토받고,
+     확정되면 `src/narrative.py`(본사 전파 문안 `national_notice`·`site_notice`)를 새 양식으로 바꾼다. 한파·대설 카테고리는 지금 없음
+     (`alert_rules.CATEGORY_ORDER`는 강풍·호우·폭염뿐) → 예시의 한파 문구는 초안. 실제 발송(live)은 계속 금지.
+  2. 사용자가 외부 예약 서비스 설정(`design/ops/external-trigger.md`)을 마치면 하루 뒤 Actions 실행 횟수·공백을 다시 센다.
+  3. (가)·(나) 현장 DB 도구는 아직 결정 대기(엑셀이 있는 업무용 PC에서만 가능).
 - 2026-09-28 추가 반영(배포 완료): 현장 화면에서 전파 문안 제거 / 본사 휴대폰 "현장 목록" 표 → 현장별 카드(좌우 스크롤 없음) /
   본사 좁은 화면 범례에 레이더 시각·"자료: 기상청" 표시.
-- **5단계(정리)**: `docs/old/`·`src/map_dashboard.py`·`src/dashboard.py` 등 이전 화면 삭제(2주 병행 뒤).
+- 5단계(정리) 2026-10-22 완료: `docs/old/`·`src/map_dashboard.py`·`src/dashboard.py`와 그 테스트 삭제, `main.py`의 옛 화면 생성 제거.
+- 특보 구역 짝짓기 수정(2026-10-22): 구역 이름을 글자 포함이 아니라 이름 단위로 비교(경북 '영양산지' 속 '양산'으로 양산 현장에
+  한파주의보가 붙던 오탐), '안동북부'처럼 세부구역은 군 별칭에 해당, 후포는 '울진평지'(울진산지 특보 제외), '서울(서북권)' 형식 지원.
+  새 현장의 특보 구역이 평지·산지로 나뉘는 군이면 `warning_regions`에 `OO평지`/`OO산지`를 적는다.
 - 사용자 결정 대기: 전파 문안 조치 항목이 붙는 조건(현재 비 0.1mm/h·바람 9m/s부터 — 사내 기준 없음).
 
 #### 미룬 작은 개선(필요할 때 처리)
@@ -116,20 +127,20 @@
 - `src/narrative.py`: 현장·전국 요약 문장과 전파 문안(금지어 검사 포함)
 - `src/intensity.py`: 기상청 예보용어(2025-06-11) 강수·바람 세기 표현
 - `src/site_profile.py`: 현장 공개 ID·짧은 이름·지역
-- `src/schedule.py`: 다음 수집 시각(워크플로 일정 변경 시 함께 수정)
+- `src/schedule.py`: 다음 수집 시각(워크플로 일정 변경 시 함께 수정), 실행 종류(주·보완·직접) 판단과 중복 수집 건너뛰기
 - `src/collection.py`: 실황·예보 병렬 수집. 격자 캐시·회로 차단(`CircuitBreaker`) 포함.
   실황·예보·중기·특보 호출이 하나의 breaker를 공유한다.
 - `src/warning_client.py`: 공공데이터포털 공식 기상특보 수집 및 현장 매칭
 - `src/radar.py`: 레이더 합성영상(공공데이터포털) 처리 — 범례·틀 확인, 강수 5단계 재분류, 기상청 LCC 보정 변환, 웹 지도 영상 생성(`docs/data/radar.png`). 실제 기상청 호출로 수동 확인하려면 `python -m src.radar tmp/radar`(`config.py` 필요, 결과 dict가 출력되면 정상)
 - `src/legal_rules.py`: 작업 종류·실측값 기반 법정 조치 판정
-- `legal/LEGAL_WEATHER_SAFETY_MATRIX_2026-09-20.md`: 법적 기준과 원문 링크
+- `legal/LEGAL_WEATHER_SAFETY_MATRIX_2026-09-20.md`: 법적 기준과 원문 링크(9절 2026-10-22 재확인: 33℃ 휴식 규정 유효, 매년 폭염철 전 재확인,
+  기상법 제12조의3제5항 출처 표시 의무 2026-09-18 시행)
 - `src/state_monitor.py`: 이전 상태 비교와 변화 알림 생성 (문안 톤 alert_rules와 공유)
 - `src/alert_rules.py`: 정기 공고문 생성. `_situational_title`·`_situational_closing`
   헬퍼가 카테고리 조합에 따라 【제목】과 마무리 문단을 자동 조립.
 - `src/notification_queue.py`: 알림 대기열, 중복 방지, 재시도, shadow/live 제어
-- `src/map_dashboard.py`: 지도 중심 본사 관제 화면 — 이전 화면(docs/old/), 5단계에서 삭제 예정
-- `src/dashboard.py`: 현장별 카드 화면 — 이전 화면(docs/old/), 5단계에서 삭제 예정
-- `src/publish.py`: `web/` → `docs/` 게시와 게시 전 점검, 이전 화면 경로(`docs/old/`)
+- `src/publish.py`: `web/` → `docs/` 게시와 게시 전 점검
+- `design/ops/external-trigger.md`: 외부 예약 서비스(cron-job.org) 설정 안내(토큰 값은 적지 않음)
 - `web/`: 새 화면 원본 — `index.html`(본사), `assets/common.js`(공통), `geo.js`(지도·자체 지도 전환), `hq*.js`(본사 모듈), `tokens.css`·`app.css`·`hq.css`, `icons.svg`, `brand/`(공식 로고, 가공 금지)
 - `web/site.html`·`assets/site*.js`·`site.css`: 현장 화면, `assets/parts.js`: 현장 카드 공통 부품, `manifest.webmanifest`·`assets/icons/`: 홈 화면 추가
 - `scripts/ui_check.mjs`: 헤드리스 Chrome 화면 점검 도구(단계 JSON → 결과·콘솔 오류·캡처)
@@ -193,6 +204,9 @@
 문체 규칙 초안과 예시는 `design/specs/2026-09-28-notice-style-and-site-db-draft.md` 1장 — 사용자 확인 (다)(라) 뒤 코드 반영.
 원문(실명·회의 링크 포함)은 저장소에 두지 않는다. 남은 미확보 유형: 강풍 단독, 대설·한파, 특보 해제.
 
+**진행 상황 (2026-10-22)**: (다) 현장권 묶기·(라) 법정 문구 넣기 결정. 새 양식 예시와 질문은 `design/specs/2026-10-22-notice-examples.md`
+(사용자 검토 대기, 코드 미반영). 10/22에 실제로 한파주의보가 발효됐으나 한파 샘플이 없어 한파 문구는 초안으로 제시했다.
+
 새 위험 유형 샘플을 받으면 카테고리별 문구를 세분화한다. 실명·연락처는 자리표시자
 (`[안전경영팀 담당 매니저]` 등)로만 반영하고 저장소 어디에도 원문을 두지 않는다.
 `NOTIFICATION_MODE=live` 전환은 **여전히 금지** 상태.
@@ -209,6 +223,9 @@
 
 실측 결과: 개선 전 12분 50초 → 개선 후 중앙값 55초, 최대 3분 59초(61회 모두 성공).
 자세한 수치는 위 "수집 시간 실측" 절 참고.
+
+실행 횟수 실측(2026-10-22): 9/28 이후 168회 모두 성공했지만 GitHub 예약이 대부분 빠져 하루 6~8회만 실행(업무시간 공백 3~7시간,
+일부는 예약 시각보다 수 시간 늦게 실행). → 외부 예약 서비스로 보완(위 "현재 운영 상태"의 자동 수집 항목).
 
 ### 4. 본사·현장 로그인 분리
 
