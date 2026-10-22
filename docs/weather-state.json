@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-22T17:47:18+09:00",
+  "updated_at": "2026-10-22T21:27:31+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,17 +10,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -44,17 +39,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -78,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -101,7 +91,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -135,7 +125,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -158,7 +148,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -169,11 +159,6 @@
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 80%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -197,7 +182,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -220,7 +205,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/23(금)",
@@ -236,11 +221,6 @@
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -264,7 +244,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -287,7 +267,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -310,7 +290,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -333,7 +313,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -344,11 +324,6 @@
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -372,7 +347,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -395,7 +370,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -406,11 +381,6 @@
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -434,7 +404,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -457,17 +427,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -491,7 +456,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -530,7 +495,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -564,7 +529,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -575,11 +540,6 @@
           "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -603,14 +563,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
-      "forecast_risks": [
-        {
-          "date": "10/26(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261022-2000",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -632,7 +586,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261022-1700",
+      "observation_id": "20261022-2000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -652,7 +606,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-22T17:47:18+09:00",
+  "last_success_at": "2026-10-22T21:27:31+09:00",
   "last_change_at": "2026-10-22T17:47:18+09:00",
   "last_changes": [
     {
