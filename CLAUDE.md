@@ -23,8 +23,8 @@
 - 이전 화면(`docs/old/`)은 5단계(2026-10-22)에서 정리했다. 예전 주소 `map.html`·`sites.html`은 3초 뒤 새 화면으로 옮겨 가는 안내 페이지
 - 자동 수집: `.github/workflows/collector.yml`. GitHub 예약 실행이 하루 6~8회만 돌아(2026-10 실측, 업무시간 공백 3~7시간)
   외부 예약 서비스(cron-job.org)가 한국시각 04~17시 :17·:47마다 `workflow_dispatch`(`mode=auto`)를 요청하도록 했다.
-  설정 안내 `design/ops/external-trigger.md` — **토큰 발급·cron-job.org 등록은 사용자가 직접(2026-10-22 기준 미완료일 수 있음, Actions 실행 기록에
-  `workflow_dispatch`가 매시 보이면 완료)**. 겹친 요청은 `src/schedule.py`(`resolve_run_mode`·`skip_reason`)가 한 번만 수집한다.
+  설정 안내 `design/ops/external-trigger.md` — **2026-10-22 사용자가 키 발급·cron-job.org 등록 완료**(Test run 10:08 성공, `mode=auto` 확인).
+  키 만료일은 사용자가 정함(안내: 1년). 만료되면 cron-job.org가 실패 메일을 보내고 25번 연속 실패 시 예약을 끈다 → 새 키로 Authorization만 교체. 겹친 요청은 `src/schedule.py`(`resolve_run_mode`·`skip_reason`)가 한 번만 수집한다.
   GitHub 자체 예약은 예비로 남겨 두었다. 체크아웃은 `ref: main`(대기열 실행도 직전 결과를 봄), 푸시 전 `git pull --rebase`.
 - 전체 테스트: **216개 통과** (2026-10-22 갱신: 외부 예약·중복 수집, 옛 화면 정리, 특보 구역 짝짓기 수정). `config.py`가 없는 PC에서도 가짜 값(`tests/secretless_env.py`)으로 모두 돈다
 
@@ -51,7 +51,7 @@
      → `design/specs/2026-10-22-notice-examples.md`의 예시 4건(오늘 실제 한파 + 폭염·호우·평상시)과 6장 질문 6개를 사용자에게 검토받고,
      확정되면 `src/narrative.py`(본사 전파 문안 `national_notice`·`site_notice`)를 새 양식으로 바꾼다. 한파·대설 카테고리는 지금 없음
      (`alert_rules.CATEGORY_ORDER`는 강풍·호우·폭염뿐) → 예시의 한파 문구는 초안. 실제 발송(live)은 계속 금지.
-  2. 사용자가 외부 예약 서비스 설정(`design/ops/external-trigger.md`)을 마치면 하루 뒤 Actions 실행 횟수·공백을 다시 센다.
+  2. 외부 예약 서비스 등록 완료(2026-10-22). 하루 뒤 Actions 실행 횟수·업무시간 공백을 다시 센다(목표: 04~17시 매시 :47 수집).
   3. (가)·(나) 현장 DB 도구는 아직 결정 대기(엑셀이 있는 업무용 PC에서만 가능).
 - 2026-09-28 추가 반영(배포 완료): 현장 화면에서 전파 문안 제거 / 본사 휴대폰 "현장 목록" 표 → 현장별 카드(좌우 스크롤 없음) /
   본사 좁은 화면 범례에 레이더 시각·"자료: 기상청" 표시.
