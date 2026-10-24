@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-24T13:47:19+09:00",
+  "updated_at": "2026-10-24T14:47:18+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -99,9 +99,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.8mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.7mm"
       ],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -140,7 +140,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -171,9 +171,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -212,7 +212,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -243,9 +243,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.4mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.9mm"
       ],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -279,7 +279,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -308,7 +308,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -337,7 +337,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -363,10 +363,14 @@
       "weather_warnings_available": true
     },
     "포항~안동2 국도건설공사": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261024-1300",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+      ],
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -405,7 +409,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -436,9 +440,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 3.0mm"
       ],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -472,7 +476,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -506,7 +510,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -542,9 +546,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
       ],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -583,7 +587,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -619,9 +623,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.5mm"
       ],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -657,9 +661,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 3.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -698,7 +702,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1300",
+      "observation_id": "20261024-1400",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -724,43 +728,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-24T13:47:19+09:00",
-  "last_change_at": "2026-10-24T13:47:19+09:00",
+  "last_success_at": "2026-10-24T14:47:18+09:00",
+  "last_change_at": "2026-10-24T14:47:18+09:00",
   "last_changes": [
     {
-      "site_name": "청정고원 스포츠센터",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.8mm"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.4mm"
-      ]
-    },
-    {
       "site_name": "포항~안동2 국도건설공사",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
       "type": "위험 상승",
       "from_level": "정상",
       "to_level": "주의",
@@ -768,7 +740,7 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
       ]
     }
   ]
