@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-24T16:47:18+09:00",
+  "updated_at": "2026-10-24T17:47:19+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,14 +10,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
-      "forecast_risks": [
-        {
-          "date": "10/24(토)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261024-1700",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -39,14 +33,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
-      "forecast_risks": [
-        {
-          "date": "10/24(토)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261024-1700",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -68,7 +56,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -99,9 +87,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.2mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.1mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -140,7 +128,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -171,19 +159,19 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 6.3mm"
+        "시스템 선제알림(주의) · 시간당 강우 4.3mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 80%"
+          "detail": "비 예보, 강수확률 최고 90%"
         },
         {
           "date": "10/25(일)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 80%"
+          "detail": "비 예보, 강수확률 최고 70%"
         },
         {
           "date": "10/26(월)",
@@ -212,7 +200,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -245,7 +233,7 @@
       "reasons": [
         "시스템 선제알림(주의) · 시간당 강우 1.8mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -279,7 +267,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -308,7 +296,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -337,7 +325,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -370,12 +358,12 @@
       "reasons": [
         "시스템 선제알림(주의) · 시간당 강우 2.5mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
+          "detail": "비 예보, 강수확률 최고 70%"
         },
         {
           "date": "10/25(일)",
@@ -409,7 +397,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -440,14 +428,14 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
+          "detail": "비 예보, 강수확률 최고 60%"
         },
         {
           "date": "10/25(일)",
@@ -473,10 +461,14 @@
       "weather_warnings_available": true
     },
     "산솔면 하수처리장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261024-1600",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.3mm"
+      ],
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -507,18 +499,17 @@
       "weather_warnings_available": true
     },
     "단월정수장 시설공사": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261024-1600",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.1mm"
+      ],
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "10/25(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -548,7 +539,7 @@
       "reasons": [
         "시스템 선제알림(주의) · 시간당 강우 2.5mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -587,7 +578,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -623,14 +614,14 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 4.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 3.0mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
+          "detail": "비 예보, 강수확률 최고 80%"
         },
         {
           "date": "10/25(일)",
@@ -663,7 +654,7 @@
       "reasons": [
         "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/24(토)",
@@ -702,7 +693,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261024-1600",
+      "observation_id": "20261024-1700",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -728,11 +719,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-24T16:47:18+09:00",
-  "last_change_at": "2026-10-24T16:47:18+09:00",
+  "last_success_at": "2026-10-24T17:47:19+09:00",
+  "last_change_at": "2026-10-24T17:47:19+09:00",
   "last_changes": [
     {
-      "site_name": "오리온수협 목포 김공장",
+      "site_name": "산솔면 하수처리장",
       "type": "위험 상승",
       "from_level": "정상",
       "to_level": "주의",
@@ -740,7 +731,19 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.8mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.3mm"
+      ]
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.1mm"
       ]
     }
   ]
