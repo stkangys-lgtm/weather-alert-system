@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-25T14:47:23+09:00",
+  "updated_at": "2026-10-25T15:47:19+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -102,7 +102,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -136,7 +136,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -167,10 +167,14 @@
       "weather_warnings_available": true
     },
     "양산 부산대병원": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261025-1400",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.6mm"
+      ],
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -204,7 +208,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -240,9 +244,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.1mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
       ],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -271,7 +275,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -305,7 +309,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -339,7 +343,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -373,7 +377,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -407,7 +411,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -445,7 +449,7 @@
       "reasons": [
         "시스템 선제알림(주의) · 시간당 강우 1.0mm"
       ],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -474,7 +478,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -508,7 +512,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -537,7 +541,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -568,10 +572,14 @@
       "weather_warnings_available": true
     },
     "동해안 바닷가 자동차길": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261025-1400",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ],
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -597,14 +605,10 @@
       "weather_warnings_available": true
     },
     "풍각지구 정비사업": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261025-1400",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -633,7 +637,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/25(일)",
@@ -667,7 +671,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261025-1400",
+      "observation_id": "20261025-1500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -698,19 +702,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-25T14:47:23+09:00",
-  "last_change_at": "2026-10-25T14:47:23+09:00",
+  "last_success_at": "2026-10-25T15:47:19+09:00",
+  "last_change_at": "2026-10-25T15:47:19+09:00",
   "last_changes": [
     {
       "site_name": "양산 부산대병원",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
       "type": "위험 상승",
       "from_level": "정상",
       "to_level": "주의",
@@ -718,8 +714,28 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.1mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.6mm"
       ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ]
+    },
+    {
+      "site_name": "풍각지구 정비사업",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     }
   ]
 }
