@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-27T04:47:20+09:00",
+  "updated_at": "2026-10-27T05:47:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -112,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -135,7 +135,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -169,7 +169,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -192,7 +192,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -226,7 +226,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -258,8 +258,8 @@
             "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 무안북부, 무안남부)",
             "제주도(제주도산지, 제주시서부, 제주시동부, 제주시중산간, 서귀포시서부, 서귀포시동부)"
           ],
-          "announced_at": "202610270300",
-          "effective_at": "202610270500",
+          "announced_at": "202610270500",
+          "effective_at": "202610270700",
           "matched_areas": [
             "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 무안북부, 무안남부)"
           ]
@@ -271,7 +271,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -305,7 +305,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -339,7 +339,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -373,7 +373,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -396,7 +396,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -430,7 +430,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -459,8 +459,13 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
+        {
+          "date": "10/29(목)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/30(금)",
           "kind": "강수 예상",
@@ -488,8 +493,13 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
+        {
+          "date": "10/29(목)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/30(금)",
           "kind": "강수 예상",
@@ -517,7 +527,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -543,8 +553,8 @@
             "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)",
             "울산"
           ],
-          "announced_at": "202610270300",
-          "effective_at": "202610270500",
+          "announced_at": "202610270500",
+          "effective_at": "202610270700",
           "matched_areas": [
             "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)"
           ]
@@ -556,7 +566,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -579,7 +589,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -602,7 +612,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -625,7 +635,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0400",
+      "observation_id": "20261027-0500",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -656,8 +666,8 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-27T04:47:20+09:00",
-  "last_change_at": "2026-10-27T04:17:27+09:00",
+  "last_success_at": "2026-10-27T05:47:20+09:00",
+  "last_change_at": "2026-10-27T05:47:20+09:00",
   "last_changes": [
     {
       "site_name": "오리온수협 목포 김공장",
@@ -679,6 +689,30 @@
       "categories": [],
       "reasons": [
         "10월 27일 오후(12시~18시) · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 무안북부, 무안남부)"
+      ]
+    },
+    {
+      "site_name": "산솔면 하수처리장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/29(목) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/29(목) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
