@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-27T09:47:19+09:00",
+  "updated_at": "2026-10-27T10:47:24+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -49,7 +49,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -88,7 +88,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -122,7 +122,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -145,7 +145,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -179,7 +179,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -208,7 +208,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -239,10 +239,14 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261027-0900",
+      "level": "주의",
+      "categories": [
+        "강풍"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 풍속 10.3m/s"
+      ],
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -278,16 +282,16 @@
           "areas": [
             "서해5도",
             "충청남도(태안, 당진, 서산, 서천, 보령(도서제외), 보령도서, 홍성서부)",
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
+            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
             "전북자치도(군산옥도면(어청도 제외), 군산어청도)",
             "제주도(추자도)",
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202610270900",
-          "effective_at": "202610271100",
+          "announced_at": "202610271000",
+          "effective_at": "202610271200",
           "matched_areas": [
-            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
+            "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
           ]
         }
       ],
@@ -297,7 +301,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -331,7 +335,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -365,7 +369,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -399,7 +403,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -428,7 +432,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -462,7 +466,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -496,7 +500,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -530,7 +534,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -569,7 +573,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -601,8 +605,8 @@
             "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)",
             "울산"
           ],
-          "announced_at": "202610270900",
-          "effective_at": "202610271100",
+          "announced_at": "202610271000",
+          "effective_at": "202610271200",
           "matched_areas": [
             "경상북도(영덕, 포항, 울진평지, 울진산지, 경주동부)"
           ]
@@ -614,7 +618,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -637,7 +641,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -666,7 +670,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -695,7 +699,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-0900",
+      "observation_id": "20261027-1000",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -726,9 +730,21 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-27T09:47:19+09:00",
-  "last_change_at": "2026-10-27T09:47:19+09:00",
+  "last_success_at": "2026-10-27T10:47:24+09:00",
+  "last_change_at": "2026-10-27T10:47:24+09:00",
   "last_changes": [
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "강풍"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 풍속 10.3m/s"
+      ]
+    },
     {
       "site_name": "오리온수협 목포 김공장",
       "type": "기상특보 발효",
@@ -738,17 +754,17 @@
         "강풍"
       ],
       "reasons": [
-        "강풍주의보 · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
+        "강풍주의보 · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
       ]
     },
     {
       "site_name": "오리온수협 목포 김공장",
-      "type": "예비특보 변경",
-      "from_level": "예비특보",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
       "to_level": "해제",
       "categories": [],
       "reasons": [
-        "10월 27일 오후(12시~18시) · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 거문도.초도, 영광(낙월면 제외), 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 무안북부, 무안남부)"
+        "강풍주의보 · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
       ]
     },
     {
