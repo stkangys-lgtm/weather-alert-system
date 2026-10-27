@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-27T23:55:06+09:00",
+  "updated_at": "2026-10-28T04:17:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -63,8 +63,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "충청북도"
           ]
@@ -76,7 +76,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -129,8 +129,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "충청북도"
           ]
@@ -142,7 +142,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -181,7 +181,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -224,8 +224,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
           ]
@@ -237,7 +237,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -276,7 +276,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -315,7 +315,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -368,8 +368,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "경기도(가평, 군포, 이천, 안성, 여주동남부, 여주서부, 양평동부, 양평서부)"
           ]
@@ -381,7 +381,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -413,34 +413,14 @@
           "source": "산업안전보건기준에 관한 규칙"
         }
       ],
-      "weather_warnings": [
-        {
-          "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도(백령도.대청도)",
-            "충청남도(보령도서)",
-            "전라남도(보성, 여수, 광양, 순천, 장흥, 강진, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
-            "전북자치도(군산옥도면(어청도 제외), 군산어청도)",
-            "제주도(서귀포시중산간 제외)",
-            "울릉도.독도"
-          ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
-          "matched_areas": [
-            "전라남도(보성, 여수, 광양, 순천, 장흥, 강진, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
-          ]
-        }
-      ],
+      "weather_warnings": [],
       "weather_warnings_available": true
     },
     "렉서스 동탄 네트워크": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -479,7 +459,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -532,8 +512,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
           ]
@@ -545,7 +525,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -584,7 +564,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -618,7 +598,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -657,7 +637,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -710,8 +690,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "전라남도(담양, 장성, 화순, 보성, 광양, 순천, 함평, 영광(낙월면 제외), 나주동남부, 나주서북부, 곡성북부, 곡성남부, 구례평지)"
           ]
@@ -723,7 +703,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -776,8 +756,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
           ]
@@ -789,7 +769,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -842,8 +822,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "충청북도"
           ]
@@ -855,7 +835,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -903,8 +883,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "경상북도(영덕, 포항, 울진평지, 경주중북부, 경주동부, 경주남부 제외)"
           ]
@@ -916,7 +896,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -959,8 +939,8 @@
             "대구",
             "세종"
           ],
-          "announced_at": "202610272200",
-          "effective_at": "202610280000",
+          "announced_at": "202610280400",
+          "effective_at": "202610280600",
           "matched_areas": [
             "강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
           ]
@@ -972,7 +952,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -1011,7 +991,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -1050,7 +1030,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261027-2300",
+      "observation_id": "20261028-0300",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -1086,8 +1066,8 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-27T23:55:06+09:00",
-  "last_change_at": "2026-10-27T23:33:41+09:00",
+  "last_success_at": "2026-10-28T04:17:20+09:00",
+  "last_change_at": "2026-10-28T04:17:20+09:00",
   "last_changes": [
     {
       "site_name": "오리온 진천신공장",
@@ -1134,30 +1114,6 @@
       ]
     },
     {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
       "site_name": "청정고원 스포츠센터",
       "type": "기상특보 발효",
       "from_level": null,
@@ -1177,42 +1133,6 @@
       "categories": [],
       "reasons": [
         "한파주의보 · 강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 흐리고 비 예보, 강수확률 최고 70%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 흐리고 비 예보, 강수확률 최고 60%"
       ]
     },
     {
@@ -1239,38 +1159,6 @@
     },
     {
       "site_name": "오리온수협 목포 김공장",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "강풍주의보 · 전라남도(보성, 여수, 광양, 순천, 장흥, 강진, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
       "type": "기상특보 해제",
       "from_level": "주의보",
       "to_level": "해제",
@@ -1280,31 +1168,117 @@
       ]
     },
     {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
+      "site_name": "화천군부대 시설공사",
+      "type": "기상특보 발효",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "주의보",
       "categories": [
-        "강수 예상"
+        "한파"
       ],
       "reasons": [
-        "11/1(일) 흐리고 비 예보, 강수확률 최고 60%"
+        "한파주의보 · 강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
       ]
     },
     {
       "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
       "reasons": [
-        "11/1(일) 흐리고 비 예보, 강수확률 최고 60%"
+        "한파주의보 · 강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
       ]
     },
     {
-      "site_name": "화천군부대 시설공사",
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "한파"
+      ],
+      "reasons": [
+        "한파주의보 · 전라남도(담양, 장성, 화순, 보성, 광양, 순천, 함평, 영광(낙월면 제외), 나주동남부, 나주서북부, 곡성북부, 곡성남부, 구례평지)"
+      ]
+    },
+    {
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "한파주의보 · 전라남도(담양, 장성, 화순, 보성, 광양, 순천, 함평, 영광(낙월면 제외), 나주동남부, 나주서북부, 곡성북부, 곡성남부, 구례평지)"
+      ]
+    },
+    {
+      "site_name": "산솔면 하수처리장",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "한파"
+      ],
+      "reasons": [
+        "한파주의보 · 강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "산솔면 하수처리장",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "한파주의보 · 강원도(태백, 영월, 횡성, 원주, 화천, 춘천, 동해평지, 동해산지, 삼척산지, 고성산지, 양양산지, 평창평지, 평창산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 홍천평지, 홍천산지, 양구평지, 양구산지, 인제평지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "한파"
+      ],
+      "reasons": [
+        "한파주의보 · 충청북도"
+      ]
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "한파주의보 · 충청북도"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "한파"
+      ],
+      "reasons": [
+        "한파주의보 · 경상북도(영덕, 포항, 울진평지, 경주중북부, 경주동부, 경주남부 제외)"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "한파주의보 · 경상북도(영덕, 포항, 울진평지, 경주중북부, 경주동부, 경주남부 제외)"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
       "type": "기상특보 발효",
       "from_level": null,
       "to_level": "주의보",
