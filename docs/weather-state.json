@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-29T10:47:21+09:00",
+  "updated_at": "2026-10-29T11:47:29+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -49,7 +49,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -93,7 +93,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -132,7 +132,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "11/2(월)",
@@ -161,7 +161,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -205,7 +205,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -239,7 +239,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -283,8 +283,13 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
+        {
+          "date": "10/29(목)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/30(금)",
           "kind": "강수 예상",
@@ -322,7 +327,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -366,7 +371,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -410,7 +415,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -449,7 +454,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "11/2(월)",
@@ -478,7 +483,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -522,8 +527,13 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
+        {
+          "date": "10/29(목)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "10/30(금)",
           "kind": "강수 예상",
@@ -561,7 +571,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -600,7 +610,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -639,7 +649,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "11/2(월)",
@@ -668,7 +678,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -691,7 +701,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/30(금)",
@@ -725,7 +735,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "11/2(월)",
@@ -754,7 +764,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261029-1000",
+      "observation_id": "20261029-1100",
       "forecast_risks": [
         {
           "date": "10/29(목)",
@@ -795,129 +805,9 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-29T10:47:21+09:00",
-  "last_change_at": "2026-10-29T04:17:22+09:00",
+  "last_success_at": "2026-10-29T11:47:29+09:00",
+  "last_change_at": "2026-10-29T11:47:29+09:00",
   "last_changes": [
-    {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
     {
       "site_name": "오리온수협 목포 김공장",
       "type": "새 예보 위험",
@@ -927,103 +817,7 @@
         "강수 예상"
       ],
       "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 70%"
-      ]
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "시흥능곡 주변도로",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "시흥능곡 주변도로",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/2(월) 비 예보, 강수확률 최고 60%"
+        "10/29(목) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
@@ -1035,7 +829,7 @@
         "강수 예상"
       ],
       "reasons": [
-        "11/1(일) 비 예보, 강수확률 최고 60%"
+        "10/29(목) 비 예보, 강수확률 최고 60%"
       ]
     }
   ]
