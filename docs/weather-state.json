@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-10-30T04:47:23+09:00",
+  "updated_at": "2026-10-30T05:47:25+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,13 +10,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/2(월)",
           "kind": "강수 예상",
@@ -44,7 +39,36 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
+      "forecast_risks": [
+        {
+          "date": "11/2(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": true
+    },
+    "연희·연남동 공공주택": {
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -74,40 +98,11 @@
       "weather_warnings": [],
       "weather_warnings_available": true
     },
-    "연희·연남동 공공주택": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261030-0400",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
     "청정고원 스포츠센터": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -141,10 +136,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/2(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -170,10 +170,10 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
-          "date": "10/30(금)",
+          "date": "11/1(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         },
@@ -204,10 +204,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/2(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -233,7 +238,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -267,94 +272,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
-    "화천군부대 시설공사": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261030-0400",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
-    "반얀트리호텔 근생동": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261030-0400",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
-    },
-    "포항~안동2 국도건설공사": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -384,14 +302,121 @@
       "weather_warnings": [],
       "weather_warnings_available": true
     },
+    "화천군부대 시설공사": {
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261030-0500",
+      "forecast_risks": [
+        {
+          "date": "10/30(금)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/1(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/2(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": true
+    },
+    "반얀트리호텔 근생동": {
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261030-0500",
+      "forecast_risks": [
+        {
+          "date": "11/1(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/2(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": true
+    },
+    "포항~안동2 국도건설공사": {
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261030-0500",
+      "forecast_risks": [
+        {
+          "date": "11/2(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": true
+    },
     "시흥능곡 주변도로": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/2(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -417,13 +442,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
-        {
-          "date": "10/30(금)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/1(일)",
           "kind": "강수 예상",
@@ -456,8 +476,13 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
+        {
+          "date": "10/31(토)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
         {
           "date": "11/1(일)",
           "kind": "강수 예상",
@@ -490,13 +515,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/2(월)",
           "kind": "강수 예상",
@@ -524,8 +544,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
-      "forecast_risks": [],
+      "observation_id": "20261030-0500",
+      "forecast_risks": [
+        {
+          "date": "11/2(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -547,8 +573,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
-      "forecast_risks": [],
+      "observation_id": "20261030-0500",
+      "forecast_risks": [
+        {
+          "date": "11/2(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -570,13 +602,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
       "forecast_risks": [
-        {
-          "date": "10/30(금)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/1(일)",
           "kind": "강수 예상",
@@ -609,7 +636,36 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261030-0400",
+      "observation_id": "20261030-0500",
+      "forecast_risks": [
+        {
+          "date": "11/2(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
+      "legal_signals": [
+        {
+          "status": "데이터 부족",
+          "work_type": "site_profile",
+          "title": "현장 작업 프로필 미등록",
+          "article": "판정 전제정보",
+          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
+          "actions": [
+            "현장별 보유 설비와 작업 종류를 등록",
+            "매일 진행 작업을 확인"
+          ],
+          "source": "산업안전보건기준에 관한 규칙"
+        }
+      ],
+      "weather_warnings": [],
+      "weather_warnings_available": true
+    },
+    "송산그린시티 용수공급시설": {
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261030-0500",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -638,47 +694,166 @@
       ],
       "weather_warnings": [],
       "weather_warnings_available": true
-    },
-    "송산그린시티 용수공급시설": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261030-0400",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
-      "legal_signals": [
-        {
-          "status": "데이터 부족",
-          "work_type": "site_profile",
-          "title": "현장 작업 프로필 미등록",
-          "article": "판정 전제정보",
-          "reason": "타워크레인·철골·비계·굴착·옥외작업 여부가 등록되지 않았습니다.",
-          "actions": [
-            "현장별 보유 설비와 작업 종류를 등록",
-            "매일 진행 작업을 확인"
-          ],
-          "source": "산업안전보건기준에 관한 규칙"
-        }
-      ],
-      "weather_warnings": [],
-      "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-10-30T04:47:23+09:00",
-  "last_change_at": "2026-10-30T04:47:23+09:00",
+  "last_success_at": "2026-10-30T05:47:25+09:00",
+  "last_change_at": "2026-10-30T05:47:25+09:00",
   "last_changes": [
     {
-      "site_name": "풍각지구 정비사업",
-      "type": "위험 해제",
-      "from_level": "주의",
+      "site_name": "연희·연남동 공공주택",
+      "type": "새 예보 위험",
+      "from_level": null,
       "to_level": "정상",
-      "categories": [],
-      "reasons": []
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "LX 논현 업무시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "양산 부산대병원",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/1(일) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "군포복합개발",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "렉서스 동탄 네트워크",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "화천군부대 시설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/30(금) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "화천군부대 시설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "반얀트리호텔 근생동",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "시흥능곡 주변도로",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "산솔면 하수처리장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "10/31(토) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/2(월) 비 예보, 강수확률 최고 60%"
+      ]
     }
   ]
 }
