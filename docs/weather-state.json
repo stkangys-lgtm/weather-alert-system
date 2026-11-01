@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-01T15:47:20+09:00",
+  "updated_at": "2026-11-01T16:47:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -12,9 +12,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
       ],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -50,9 +50,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
       ],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -86,7 +86,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -111,9 +111,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.7mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.1mm"
       ],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -144,14 +144,10 @@
       "weather_warnings_available": true
     },
     "LX 논현 업무시설": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261101-1500",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261101-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -174,7 +170,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -210,10 +206,14 @@
       "weather_warnings_available": true
     },
     "군포복합개발": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261101-1500",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
+      ],
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -239,10 +239,14 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261101-1500",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+      ],
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -281,7 +285,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -315,7 +319,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -341,14 +345,10 @@
       "weather_warnings_available": true
     },
     "반얀트리호텔 근생동": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261101-1500",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261101-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -371,7 +371,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -407,14 +407,10 @@
       "weather_warnings_available": true
     },
     "시흥능곡 주변도로": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261101-1500",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261101-1600",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -439,9 +435,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 4.5mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -480,7 +476,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -511,10 +507,14 @@
       "weather_warnings_available": true
     },
     "단월정수장 시설공사": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261101-1500",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.6mm"
+      ],
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -548,7 +548,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -587,7 +587,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -616,7 +616,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1500",
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -652,10 +652,14 @@
       "weather_warnings_available": true
     },
     "영주 가흥정수장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261101-1500",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ],
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -691,10 +695,14 @@
       "weather_warnings_available": true
     },
     "송산그린시티 용수공급시설": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261101-1500",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ],
+      "observation_id": "20261101-1600",
       "forecast_risks": [
         {
           "date": "11/1(일)",
@@ -720,76 +728,92 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-01T15:47:20+09:00",
-  "last_change_at": "2026-11-01T15:47:20+09:00",
+  "last_success_at": "2026-11-01T16:47:20+09:00",
+  "last_change_at": "2026-11-01T16:47:20+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천 기숙사",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.7mm"
-      ]
-    },
-    {
       "site_name": "LX 논현 업무시설",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
-    },
-    {
-      "site_name": "시흥능곡 주변도로",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
-    },
-    {
-      "site_name": "단월정수장 시설공사",
       "type": "위험 해제",
       "from_level": "주의",
       "to_level": "정상",
       "categories": [],
       "reasons": []
+    },
+    {
+      "site_name": "군포복합개발",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
+      ]
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+      ]
+    },
+    {
+      "site_name": "반얀트리호텔 근생동",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "시흥능곡 주변도로",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.6mm"
+      ]
+    },
+    {
+      "site_name": "영주 가흥정수장",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ]
+    },
+    {
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ]
     }
   ]
 }
