@@ -1,31 +1,17 @@
 {
   "version": 1,
-  "updated_at": "2026-11-01T18:44:05+09:00",
+  "updated_at": "2026-11-02T04:17:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
   "warning_collection_status": "healthy",
   "sites": {
     "오리온 진천신공장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 6.0mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -50,25 +36,11 @@
       "weather_warnings_available": true
     },
     "오리온 진천 기숙사": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 6.0mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -96,14 +68,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -125,19 +91,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -156,21 +111,11 @@
       "weather_warnings_available": true
     },
     "LX 논현 업무시설": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -189,20 +134,11 @@
       "weather_warnings_available": true
     },
     "양산 부산대병원": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.8mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/2(월)",
           "kind": "강수 예상",
@@ -232,21 +168,11 @@
       "weather_warnings_available": true
     },
     "군포복합개발": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
-      ],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -265,20 +191,11 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 6.5mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
         {
           "date": "11/2(월)",
           "kind": "강수 예상",
@@ -308,21 +225,11 @@
       "weather_warnings_available": true
     },
     "렉서스 동탄 네트워크": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
-      ],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -344,14 +251,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -373,14 +274,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -399,20 +294,11 @@
       "weather_warnings_available": true
     },
     "포항~안동2 국도건설공사": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/2(월)",
           "kind": "강수 예상",
@@ -442,21 +328,11 @@
       "weather_warnings_available": true
     },
     "시흥능곡 주변도로": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -475,24 +351,15 @@
       "weather_warnings_available": true
     },
     "뇌죽천 하천재해예방": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 5.5mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
         {
           "date": "11/2(월)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
+          "detail": "비 예보, 강수확률 최고 60%"
         },
         {
           "date": "11/5(목)",
@@ -518,26 +385,11 @@
       "weather_warnings_available": true
     },
     "산솔면 하수처리장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
-      ],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -556,25 +408,11 @@
       "weather_warnings_available": true
     },
     "단월정수장 시설공사": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 3.0mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -602,15 +440,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1800",
+      "observation_id": "20261102-0300",
       "forecast_risks": [
         {
-          "date": "11/1(일)",
+          "date": "11/2(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         },
         {
-          "date": "11/2(월)",
+          "date": "11/5(목)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -636,14 +474,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -662,20 +494,11 @@
       "weather_warnings_available": true
     },
     "풍각지구 정비사업": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/2(월)",
           "kind": "강수 예상",
@@ -705,22 +528,13 @@
       "weather_warnings_available": true
     },
     "영주 가흥정수장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261101-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
       "forecast_risks": [
         {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/2(월)",
+          "date": "11/5(목)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -743,21 +557,11 @@
       "weather_warnings_available": true
     },
     "송산그린시티 용수공급시설": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261101-1800",
-      "forecast_risks": [
-        {
-          "date": "11/1(일)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261102-0300",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -776,56 +580,152 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-01T18:44:05+09:00",
-  "last_change_at": "2026-11-01T18:44:05+09:00",
+  "last_success_at": "2026-11-02T04:17:20+09:00",
+  "last_change_at": "2026-11-02T04:17:20+09:00",
   "last_changes": [
     {
+      "site_name": "오리온 진천신공장",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "오리온 진천 기숙사",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
       "site_name": "LX 논현 업무시설",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "양산 부산대병원",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "군포복합개발",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "렉서스 동탄 네트워크",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     },
     {
       "site_name": "포항~안동2 국도건설공사",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
-      ]
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "시흥능곡 주변도로",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     },
     {
       "site_name": "산솔면 하수처리장",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
       "categories": [
-        "호우"
+        "강수 예상"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
+        "11/5(목) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
       "site_name": "풍각지구 정비사업",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "영주 가흥정수장",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "영주 가흥정수장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
       "categories": [
-        "호우"
+        "강수 예상"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+        "11/5(목) 비 예보, 강수확률 최고 60%"
       ]
+    },
+    {
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     }
   ]
 }
