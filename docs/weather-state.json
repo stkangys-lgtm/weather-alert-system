@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-02T04:47:21+09:00",
+  "updated_at": "2026-11-02T05:47:23+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -91,7 +91,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -114,7 +114,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -137,13 +137,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 70%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -171,7 +166,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -194,13 +189,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -228,7 +218,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -251,7 +241,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -274,7 +264,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -297,13 +287,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -331,7 +316,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -354,13 +339,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -388,7 +368,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -411,7 +391,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -440,13 +420,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -474,7 +449,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -497,13 +472,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
-        {
-          "date": "11/2(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/5(목)",
           "kind": "강수 예상",
@@ -531,7 +501,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -560,7 +530,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261102-0400",
+      "observation_id": "20261102-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -580,7 +550,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-02T04:47:21+09:00",
+  "last_success_at": "2026-11-02T05:47:23+09:00",
   "last_change_at": "2026-11-02T04:17:20+09:00",
   "last_changes": [
     {
