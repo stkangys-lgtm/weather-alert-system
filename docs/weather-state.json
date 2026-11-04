@@ -1,16 +1,20 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T04:17:21+09:00",
+  "updated_at": "2026-11-05T04:47:22+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
   "warning_collection_status": "healthy",
   "sites": {
     "오리온 진천신공장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261105-0300",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+      ],
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -44,7 +48,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -78,7 +82,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -112,7 +116,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -141,7 +145,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -175,7 +179,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -204,7 +208,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -240,9 +244,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 3.1mm"
+        "시스템 선제알림(주의) · 시간당 강우 5.5mm"
       ],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -271,7 +275,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -305,7 +309,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -334,7 +338,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -368,7 +372,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -397,7 +401,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -433,9 +437,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 6.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 6.5mm"
       ],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -464,7 +468,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -498,7 +502,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -527,7 +531,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -556,7 +560,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -585,7 +589,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -614,7 +618,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -643,7 +647,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-0300",
+      "observation_id": "20261105-0400",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -674,11 +678,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-05T04:17:21+09:00",
-  "last_change_at": "2026-11-05T04:17:21+09:00",
+  "last_success_at": "2026-11-05T04:47:22+09:00",
+  "last_change_at": "2026-11-05T04:47:22+09:00",
   "last_changes": [
     {
-      "site_name": "오리온수협 목포 김공장",
+      "site_name": "오리온 진천신공장",
       "type": "위험 상승",
       "from_level": "정상",
       "to_level": "주의",
@@ -686,19 +690,7 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 3.1mm"
-      ]
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 6.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ]
     }
   ]
