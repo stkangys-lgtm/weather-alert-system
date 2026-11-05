@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T12:47:22+09:00",
+  "updated_at": "2026-11-05T13:47:21+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -54,7 +54,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -98,7 +98,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -139,14 +139,10 @@
       "weather_warnings_available": true
     },
     "청정고원 스포츠센터": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
-      ],
-      "observation_id": "20261105-1200",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -185,7 +181,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -229,7 +225,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -258,7 +254,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -302,7 +298,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -325,7 +321,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/6(금)",
@@ -364,7 +360,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -403,7 +399,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -449,9 +445,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 4.5mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -480,7 +476,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -524,7 +520,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -553,7 +549,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -597,7 +593,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -638,9 +634,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -669,7 +665,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -694,9 +690,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
       ],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -722,14 +718,10 @@
       "weather_warnings_available": true
     },
     "영주 가흥정수장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
-      ],
-      "observation_id": "20261105-1200",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -758,7 +750,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1200",
+      "observation_id": "20261105-1300",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -799,248 +791,24 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-05T12:47:22+09:00",
-  "last_change_at": "2026-11-05T11:47:21+09:00",
+  "last_success_at": "2026-11-05T13:47:21+09:00",
+  "last_change_at": "2026-11-05T13:47:21+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
       "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "주의",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "주의",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
+      "type": "위험 해제",
+      "from_level": "주의",
       "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
+      "categories": [],
+      "reasons": []
     },
     {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
+      "site_name": "영주 가흥정수장",
+      "type": "위험 해제",
+      "from_level": "주의",
       "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "반얀트리호텔 근생동",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "시흥능곡 주변도로",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/8(일) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "시흥능곡 주변도로",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/9(월) 비 예보, 강수확률 최고 60%"
-      ]
+      "categories": [],
+      "reasons": []
     }
   ]
 }
