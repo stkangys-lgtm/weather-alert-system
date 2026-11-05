@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-05T11:47:21+09:00",
+  "updated_at": "2026-11-05T12:47:22+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -54,7 +54,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -98,7 +98,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -144,9 +144,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.1mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
       ],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -185,7 +185,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -229,7 +229,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -258,7 +258,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -302,7 +302,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -325,7 +325,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/6(금)",
@@ -364,7 +364,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -403,7 +403,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -449,9 +449,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 3.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 4.5mm"
       ],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -480,7 +480,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -524,7 +524,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -553,7 +553,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -597,7 +597,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -638,9 +638,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
       ],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -669,7 +669,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -694,9 +694,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -729,7 +729,7 @@
       "reasons": [
         "시스템 선제알림(주의) · 시간당 강우 1.5mm"
       ],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -758,7 +758,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261105-1100",
+      "observation_id": "20261105-1200",
       "forecast_risks": [
         {
           "date": "11/5(목)",
@@ -799,7 +799,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-05T11:47:21+09:00",
+  "last_success_at": "2026-11-05T12:47:22+09:00",
   "last_change_at": "2026-11-05T11:47:21+09:00",
   "last_changes": [
     {
