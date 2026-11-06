@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-06T16:47:21+09:00",
+  "updated_at": "2026-11-06T17:47:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,10 +10,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/9(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -39,10 +44,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/9(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -68,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -102,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -138,7 +148,7 @@
             "경상북도(구미, 영천, 상주, 문경, 예천, 영주, 청송, 포항, 김천북부, 안동동남부, 봉화평지, 경주서부)",
             "경상남도(하동남부, 산청북부, 산청서남부, 함양서북부, 거창남부, 합천서북부)"
           ],
-          "announced_at": "202611061600",
+          "announced_at": "202611061700",
           "effective_at": "202611062100",
           "matched_areas": [
             "강원도(태백, 영월, 원주, 철원, 춘천, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제평지, 인제산지)"
@@ -151,7 +161,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -185,7 +195,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -208,7 +218,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -242,7 +252,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -265,7 +275,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -299,7 +309,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -328,7 +338,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -362,7 +372,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -392,7 +402,7 @@
             "경상북도(구미, 영천, 상주, 문경, 예천, 영주, 청송, 포항, 김천북부, 안동동남부, 봉화평지, 경주서부)",
             "경상남도(하동남부, 산청북부, 산청서남부, 함양서북부, 거창남부, 합천서북부)"
           ],
-          "announced_at": "202611061600",
+          "announced_at": "202611061700",
           "effective_at": "202611062100",
           "matched_areas": [
             "경상북도(구미, 영천, 상주, 문경, 예천, 영주, 청송, 포항, 김천북부, 안동동남부, 봉화평지, 경주서부)"
@@ -405,7 +415,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -439,8 +449,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
-      "forecast_risks": [],
+      "observation_id": "20261106-1700",
+      "forecast_risks": [
+        {
+          "date": "11/9(월)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -462,7 +478,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -503,7 +519,7 @@
             "경상북도(구미, 영천, 상주, 문경, 예천, 영주, 청송, 포항, 김천북부, 안동동남부, 봉화평지, 경주서부)",
             "경상남도(하동남부, 산청북부, 산청서남부, 함양서북부, 거창남부, 합천서북부)"
           ],
-          "announced_at": "202611061600",
+          "announced_at": "202611061700",
           "effective_at": "202611062100",
           "matched_areas": [
             "강원도(태백, 영월, 원주, 철원, 춘천, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제평지, 인제산지)"
@@ -516,10 +532,15 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/9(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -545,7 +566,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -568,8 +589,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
-      "forecast_risks": [],
+      "observation_id": "20261106-1700",
+      "forecast_risks": [
+        {
+          "date": "11/8(일)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -591,7 +618,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -614,7 +641,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -644,7 +671,7 @@
             "경상북도(구미, 영천, 상주, 문경, 예천, 영주, 청송, 포항, 김천북부, 안동동남부, 봉화평지, 경주서부)",
             "경상남도(하동남부, 산청북부, 산청서남부, 함양서북부, 거창남부, 합천서북부)"
           ],
-          "announced_at": "202611061600",
+          "announced_at": "202611061700",
           "effective_at": "202611062100",
           "matched_areas": [
             "경상북도(구미, 영천, 상주, 문경, 예천, 영주, 청송, 포항, 김천북부, 안동동남부, 봉화평지, 경주서부)"
@@ -657,7 +684,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261106-1600",
+      "observation_id": "20261106-1700",
       "forecast_risks": [
         {
           "date": "11/8(일)",
@@ -688,10 +715,34 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-06T16:47:21+09:00",
-  "last_change_at": "2026-11-06T16:24:36+09:00",
+  "last_success_at": "2026-11-06T17:47:20+09:00",
+  "last_change_at": "2026-11-06T17:47:20+09:00",
   "last_changes": [
     {
+      "site_name": "오리온 진천신공장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/9(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "오리온 진천 기숙사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/9(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
       "site_name": "청정고원 스포츠센터",
       "type": "기상특보 발효",
       "from_level": null,
@@ -736,6 +787,18 @@
       ]
     },
     {
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/9(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
       "site_name": "산솔면 하수처리장",
       "type": "기상특보 발효",
       "from_level": null,
@@ -755,6 +818,30 @@
       "categories": [],
       "reasons": [
         "한파주의보 · 강원도(태백, 영월, 원주, 철원, 춘천, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제평지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "단월정수장 시설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/9(월) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/8(일) 비 예보, 강수확률 최고 60%"
       ]
     },
     {
