@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-09T16:47:23+09:00",
+  "updated_at": "2026-11-09T17:47:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -112,13 +112,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
-        {
-          "date": "11/9(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/14(토)",
           "kind": "강수 예상",
@@ -161,7 +156,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -192,10 +187,14 @@
       "weather_warnings_available": true
     },
     "양산 부산대병원": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261109-1600",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 2.1mm"
+      ],
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/9(월)",
@@ -239,7 +238,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -273,7 +272,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/9(월)",
@@ -312,7 +311,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -346,7 +345,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -380,7 +379,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -414,7 +413,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -448,7 +447,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -479,14 +478,10 @@
       "weather_warnings_available": true
     },
     "뇌죽천 하천재해예방": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261109-1600",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/9(월)",
@@ -525,7 +520,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -559,7 +554,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -593,7 +588,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/9(월)",
@@ -637,13 +632,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
-        {
-          "date": "11/9(월)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
         {
           "date": "11/14(토)",
           "kind": "강수 예상",
@@ -683,10 +673,14 @@
       "weather_warnings_available": true
     },
     "풍각지구 정비사업": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261109-1600",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ],
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/9(월)",
@@ -725,7 +719,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -759,7 +753,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261109-1600",
+      "observation_id": "20261109-1700",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -790,11 +784,23 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-09T16:47:23+09:00",
-  "last_change_at": "2026-11-09T16:47:23+09:00",
+  "last_success_at": "2026-11-09T17:47:20+09:00",
+  "last_change_at": "2026-11-09T17:47:20+09:00",
   "last_changes": [
     {
-      "site_name": "오리온수협 목포 김공장",
+      "site_name": "양산 부산대병원",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 2.1mm"
+      ]
+    },
+    {
+      "site_name": "뇌죽천 하천재해예방",
       "type": "위험 해제",
       "from_level": "주의",
       "to_level": "정상",
@@ -803,11 +809,15 @@
     },
     {
       "site_name": "풍각지구 정비사업",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ]
     }
   ]
 }
