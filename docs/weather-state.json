@@ -1,16 +1,20 @@
 {
   "version": 1,
-  "updated_at": "2026-11-14T12:47:24+09:00",
+  "updated_at": "2026-11-14T13:47:22+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
   "warning_collection_status": "healthy",
   "sites": {
     "오리온 진천신공장": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261114-1200",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ],
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -54,7 +58,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -98,7 +102,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -137,7 +141,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -186,7 +190,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -225,7 +229,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -271,14 +275,10 @@
       "weather_warnings_available": true
     },
     "군포복합개발": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.1mm"
-      ],
-      "observation_id": "20261114-1200",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -317,7 +317,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -356,7 +356,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -400,7 +400,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -444,7 +444,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -483,7 +483,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -522,7 +522,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -565,7 +565,7 @@
       "reasons": [
         "시스템 선제알림(주의) · 시간당 강우 1.0mm"
       ],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -609,7 +609,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -653,7 +653,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -697,7 +697,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -746,7 +746,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -795,7 +795,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -834,7 +834,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -873,7 +873,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261114-1200",
+      "observation_id": "20261114-1300",
       "forecast_risks": [
         {
           "date": "11/14(토)",
@@ -909,75 +909,23 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-14T12:47:24+09:00",
-  "last_change_at": "2026-11-14T12:47:24+09:00",
+  "last_success_at": "2026-11-14T13:47:22+09:00",
+  "last_change_at": "2026-11-14T13:47:22+09:00",
   "last_changes": [
     {
       "site_name": "오리온 진천신공장",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ]
     },
     {
-      "site_name": "연희·연남동 공공주택",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "시흥능곡 주변도로",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "송산그린시티 용수공급시설",
+      "site_name": "군포복합개발",
       "type": "위험 해제",
       "from_level": "주의",
       "to_level": "정상",
