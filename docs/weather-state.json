@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-15T04:17:21+09:00",
+  "updated_at": "2026-11-15T04:47:19+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -112,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/15(일)",
@@ -156,7 +156,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -187,14 +187,10 @@
       "weather_warnings_available": true
     },
     "양산 부산대병원": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261115-0300",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/15(일)",
@@ -238,7 +234,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -272,7 +268,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -316,7 +312,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -350,7 +346,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -384,7 +380,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -418,7 +414,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -452,7 +448,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -486,7 +482,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -530,7 +526,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/15(일)",
@@ -569,7 +565,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -603,7 +599,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -642,7 +638,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/15(일)",
@@ -686,7 +682,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -715,7 +711,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -749,7 +745,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261115-0300",
+      "observation_id": "20261115-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -780,111 +776,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-15T04:17:21+09:00",
-  "last_change_at": "2026-11-14T23:31:05+09:00",
+  "last_success_at": "2026-11-15T04:47:19+09:00",
+  "last_change_at": "2026-11-15T04:47:19+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천신공장",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
       "site_name": "양산 부산대병원",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/19(목) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/20(금) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/19(목) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/20(금) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "영주 가흥정수장",
       "type": "위험 해제",
       "from_level": "주의",
       "to_level": "정상",
