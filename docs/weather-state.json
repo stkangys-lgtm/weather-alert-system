@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-16T17:47:20+09:00",
+  "updated_at": "2026-11-16T21:03:35+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -89,6 +89,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -112,7 +117,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -132,7 +137,7 @@
         {
           "date": "11/19(목)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.1m/s"
+          "detail": "최대풍속 10.0m/s"
         }
       ],
       "legal_signals": [
@@ -156,7 +161,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -167,6 +172,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -190,7 +200,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -229,7 +239,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -240,6 +250,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -263,7 +278,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -312,7 +327,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -323,6 +338,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -346,7 +366,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -357,6 +377,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -380,7 +405,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -391,6 +416,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -414,7 +444,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -448,7 +478,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -459,6 +489,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -482,7 +517,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -526,7 +561,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -537,6 +572,11 @@
           "date": "11/18(수)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/23(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -560,7 +600,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -596,9 +636,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 4.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -634,10 +674,14 @@
       "weather_warnings_available": true
     },
     "동해안 바닷가 자동차길": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261116-1700",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 2.5mm"
+      ],
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -657,12 +701,12 @@
         {
           "date": "11/18(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.3m/s"
+          "detail": "최대풍속 10.2m/s"
         },
         {
           "date": "11/19(목)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.6m/s"
+          "detail": "최대풍속 11.5m/s"
         }
       ],
       "legal_signals": [
@@ -686,7 +730,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -720,7 +764,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -754,7 +798,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-1700",
+      "observation_id": "20261116-2000",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -769,12 +813,12 @@
         {
           "date": "11/18(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.1m/s"
+          "detail": "최대풍속 11.0m/s"
         },
         {
           "date": "11/19(목)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.1m/s"
+          "detail": "최대풍속 10.0m/s"
         },
         {
           "date": "11/20(금)",
@@ -800,23 +844,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-16T17:47:20+09:00",
-  "last_change_at": "2026-11-16T17:47:20+09:00",
+  "last_success_at": "2026-11-16T21:03:35+09:00",
+  "last_change_at": "2026-11-16T21:03:35+09:00",
   "last_changes": [
     {
-      "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강풍 유의 예상"
-      ],
-      "reasons": [
-        "11/19(목) 최대풍속 10.1m/s"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
+      "site_name": "연희·연남동 공공주택",
       "type": "새 예보 위험",
       "from_level": null,
       "to_level": "정상",
@@ -824,11 +856,95 @@
         "강수 예상"
       ],
       "reasons": [
-        "11/21(토) 흐리고 비/눈 예보, 강수확률 최고 60%"
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
       ]
     },
     {
-      "site_name": "후포 공공하수처리",
+      "site_name": "LX 논현 업무시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "군포복합개발",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "렉서스 동탄 네트워크",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "화천군부대 시설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "반얀트리호텔 근생동",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "시흥능곡 주변도로",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "산솔면 하수처리장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
       "type": "위험 상승",
       "from_level": "정상",
       "to_level": "주의",
@@ -836,51 +952,7 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 4.0mm"
-      ]
-    },
-    {
-      "site_name": "동해안 바닷가 자동차길",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "동해안 바닷가 자동차길",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강풍 유의 예상"
-      ],
-      "reasons": [
-        "11/18(수) 최대풍속 10.3m/s"
-      ]
-    },
-    {
-      "site_name": "동해안 바닷가 자동차길",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강풍 유의 예상"
-      ],
-      "reasons": [
-        "11/19(목) 최대풍속 11.6m/s"
-      ]
-    },
-    {
-      "site_name": "송산그린시티 용수공급시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/20(금) 눈 예보, 강수확률 최고 60%"
+        "시스템 선제알림(주의) · 시간당 강우 2.5mm"
       ]
     }
   ]
