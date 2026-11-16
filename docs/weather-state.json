@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-17T04:17:41+09:00",
+  "updated_at": "2026-11-17T05:17:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -117,7 +117,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -151,7 +151,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -190,7 +190,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -224,7 +224,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -263,7 +263,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -312,7 +312,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -351,7 +351,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -390,7 +390,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -429,7 +429,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -463,7 +463,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -502,7 +502,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -546,7 +546,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -585,7 +585,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -621,9 +621,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.5mm"
       ],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -657,7 +657,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -670,14 +670,9 @@
           "detail": "비 예보, 강수확률 최고 60%"
         },
         {
-          "date": "11/18(수)",
-          "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.0m/s"
-        },
-        {
           "date": "11/19(목)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.3m/s"
+          "detail": "최대풍속 11.2m/s"
         }
       ],
       "legal_signals": [
@@ -701,7 +696,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -735,7 +730,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -769,7 +764,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261117-0300",
+      "observation_id": "20261117-0400",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -784,7 +779,7 @@
         {
           "date": "11/18(수)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.8m/s"
+          "detail": "최대풍속 10.7m/s"
         },
         {
           "date": "11/20(금)",
@@ -815,7 +810,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-17T04:17:41+09:00",
+  "last_success_at": "2026-11-17T05:17:20+09:00",
   "last_change_at": "2026-11-17T02:03:45+09:00",
   "last_changes": [
     {
