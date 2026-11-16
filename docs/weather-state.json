@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-16T09:17:20+09:00",
+  "updated_at": "2026-11-16T09:47:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -112,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -151,7 +151,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -185,7 +185,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -224,7 +224,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -258,7 +258,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -307,7 +307,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -341,7 +341,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -375,7 +375,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -409,7 +409,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -443,7 +443,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -477,7 +477,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -521,7 +521,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -555,7 +555,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -586,10 +586,14 @@
       "weather_warnings_available": true
     },
     "후포 공공하수처리": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261116-0800",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 3.0mm"
+      ],
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -630,9 +634,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
       ],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/16(월)",
@@ -676,7 +680,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -710,7 +714,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -744,7 +748,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261116-0800",
+      "observation_id": "20261116-0900",
       "forecast_risks": [
         {
           "date": "11/17(화)",
@@ -785,11 +789,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-16T09:17:20+09:00",
-  "last_change_at": "2026-11-16T07:47:23+09:00",
+  "last_success_at": "2026-11-16T09:47:20+09:00",
+  "last_change_at": "2026-11-16T09:47:20+09:00",
   "last_changes": [
     {
-      "site_name": "동해안 바닷가 자동차길",
+      "site_name": "후포 공공하수처리",
       "type": "위험 상승",
       "from_level": "정상",
       "to_level": "주의",
@@ -797,7 +801,7 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 2.0mm"
+        "시스템 선제알림(주의) · 시간당 강우 3.0mm"
       ]
     }
   ]
