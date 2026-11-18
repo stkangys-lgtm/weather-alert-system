@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-18T11:47:34+09:00",
+  "updated_at": "2026-11-18T12:47:18+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -112,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -150,7 +150,7 @@
             "경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)",
             "경상남도(함양서북부)"
           ],
-          "announced_at": "202611181100",
+          "announced_at": "202611181200",
           "effective_at": "202611182100",
           "matched_areas": [
             "강원도(태백, 삼척산지, 고성산지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제산지)"
@@ -172,7 +172,7 @@
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611181100",
+          "announced_at": "202611181200",
           "effective_at": "202611182100",
           "matched_areas": [
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
@@ -185,7 +185,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -219,7 +219,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -242,7 +242,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -276,7 +276,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -330,7 +330,7 @@
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611181100",
+          "announced_at": "202611181200",
           "effective_at": "202611182100",
           "matched_areas": [
             "전라남도(영암, 함평, 목포, 신안(흑산면제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 해남북부, 해남남부, 완도(여서도 제외), 무안북부, 무안남부)"
@@ -343,7 +343,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -377,7 +377,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -406,7 +406,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -440,7 +440,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -467,7 +467,7 @@
             "경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)",
             "경상남도(함양서북부)"
           ],
-          "announced_at": "202611181100",
+          "announced_at": "202611181200",
           "effective_at": "202611182100",
           "matched_areas": [
             "경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)"
@@ -480,7 +480,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -514,7 +514,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -553,7 +553,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -587,7 +587,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -621,7 +621,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -644,7 +644,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -693,7 +693,7 @@
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611181100",
+          "announced_at": "202611181200",
           "effective_at": "202611182100",
           "matched_areas": [
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
@@ -706,7 +706,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -729,7 +729,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -758,7 +758,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1100",
+      "observation_id": "20261118-1200",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -804,8 +804,8 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-18T11:47:34+09:00",
-  "last_change_at": "2026-11-18T11:47:34+09:00",
+  "last_success_at": "2026-11-18T12:47:18+09:00",
+  "last_change_at": "2026-11-18T12:47:18+09:00",
   "last_changes": [
     {
       "site_name": "청정고원 스포츠센터",
@@ -829,6 +829,16 @@
       ],
       "reasons": [
         "11월 18일 오후(12시~18시) · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "한파주의보 · 강원도(태백, 삼척산지, 고성산지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제산지)"
       ]
     },
     {
@@ -871,6 +881,16 @@
       "categories": [
         "한파"
       ],
+      "reasons": [
+        "한파주의보 · 경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)"
+      ]
+    },
+    {
+      "site_name": "포항~안동2 국도건설공사",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
       "reasons": [
         "한파주의보 · 경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)"
       ]
