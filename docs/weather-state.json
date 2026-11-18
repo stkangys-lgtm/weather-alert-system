@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-18T19:12:26+09:00",
+  "updated_at": "2026-11-18T19:44:48+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -41,10 +41,14 @@
       "weather_warnings_available": true
     },
     "오리온 진천 기숙사": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261118-1800",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
+      ],
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -78,7 +82,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -112,7 +116,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -156,7 +160,7 @@
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611181800",
+          "announced_at": "202611181935",
           "effective_at": "202611182100",
           "matched_areas": [
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
@@ -172,7 +176,7 @@
             "경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)",
             "경상남도(함양서북부)"
           ],
-          "announced_at": "202611181800",
+          "announced_at": "202611181935",
           "effective_at": "202611182100",
           "matched_areas": [
             "강원도(태백, 삼척산지, 고성산지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제산지)"
@@ -185,7 +189,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -219,7 +223,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -242,7 +246,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -273,14 +277,10 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
-      ],
-      "observation_id": "20261118-1800",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -334,7 +334,7 @@
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611181800",
+          "announced_at": "202611181935",
           "effective_at": "202611182100",
           "matched_areas": [
             "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
@@ -344,10 +344,14 @@
       "weather_warnings_available": true
     },
     "렉서스 동탄 네트워크": {
-      "level": "정상",
-      "categories": [],
-      "reasons": [],
-      "observation_id": "20261118-1800",
+      "level": "주의",
+      "categories": [
+        "호우"
+      ],
+      "reasons": [
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
+      ],
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -381,7 +385,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -410,7 +414,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -444,7 +448,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -477,7 +481,7 @@
             "경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)",
             "경상남도(함양서북부)"
           ],
-          "announced_at": "202611181800",
+          "announced_at": "202611181935",
           "effective_at": "202611182100",
           "matched_areas": [
             "경상북도(청송, 포항, 봉화산지, 경주중북부, 경주남부, 경주서부)"
@@ -490,7 +494,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -524,7 +528,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -563,7 +567,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -597,7 +601,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -631,7 +635,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -660,7 +664,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/20(금)",
@@ -704,7 +708,7 @@
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611181800",
+          "announced_at": "202611181935",
           "effective_at": "202611182100",
           "matched_areas": [
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
@@ -717,7 +721,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -746,7 +750,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -780,7 +784,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261118-1800",
+      "observation_id": "20261118-1900",
       "forecast_risks": [
         {
           "date": "11/18(수)",
@@ -826,55 +830,11 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-18T19:12:26+09:00",
-  "last_change_at": "2026-11-18T19:12:26+09:00",
+  "last_success_at": "2026-11-18T19:44:48+09:00",
+  "last_change_at": "2026-11-18T19:44:48+09:00",
   "last_changes": [
     {
-      "site_name": "청정고원 스포츠센터",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "한파"
-      ],
-      "reasons": [
-        "한파주의보 · 강원도(태백, 삼척산지, 고성산지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "한파주의보 · 강원도(태백, 삼척산지, 고성산지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "예비특보 변경",
-      "from_level": "예비특보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "11월 18일 오후(12시~18시) · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
+      "site_name": "오리온 진천 기숙사",
       "type": "위험 상승",
       "from_level": "정상",
       "to_level": "주의",
@@ -882,8 +842,60 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+        "시스템 선제알림(주의) · 시간당 강우 1.2mm"
       ]
+    },
+    {
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "강풍"
+      ],
+      "reasons": [
+        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "한파"
+      ],
+      "reasons": [
+        "한파주의보 · 강원도(태백, 삼척산지, 고성산지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "한파주의보 · 강원도(태백, 삼척산지, 고성산지, 평창산지, 정선평지, 정선산지, 홍천산지, 양구산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     },
     {
       "site_name": "오리온수협 목포 김공장",
@@ -908,15 +920,15 @@
       ]
     },
     {
-      "site_name": "포항~안동2 국도건설공사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
+      "site_name": "렉서스 동탄 네트워크",
+      "type": "위험 상승",
+      "from_level": "정상",
+      "to_level": "주의",
       "categories": [
-        "강수 예상"
+        "호우"
       ],
       "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
       ]
     },
     {
@@ -942,18 +954,6 @@
       ]
     },
     {
-      "site_name": "후포 공공하수처리",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
       "site_name": "동해안 바닷가 자동차길",
       "type": "기상특보 발효",
       "from_level": null,
@@ -967,36 +967,12 @@
     },
     {
       "site_name": "동해안 바닷가 자동차길",
-      "type": "예비특보 변경",
-      "from_level": "예비특보",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
       "to_level": "해제",
       "categories": [],
       "reasons": [
-        "11월 18일 오후(12시~18시) · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "풍각지구 정비사업",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "영주 가흥정수장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
+        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선평지, 정선산지, 홍천산지, 인제산지)"
       ]
     }
   ]
