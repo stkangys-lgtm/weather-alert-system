@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-19T07:47:24+09:00",
+  "updated_at": "2026-11-19T08:47:25+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -97,7 +97,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -165,7 +165,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -194,7 +194,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -217,7 +217,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -246,7 +246,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -261,7 +261,7 @@
         {
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.3m/s"
+          "detail": "최대풍속 11.2m/s"
         },
         {
           "date": "11/21(토)",
@@ -313,7 +313,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -342,7 +342,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -371,7 +371,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -400,7 +400,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -446,7 +446,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -475,7 +475,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -509,7 +509,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -538,7 +538,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -567,7 +567,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -596,12 +596,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.9m/s"
+          "detail": "최대풍속 10.8m/s"
         },
         {
           "date": "11/23(월)",
@@ -653,7 +653,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -682,7 +682,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -711,7 +711,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-0700",
+      "observation_id": "20261119-0800",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -721,7 +721,7 @@
         {
           "date": "11/19(목)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.1m/s"
+          "detail": "최대풍속 10.0m/s"
         },
         {
           "date": "11/20(금)",
@@ -731,7 +731,7 @@
         {
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.6m/s"
+          "detail": "최대풍속 10.5m/s"
         },
         {
           "date": "11/23(월)",
@@ -757,7 +757,7 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-19T07:47:24+09:00",
+  "last_success_at": "2026-11-19T08:47:25+09:00",
   "last_change_at": "2026-11-19T07:47:24+09:00",
   "last_changes": [
     {
