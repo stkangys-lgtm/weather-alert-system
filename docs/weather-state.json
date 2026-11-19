@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-19T16:47:20+09:00",
+  "updated_at": "2026-11-19T17:47:22+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -97,7 +97,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -126,7 +126,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -155,7 +155,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -178,7 +178,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -207,7 +207,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -222,7 +222,7 @@
         {
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.0m/s"
+          "detail": "최대풍속 10.9m/s"
         },
         {
           "date": "11/21(토)",
@@ -254,13 +254,13 @@
             "서해5도",
             "충청남도(태안, 서천, 보령(도서제외), 보령도서)",
             "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
-            "전북자치도(부안위도면, 군산(옥도면 제외), 군산옥도면(어청도 제외), 군산어청도)",
+            "전북자치도(부안위도면, 군산옥도면(어청도 제외), 군산어청도)",
             "제주도(서귀포시남부 제외)",
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611191000",
-          "effective_at": "202611191200",
+          "announced_at": "202611191730",
+          "effective_at": "202611191730",
           "matched_areas": [
             "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
           ]
@@ -272,7 +272,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -301,7 +301,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -330,7 +330,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -359,7 +359,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -388,7 +388,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -417,12 +417,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/19(목)",
           "kind": "강수 예상",
-          "detail": "비/비/눈 예보, 강수확률 최고 60%"
+          "detail": "비/눈 예보, 강수확률 최고 60%"
         },
         {
           "date": "11/20(금)",
@@ -451,7 +451,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -480,7 +480,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -509,7 +509,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -538,12 +538,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.6m/s"
+          "detail": "최대풍속 10.5m/s"
         },
         {
           "date": "11/23(월)",
@@ -572,7 +572,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -601,7 +601,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -630,7 +630,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1600",
+      "observation_id": "20261119-1700",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -645,7 +645,7 @@
         {
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.3m/s"
+          "detail": "최대풍속 10.2m/s"
         },
         {
           "date": "11/23(월)",
@@ -671,16 +671,30 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-19T16:47:20+09:00",
-  "last_change_at": "2026-11-19T15:47:21+09:00",
+  "last_success_at": "2026-11-19T17:47:22+09:00",
+  "last_change_at": "2026-11-19T17:47:22+09:00",
   "last_changes": [
     {
       "site_name": "오리온수협 목포 김공장",
-      "type": "위험 해제",
-      "from_level": "주의",
-      "to_level": "정상",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "강풍"
+      ],
+      "reasons": [
+        "강풍주의보 · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
+      ]
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
       "categories": [],
-      "reasons": []
+      "reasons": [
+        "강풍주의보 · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
+      ]
     }
   ]
 }
