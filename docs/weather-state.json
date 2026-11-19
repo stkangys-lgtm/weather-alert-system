@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-19T15:17:20+09:00",
+  "updated_at": "2026-11-19T15:47:21+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -97,7 +97,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -126,7 +126,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -155,7 +155,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -178,7 +178,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -204,14 +204,10 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "주의",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 풍속 11.0m/s"
-      ],
-      "observation_id": "20261119-1400",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -276,7 +272,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -305,7 +301,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -334,7 +330,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -363,7 +359,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -392,7 +388,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -421,7 +417,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -455,7 +451,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -484,7 +480,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -513,7 +509,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -542,7 +538,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/20(금)",
@@ -576,7 +572,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -605,7 +601,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -634,7 +630,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261119-1400",
+      "observation_id": "20261119-1500",
       "forecast_risks": [
         {
           "date": "11/19(목)",
@@ -675,218 +671,16 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-19T15:17:20+09:00",
-  "last_change_at": "2026-11-19T15:17:20+09:00",
+  "last_success_at": "2026-11-19T15:47:21+09:00",
+  "last_change_at": "2026-11-19T15:47:21+09:00",
   "last_changes": [
     {
-      "site_name": "전 현장",
-      "type": "기상특보 수집 정상화",
-      "from_level": "수집 장애",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": [
-        "기상청 특보 API 수신이 정상화되었습니다."
-      ]
-    },
-    {
-      "site_name": "오리온 진천신공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "연희·연남동 공공주택",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "LX 논현 업무시설",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "양산 부산대병원",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "정상",
-      "categories": [],
-      "reasons": []
-    },
-    {
-      "site_name": "군포복합개발",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/23(월) 흐리고 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
       "site_name": "오리온수협 목포 김공장",
-      "type": "수집 정상화",
-      "from_level": "데이터없음",
-      "to_level": "주의",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 풍속 11.0m/s"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "주의",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/19(목) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "주의",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/20(금) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "주의",
-      "categories": [
-        "강풍 유의 예상"
-      ],
-      "reasons": [
-        "11/20(금) 최대풍속 11.0m/s"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "주의",
-      "categories": [
-        "강수 예상"
-      ],
-      "reasons": [
-        "11/21(토) 비 예보, 강수확률 최고 60%"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "강풍"
-      ],
-      "reasons": [
-        "강풍주의보 · 전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
-      ]
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     }
   ]
 }
