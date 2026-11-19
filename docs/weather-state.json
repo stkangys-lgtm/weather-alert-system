@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-19T17:47:22+09:00",
+  "updated_at": "2026-11-19T18:30:01+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -11,13 +11,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -40,13 +34,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -69,13 +57,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -98,13 +80,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -127,13 +103,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -179,13 +149,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -259,8 +223,8 @@
             "인천(옹진, 인천영종)",
             "울릉도.독도"
           ],
-          "announced_at": "202611191730",
-          "effective_at": "202611191730",
+          "announced_at": "202611191830",
+          "effective_at": "202611191930",
           "matched_areas": [
             "전라남도(여수, 영암, 함평, 목포, 신안(흑산면제외), 진도, 흑산도.홍도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
           ]
@@ -273,13 +237,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -302,13 +260,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -331,13 +283,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -360,13 +306,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -389,13 +329,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -452,13 +386,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -481,13 +409,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -510,13 +432,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -544,11 +460,6 @@
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
           "detail": "최대풍속 10.5m/s"
-        },
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -573,13 +484,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -602,13 +507,7 @@
       "categories": [],
       "reasons": [],
       "observation_id": "20261119-1700",
-      "forecast_risks": [
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -646,11 +545,6 @@
           "date": "11/20(금)",
           "kind": "강풍 유의 예상",
           "detail": "최대풍속 10.2m/s"
-        },
-        {
-          "date": "11/23(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -671,8 +565,8 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-19T17:47:22+09:00",
-  "last_change_at": "2026-11-19T17:47:22+09:00",
+  "last_success_at": "2026-11-19T18:30:01+09:00",
+  "last_change_at": "2026-11-19T18:30:01+09:00",
   "last_changes": [
     {
       "site_name": "오리온수협 목포 김공장",
