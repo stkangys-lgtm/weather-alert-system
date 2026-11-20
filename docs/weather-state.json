@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-21T04:47:21+09:00",
+  "updated_at": "2026-11-21T05:47:23+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -102,7 +102,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -134,7 +134,7 @@
             "강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611210400",
+          "announced_at": "202611210530",
           "effective_at": "202611210600",
           "matched_areas": [
             "강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
@@ -147,7 +147,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -181,7 +181,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -215,7 +215,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -246,19 +246,15 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.9mm"
-      ],
-      "observation_id": "20261121-0400",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/21(토)",
           "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
+          "detail": "비/비/눈 예보, 강수확률 최고 60%"
         },
         {
           "date": "11/23(월)",
@@ -292,7 +288,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -326,7 +322,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -360,7 +356,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -394,7 +390,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -428,7 +424,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -462,7 +458,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/21(토)",
@@ -501,7 +497,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -535,7 +531,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -564,7 +560,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -596,7 +592,7 @@
             "강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611210400",
+          "announced_at": "202611210530",
           "effective_at": "202611210600",
           "matched_areas": [
             "경상북도(울진평지, 울진산지)"
@@ -609,7 +605,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -641,7 +637,7 @@
             "강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611210400",
+          "announced_at": "202611210530",
           "effective_at": "202611210600",
           "matched_areas": [
             "강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
@@ -654,7 +650,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -688,7 +684,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -717,7 +713,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-0400",
+      "observation_id": "20261121-0500",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -748,19 +744,81 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-21T04:47:21+09:00",
-  "last_change_at": "2026-11-21T04:47:21+09:00",
+  "last_success_at": "2026-11-21T05:47:23+09:00",
+  "last_change_at": "2026-11-21T05:47:23+09:00",
   "last_changes": [
     {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
       "categories": [
-        "호우"
+        "건조"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.9mm"
+        "건조주의보 · 강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
+      ]
+    },
+    {
+      "site_name": "청정고원 스포츠센터",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "건조주의보 · 강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
+      ]
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "건조"
+      ],
+      "reasons": [
+        "건조주의보 · 경상북도(울진평지, 울진산지)"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "건조주의보 · 경상북도(울진평지, 울진산지)"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "기상특보 발효",
+      "from_level": null,
+      "to_level": "주의보",
+      "categories": [
+        "건조"
+      ],
+      "reasons": [
+        "건조주의보 · 강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "건조주의보 · 강원도(태백, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
       ]
     }
   ]
