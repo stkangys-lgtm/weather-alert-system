@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-21T16:47:20+09:00",
+  "updated_at": "2026-11-21T17:45:59+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -102,7 +102,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -149,7 +149,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -183,7 +183,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -217,7 +217,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -251,7 +251,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -262,6 +262,11 @@
           "date": "11/24(화)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/24(화)",
+          "kind": "강풍 유의 예상",
+          "detail": "최대풍속 10.5m/s"
         }
       ],
       "legal_signals": [
@@ -285,7 +290,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -319,7 +324,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -371,7 +376,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -405,7 +410,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -439,7 +444,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -473,7 +478,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -507,7 +512,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -541,7 +546,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -570,7 +575,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -617,12 +622,17 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/24(화)",
+          "kind": "강풍 유의 예상",
+          "detail": "최대풍속 11.4m/s"
         }
       ],
       "legal_signals": [
@@ -664,7 +674,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -698,7 +708,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
@@ -727,12 +737,17 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261121-1600",
+      "observation_id": "20261121-1700",
       "forecast_risks": [
         {
           "date": "11/23(월)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/24(화)",
+          "kind": "강풍 유의 예상",
+          "detail": "최대풍속 10.6m/s"
         },
         {
           "date": "11/27(금)",
@@ -758,95 +773,43 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-21T16:47:20+09:00",
-  "last_change_at": "2026-11-21T16:47:20+09:00",
+  "last_success_at": "2026-11-21T17:45:59+09:00",
+  "last_change_at": "2026-11-21T17:45:59+09:00",
   "last_changes": [
     {
-      "site_name": "청정고원 스포츠센터",
-      "type": "기상특보 발효",
+      "site_name": "오리온수협 목포 김공장",
+      "type": "새 예보 위험",
       "from_level": null,
-      "to_level": "주의보",
+      "to_level": "정상",
       "categories": [
-        "건조"
+        "강풍 유의 예상"
       ],
       "reasons": [
-        "건조주의보 · 강원도(태백, 화천, 동해평지, 동해산지, 삼척평지, 삼척산지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 양구산지, 인제평지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "청정고원 스포츠센터",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "건조주의보 · 강원도(태백, 화천, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 양구산지, 인제평지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "건조"
-      ],
-      "reasons": [
-        "건조주의보 · 강원도(태백, 화천, 동해평지, 동해산지, 삼척평지, 삼척산지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 양구산지, 인제평지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "화천군부대 시설공사",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "건조주의보 · 강원도(태백, 화천, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 양구산지, 인제평지, 인제산지)"
-      ]
-    },
-    {
-      "site_name": "후포 공공하수처리",
-      "type": "기상특보 발효",
-      "from_level": null,
-      "to_level": "주의보",
-      "categories": [
-        "건조"
-      ],
-      "reasons": [
-        "건조주의보 · 경상북도(영덕, 포항, 울진평지, 울진산지)"
-      ]
-    },
-    {
-      "site_name": "후포 공공하수처리",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "건조주의보 · 경상북도(영덕, 포항, 울진평지, 울진산지)"
+        "11/24(화) 최대풍속 10.5m/s"
       ]
     },
     {
       "site_name": "동해안 바닷가 자동차길",
-      "type": "기상특보 발효",
+      "type": "새 예보 위험",
       "from_level": null,
-      "to_level": "주의보",
+      "to_level": "정상",
       "categories": [
-        "건조"
+        "강풍 유의 예상"
       ],
       "reasons": [
-        "건조주의보 · 강원도(태백, 화천, 동해평지, 동해산지, 삼척평지, 삼척산지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 양구산지, 인제평지, 인제산지)"
+        "11/24(화) 최대풍속 11.4m/s"
       ]
     },
     {
-      "site_name": "동해안 바닷가 자동차길",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강풍 유의 예상"
+      ],
       "reasons": [
-        "건조주의보 · 강원도(태백, 화천, 동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지, 정선평지, 정선산지, 양구산지, 인제평지, 인제산지)"
+        "11/24(화) 최대풍속 10.6m/s"
       ]
     }
   ]
