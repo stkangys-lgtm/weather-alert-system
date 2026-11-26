@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "updated_at": "2026-11-27T04:47:21+09:00",
-  "successful_sites": 20,
+  "updated_at": "2026-11-27T05:47:21+09:00",
+  "successful_sites": 21,
   "total_sites": 21,
-  "collection_status": "partial",
+  "collection_status": "healthy",
   "warning_collection_status": "healthy",
   "sites": {
     "오리온 진천신공장": {
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -107,7 +107,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -146,7 +146,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -175,8 +175,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
-      "forecast_risks": [],
+      "observation_id": "20261127-0500",
+      "forecast_risks": [
+        {
+          "date": "11/28(토)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -198,7 +204,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -227,7 +233,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -237,7 +243,7 @@
         {
           "date": "11/28(토)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.1m/s"
+          "detail": "최대풍속 11.0m/s"
         },
         {
           "date": "11/29(일)",
@@ -266,15 +272,10 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
-          "kind": "강수 예상",
-          "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/28(토)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
         }
@@ -300,7 +301,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -329,7 +330,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -358,7 +359,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -381,7 +382,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -410,12 +411,17 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
           "kind": "강수 예상",
-          "detail": "눈/비/비/눈 예보, 강수확률 최고 60%"
+          "detail": "눈/비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/29(일)",
+          "kind": "강수 예상",
+          "detail": "비/눈 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -439,7 +445,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -462,7 +468,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -491,7 +497,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -530,7 +536,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -581,12 +587,10 @@
       "weather_warnings_available": true
     },
     "풍각지구 정비사업": {
-      "level": "데이터없음",
+      "level": "정상",
       "categories": [],
-      "reasons": [
-        "기상 데이터 수신 실패"
-      ],
-      "observation_id": "-",
+      "reasons": [],
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -615,7 +619,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -638,12 +642,22 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-0400",
+      "observation_id": "20261127-0500",
       "forecast_risks": [
         {
           "date": "11/27(금)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/28(토)",
+          "kind": "강수 예상",
+          "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "11/28(토)",
+          "kind": "강풍 유의 예상",
+          "detail": "최대풍속 10.1m/s"
         }
       ],
       "legal_signals": [
@@ -664,17 +678,63 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-27T04:47:21+09:00",
-  "last_change_at": "2026-11-27T04:47:21+09:00",
+  "last_success_at": "2026-11-27T05:47:21+09:00",
+  "last_change_at": "2026-11-27T05:47:21+09:00",
   "last_changes": [
     {
-      "site_name": "풍각지구 정비사업",
-      "type": "수집 장애",
-      "from_level": "정상",
-      "to_level": "데이터없음",
-      "categories": [],
+      "site_name": "양산 부산대병원",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
       "reasons": [
-        "기상 데이터 수신 실패"
+        "11/28(토) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/29(일) 비/눈 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "풍각지구 정비사업",
+      "type": "수집 정상화",
+      "from_level": "데이터없음",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
+    },
+    {
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "11/28(토) 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강풍 유의 예상"
+      ],
+      "reasons": [
+        "11/28(토) 최대풍속 10.1m/s"
       ]
     }
   ]
