@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-26T17:47:32+09:00",
+  "updated_at": "2026-11-26T19:59:14+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -78,17 +78,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -112,7 +107,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -138,8 +133,8 @@
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)",
             "경상북도(영양산지, 봉화산지, 울진산지)"
           ],
-          "announced_at": "202611261600",
-          "effective_at": "202611261700",
+          "announced_at": "202611261800",
+          "effective_at": "202611261900",
           "matched_areas": [
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
           ]
@@ -151,17 +146,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -185,7 +175,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -208,17 +198,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -242,7 +227,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -281,7 +266,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -292,11 +277,6 @@
           "date": "11/28(토)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -320,17 +300,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -354,17 +329,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -388,7 +358,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -411,17 +381,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -445,7 +410,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -474,14 +439,8 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
-      "forecast_risks": [
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
-        }
-      ],
+      "observation_id": "20261126-1900",
+      "forecast_risks": [],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -503,7 +462,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -532,7 +491,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -558,8 +517,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611261600",
-          "effective_at": "202611261700",
+          "announced_at": "202611261800",
+          "effective_at": "202611261900",
           "matched_areas": [
             "경상북도(울진평지, 울진산지)"
           ]
@@ -571,7 +530,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -603,8 +562,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611261600",
-          "effective_at": "202611261700",
+          "announced_at": "202611261800",
+          "effective_at": "202611261900",
           "matched_areas": [
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
           ]
@@ -618,8 +577,8 @@
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)",
             "경상북도(영양산지, 봉화산지, 울진산지)"
           ],
-          "announced_at": "202611261600",
-          "effective_at": "202611261700",
+          "announced_at": "202611261800",
+          "effective_at": "202611261900",
           "matched_areas": [
             "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
           ]
@@ -631,7 +590,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -660,7 +619,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -683,7 +642,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1700",
+      "observation_id": "20261126-1900",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -694,11 +653,6 @@
           "date": "11/28(토)",
           "kind": "강풍 유의 예상",
           "detail": "최대풍속 10.1m/s"
-        },
-        {
-          "date": "11/30(월)",
-          "kind": "강수 예상",
-          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -719,55 +673,95 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-26T17:47:32+09:00",
-  "last_change_at": "2026-11-26T17:47:32+09:00",
+  "last_success_at": "2026-11-26T19:59:14+09:00",
+  "last_change_at": "2026-11-26T19:59:14+09:00",
   "last_changes": [
     {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
+      "site_name": "청정고원 스포츠센터",
+      "type": "예비특보 발표",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "예비특보",
       "categories": [
-        "강풍 유의 예상"
+        "11월 27일 오전(06시~12시)"
       ],
       "reasons": [
-        "11/28(토) 최대풍속 11.4m/s"
+        "11월 27일 오전(06시~12시) · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
       ]
     },
     {
-      "site_name": "오리온수협 목포 김공장",
-      "type": "새 예보 위험",
+      "site_name": "청정고원 스포츠센터",
+      "type": "예비특보 변경",
+      "from_level": "예비특보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "11월 27일 오전(06시~12시) · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 발효",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "주의보",
       "categories": [
-        "강수 예상"
+        "건조"
       ],
       "reasons": [
-        "11/29(일) 비 예보, 강수확률 최고 60%"
+        "건조주의보 · 경상북도(울진평지, 울진산지)"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "건조주의보 · 경상북도(울진평지, 울진산지)"
       ]
     },
     {
       "site_name": "동해안 바닷가 자동차길",
-      "type": "새 예보 위험",
+      "type": "기상특보 발효",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "주의보",
       "categories": [
-        "강풍 유의 예상"
+        "건조"
       ],
       "reasons": [
-        "11/28(토) 최대풍속 10.1m/s"
+        "건조주의보 · 강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
       ]
     },
     {
-      "site_name": "송산그린시티 용수공급시설",
-      "type": "새 예보 위험",
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "예비특보 발표",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "예비특보",
       "categories": [
-        "강풍 유의 예상"
+        "11월 27일 오전(06시~12시)"
       ],
       "reasons": [
-        "11/28(토) 최대풍속 10.1m/s"
+        "11월 27일 오전(06시~12시) · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "건조주의보 · 강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "예비특보 변경",
+      "from_level": "예비특보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "11월 27일 오전(06시~12시) · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
       ]
     }
   ]
