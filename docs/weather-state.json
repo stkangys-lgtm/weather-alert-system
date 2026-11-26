@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-26T12:47:22+09:00",
+  "updated_at": "2026-11-26T13:47:19+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -44,7 +44,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -78,7 +78,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -112,7 +112,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -135,7 +135,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -169,7 +169,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -192,7 +192,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -226,7 +226,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -255,7 +255,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -294,7 +294,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -328,7 +328,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -362,7 +362,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -385,7 +385,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -419,7 +419,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -448,7 +448,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/30(월)",
@@ -477,7 +477,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -506,7 +506,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -532,8 +532,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611260730",
-          "effective_at": "202611260900",
+          "announced_at": "202611261300",
+          "effective_at": "202611261400",
           "matched_areas": [
             "경상북도(울진평지, 울진산지)"
           ]
@@ -545,7 +545,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -564,21 +564,6 @@
       "weather_warnings": [
         {
           "kind": "기상특보",
-          "title": "강풍주의보",
-          "phenomenon": "강풍",
-          "level": "주의보",
-          "areas": [
-            "서해5도(백령도.대청도)",
-            "강원도(속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 홍천산지, 인제산지)"
-          ],
-          "announced_at": "202611260730",
-          "effective_at": "202611260900",
-          "matched_areas": [
-            "강원도(속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 홍천산지, 인제산지)"
-          ]
-        },
-        {
-          "kind": "기상특보",
           "title": "건조주의보",
           "phenomenon": "건조",
           "level": "주의보",
@@ -586,8 +571,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611260730",
-          "effective_at": "202611260900",
+          "announced_at": "202611261300",
+          "effective_at": "202611261400",
           "matched_areas": [
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
           ]
@@ -599,7 +584,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -628,7 +613,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -651,7 +636,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261126-1200",
+      "observation_id": "20261126-1300",
       "forecast_risks": [
         {
           "date": "11/27(금)",
@@ -682,55 +667,61 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-26T12:47:22+09:00",
-  "last_change_at": "2026-11-26T11:27:15+09:00",
+  "last_success_at": "2026-11-26T13:47:19+09:00",
+  "last_change_at": "2026-11-26T13:47:19+09:00",
   "last_changes": [
     {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 발효",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "주의보",
       "categories": [
-        "강수 예상"
+        "건조"
       ],
       "reasons": [
-        "11/27(금) 비 예보, 강수확률 최고 60%"
+        "건조주의보 · 경상북도(울진평지, 울진산지)"
       ]
     },
     {
-      "site_name": "오리온 진천신공장",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
       "reasons": [
-        "11/28(토) 비 예보, 강수확률 최고 60%"
+        "건조주의보 · 경상북도(울진평지, 울진산지)"
       ]
     },
     {
-      "site_name": "오리온 진천 기숙사",
-      "type": "새 예보 위험",
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "기상특보 발효",
       "from_level": null,
-      "to_level": "정상",
+      "to_level": "주의보",
       "categories": [
-        "강수 예상"
+        "건조"
       ],
       "reasons": [
-        "11/27(금) 비 예보, 강수확률 최고 60%"
+        "건조주의보 · 강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
       ]
     },
     {
-      "site_name": "렉서스 동탄 네트워크",
-      "type": "새 예보 위험",
-      "from_level": null,
-      "to_level": "정상",
-      "categories": [
-        "강수 예상"
-      ],
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
       "reasons": [
-        "11/28(토) 비 예보, 강수확률 최고 60%"
+        "강풍주의보 · 강원도(속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 홍천산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "동해안 바닷가 자동차길",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "건조주의보 · 강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
       ]
     }
   ]
