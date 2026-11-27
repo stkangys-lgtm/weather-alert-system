@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-27T17:47:20+09:00",
+  "updated_at": "2026-11-27T19:56:24+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -91,8 +91,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
-      "forecast_risks": [],
+      "observation_id": "20261127-1900",
+      "forecast_risks": [
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -114,12 +120,12 @@
           "phenomenon": "강풍",
           "level": "주의보",
           "areas": [
-            "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+            "강원도(태백, 동해산지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
           ],
-          "announced_at": "202611271700",
-          "effective_at": "202611271800",
+          "announced_at": "202611271810",
+          "effective_at": "202611271810",
           "matched_areas": [
-            "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+            "강원도(태백, 동해산지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
           ]
         }
       ],
@@ -129,7 +135,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -152,12 +158,17 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -181,7 +192,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -204,7 +215,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -220,6 +231,11 @@
           "date": "11/29(일)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -250,8 +266,8 @@
             "전남광주통합시(여수, 영암, 함평, 목포, 신안(흑산면 제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부, 흑산도.홍도)",
             "울릉도.독도"
           ],
-          "announced_at": "202611271700",
-          "effective_at": "202611271800",
+          "announced_at": "202611271810",
+          "effective_at": "202611271810",
           "matched_areas": [
             "전남광주통합시(여수, 영암, 함평, 목포, 신안(흑산면 제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부, 흑산도.홍도)"
           ]
@@ -263,7 +279,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -286,8 +302,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
-      "forecast_risks": [],
+      "observation_id": "20261127-1900",
+      "forecast_risks": [
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비/눈 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -309,7 +331,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -332,8 +354,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
-      "forecast_risks": [],
+      "observation_id": "20261127-1900",
+      "forecast_risks": [
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -355,7 +383,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -378,7 +406,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -389,6 +417,11 @@
           "date": "11/29(일)",
           "kind": "강수 예상",
           "detail": "비/눈 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -412,8 +445,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
-      "forecast_risks": [],
+      "observation_id": "20261127-1900",
+      "forecast_risks": [
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비/눈 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -435,7 +474,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -458,8 +497,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
-      "forecast_risks": [],
+      "observation_id": "20261127-1900",
+      "forecast_risks": [
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -484,8 +529,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611271700",
-          "effective_at": "202611271800",
+          "announced_at": "202611271810",
+          "effective_at": "202611271810",
           "matched_areas": [
             "경상북도(울진평지, 울진산지)"
           ]
@@ -497,12 +542,17 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
           "kind": "강풍 유의 예상",
           "detail": "최대풍속 10.1m/s"
+        },
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -526,12 +576,12 @@
           "phenomenon": "강풍",
           "level": "주의보",
           "areas": [
-            "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+            "강원도(태백, 동해산지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
           ],
-          "announced_at": "202611271700",
-          "effective_at": "202611271800",
+          "announced_at": "202611271810",
+          "effective_at": "202611271810",
           "matched_areas": [
-            "강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+            "강원도(태백, 동해산지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
           ]
         },
         {
@@ -543,8 +593,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611271700",
-          "effective_at": "202611271800",
+          "announced_at": "202611271810",
+          "effective_at": "202611271810",
           "matched_areas": [
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
           ]
@@ -556,12 +606,17 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
           "kind": "강수 예상",
           "detail": "비 예보, 강수확률 최고 60%"
+        },
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비 예보, 강수확률 최고 60%"
         }
       ],
       "legal_signals": [
@@ -585,8 +640,14 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
-      "forecast_risks": [],
+      "observation_id": "20261127-1900",
+      "forecast_risks": [
+        {
+          "date": "12/7(월)",
+          "kind": "강수 예상",
+          "detail": "흐리고 한때 비 예보, 강수확률 최고 60%"
+        }
+      ],
       "legal_signals": [
         {
           "status": "데이터 부족",
@@ -608,7 +669,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261127-1700",
+      "observation_id": "20261127-1900",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -639,9 +700,21 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-27T17:47:20+09:00",
-  "last_change_at": "2026-11-27T17:47:20+09:00",
+  "last_success_at": "2026-11-27T19:56:24+09:00",
+  "last_change_at": "2026-11-27T19:56:24+09:00",
   "last_changes": [
+    {
+      "site_name": "청정고원 스포츠센터",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
     {
       "site_name": "청정고원 스포츠센터",
       "type": "기상특보 발효",
@@ -651,7 +724,7 @@
         "강풍"
       ],
       "reasons": [
-        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
       ]
     },
     {
@@ -662,6 +735,30 @@
       "categories": [],
       "reasons": [
         "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+      ]
+    },
+    {
+      "site_name": "양산 부산대병원",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "오리온수협 목포 김공장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 한때 비 예보, 강수확률 최고 60%"
       ]
     },
     {
@@ -678,22 +775,72 @@
     },
     {
       "site_name": "오리온수협 목포 김공장",
-      "type": "기상특보 해제",
-      "from_level": "주의보",
-      "to_level": "해제",
-      "categories": [],
-      "reasons": [
-        "폭풍해일주의보 · 전남광주통합시(영암, 목포, 신안(흑산면 제외), 무안북부, 무안남부)"
-      ]
-    },
-    {
-      "site_name": "오리온수협 목포 김공장",
       "type": "예비특보 변경",
       "from_level": "예비특보",
       "to_level": "해제",
       "categories": [],
       "reasons": [
         "11월 28일 오전(06시~12시) · 전남광주통합시(여수, 영암, 함평, 목포, 신안(흑산면 제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부, 흑산도.홍도)"
+      ]
+    },
+    {
+      "site_name": "화천군부대 시설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 한때 비/눈 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "포항~안동2 국도건설공사",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 한때 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "뇌죽천 하천재해예방",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 한때 비 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "산솔면 하수처리장",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 한때 비/눈 예보, 강수확률 최고 60%"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "새 예보 위험",
+      "from_level": null,
+      "to_level": "정상",
+      "categories": [
+        "강수 예상"
+      ],
+      "reasons": [
+        "12/7(월) 흐리고 한때 비 예보, 강수확률 최고 60%"
       ]
     },
     {
@@ -724,10 +871,10 @@
       "from_level": null,
       "to_level": "정상",
       "categories": [
-        "강풍 유의 예상"
+        "강수 예상"
       ],
       "reasons": [
-        "11/28(토) 최대풍속 10.1m/s"
+        "12/7(월) 흐리고 비 예보, 강수확률 최고 60%"
       ]
     },
     {
@@ -739,7 +886,7 @@
         "강풍"
       ],
       "reasons": [
-        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초산지, 고성산지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
+        "강풍주의보 · 강원도(태백, 동해산지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 평창산지, 강릉산지, 정선산지, 홍천산지, 인제산지)"
       ]
     },
     {
@@ -775,15 +922,15 @@
       ]
     },
     {
-      "site_name": "송산그린시티 용수공급시설",
+      "site_name": "풍각지구 정비사업",
       "type": "새 예보 위험",
       "from_level": null,
       "to_level": "정상",
       "categories": [
-        "강풍 유의 예상"
+        "강수 예상"
       ],
       "reasons": [
-        "11/28(토) 최대풍속 10.0m/s"
+        "12/7(월) 흐리고 한때 비 예보, 강수확률 최고 60%"
       ]
     }
   ]
