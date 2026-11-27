@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-28T07:47:20+09:00",
+  "updated_at": "2026-11-28T08:47:20+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -91,7 +91,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -114,7 +114,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -137,7 +137,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -166,7 +166,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -189,7 +189,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -199,7 +199,7 @@
         {
           "date": "11/28(토)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 11.6m/s"
+          "detail": "최대풍속 11.5m/s"
         },
         {
           "date": "11/29(일)",
@@ -234,8 +234,8 @@
             "전남광주통합시(여수, 영암, 함평, 목포, 신안(흑산면 제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
             "울릉도.독도"
           ],
-          "announced_at": "202611280600",
-          "effective_at": "202611280800",
+          "announced_at": "202611280800",
+          "effective_at": "202611281000",
           "matched_areas": [
             "전남광주통합시(여수, 영암, 함평, 목포, 신안(흑산면 제외), 진도, 거문도.초도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
           ]
@@ -247,7 +247,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -270,7 +270,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -293,7 +293,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -316,7 +316,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -339,7 +339,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -362,7 +362,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -396,7 +396,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -419,7 +419,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -442,7 +442,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -468,8 +468,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611280600",
-          "effective_at": "202611280800",
+          "announced_at": "202611280800",
+          "effective_at": "202611281000",
           "matched_areas": [
             "경상북도(울진평지, 울진산지)"
           ]
@@ -481,7 +481,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -507,8 +507,8 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611280600",
-          "effective_at": "202611280800",
+          "announced_at": "202611280800",
+          "effective_at": "202611281000",
           "matched_areas": [
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
           ]
@@ -520,7 +520,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -549,7 +549,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -572,12 +572,12 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-0700",
+      "observation_id": "20261128-0800",
       "forecast_risks": [
         {
           "date": "11/28(토)",
           "kind": "강풍 유의 예상",
-          "detail": "최대풍속 10.2m/s"
+          "detail": "최대풍속 10.1m/s"
         }
       ],
       "legal_signals": [
@@ -598,8 +598,8 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-28T07:47:20+09:00",
-  "last_change_at": "2026-11-28T06:47:19+09:00",
+  "last_success_at": "2026-11-28T08:47:20+09:00",
+  "last_change_at": "2026-11-28T08:47:20+09:00",
   "last_changes": [
     {
       "site_name": "오리온수협 목포 김공장",
