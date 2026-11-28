@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-11-28T14:47:21+09:00",
+  "updated_at": "2026-11-28T15:47:18+09:00",
   "successful_sites": 21,
   "total_sites": 21,
   "collection_status": "healthy",
@@ -10,7 +10,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -39,7 +39,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -68,7 +68,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -91,7 +91,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -118,7 +118,7 @@
             "강원도(태백, 춘천, 삼척산지, 속초평지, 정선산지, 홍천산지, 양구산지)",
             "충청북도(괴산, 단양)"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "강원도(태백, 춘천, 삼척산지, 속초평지, 정선산지, 홍천산지, 양구산지)"
@@ -131,7 +131,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -154,7 +154,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -177,7 +177,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -204,7 +204,7 @@
             "강원도(태백, 춘천, 삼척산지, 속초평지, 정선산지, 홍천산지, 양구산지)",
             "충청북도(괴산, 단양)"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "경기도(안산, 성남, 안양, 군포, 의왕)"
@@ -214,14 +214,10 @@
       "weather_warnings_available": true
     },
     "오리온수협 목포 김공장": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 3.4mm"
-      ],
-      "observation_id": "20261128-1400",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261128-1500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -266,7 +262,7 @@
             "전남광주통합시(강진, 영암, 함평, 목포, 진도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
             "울릉도.독도"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "전남광주통합시(강진, 영암, 함평, 목포, 진도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
@@ -279,7 +275,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -313,7 +309,7 @@
             "전남광주통합시(강진, 영암, 함평, 목포, 진도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
             "울릉도.독도"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "경기도(안산, 화성)"
@@ -326,7 +322,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -349,7 +345,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -372,7 +368,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -395,7 +391,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -420,9 +416,9 @@
         "호우"
       ],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+        "시스템 선제알림(주의) · 시간당 강우 4.0mm"
       ],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -456,7 +452,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -479,7 +475,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -502,7 +498,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -536,7 +532,7 @@
             "전남광주통합시(강진, 영암, 함평, 목포, 진도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
             "울릉도.독도"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "경상북도(영덕, 포항, 울진평지, 경주중북부, 경주동부, 경주남부, 경주서부)"
@@ -551,7 +547,7 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "경상북도(울진평지, 울진산지)"
@@ -564,7 +560,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -590,7 +586,7 @@
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)",
             "경상북도(울진평지, 울진산지)"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "강원도(동해평지, 동해산지, 삼척평지, 삼척산지, 속초평지, 속초산지, 고성평지, 고성산지, 양양평지, 양양산지, 강릉평지, 강릉산지)"
@@ -600,14 +596,10 @@
       "weather_warnings_available": true
     },
     "풍각지구 정비사업": {
-      "level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ],
-      "observation_id": "20261128-1400",
+      "level": "정상",
+      "categories": [],
+      "reasons": [],
+      "observation_id": "20261128-1500",
       "forecast_risks": [
         {
           "date": "11/28(토)",
@@ -636,7 +628,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -659,7 +651,7 @@
       "level": "정상",
       "categories": [],
       "reasons": [],
-      "observation_id": "20261128-1400",
+      "observation_id": "20261128-1500",
       "forecast_risks": [],
       "legal_signals": [
         {
@@ -693,7 +685,7 @@
             "전남광주통합시(강진, 영암, 함평, 목포, 진도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)",
             "울릉도.독도"
           ],
-          "announced_at": "202611281430",
+          "announced_at": "202611281510",
           "effective_at": "202611282100",
           "matched_areas": [
             "경기도(안산, 화성)"
@@ -703,8 +695,8 @@
       "weather_warnings_available": true
     }
   },
-  "last_success_at": "2026-11-28T14:47:21+09:00",
-  "last_change_at": "2026-11-28T14:47:21+09:00",
+  "last_success_at": "2026-11-28T15:47:18+09:00",
+  "last_change_at": "2026-11-28T15:47:18+09:00",
   "last_changes": [
     {
       "site_name": "청정고원 스포츠센터",
@@ -752,15 +744,11 @@
     },
     {
       "site_name": "오리온수협 목포 김공장",
-      "type": "위험 종류 변경",
+      "type": "위험 해제",
       "from_level": "주의",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 3.4mm"
-      ]
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     },
     {
       "site_name": "오리온수협 목포 김공장",
@@ -781,7 +769,7 @@
       "to_level": "해제",
       "categories": [],
       "reasons": [
-        "강풍주의보 · 전남광주통합시(여수, 강진, 영암, 함평, 목포, 신안(흑산면 제외), 진도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
+        "강풍주의보 · 전남광주통합시(강진, 영암, 함평, 목포, 진도, 영광(낙월면 제외), 영광낙월면, 고흥북부, 고흥남부, 해남북부, 해남남부, 완도(여서도 제외), 완도여서도, 무안북부, 무안남부)"
       ]
     },
     {
@@ -797,15 +785,13 @@
       ]
     },
     {
-      "site_name": "뇌죽천 하천재해예방",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
+      "site_name": "렉서스 동탄 네트워크",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
       "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.5mm"
+        "강풍주의보 · 경기도(안산, 화성)"
       ]
     },
     {
@@ -830,6 +816,16 @@
       ],
       "reasons": [
         "건조주의보 · 경상북도(울진평지, 울진산지)"
+      ]
+    },
+    {
+      "site_name": "후포 공공하수처리",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
+      "reasons": [
+        "강풍주의보 · 경상북도(영덕, 포항, 울진평지, 경주중북부, 경주동부, 경주남부, 경주서부)"
       ]
     },
     {
@@ -866,15 +862,11 @@
     },
     {
       "site_name": "풍각지구 정비사업",
-      "type": "위험 상승",
-      "from_level": "정상",
-      "to_level": "주의",
-      "categories": [
-        "호우"
-      ],
-      "reasons": [
-        "시스템 선제알림(주의) · 시간당 강우 1.0mm"
-      ]
+      "type": "위험 해제",
+      "from_level": "주의",
+      "to_level": "정상",
+      "categories": [],
+      "reasons": []
     },
     {
       "site_name": "송산그린시티 용수공급시설",
@@ -884,6 +876,16 @@
       "categories": [
         "강풍"
       ],
+      "reasons": [
+        "강풍주의보 · 경기도(안산, 화성)"
+      ]
+    },
+    {
+      "site_name": "송산그린시티 용수공급시설",
+      "type": "기상특보 해제",
+      "from_level": "주의보",
+      "to_level": "해제",
+      "categories": [],
       "reasons": [
         "강풍주의보 · 경기도(안산, 화성)"
       ]
